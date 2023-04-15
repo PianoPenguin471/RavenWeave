@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "package": "me.PianoPenguin471.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinEntity",
+    "MixinEntity2",
+    "MixinEntityPlayer",
+    "MixinEntityPlayerSP",
+    "MixinEntityRenderer",
+    "MixinGuiMainMenu",
+    "MixinMinecraft",
+    "MixinNetworkManager",
+    "AttackMixin",
+    "EntityPlayerSPMixin",
+    "WorldMixin",
+    "MixinEntityLivingBase"
+  ],
+  "client": [
+    "IMinecraft"
+  ]
+}

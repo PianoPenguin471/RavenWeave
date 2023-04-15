@@ -1,0 +1,11 @@
+{
+  "mixinConfigs": [
+    "ravenweave.mixins.json"
+  ],
+  "entrypoints": [
+    "me.PianoPenguin471.RavenWeave"
+  ],
+  "hooks": [
+    "me.PianoPenguin471.hook.MinecraftHook"
+  ]
+}
