@@ -43,13 +43,14 @@ public class ChatLogger extends Module {
 
     @SubscribeEvent
     public void onMessageRecieved(ChatReceivedEvent event) {
-            try (FileWriter fw = new FileWriter(this.chatLog.getPath(), true);
-                    BufferedWriter bw = new BufferedWriter(fw);
-                    PrintWriter out = new PrintWriter(bw)) {
-                out.println(event.getMessage().getUnformattedText());
-            } catch (IOException e) {
-                // shit
-            }
+        if (!this.enabled) return;
+        try (FileWriter fw = new FileWriter(this.chatLog.getPath(), true);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
+            out.println(event.getMessage().getUnformattedText());
+        } catch (IOException e) {
+            // crap
         }
     }
+}
 

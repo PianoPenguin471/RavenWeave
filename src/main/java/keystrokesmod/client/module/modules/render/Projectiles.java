@@ -24,6 +24,7 @@ public class Projectiles extends Module {
 
     @SubscribeEvent
     public void onForgeEvent(RenderWorldEvent fe) {
+        if (!this.enabled) return;
         if (!Utils.Player.isPlayerInGame())
             return;
         EntityPlayerSP player = mc.thePlayer;

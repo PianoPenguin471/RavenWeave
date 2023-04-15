@@ -127,6 +127,7 @@ public class BridgeInfo extends Module {
 
     @SubscribeEvent
     public void onChatRecieved(ChatReceivedEvent c) {
+        if (!this.enabled) return;
         if (Utils.Player.isPlayerInGame()) {
             String s = Utils.Java.str(c.getMessage().getUnformattedText());
             if (s.startsWith(" ")) {
@@ -148,6 +149,7 @@ public class BridgeInfo extends Module {
 
     @SubscribeEvent
     public void onEntityJoinWorld(EntityJoinWorldEvent e) {
+        if (!this.enabled) return;
         if (e.entity == mc.thePlayer) {
             this.rv();
         }

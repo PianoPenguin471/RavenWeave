@@ -162,6 +162,7 @@ public class Freecam extends Module {
 
     @SubscribeEvent
     public void onMouseEvent(MouseEvent e) {
+        if (!this.enabled) return;
         if (Utils.Player.isPlayerInGame() && e.getButton() != -1) {
             e.setCancelled(true);
         }

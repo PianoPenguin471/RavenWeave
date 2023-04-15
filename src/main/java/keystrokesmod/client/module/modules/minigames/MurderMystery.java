@@ -40,6 +40,7 @@ public class MurderMystery extends Module {
 
     @SubscribeEvent
     public void onRenderWorld(RenderWorldEvent event) {
+        if (!this.enabled) return;
         if (Utils.Player.isPlayerInGame()) {
             PlayerESP p = (PlayerESP) Raven.moduleManager.getModuleByName("PlayerESP");
             assert p != null;

@@ -61,6 +61,7 @@ public class STap extends Module {
 
     @SubscribeEvent
     public void onForgeEvent(AttackEntityEvent e) {
+        if (!this.enabled) return;
         target = e.target;
 
         if (isSecondCall())

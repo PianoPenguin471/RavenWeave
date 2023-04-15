@@ -34,6 +34,7 @@ public class Velocity extends Module {
 
     @SubscribeEvent
     public void onLivingUpdate(LivingUpdateEvent fe) {
+        if (!this.enabled) return;
         if (Utils.Player.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0
                 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime) {
             if (d.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {

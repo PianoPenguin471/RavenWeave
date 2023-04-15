@@ -30,6 +30,7 @@ public class TargetHUD extends Module {
 
     @SubscribeEvent
     public void onForgeEvent(AttackEntityEvent e) {
+        if (!this.enabled) return;
         System.out.println(e.target instanceof AbstractClientPlayer);
         System.out.println(e.target);
         EntityPlayer ep = (EntityPlayer) e.target;

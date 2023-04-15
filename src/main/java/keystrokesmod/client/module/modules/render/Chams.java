@@ -12,6 +12,7 @@ public class Chams extends Module {
 
     @SubscribeEvent
     public void onPreLivingRender(RenderLivingEvent.Pre event) {
+        if (!this.enabled) return;
         if (event.getEntity() != mc.thePlayer) {
             GL11.glEnable(32823);
             GL11.glPolygonOffset(1.0F, -1100000.0F);
@@ -20,6 +21,7 @@ public class Chams extends Module {
 
     @SubscribeEvent
     public void onPostLivingRender(RenderLivingEvent.Post event) {
+        if (!this.enabled) return;
         if (event.getEntity() != mc.thePlayer) {
             GL11.glDisable(32823);
             GL11.glPolygonOffset(1.0F, 1100000.0F);

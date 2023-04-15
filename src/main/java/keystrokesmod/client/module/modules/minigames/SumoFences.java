@@ -89,6 +89,7 @@ public class SumoFences extends Module {
 
     @SubscribeEvent
     public void onForgeEvent(MouseEvent e) {
+        if (!this.enabled) return;
         if (e.getButtonState() && (e.getButton() == 0 || e.getButton() == 1) && Utils.Player.isPlayerInGame() && this.is()) {
             MovingObjectPosition mop = mc.objectMouseOver;
             if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {

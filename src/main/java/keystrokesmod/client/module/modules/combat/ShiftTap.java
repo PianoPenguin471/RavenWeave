@@ -61,6 +61,7 @@ public class ShiftTap extends Module {
 
     @SubscribeEvent
     public void onAttackEntity(AttackEntityEvent e) {
+        if (!this.enabled) return;
         target = e.target;
 
         if (isSecondCall())
@@ -69,7 +70,7 @@ public class ShiftTap extends Module {
 
     @SubscribeEvent
     public void onForgeEvent(LivingUpdateEvent e) {
-
+        if (!this.enabled) return;
         if (e.getEntityLiving().hurtTime > 0
                 && e.getEntityLiving().hurtTime == e.getEntityLiving().maxHurtTime && e.entity == this.target)
             wTap();

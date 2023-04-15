@@ -61,6 +61,7 @@ public class Tracers extends Module {
 
     @SubscribeEvent
     public void onForgeEvent(RenderWorldEvent event) {
+        if (!this.enabled) return;
         if (Utils.Player.isPlayerInGame()) {
             int rgb = e.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : this.rgb_c;
             Iterator<EntityPlayer> var3 = mc.theWorld.playerEntities.iterator();

@@ -117,6 +117,7 @@ public class LegitAura2 extends Module {
 
     @SubscribeEvent
     public void renderWorldLast(RenderWorldEvent e) {
+        if (!this.enabled) return;
         if (target != null) {
             int red = (int) (((20 - target.getHealth()) * 13) > 255 ? 255 : (20 - target.getHealth()) * 13);
             int green =  255 - red;
