@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class RenderGlobalMixin {
     @Inject(method = "drawSelectionBox", at = @At("HEAD"))
     public void onDrawSelectionBox(CallbackInfo ci) {
+        System.out.println("Drawing Selection Box");
         EventBus.callEvent(new DrawBlockHighlightEvent());
     }
 }

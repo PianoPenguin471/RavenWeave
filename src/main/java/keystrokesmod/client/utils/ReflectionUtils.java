@@ -18,6 +18,7 @@ public class ReflectionUtils {
     public static Object getPrivateValue(Class clazz, Object obj, String name) {
         try {
             Field field = clazz.getDeclaredField(name);
+            field.setAccessible(true);
             return field.get(obj);
         } catch (Exception e) {
             e.printStackTrace();
