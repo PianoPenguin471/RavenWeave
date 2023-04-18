@@ -36,7 +36,6 @@ public class Nametags extends Module {
         if (!this.enabled) return;
         if (removeTags.isToggled()) {
             event.setCancelled(true);
-            return;
         }
         if (event.getEntity() instanceof EntityPlayer && event.getEntity() != mc.thePlayer && event.getEntity().deathTime == 0) {
             EntityPlayer en = (EntityPlayer) event.getEntity();

@@ -503,7 +503,7 @@ public class Utils {
 
             MouseEvent m = new MouseEvent();
             setPrivateValue(MouseEvent.class, m, mouseButton, "button");
-            setPrivateValue(MouseEvent.class, m, held, "buttonstate");
+            setPrivateValue(MouseEvent.class, m, held, "buttonState");
             EventBus.callEvent(m);
 
             ByteBuffer buttons = (ByteBuffer) getPrivateValue(Mouse.class, null, "buttons");
