@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.render;
 
-import com.google.common.eventbus.Subscribe;
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.impl.RGBSetting;
@@ -28,8 +28,9 @@ public class Radar extends Module {
 
     }
 
-    @Subscribe
-    public void render2D(Render2DEvent e) {
+    @SubscribeEvent
+    public void render2D(RenderGameOverlayEvent e) {
+        if (!this.enabled) return;
         if(!Utils.Player.isPlayerInGame() || (mc.currentScreen != null))
             return;
         int centreX = x + (width/2), centreY = y + (height/2);

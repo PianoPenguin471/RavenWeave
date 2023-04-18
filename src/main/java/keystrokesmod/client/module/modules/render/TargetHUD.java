@@ -1,9 +1,8 @@
 package keystrokesmod.client.module.modules.render;
 
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
 import club.maxstats.weave.loader.api.event.SubscribeEvent;
-import com.google.common.eventbus.Subscribe;
 
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import me.PianoPenguin471.events.AttackEntityEvent;
@@ -37,8 +36,9 @@ public class TargetHUD extends Module {
     }
 
 
-    @Subscribe
-    public void onRender2d(Render2DEvent e) {
+    @SubscribeEvent
+    public void onRender2d(RenderGameOverlayEvent e) {
+        if (!this.enabled) return;
         /*try {
             ResourceLocation skin = AbstractClientPlayer.getLocationSkin();
             Minecraft.getMinecraft().getTextureManager().bindTexture(skin);

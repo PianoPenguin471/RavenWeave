@@ -1,7 +1,8 @@
 package keystrokesmod.client.module.modules.player;
 
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
@@ -167,8 +168,9 @@ public class SafeWalk extends Module {
         }
     }
 
-    @Subscribe
-    public void onRender2D(Render2DEvent e) {
+    @SubscribeEvent
+    public void onRender2D(RenderGameOverlayEvent e) {
+        if (!this.enabled) return;
         if (!showBlockAmount.isToggled() || !Utils.Player.isPlayerInGame())
             return;
         if (mc.currentScreen == null) {

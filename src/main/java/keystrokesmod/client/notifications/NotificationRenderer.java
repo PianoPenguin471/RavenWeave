@@ -1,13 +1,12 @@
 package keystrokesmod.client.notifications;
 
-import com.google.common.eventbus.Subscribe;
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 
 import keystrokesmod.client.config.ConfigManager;
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.ClientConfig;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.GuiModule;
-import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
@@ -15,8 +14,8 @@ public class NotificationRenderer {
     public static final NotificationRenderer notificationRenderer = new NotificationRenderer();
     private static Minecraft mc = Minecraft.getMinecraft();
 
-    @Subscribe
-    public void onRender(Render2DEvent e) {
+    @SubscribeEvent
+    public void onRender(RenderGameOverlayEvent e) {
         if (GuiModule.notifications())
             NotificationManager.render();
     }

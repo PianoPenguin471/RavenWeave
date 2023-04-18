@@ -1,9 +1,9 @@
 package keystrokesmod.client.module.modules.minigames;
 
 import club.maxstats.weave.loader.api.event.ChatReceivedEvent;
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
 import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -106,8 +106,9 @@ public class BridgeInfo extends Module {
         }
     }
 
-    @Subscribe
-    public void onRender2D(Render2DEvent ev) {
+    @SubscribeEvent
+    public void onRender2D(RenderGameOverlayEvent ev) {
+        if (!this.enabled) return;
         if (Utils.Player.isPlayerInGame() && this.ibd()) {
             if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
                 return;

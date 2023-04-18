@@ -8,13 +8,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
 import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import club.maxstats.weave.loader.api.event.TickEvent;
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.utils.ReflectionUtils;
 import me.PianoPenguin471.events.AttackEntityEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-
-import com.google.common.eventbus.Subscribe;
 
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;

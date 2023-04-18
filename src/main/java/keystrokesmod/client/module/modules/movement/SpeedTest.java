@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.movement;
 
-import com.google.common.eventbus.Subscribe;
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.CoolDown;
@@ -20,8 +20,9 @@ public class SpeedTest extends Module {
         this.registerSetting(stopPercent = new SliderSetting("Stop Percent", 0, 0, 200 ,1));
     }
     
-    @Subscribe
-    public void onRender2D(Render2DEvent e) {
+    @SubscribeEvent
+    public void onRender2D(RenderGameOverlayEvent e) {
+        if (!this.enabled) return;
         if(!Utils.Player.isPlayerInGame())
             return;
         if(mc.thePlayer.onGround && coolDown.hasFinished()) {

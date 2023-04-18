@@ -1,8 +1,7 @@
 package keystrokesmod.client.module.modules.combat;
 
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
 import club.maxstats.weave.loader.api.event.SubscribeEvent;
-import com.google.common.eventbus.Subscribe;
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -48,8 +47,9 @@ public class STap extends Module {
         this.registerSetting(tapMultiplier = new SliderSetting("wait time sensitivity", 1F, 0F, 5F, 0.1F));
     }
 
-    @Subscribe
-    public void onRender2D(Render2DEvent e) {
+    @SubscribeEvent
+    public void onRender2D(RenderGameOverlayEvent e) {
+        if (!this.enabled) return;
         if (state == StapState.NONE)
             return;
         if (state == StapState.WAITINGTOTAP && timer.hasFinished()) {

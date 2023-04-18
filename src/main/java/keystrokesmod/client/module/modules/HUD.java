@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules;
 
-import com.google.common.eventbus.Subscribe;
-import keystrokesmod.client.event.impl.Render2DEvent;
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.FakeHud;
@@ -95,8 +95,9 @@ public class HUD extends Module {
         Raven.moduleManager.sort();
     }
 
-    @Subscribe
-    public void onRender2D(Render2DEvent ev) {
+    @SubscribeEvent
+    public void onRender2D(RenderGameOverlayEvent ev) {
+        if (!this.enabled) return;
         if (Utils.Player.isPlayerInGame()) {
             if ((mc.currentScreen != null) || mc.gameSettings.showDebugInfo)
 				return;

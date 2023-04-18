@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.combat;
 
-import com.google.common.eventbus.Subscribe;
-import keystrokesmod.client.event.impl.Render2DEvent;
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
@@ -20,8 +20,9 @@ public class AutoWeapon extends Module {
         this.registerSetting(goBackToPrevSlot = new TickSetting("Revert to old slot", true));
     }
 
-    @Subscribe
-    public void onRender2D(Render2DEvent ev) {
+    @SubscribeEvent
+    public void onRender2D(RenderGameOverlayEvent ev) {
+        if (!this.enabled) return;
         if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
             return;
 

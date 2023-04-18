@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.player;
 
-import com.google.common.eventbus.Subscribe;
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
@@ -55,8 +55,9 @@ public class BridgeAssist extends Module {
         super.onEnable();
     }
 
-    @Subscribe
-    public void onRenderTick(Render2DEvent e) {
+    @SubscribeEvent
+    public void onRenderTick(RenderGameOverlayEvent e) {
+        if (!this.enabled) return;
         if (!Utils.Player.isPlayerInGame()) {
             return;
         }

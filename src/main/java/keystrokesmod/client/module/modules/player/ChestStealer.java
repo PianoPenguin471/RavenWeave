@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.player;
 
-import com.google.common.eventbus.Subscribe;
-import keystrokesmod.client.event.impl.Render2DEvent;
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -35,8 +35,9 @@ public class ChestStealer extends Module {
         this.registerSetting(closeDelay = new DoubleSliderSetting("Close delay", 150, 250, 0, 1000, 1));
     }
 
-    @Subscribe
-    public void onRender2D(Render2DEvent e) {
+    @SubscribeEvent
+    public void onRender2D(RenderGameOverlayEvent e) {
+        if (!this.enabled) return;
         if (Utils.Player.isPlayerInChest()) {
             if (!inChest) {
                 chest = (ContainerChest) mc.thePlayer.openContainer;

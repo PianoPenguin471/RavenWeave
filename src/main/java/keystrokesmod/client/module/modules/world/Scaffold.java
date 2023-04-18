@@ -1,11 +1,12 @@
 package keystrokesmod.client.module.modules.world;
 
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
 
 import keystrokesmod.client.event.impl.GameLoopEvent;
 import keystrokesmod.client.event.impl.LookEvent;
 import keystrokesmod.client.event.impl.MoveInputEvent;
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.event.impl.UpdateEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -52,8 +53,9 @@ public class Scaffold extends Module {
         e.setYaw(yaw);
     }
 
-    @Subscribe
-    public void onRender2D(Render2DEvent e) {
+    @SubscribeEvent
+    public void onRender2D(RenderGameOverlayEvent e) {
+        if (!this.enabled) return;
         ScaledResolution sr = new ScaledResolution(mc);
         FontUtil.normal.drawCenteredSmoothString(blockCount + " blocks", (int) (sr.getScaledWidth()/2f+8), (int) (sr.getScaledHeight()/2f-4), blockCount <= 16? 0xff0000 : -1);
     }

@@ -1,7 +1,8 @@
 package keystrokesmod.client.module.modules.player;
 
+import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
-import keystrokesmod.client.event.impl.Render2DEvent;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
@@ -94,18 +95,12 @@ public class RightClicker extends Module {
         this.rightClickWaiting = false;
     }
 
-    @Subscribe
-    public void onRender2D(Render2DEvent e) {
-        if (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to
-                                                                                                                        // make
-                                                                                                                        // it
-                                                                                                                        // work
-                                                                                                                        // in
-                                                                                                                        // survival
-                                                                                                                        // inventory
+    @SubscribeEvent
+    public void onRender2D(RenderGameOverlayEvent e) {
+        if (!this.enabled) return;
+        if (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival inventory
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
-        )
-            return;
+        ) return;
 
         if (clickTimings.getMode() != ClickEvent.Render)
             return;
