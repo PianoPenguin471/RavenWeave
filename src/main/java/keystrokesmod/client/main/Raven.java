@@ -124,14 +124,6 @@ public class Raven {
         configManager = new ConfigManager();
         clientConfig = new ClientConfig();
         clientConfig.applyConfig();
-
-        ex.execute(() -> {
-            try {
-                LaunchTracker.registerLaunch();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     @SuppressWarnings("unused")

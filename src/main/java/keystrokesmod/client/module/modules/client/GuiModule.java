@@ -1,6 +1,10 @@
 package keystrokesmod.client.module.modules.client;
 
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
+import keystrokesmod.client.clickgui.theme.Theme;
+import keystrokesmod.client.clickgui.theme.themes.ArcDark;
+import keystrokesmod.client.clickgui.theme.themes.MaterialDark;
+import keystrokesmod.client.clickgui.theme.themes.RavenB3;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.Setting;
@@ -250,6 +254,8 @@ public class GuiModule extends Module {
                         in -> -12876693,
                         in -> Utils.Client.otherAstolfoColorsDraw(in, 10)
                         ),
+        ArcDark(new ArcDark()),
+        MaterialDark(new MaterialDark()),
 
         PlusPlus( // name
                         true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
@@ -304,6 +310,30 @@ public class GuiModule extends Module {
             this.boarderColor = boarderColor;
             this.categoryOutlineColor = categoryOutlineColor;
             this.categoryOutlineColor2 = categoryOutlineColor2;
+        }
+
+        private Preset(Theme theme) {
+            this.showGradientEnabled = true;
+            this.showGradientDisabled = false;
+            this.useCustomFont = true;
+            this.categoryBackground = true;
+            this.categoryNameRGB = in -> theme.getTextColour().getRGB();
+            this.settingBackgroundRGB = in -> theme.getAccentColour().getRGB();
+            this.categoryBackgroundRGB = in -> theme.getBackgroundColour().getRGB();
+            this.enabledTopRGB = in -> theme.getBackgroundColour().getRGB();
+            this.enabledBottomRGB = in -> theme.getSecondBackgroundColour().getRGB();
+            this.enabledTextRGB = in -> theme.getTextColour().getRGB();
+            this.disabledTopRGB = in -> theme.getDisabledColour().getRGB();
+            this.disabledBottomRGB = in -> theme.getDisabledColour().getRGB();
+            this.disabledTextRGB = in -> theme.getDisabledColour().getRGB();
+            this.backgroundRGB = in -> theme.getDisabledColour().getRGB();
+            this.cnColor = CNColor.STATIC;
+            this.roundedCorners = true;
+            this.swing = true;
+            this.boarder = true;
+            this.boarderColor = in -> theme.getBorderColour().getRGB();
+            this.categoryOutlineColor = in -> theme.getBorderColour().getRGB();
+            this.categoryOutlineColor2 = in -> theme.getSelectionForegroundColour().getRGB();
         }
 
     }
