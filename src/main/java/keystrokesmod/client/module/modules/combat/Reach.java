@@ -12,7 +12,7 @@ public class Reach extends Module {
     public static TickSetting weapon_only;
     public static TickSetting moving_only;
     public static TickSetting sprint_only;
-    public static KillAura la;
+    public static KillAura killAura;
 
     public Reach() {
         super("Reach", ModuleCategory.combat);
@@ -24,11 +24,11 @@ public class Reach extends Module {
 
     @Override
     public void postApplyConfig() {
-       la = (KillAura) Raven.moduleManager.getModuleByClazz(KillAura.class);
+       killAura = (KillAura) Raven.moduleManager.getModuleByClazz(KillAura.class);
     }
 
     public static double getReach() {
-        if(la.isEnabled())
+        if(killAura.isEnabled())
             return KillAura.reach.getInput();
 
         double normal = mc.playerController.extendedReach()? 5 : 3;
