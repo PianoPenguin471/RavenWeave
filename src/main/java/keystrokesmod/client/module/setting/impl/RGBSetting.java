@@ -32,8 +32,10 @@ public class RGBSetting extends Setting {
 
     @Override
     public void resetToDefaults() {
-        for (int i = 0; i <= colour.length; i++)
-			this.colour[i] = this.defaultColour[i];
+        System.out.println("Color length: " + colour.length + ", Default color length: " + defaultColour.length);
+        for (int i = 0; i < colour.length; i++) {
+            this.colour[i] = this.defaultColour[i];
+        }
     }
 
     @Override
