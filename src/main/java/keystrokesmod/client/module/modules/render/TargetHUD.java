@@ -20,7 +20,7 @@ public class TargetHUD extends Module {
     ScaledResolution sr;
 
     public TargetHUD() {
-        super("Target HUD", ModuleCategory.render);
+        super("Target HUD", /*ModuleCategory.render*/ModuleCategory.beta);
         sr = new ScaledResolution(Minecraft.getMinecraft());
         height = sr.getScaledHeight();
         width = sr.getScaledWidth();

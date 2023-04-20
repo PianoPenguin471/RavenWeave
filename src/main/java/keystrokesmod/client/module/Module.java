@@ -271,7 +271,7 @@ public class Module {
         client(false, category, "Client"),
         hotkey(false, category, "Hotkey"),
         config(false, client, "Config"),
-        sumo(false, minigames, "Sumo");
+        beta(false, category, "BETA");
 
         private final boolean defaultShown;
         private final ModuleCategory topCategory;

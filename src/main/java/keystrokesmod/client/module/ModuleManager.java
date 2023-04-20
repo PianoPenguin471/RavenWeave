@@ -43,47 +43,18 @@ import keystrokesmod.client.module.modules.minigames.BridgeInfo;
 import keystrokesmod.client.module.modules.minigames.DuelsStats;
 import keystrokesmod.client.module.modules.minigames.MurderMystery;
 import keystrokesmod.client.module.modules.minigames.SumoFences;
-import keystrokesmod.client.module.modules.movement.AutoHeader;
-import keystrokesmod.client.module.modules.movement.Boost;
-import keystrokesmod.client.module.modules.movement.Fly;
-import keystrokesmod.client.module.modules.movement.InvMove;
-import keystrokesmod.client.module.modules.movement.KeepSprint;
-import keystrokesmod.client.module.modules.movement.LegitSpeed;
-import keystrokesmod.client.module.modules.movement.NoSlow;
-import keystrokesmod.client.module.modules.movement.SlyPort;
-import keystrokesmod.client.module.modules.movement.Sprint;
-import keystrokesmod.client.module.modules.movement.StopMotion;
-import keystrokesmod.client.module.modules.movement.Timer;
-import keystrokesmod.client.module.modules.movement.VClip;
+import keystrokesmod.client.module.modules.movement.*;
 import keystrokesmod.client.module.modules.other.Disabler;
 import keystrokesmod.client.module.modules.other.FakeChat;
 import keystrokesmod.client.module.modules.other.MiddleClick;
 import keystrokesmod.client.module.modules.other.NameHider;
 import keystrokesmod.client.module.modules.other.Spin;
 import keystrokesmod.client.module.modules.other.WaterBucket;
-import keystrokesmod.client.module.modules.player.AutoArmour;
-import keystrokesmod.client.module.modules.player.AutoJump;
-import keystrokesmod.client.module.modules.player.AutoPlace;
-import keystrokesmod.client.module.modules.player.BedAura;
-import keystrokesmod.client.module.modules.player.BridgeAssist;
-import keystrokesmod.client.module.modules.player.ChestStealer;
-import keystrokesmod.client.module.modules.player.FallSpeed;
-import keystrokesmod.client.module.modules.player.FastPlace;
-import keystrokesmod.client.module.modules.player.Freecam;
-import keystrokesmod.client.module.modules.player.NoFall;
-import keystrokesmod.client.module.modules.player.Parkour;
-import keystrokesmod.client.module.modules.player.RightClicker;
-import keystrokesmod.client.module.modules.player.SafeWalk;
-import keystrokesmod.client.module.modules.render.AntiShuffle;
-import keystrokesmod.client.module.modules.render.Chams;
-import keystrokesmod.client.module.modules.render.ChestESP;
-import keystrokesmod.client.module.modules.render.Fullbright;
-import keystrokesmod.client.module.modules.render.Nametags;
-import keystrokesmod.client.module.modules.render.PlayerESP;
-import keystrokesmod.client.module.modules.render.Projectiles;
-import keystrokesmod.client.module.modules.render.Tracers;
+import keystrokesmod.client.module.modules.player.*;
+import keystrokesmod.client.module.modules.render.*;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.modules.world.ChatLogger;
+import keystrokesmod.client.module.modules.world.Scaffold;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.FontRenderer;
 
@@ -140,7 +111,6 @@ public class ModuleManager {
         addModule(new SlyPort());
         addModule(new FakeChat());
         addModule(new WaterBucket());
-        // addModule(new AutoConfig());
         addModule(new Terminal());
         addModule(new GuiModule());
         addModule(new SelfDestruct());
@@ -176,14 +146,18 @@ public class ModuleManager {
         addModule(new KillAura());
         addModule(new Spin());
         addModule(new AutoGHead());
-        //addModule(new Radar());
+
+        addModule(new Radar());
+        addModule(new Scaffold());
+        addModule(new Blink());
+
         addModule(new AutoSoup());
         addModule(new Targets());
         //addModule(new CursorTrail());
 
-        //addModule(new SpeedTest());
+        addModule(new SpeedTest());
         //addModule(new LegitAura());
-        //addModule(new TargetHUD());
+        addModule(new TargetHUD());
         // why ?
         // idk dude. you tell me why. I am pretty sure this was blowsy's work.
         initialized = true;

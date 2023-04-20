@@ -24,7 +24,7 @@ public class Scaffold extends Module {
 
 
     public Scaffold() {
-        super("Scaffold", ModuleCategory.world);
+        super("Scaffold", /*ModuleCategory.world*/ModuleCategory.beta);
         this.registerSettings(
                         eagle = new TickSetting("Shift", false),
                         rps = new SliderSetting("Rotation speed", 80, 0, 300, 1));
