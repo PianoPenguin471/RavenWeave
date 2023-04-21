@@ -92,7 +92,7 @@ public class BedwarsOverlay extends Module {
 
         fr.drawString("", 0, 0, 0xffffffff);
         // LEVEL PLAYERS PARTY WS BBBLR FKDR WLR FINALS WINS THREAT
-        // 420 KOPAMED - 23 84 9.3 6.3 30002 1
+        //  420  KOPAMED   -   23   84   9.3 6.3 30002   1
         // 1 Jpzinn - 0 1 0.07 0.01 22394 10
 
         // Colour pallette
@@ -160,7 +160,7 @@ public class BedwarsOverlay extends Module {
         }
     }
 
-    private int getTreatColour(String bad) {
+    private int getThreatColour(String bad) {
         // "&4VERY HIGH", "&cHIGH", "&6MODERATE", "&aLOW", "&2VERY LOW"
         if (bad.equalsIgnoreCase("very high")) {
             return Colours.RED;
@@ -401,7 +401,7 @@ public class BedwarsOverlay extends Module {
     }
 
     public enum StatType {
-        LEVEL, PLAYER_NAME, NICKED, WS, BBBLR, FKDR, WLR, FINALS, WINS, OVERALLTHREAT
+        LEVEL, PLAYER_NAME, NICKED, WS, BBBLR, FKDR, WLR, FINALS, WINS/*, OVERALLTHREAT*/
     }
 
     public static class Colours {
