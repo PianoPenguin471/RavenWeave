@@ -9,7 +9,7 @@ import javax.sound.sampled.Clip;
 public class SoundUtils {
 
     private static final HashMap<String, AudioInputStream> sounds = new HashMap<String, AudioInputStream>();
-    private static Clip clip;
+    public static Clip clip;
 
     public static void playSound(String name) {
         try {
