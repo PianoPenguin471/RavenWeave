@@ -17,14 +17,13 @@ import keystrokesmod.client.utils.Utils.Client;
 
 public class RGBSetting extends Setting {
 
-    private final String name;
-    private int[] colour = new int[2];
-    private int[] defaultColour = new int[2];
+    private int[] colour;
+    private int[] defaultColour;
     private int colorRGB;
 
     public RGBSetting(String name, int defaultRed, int defaultGreen, int defaultBlue) {
         super(name);
-        this.name = name;
+        this.settingName = name;
         this.defaultColour = new int[] { defaultRed, defaultGreen, defaultBlue };
         this.colour = new int[] { defaultRed, defaultGreen, defaultBlue };
         colorRGB = new Color(defaultRed, defaultGreen, defaultBlue).getRGB();
