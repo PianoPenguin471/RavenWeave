@@ -32,8 +32,7 @@ public class MixinNetworkManager {
         Raven.eventBus.post(e);
 
         p_channelRead0_2_ = e.getPacket();
-        if (e.isCancelled())
-            ci.cancel();
+        if (e.isCancelled()) ci.cancel();
     }
 
 }
