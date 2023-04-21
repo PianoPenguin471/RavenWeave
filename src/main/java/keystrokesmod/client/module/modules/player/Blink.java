@@ -10,7 +10,7 @@ import net.minecraft.network.Packet;
 
 public class Blink extends Module {
 
-    private ArrayList<Packet> packets = new ArrayList<>();
+    private ArrayList<? extends Packet> packets = new ArrayList<>();
     
     public Blink() {
         super("Blink", /*ModuleCategory.player*/ModuleCategory.beta);

@@ -273,9 +273,10 @@ public class LeftClicker extends Module {
 
         if ((this.leftUpTime > 0L) && (this.leftDownTime > 0L)) {
             if ((System.currentTimeMillis() > this.leftUpTime) && leftDown) {
-                if (sound.isToggled())
+                if (sound.isToggled()) {
                     SoundUtils.clip.stop();
-					SoundUtils.playSound(soundMode.getMode().name());
+                    SoundUtils.playSound(soundMode.getMode().name());
+                }
                 KeyBinding.setKeyBindState(key, true);
                 KeyBinding.onTick(key);
                 this.genLeftTimings();
