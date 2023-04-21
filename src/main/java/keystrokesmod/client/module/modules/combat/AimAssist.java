@@ -6,6 +6,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.TickEvent;
+import keystrokesmod.client.module.modules.world.AntiBot;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MovingObjectPosition;
 import org.lwjgl.input.Mouse;
 
 import keystrokesmod.client.main.Raven;
@@ -36,6 +40,7 @@ public class AimAssist extends Module {
     public static TickSetting breakBlocks;
     public static TickSetting blatantMode;
     public static ArrayList<Entity> friends = new ArrayList<>();
+    public static TickSetting aimWhileTargeting;
 
     public AimAssist() {
         super("AimAssist", ModuleCategory.combat);
@@ -50,6 +55,15 @@ public class AimAssist extends Module {
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
         this.registerSetting(blatantMode = new TickSetting("Blatant mode", false));
         this.registerSetting(aimPitch = new TickSetting("Aim pitch", false));
+        this.registerSetting(aimWhileTargeting = new TickSetting("Aim while targeting", true));
+    }
+
+    public boolean isLookingAtPlayer() {
+        if (mc.objectMouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.ENTITY) return false;
+        if (!(mc.objectMouseOver.entityHit instanceof EntityPlayer)) return false;
+        if (AntiBot.bot(mc.objectMouseOver.entityHit)) return false;
+
+        return true;
     }
 
     @Subscribe
@@ -68,14 +82,12 @@ public class AimAssist extends Module {
             }
 
             if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
+                boolean shouldAim = !clickAim.isToggled() || Mouse.isButtonDown(0) || (clickAim.isToggled() && Utils.Client.autoClickerClicking());
+                if (shouldAim) {
+                    if (isLookingAtPlayer() && !aimWhileTargeting.isToggled()) return;
 
-                Module autoClicker = Raven.moduleManager.getModuleByClazz(RightClicker.class); // right clicker???????????
-                // what if player clicking but mouse not down ????
-                if ((clickAim.isToggled() && Utils.Client.autoClickerClicking())
-                        || (Mouse.isButtonDown(0) && (autoClicker != null) && !autoClicker.isEnabled())
-                        || !clickAim.isToggled()) {
                     Entity en = this.getEnemy();
-                    if (en != null)
+                    if (en != null) {
                         if (blatantMode.isToggled())
                             Utils.Player.aim(en, (float) pitchOffSet.getInput());
                         else {
@@ -100,10 +112,9 @@ public class AimAssist extends Module {
                                                 speedPitch.getInput())))));
 
                                 mc.thePlayer.rotationPitch += val;
-
                             }
                         }
-
+                    }
                 }
             }
 
