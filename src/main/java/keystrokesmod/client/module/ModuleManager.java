@@ -6,6 +6,7 @@ import java.util.List;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module.ModuleCategory;
+import keystrokesmod.client.module.modules.HUD;
 import keystrokesmod.client.module.modules.client.FPSSpoofer;
 import keystrokesmod.client.module.modules.client.FakeHud;
 import keystrokesmod.client.module.modules.client.GuiModule;
@@ -72,8 +73,8 @@ public class ModuleManager {
         addModule(new ChestStealer());
         addModule(new AutoArmour());
         addModule(new LeftClicker());
+        addModule(new ClickAssist());
         addModule(new RightClicker());
-	addModule(new ClickAssist());
         addModule(new AimAssist());
         addModule(new DelayRemover());
         addModule(new HitBox());
