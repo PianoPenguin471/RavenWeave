@@ -24,6 +24,7 @@ import keystrokesmod.client.module.modules.combat.DelayRemover;
 import keystrokesmod.client.module.modules.combat.HitBox;
 import keystrokesmod.client.module.modules.combat.JumpReset;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
+import keystrokesmod.client.module.modules.combat.ClickAssist;
 import keystrokesmod.client.module.modules.combat.Reach;
 import keystrokesmod.client.module.modules.combat.STap;
 import keystrokesmod.client.module.modules.combat.ShiftTap;
@@ -72,6 +73,7 @@ public class ModuleManager {
         addModule(new ChestStealer());
         addModule(new AutoArmour());
         addModule(new LeftClicker());
+        addModule(new ClickAssist());
         addModule(new RightClicker());
         addModule(new AimAssist());
         addModule(new DelayRemover());
