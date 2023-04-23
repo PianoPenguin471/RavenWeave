@@ -23,6 +23,7 @@ import keystrokesmod.client.module.modules.combat.DelayRemover;
 import keystrokesmod.client.module.modules.combat.HitBox;
 import keystrokesmod.client.module.modules.combat.JumpReset;
 import keystrokesmod.client.module.modules.combat.LeftClicker;
+import keystrokesmod.client.module.modules.combat.ClickAssist;
 import keystrokesmod.client.module.modules.combat.Reach;
 import keystrokesmod.client.module.modules.combat.STap;
 import keystrokesmod.client.module.modules.combat.ShiftTap;
