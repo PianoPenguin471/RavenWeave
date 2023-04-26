@@ -90,6 +90,7 @@ public class ModuleManager {
         addModule(new LegitSpeed());
         addModule(new Timer());
         addModule(new VClip());
+        addModule(new HClip());
         addModule(new AutoJump());
         addModule(new AutoPlace());
         addModule(new BedAura());
