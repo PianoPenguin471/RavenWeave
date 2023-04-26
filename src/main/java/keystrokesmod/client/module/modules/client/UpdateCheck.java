@@ -37,13 +37,13 @@ public class UpdateCheck extends Module {
             Version current = Raven.versionManager.getClientVersion();
             if (latest.isNewerThan(current)) {
                 Utils.Player.sendMessageToSelf(
-                        "The current version or Raven B++ is outdated. Visit https://github.com/K-ov/Raven-bPLUS/tree/stable/build/libs to download the latest version.");
-                Utils.Player.sendMessageToSelf("https://github.com/K-ov/Raven-bPLUS/tree/stable/build/libs");
+                        "The current version or RavenWeave is outdated. Visit https://github.com/PianoPenguin471/RavenWeave/releases to download the latest version.");
+                Utils.Player.sendMessageToSelf("https://github.com/PianoPenguin471/RavenWeave/releases");
             }
 
             if (current.isNewerThan(latest)) {
                 Utils.Player.sendMessageToSelf("You are on a beta build of raven");
-                Utils.Player.sendMessageToSelf("https://github.com/K-ov/Raven-bPLUS");
+                Utils.Player.sendMessageToSelf("https://github.com/PianoPenguin471/RavenWeave/releases");
             } else {
                 Utils.Player.sendMessageToSelf("You are on the latest public version!");
             }
@@ -61,7 +61,7 @@ public class UpdateCheck extends Module {
                 } catch (MalformedURLException bruh) {
                     bruh.printStackTrace();
                     Utils.Player
-                            .sendMessageToSelf("&cFailed to open page! Please report this bug in Raven b++'s discord");
+                            .sendMessageToSelf("&cFailed to open page! Please report this bug in RavenWeave's discord");
                 }
             }
 
