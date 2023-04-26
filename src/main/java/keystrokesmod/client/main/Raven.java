@@ -110,7 +110,7 @@ public class Raven {
         register(new Raven());
         register(new MouseManager());
         register(new PingChecker());
-        eventBus.register(NotificationRenderer.notificationRenderer);
+        club.maxstats.weave.loader.api.event.EventBus.subscribe(NotificationRenderer.notificationRenderer);
 
         FontUtil.bootstrap();
 
@@ -124,6 +124,7 @@ public class Raven {
         configManager = new ConfigManager();
         clientConfig = new ClientConfig();
         clientConfig.applyConfig();
+        System.out.println("AAAAAAH");
     }
 
     @SuppressWarnings("unused")

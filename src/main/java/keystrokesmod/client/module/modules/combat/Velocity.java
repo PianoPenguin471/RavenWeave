@@ -1,15 +1,19 @@
 package keystrokesmod.client.module.modules.combat;
 
-import club.maxstats.weave.loader.api.event.EventBus;
 import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
 import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.event.impl.PacketEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
+import me.PianoPenguin471.mixins.S12PacketEntityVelocityAccessor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.util.ChatComponentText;
 import org.lwjgl.input.Keyboard;
 
 public class Velocity extends Module {
@@ -33,52 +37,52 @@ public class Velocity extends Module {
         this.registerSetting(distanceProjectiles = new SliderSetting("Distance projectiles", 3D, 0.0D, 20D, 0.1D));
     }
 
-    @SubscribeEvent
-    public void onLivingUpdate(RenderGameOverlayEvent fe) {
-        System.out.println("PLEASE");
-        if (Utils.Player.isPlayerInGame() && mc.thePlayer.maxHurtTime > 0
-                && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime) {
-            System.out.println("First velo condition");
-            if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
+    @Subscribe
+    public void onPacket(PacketEvent packetEvent) {
+        mc.thePlayer.addChatMessage(new ChatComponentText("Packet event called"));
+        if (!packetEvent.isIncoming()) return;
+        if (!(packetEvent.getPacket() instanceof S12PacketEntityVelocity)) return;
+        if (chance.getInput() != 100.0D) {
+            double ch = Math.random() * 100;
+            if (ch >= chance.getInput()) {
                 return;
             }
+        }
 
-            if (disableWhileHoldingS.isToggled() && Keyboard.isKeyDown(mc.gameSettings.keyBindBack.getKeyCode())) {
-                return;
-            }
-            if (mc.thePlayer.getLastAttacker() instanceof EntityPlayer) {
-                EntityPlayer attacker = (EntityPlayer) mc.thePlayer.getLastAttacker();
-                Item item = attacker.getCurrentEquippedItem() != null ? attacker.getCurrentEquippedItem().getItem()
-                        : null;
-                if ((item instanceof ItemEgg || item instanceof ItemBow || item instanceof ItemSnow
-                        || item instanceof ItemFishingRod) && mode == Mode.ItemHeld) {
-                    velo();
-                    return;
-                } else if (attacker.getDistanceToEntity(mc.thePlayer) > distanceProjectiles.getInput()) {
-                    velo();
-                    return;
-                }
-            }
+        if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
+            return;
+        }
 
-            if (chance.getInput() != 100.0D) {
-                double ch = Math.random();
-                if (ch >= chance.getInput() / 100.0D) {
-                    return;
-                }
-            }
+        if (disableWhileHoldingS.isToggled() && Keyboard.isKeyDown(mc.gameSettings.keyBindBack.getKeyCode())) {
+            return;
+        }
 
-            if (horizontal.getInput() != 100.0D) {
-                mc.thePlayer.motionX *= horizontal.getInput() / 100.0D;
-                mc.thePlayer.motionZ *= horizontal.getInput() / 100.0D;
-            }
-
-            if (vertical.getInput() != 100.0D) {
-                mc.thePlayer.motionY *= vertical.getInput() / 100.0D;
+        if (mc.thePlayer.getLastAttacker() instanceof EntityPlayer) {
+            EntityPlayer attacker = (EntityPlayer) mc.thePlayer.getLastAttacker();
+            Item item = attacker.getCurrentEquippedItem() != null ? attacker.getCurrentEquippedItem().getItem()
+                    : null;
+            if ((item instanceof ItemEgg || item instanceof ItemBow || item instanceof ItemSnow
+                    || item instanceof ItemFishingRod) && mode == Mode.ItemHeld) {
+                velo(packetEvent);
+            } else if (attacker.getDistanceToEntity(mc.thePlayer) > distanceProjectiles.getInput()) {
+                velo(packetEvent);
             }
         }
     }
 
-    public void velo() {
+    public void velo(PacketEvent packetEvent) {
+        S12PacketEntityVelocity packet = packetEvent.getPacket();
+
+        if (packet.getEntityID() != mc.thePlayer.getEntityId()) return;
+
+        S12PacketEntityVelocityAccessor accessorPacket = (S12PacketEntityVelocityAccessor) packet;
+        accessorPacket.setMotionX((int) (packet.getMotionX() * horizontal.getInput() / 100));
+        accessorPacket.setMotionZ((int) (packet.getMotionZ() * horizontal.getInput() / 100));
+        accessorPacket.setMotionY((int) (packet.getMotionY() * vertical.getInput() / 100));
+
+
+
+
         System.out.println("Calculating Velo");
         if (chanceProjectiles.getInput() != 100.0D) {
             double ch = Math.random();
