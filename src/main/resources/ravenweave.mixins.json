@@ -14,7 +14,8 @@
     "AttackMixin",
     "EntityPlayerSPMixin",
     "WorldMixin",
-    "MixinEntityLivingBase"
+    "MixinEntityLivingBase",
+    "S12PacketEntityVelocityAccessor"
   ],
   "client": [
     "IMinecraft"

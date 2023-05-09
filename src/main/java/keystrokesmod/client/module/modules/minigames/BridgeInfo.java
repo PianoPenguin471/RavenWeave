@@ -6,6 +6,7 @@ import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
@@ -57,14 +58,14 @@ public class BridgeInfo extends Module {
     }
 
     @Subscribe
-    public void onTick(TickEvent ev) {
-        if (!this.en.isEmpty() && this.ibd()) {
-            EntityPlayer enem = null;
+    public void onTick(TickEvent ignoredEv) {
+        if (!this.en.isEmpty() && this.inBridgeGame()) {
+            EntityPlayer enemy = null;
 
             for (Entity e : mc.theWorld.loadedEntityList) {
                 if (e instanceof EntityPlayer) {
                     if (e.getName().equals(this.en)) {
-                        enem = (EntityPlayer) e;
+                        enemy = (EntityPlayer) e;
                     }
                 } else if (e instanceof EntityArmorStand) {
                     String g2t = "Jump in to score!";
@@ -84,8 +85,8 @@ public class BridgeInfo extends Module {
                     this.d1 = 0.0D;
                 }
 
-                this.d2 = enem == null ? 0.0D
-                        : Utils.Java.round(enem.getDistance(this.g1p.getX(), this.g1p.getY(), this.g1p.getZ()) - 1.4D,
+                this.d2 = enemy == null ? 0.0D
+                        : Utils.Java.round(enemy.getDistance(this.g1p.getX(), this.g1p.getY(), this.g1p.getZ()) - 1.4D,
                                 1);
                 if (this.d2 < 0.0D) {
                     this.d2 = 0.0D;
@@ -106,10 +107,17 @@ public class BridgeInfo extends Module {
         }
     }
 
+    @Override
+    public void guiButtonToggled(Setting setting) {
+        if (setting == ep) {
+            mc.displayGuiScreen(new BridgeInfo.eh());
+            ep.disable();
+        }
+    }
+
     @SubscribeEvent
-    public void onRender2D(RenderGameOverlayEvent ev) {
-        if (!this.enabled) return;
-        if (Utils.Player.isPlayerInGame() && this.ibd()) {
+    public void onRender2D(RenderGameOverlayEvent ignoredEv) {
+        if (Utils.Player.isPlayerInGame() && this.inBridgeGame()) {
             if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
                 return;
             }
@@ -123,12 +131,10 @@ public class BridgeInfo extends Module {
             String t4 = "Blocks: ";
             mc.fontRendererObj.drawString(t4 + this.blc, (float) hudX, (float) (hudY + 33), rgb, true);
         }
-
     }
 
     @SubscribeEvent
-    public void onChatRecieved(ChatReceivedEvent c) {
-        if (!this.enabled) return;
+    public void onChatReceived(ChatReceivedEvent c) {
         if (Utils.Player.isPlayerInGame()) {
             String s = Utils.Java.str(c.getMessage().getUnformattedText());
             if (s.startsWith(" ")) {
@@ -157,11 +163,12 @@ public class BridgeInfo extends Module {
     }
 
 
-    private boolean ibd() {
+    private boolean inBridgeGame() {
         if (Utils.Client.isHyp()) {
             for (String s : Utils.Client.getPlayersFromScoreboard()) {
+                System.out.println(s);
                 String s2 = s.toLowerCase();
-                String bd = "the brid";
+                String bd = "bridge duel";
                 if (s2.contains("mode") && s2.contains(bd)) {
                     return true;
                 }
@@ -231,7 +238,6 @@ public class BridgeInfo extends Module {
             int x = this.miX;
             int y = this.miY;
             String[] var5 = t.split("-");
-            int var6 = var5.length;
 
             for (String s : var5) {
                 fr.drawString(s, (float) x, (float) y, rgb, true);

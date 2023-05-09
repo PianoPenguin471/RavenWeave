@@ -3,6 +3,7 @@ package keystrokesmod.client.module.modules.combat;
 import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
 import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import keystrokesmod.client.event.impl.PacketEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
@@ -10,10 +11,15 @@ import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
 import me.PianoPenguin471.mixins.S12PacketEntityVelocityAccessor;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.network.play.server.S14PacketEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Keyboard;
 
 public class Velocity extends Module {
@@ -39,66 +45,57 @@ public class Velocity extends Module {
 
     @Subscribe
     public void onPacket(PacketEvent packetEvent) {
-        mc.thePlayer.addChatMessage(new ChatComponentText("Packet event called"));
-        if (!packetEvent.isIncoming()) return;
-        if (!(packetEvent.getPacket() instanceof S12PacketEntityVelocity)) return;
-        if (chance.getInput() != 100.0D) {
-            double ch = Math.random() * 100;
-            if (ch >= chance.getInput()) {
-                return;
+        try {
+            if (!packetEvent.isIncoming()) return;
+//         RANDOM DEBUGGING PLS IGNORE
+            if (packetEvent.getPacket() instanceof S12PacketEntityVelocity) {
+                S12PacketEntityVelocity packet = packetEvent.getPacket();
+                Entity entity = mc.theWorld.getEntityByID(((S12PacketEntityVelocity) packetEvent.getPacket()).getEntityID());
+                int packetX = packet.getMotionX(), packetY = packet.getMotionY(), packetZ = packet.getMotionZ();
+                if (entity == mc.thePlayer) System.out.println("MotionX: " + packetX +
+                        ", MotionY: " + packetY +
+                        ", MotionZ: " + packetZ +
+                        ", Entity Name: " + entity.getName());
+                else return;
             }
-        }
-
+            if (chance.getInput() != 100.0D) {
+                double ch = Math.random() * 100;
+                if (ch >= chance.getInput()) {
+                    return;
+                }
+            }
+/*
         if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
             return;
         }
 
         if (disableWhileHoldingS.isToggled() && Keyboard.isKeyDown(mc.gameSettings.keyBindBack.getKeyCode())) {
             return;
-        }
+        }*/
 
-        if (mc.thePlayer.getLastAttacker() instanceof EntityPlayer) {
+        /*if (mc.thePlayer.getLastAttacker() instanceof EntityPlayer) {
             EntityPlayer attacker = (EntityPlayer) mc.thePlayer.getLastAttacker();
-            Item item = attacker.getCurrentEquippedItem() != null ? attacker.getCurrentEquippedItem().getItem()
-                    : null;
+            Item item = attacker.getCurrentEquippedItem() != null ? attacker.getCurrentEquippedItem().getItem() : null;
             if ((item instanceof ItemEgg || item instanceof ItemBow || item instanceof ItemSnow
-                    || item instanceof ItemFishingRod) && mode == Mode.ItemHeld) {
+                    || item instanceof ItemFishingRod) && mode == Mode.ItemHeld || attacker.getDistanceToEntity(mc.thePlayer) > distanceProjectiles.getInput()) {
                 velo(packetEvent);
-            } else if (attacker.getDistanceToEntity(mc.thePlayer) > distanceProjectiles.getInput()) {
-                velo(packetEvent);
+                return;
             }
+        }*/
+            velo(packetEvent);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void velo(PacketEvent packetEvent) {
         S12PacketEntityVelocity packet = packetEvent.getPacket();
+        mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You have been hit"));
 
-        if (packet.getEntityID() != mc.thePlayer.getEntityId()) return;
-
-        S12PacketEntityVelocityAccessor accessorPacket = (S12PacketEntityVelocityAccessor) packet;
-        accessorPacket.setMotionX((int) (packet.getMotionX() * horizontal.getInput() / 100));
-        accessorPacket.setMotionZ((int) (packet.getMotionZ() * horizontal.getInput() / 100));
-        accessorPacket.setMotionY((int) (packet.getMotionY() * vertical.getInput() / 100));
-
-
-
-
-        System.out.println("Calculating Velo");
-        if (chanceProjectiles.getInput() != 100.0D) {
-            double ch = Math.random();
-            if (ch >= chanceProjectiles.getInput() / 100.0D) {
-                return;
-            }
-        }
-
-        if (horizontalProjectiles.getInput() != 100.0D) {
-            mc.thePlayer.motionX *= horizontalProjectiles.getInput() / 100.0D;
-            mc.thePlayer.motionZ *= horizontalProjectiles.getInput() / 100.0D;
-        }
-
-        if (verticalProjectiles.getInput() != 100.0D) {
-            mc.thePlayer.motionY *= verticalProjectiles.getInput() / 100.0D;
-        }
+        mc.thePlayer.motionX = packet.getMotionX() * horizontal.getInput()/100;
+        mc.thePlayer.motionY = packet.getMotionY() * vertical.getInput()/100;
+        mc.thePlayer.motionZ = packet.getMotionZ() * horizontal.getInput()/100;
+        packetEvent.setCancelled(true);
     }
 
     public enum Mode {
