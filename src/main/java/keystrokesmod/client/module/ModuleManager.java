@@ -91,7 +91,7 @@ public class ModuleManager {
         addModule(new Timer());
         addModule(new VClip());
         addModule(new HClip());
-        addModule(new AutoJump());
+        // addModule(new AutoJump()); Same as parkour?
         addModule(new AutoPlace());
         addModule(new BedAura());
         addModule(new FallSpeed());
@@ -100,7 +100,7 @@ public class ModuleManager {
         addModule(new NoFall());
         addModule(new SafeWalk());
         addModule(new AntiBot());
-        addModule(new AntiShuffle());
+        // addModule(new AntiShuffle()); Useless and doesn't work
         addModule(new Chams());
         addModule(new ChestESP());
         addModule(new Nametags());
@@ -116,7 +116,7 @@ public class ModuleManager {
         addModule(new WaterBucket());
         addModule(new Terminal());
         addModule(new GuiModule());
-        addModule(new SelfDestruct());
+        // addModule(new SelfDestruct()); Too lazy to worry about
         addModule(new ChatLogger());
         addModule(new BridgeAssist());
         addModule(new Fullbright());
