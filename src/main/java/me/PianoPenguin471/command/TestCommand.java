@@ -7,11 +7,11 @@ import net.minecraft.util.ChatComponentText;
 
 public class TestCommand extends Command {
     public TestCommand() {
-        super("test","t");
+        super("clickgui","gui", "test");
     }
 
     @Override
     public void handle(String[] args) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("This is a command!"));
+        Raven.moduleManager.getModuleByName("Gui").enable();
     }
 }
