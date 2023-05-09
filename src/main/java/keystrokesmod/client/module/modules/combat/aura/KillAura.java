@@ -101,12 +101,12 @@ public class KillAura extends Module {
         prevPitch = e.getPitch();
     }
 
-    @Subscribe
+    /*@Subscribe
     public void onTick(keystrokesmod.client.event.impl.TickEvent e) {
         BlockMode m = (BlockMode) blockMode.getMode();
         if((m == BlockMode.FUCKY) && (mc.thePlayer.prevSwingProgress < mc.thePlayer.swingProgress))
             KeyBinding.onTick(mc.gameSettings.keyBindUseItem.getKeyCode());
-    }
+    }*/
 
     @SubscribeEvent
     public void renderWorldLast(RenderWorldEvent renderWorldEvent) {
@@ -205,13 +205,7 @@ public class KillAura extends Module {
 
     public enum BlockMode {
         NONE,
-        FUCKY;
+        Vanilla,
+        Damage;
     }
-
-    private enum RotatingState {
-        SYNC,
-        TARGET,
-        TTS;
-    }
-
 }
