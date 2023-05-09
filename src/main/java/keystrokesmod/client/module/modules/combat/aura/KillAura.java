@@ -32,8 +32,8 @@ import net.minecraft.world.WorldSettings.GameType;
  * WHO MADE THIS AND WHY PLEASE WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHYW
  */
 
-// todo smoother rotations when exiting range
-// uh there was one other thing as well
+//todo change the clicking system and also patch GCD
+// todo smoother rotations when exiting range (idk if i'll ever do this)
 public class KillAura extends Module {
 
     private EntityPlayer target;
@@ -95,6 +95,10 @@ public class KillAura extends Module {
         }
         e.setYaw(yaw);
         e.setPitch(pitch);
+        
+        //for GCD
+        prevYaw = e.getYaw();
+        prevPitch = e.getPitch();
     }
 
     @Subscribe
