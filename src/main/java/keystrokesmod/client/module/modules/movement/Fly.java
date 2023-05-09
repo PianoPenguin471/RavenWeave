@@ -3,7 +3,7 @@ package keystrokesmod.client.module.modules.movement;
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.setting.impl.DescriptionSetting;
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -11,60 +11,45 @@ import net.minecraft.client.Minecraft;
 public class Fly extends Module {
     private final Fly.VanFly vanFly = new VanFly();
     private final Fly.GliFly gliFly = new Fly.GliFly();
-    public static DescriptionSetting dc;
-    public static SliderSetting a;
-    public static SliderSetting b;
-    private static final String c1 = "Vanilla";
-    private static final String c2 = "Glide";
+    public static SliderSetting speed;
+    public static ComboSetting<FlyMode> mode;
 
     public Fly() {
         super("Fly", ModuleCategory.movement);
-        this.registerSetting(a = new SliderSetting("Value", 1.0D, 1.0D, 2.0D, 1.0D));
-        this.registerSetting(dc = new DescriptionSetting(Utils.md + c1));
-        this.registerSetting(b = new SliderSetting("Speed", 2.0D, 1.0D, 5.0D, 0.1D));
+        this.registerSetting(mode = new ComboSetting<>(Utils.md, FlyMode.VANILLA));
+        this.registerSetting(speed = new SliderSetting("Speed", 2.0D, 1.0D, 5.0D, 0.1D));
     }
 
     public void onEnable() {
-        switch ((int) a.getInput()) {
-        case 1:
-            this.vanFly.onEnable();
-            break;
-        case 2:
-            this.gliFly.onEnable();
+        switch (mode.getMode()) {
+            case VANILLA:
+                this.vanFly.onEnable();
+                break;
+            case GLIDE:
+                this.gliFly.onEnable();
         }
 
     }
 
     public void onDisable() {
-        switch ((int) a.getInput()) {
-        case 1:
-            this.vanFly.onDisable();
-            break;
-        case 2:
-            this.gliFly.onDisable();
+        switch (mode.getMode()) {
+            case VANILLA:
+                this.vanFly.onDisable();
+                break;
+            case GLIDE:
+                this.gliFly.onDisable();
         }
 
     }
 
     @Subscribe
     public void onTick(TickEvent e) {
-        switch ((int) a.getInput()) {
-        case 1:
-            this.vanFly.update();
-            break;
-        case 2:
-            this.gliFly.update();
-        }
-
-    }
-
-    public void guiUpdate() {
-        switch ((int) a.getInput()) {
-        case 1:
-            dc.setDesc(Utils.md + c1);
-            break;
-        case 2:
-            dc.setDesc(Utils.md + c2);
+        switch (mode.getMode()) {
+            case VANILLA:
+                this.vanFly.update();
+                break;
+            case GLIDE:
+                this.gliFly.update();
         }
 
     }
@@ -92,7 +77,7 @@ public class Fly extends Module {
                         return;
                     }
 
-                    double s = 1.94D * b.getInput();
+                    double s = 1.94D * speed.getInput();
                     double r = Math.toRadians(Module.mc.thePlayer.rotationYaw + 90.0F);
                     Module.mc.thePlayer.motionX = s * Math.cos(r);
                     Module.mc.thePlayer.motionZ = s * Math.sin(r);
@@ -121,8 +106,13 @@ public class Fly extends Module {
 
         public void update() {
             Module.mc.thePlayer.motionY = 0.0D;
-            Module.mc.thePlayer.capabilities.setFlySpeed((float) (0.05000000074505806D * b.getInput()));
+            Module.mc.thePlayer.capabilities.setFlySpeed((float) (0.05000000074505806D * speed.getInput()));
             Module.mc.thePlayer.capabilities.isFlying = true;
         }
+    }
+
+    enum FlyMode {
+        VANILLA,
+        GLIDE
     }
 }
