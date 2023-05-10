@@ -1,6 +1,5 @@
 package keystrokesmod.client.clickgui.kv.components;
 
-import keystrokesmod.client.utils.RoundedUtils;
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.kv.KvComponent;
@@ -67,7 +66,6 @@ public class KvRgbComponent extends KvComponent {
         int boxY = y + (Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT/2) + 1;
         int boxHeight = height - (boxY - y);
         RenderUtils.drawBorderedRoundedRect(x, boxY, x + width, (boxY + boxHeight) , 4, 2, 0x20FFFFFF, 0x20FFFFFF);
-        RoundedUtils.drawCircle(x + 147, (int) (y), 3.7F, new Color(this.setting.getRed(), this.setting.getGreen(), this.setting.getBlue()).getRGB());
         int[] drawColor = { 0xffff0000, 0xff00ff00, 0xff0000ff };
         for (int i = 0; i < 3; i++) {
         	int colorX = (int) (((width * this.setting.getColor(i))/ 255f) + x);
