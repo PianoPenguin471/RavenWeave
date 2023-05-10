@@ -28,12 +28,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.world.WorldSettings.GameType;
 
-/**
- * WHO MADE THIS AND WHY PLEASE WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHYW
- */
-
 //todo change the clicking system
-// todo smoother rotations when exiting range (idk if i'll ever do this)
 public class KillAura extends Module {
 
     private EntityPlayer target;
@@ -54,14 +49,13 @@ public class KillAura extends Module {
 
     public KillAura() {
         super("KillAura", ModuleCategory.combat);
-        //this.registerSetting(new DescriptionSetting("Set targets in Client->Targets"));
         this.registerSetting(reach = new SliderSetting("Reach (Blocks)", 3.3, 3, 6, 0.05));
         //this.registerSetting(rps = new SliderSetting("Max rotation speed", 36, 0, 200, 1));
         this.registerSetting(cps = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
-        this.registerSetting(onlySurvival = new TickSetting("Only Survival", true));
-        this.registerSetting(disableOnTp = new TickSetting("Disable after tp", true));
+        this.registerSetting(onlySurvival = new TickSetting("Only Survival", false));
+        this.registerSetting(disableOnTp = new TickSetting("Disable after tp", false));
         this.registerSetting(disableWhenFlying = new TickSetting("Disable when flying", true));
-        this.registerSetting(mouseDown = new TickSetting("Mouse Down", true));
+        this.registerSetting(mouseDown = new TickSetting("Mouse Down", false));
         this.registerSetting(fixMovement = new TickSetting("Movement Fix", true));
         this.registerSetting(blockMode = new ComboSetting<BlockMode>("Block mode", BlockMode.NONE));
     }
@@ -105,13 +99,6 @@ public class KillAura extends Module {
         prevYaw = e.getYaw();
         prevPitch = e.getPitch();
     }
-
-    /*@Subscribe
-    public void onTick(keystrokesmod.client.event.impl.TickEvent e) {
-        BlockMode m = (BlockMode) blockMode.getMode();
-        if((m == BlockMode.FUCKY) && (mc.thePlayer.prevSwingProgress < mc.thePlayer.swingProgress))
-            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.getKeyCode());
-    }*/
 
     @SubscribeEvent
     public void renderWorldLast(RenderWorldEvent renderWorldEvent) {
