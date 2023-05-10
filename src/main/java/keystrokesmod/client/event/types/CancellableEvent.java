@@ -13,7 +13,9 @@ public class CancellableEvent {
     }
 
     public void cancel() {
-        setCancelled(false);
+        //me when k-ov iq moment
+        //imagine canceling an event with setCancelled(false); :skull:
+        setCancelled(true);
     }
 
 }
