@@ -1,5 +1,6 @@
 package keystrokesmod.client.clickgui.kv.components;
 
+import keystrokesmod.client.utils.RoundedUtils;
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.kv.KvComponent;
@@ -9,6 +10,8 @@ import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.awt.*;
 
 public class KvRgbComponent extends KvComponent {
 
@@ -27,7 +30,25 @@ public class KvRgbComponent extends KvComponent {
             float percentageAcross = (mouseX - x) / (float) width;
             setting.setColor(helping.id, (int) (percentageAcross*255f));
         }
+        if (setting.getBlue() < 0){
+            setting.setBlue(0);
+        }
+        if (setting.getRed() < 0){
+            setting.setRed(0);
+        }
+        if (setting.getGreen() < 0){
+            setting.setGreen(0);
+        }
 
+        if (setting.getBlue() > 255){
+            setting.setBlue(255);
+        }
+        if (setting.getRed() > 255){
+            setting.setRed(255);
+        }
+        if (setting.getGreen() > 255){
+            setting.setGreen(255);
+        }
         //name + input
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
@@ -45,7 +66,8 @@ public class KvRgbComponent extends KvComponent {
         //bars
         int boxY = y + (Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT/2) + 1;
         int boxHeight = height - (boxY - y);
-        RenderUtils.drawBorderedRoundedRect(x, boxY, x + width, (boxY + boxHeight) , 4, 2, Utils.Client.rainbowDraw(1, 0), 0x20FFFFFF);
+        RenderUtils.drawBorderedRoundedRect(x, boxY, x + width, (boxY + boxHeight) , 4, 2, 0x20FFFFFF, 0x20FFFFFF);
+        RoundedUtils.drawCircle(x + 147, (int) (y), 3.7F, new Color(this.setting.getRed(), this.setting.getGreen(), this.setting.getBlue()).getRGB());
         int[] drawColor = { 0xffff0000, 0xff00ff00, 0xff0000ff };
         for (int i = 0; i < 3; i++) {
         	int colorX = (int) (((width * this.setting.getColor(i))/ 255f) + x);
