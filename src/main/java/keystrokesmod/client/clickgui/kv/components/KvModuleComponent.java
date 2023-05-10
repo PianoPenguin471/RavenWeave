@@ -158,8 +158,11 @@ public class KvModuleComponent extends KvComponent{
 
 		else if ((x > settingX) && (x < (settingX + settingWidth)) && (y > settingY) && (y < (settingY + settingHeight)))
 			KvModuleSection.moduleSec.setOpenmodule(this);
-		else if ((x > toggleX) && (x < (toggleX + toggleWidth)) && (y > bindBoxY) && (y < (bindBoxY + bindBoxHeight)))
-			module.toggle();
+		else if ((x > toggleX) && (x < (toggleX + toggleWidth)) && (y > toggleY) && (y < (toggleY + toggleHeight)) && mouseButton == 0) {
+            		if (module.canBeEnabled()) {
+                		module.toggle();
+            		}
+        	}
     }
 
     @Override
