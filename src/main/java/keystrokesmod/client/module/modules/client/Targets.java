@@ -8,6 +8,7 @@ import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.AimAssist;
+import keystrokesmod.client.module.modules.combat.aura.KillAura;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
@@ -22,7 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 public class Targets extends Module {
 
     private static TickSetting friends, teams, invis, bots, naked, debug;
-    private static SliderSetting fov, distance, lockDist;
+    private static SliderSetting fov, distance, lockDist,auraFov;
     private static ComboSetting<SortMode> sortMode;
 
     public static EntityPlayer lockedTarget;
@@ -35,7 +36,8 @@ public class Targets extends Module {
                         invis = new TickSetting("Target invis", false),
                         bots = new TickSetting("Target bots", false),
                         naked = new TickSetting("Target naked", false),
-                        fov = new SliderSetting("Fov", 30, 0, 360, 1),
+                        fov = new SliderSetting("General Fov", 120, 0, 360, 1),
+                        auraFov = new SliderSetting("Aura Fov", 360, 0, 360, 1),
                         distance = new SliderSetting("Distance", 3.5, 0, 10, 0.1),
                         sortMode = new ComboSetting("Sort mode", SortMode.Distance),
                         lockDist = new SliderSetting("Lock distance", 4, 0, 10, 0.1),
@@ -49,6 +51,10 @@ public class Targets extends Module {
         return false;
     }
 
+    private static double getFOV() {
+        return Raven.moduleManager.getModuleByClazz(KillAura.class).isEnabled() ? auraFov.getInput() : fov.getInput();
+    }
+    
     @Override
     public void postApplyConfig() {
         guiButtonToggled(sortMode);
@@ -81,7 +87,7 @@ public class Targets extends Module {
                 && (teams.isToggled() || !isATeamMate(ep))
                 && (invis.isToggled() || !ep.isInvisible())
                 && (naked.isToggled() || !Utils.Player.isPlayerNaked(ep))
-                && Utils.Player.fov(ep, (float) fov.getInput())
+                && Utils.Player.fov(ep, (float) getFOV())
                 );
     }
 
