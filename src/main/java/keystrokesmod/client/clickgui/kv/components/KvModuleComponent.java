@@ -36,7 +36,8 @@ public class KvModuleComponent extends KvComponent{
     public KvModuleComponent(Module module) {
         this.module = module;
         bindComponent = new KvBindComponent(module);
-        moduleIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/" + module.moduleCategory().getName() + "/" + module.getName().toLowerCase() + ".png");
+	moduleIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/raven.png"); //use this temporarily until there are enough icons for BetaGui
+        //moduleIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/" + module.moduleCategory().getName() + "/" + module.getName().toLowerCase() + ".png");
         for(Setting setting : module.getSettings())
 			try {
 				Class<? extends KvComponent> clazz = setting.getComponentType();
