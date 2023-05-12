@@ -13,7 +13,7 @@ public class CancellableEvent {
     }
 
     public void cancel() {
-        setCancelled(false);
+        setCancelled(true);
     }
 
 }
