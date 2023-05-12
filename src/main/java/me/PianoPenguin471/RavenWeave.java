@@ -4,6 +4,7 @@ import club.maxstats.weave.loader.api.ModInitializer;
 import club.maxstats.weave.loader.api.command.CommandBus;
 import club.maxstats.weave.loader.api.event.EventBus;
 import club.maxstats.weave.loader.api.event.KeyboardEvent;
+import club.maxstats.weave.loader.api.event.ShutdownEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import me.PianoPenguin471.command.TestCommand;
@@ -27,9 +28,9 @@ public class RavenWeave implements ModInitializer {
             }
         });
 
-    }
+        EventBus.subscribe(ShutdownEvent.class, (shutdownEvent) -> {
+            Raven.moduleManager.getModuleByName("Blink").disable();
+        });
 
-    public static Color getColor() {
-        return Color.GREEN;
     }
 }

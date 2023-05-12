@@ -7,7 +7,7 @@ import net.minecraft.network.Packet;
 
 public class PacketEvent extends CancellableEvent implements IEventDirection {
 
-    private final Packet<?> packet;
+    private Packet<?> packet;
     private final EventDirection direction;
 
     public PacketEvent(Packet<?> packet, EventDirection direction) {
@@ -17,6 +17,10 @@ public class PacketEvent extends CancellableEvent implements IEventDirection {
 
     public <T extends Packet<?>> T getPacket() {
         return (T) this.packet;
+    }
+
+    public <T extends Packet<?>> void setPacket(T newPacket) {
+        this.packet = newPacket;
     }
 
     @Override

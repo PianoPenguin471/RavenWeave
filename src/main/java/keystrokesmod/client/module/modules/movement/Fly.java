@@ -111,7 +111,7 @@ public class Fly extends Module {
         }
     }
 
-    enum FlyMode {
+    public enum FlyMode {
         VANILLA,
         GLIDE
     }
