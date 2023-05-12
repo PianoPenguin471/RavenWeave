@@ -98,18 +98,18 @@ public class HUD extends Module {
         if (Utils.Player.isPlayerInGame()) {
             if ((mc.currentScreen != null) || mc.gameSettings.showDebugInfo)
                 return;
-            boolean fhe = Raven.moduleManager.getModuleByName("Fake Hud").isEnabled();
+            boolean fakeHUDEnabled = Raven.moduleManager.getModuleByName("Fake Hud").isEnabled();
             if (!e) {
                 ScaledResolution sr = new ScaledResolution(mc);
                 positionMode = Utils.HUD.getPostitionMode(hudX, hudY, sr.getScaledWidth(), sr.getScaledHeight());
                 if ((positionMode == Utils.HUD.PositionMode.UPLEFT) || (positionMode == Utils.HUD.PositionMode.UPRIGHT)) {
-                    if (!fhe)
+                    if (!fakeHUDEnabled)
                         Raven.moduleManager.sortShortLong();
                     else
                         FakeHud.sortShortLong();
                 } else if ((positionMode == Utils.HUD.PositionMode.DOWNLEFT)
                         || (positionMode == Utils.HUD.PositionMode.DOWNRIGHT))
-                    if (!fhe)
+                    if (!fakeHUDEnabled)
                         Raven.moduleManager.sortLongShort();
                     else
                         FakeHud.sortLongShort();
@@ -119,7 +119,7 @@ public class HUD extends Module {
             int y = hudY;
             int del = 0;
 
-            List<Module> en = fhe ? FakeHud.getModules() : new ArrayList<>(Raven.moduleManager.getModules());
+            List<Module> en = fakeHUDEnabled ? FakeHud.getModules() : new ArrayList<>(Raven.moduleManager.getModules());
             if (en.isEmpty())
                 return;
 
