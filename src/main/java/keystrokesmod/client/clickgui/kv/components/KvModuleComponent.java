@@ -36,7 +36,8 @@ public class KvModuleComponent extends KvComponent{
     public KvModuleComponent(Module module) {
         this.module = module;
         bindComponent = new KvBindComponent(module);
-        moduleIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/" + module.moduleCategory().getName() + "/" + module.getName().toLowerCase() + ".png");
+	moduleIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/raven.png"); //use this temporarily until there are enough icons for BetaGui
+        //moduleIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/" + module.moduleCategory().getName() + "/" + module.getName().toLowerCase() + ".png");
         for(Setting setting : module.getSettings())
 			try {
 				Class<? extends KvComponent> clazz = setting.getComponentType();
@@ -158,8 +159,11 @@ public class KvModuleComponent extends KvComponent{
 
 		else if ((x > settingX) && (x < (settingX + settingWidth)) && (y > settingY) && (y < (settingY + settingHeight)))
 			KvModuleSection.moduleSec.setOpenmodule(this);
-		else if ((x > toggleX) && (x < (toggleX + toggleWidth)) && (y > bindBoxY) && (y < (bindBoxY + bindBoxHeight)))
-			module.toggle();
+		else if ((x > toggleX) && (x < (toggleX + toggleWidth)) && (y > toggleY) && (y < (toggleY + toggleHeight)) && mouseButton == 0) {
+            		if (module.canBeEnabled()) {
+                		module.toggle();
+            		}
+        	}
     }
 
     @Override

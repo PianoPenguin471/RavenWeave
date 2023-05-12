@@ -1,4 +1,4 @@
-package keystrokesmod.client.module.modules.combat.aura;
+package keystrokesmod.client.module.modules.combat;
 
 import java.awt.Color;
 import java.util.List;
@@ -28,20 +28,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.world.WorldSettings.GameType;
 
-/**
- * WHO MADE THIS AND WHY PLEASE WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHY WHYW
- */
-
-// todo smoother rotations when exiting range
-// uh there was one other thing as well
+//todo change the clicking system
 public class KillAura extends Module {
 
     private EntityPlayer target;
 
-    public static SliderSetting rotationDistance, fov, reach, rps;
+    public static SliderSetting reach/*,rps*/;
     private DoubleSliderSetting cps;
     private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement;
-    private ComboSetting blockMode;
+    private ComboSetting<BlockMode> blockMode;
 
     private List<EntityPlayer> pTargets;
     private ComboSetting sortMode;
@@ -54,16 +49,15 @@ public class KillAura extends Module {
 
     public KillAura() {
         super("KillAura", ModuleCategory.combat);
-        this.registerSetting(new DescriptionSetting("Set targets in Client->Targets"));
         this.registerSetting(reach = new SliderSetting("Reach (Blocks)", 3.3, 3, 6, 0.05));
-        this.registerSetting(rps = new SliderSetting("Max rotation speed", 36, 0, 200, 1));
+        //this.registerSetting(rps = new SliderSetting("Max rotation speed", 36, 0, 200, 1));
         this.registerSetting(cps = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
-        this.registerSetting(onlySurvival = new TickSetting("Only Survival", true));
-        this.registerSetting(disableOnTp = new TickSetting("Disable after tp", true));
+        this.registerSetting(onlySurvival = new TickSetting("Only Survival", false));
+        this.registerSetting(disableOnTp = new TickSetting("Disable after tp", false));
         this.registerSetting(disableWhenFlying = new TickSetting("Disable when flying", true));
-        this.registerSetting(mouseDown = new TickSetting("Mouse Down", true));
+        this.registerSetting(mouseDown = new TickSetting("Mouse Down", false));
         this.registerSetting(fixMovement = new TickSetting("Movement Fix", true));
-        this.registerSetting(blockMode = new ComboSetting("Block mode", BlockMode.NONE));
+        this.registerSetting(blockMode = new ComboSetting<BlockMode>("Block mode", BlockMode.NONE));
     }
 
     @Subscribe
@@ -93,15 +87,17 @@ public class KillAura extends Module {
         if(!Utils.Player.isPlayerInGame() || locked) {
             return;
         }
-        e.setYaw(yaw);
-        e.setPitch(pitch);
-    }
 
-    @Subscribe
-    public void onTick(keystrokesmod.client.event.impl.TickEvent e) {
-        BlockMode m = (BlockMode) blockMode.getMode();
-        if((m == BlockMode.FUCKY) && (mc.thePlayer.prevSwingProgress < mc.thePlayer.swingProgress))
-            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.getKeyCode());
+        float[] currentRots = new float[]{yaw,pitch};
+        float[] prevRots = new float[]{prevYaw,prevPitch};
+        float[] gcdPatch = getPatchedRots(currentRots,prevRots);
+
+        e.setYaw(gcdPatch[0]);
+        e.setPitch(gcdPatch[1]);
+        
+        //for GCD
+        prevYaw = e.getYaw();
+        prevPitch = e.getPitch();
     }
 
     @SubscribeEvent
@@ -121,12 +117,20 @@ public class KillAura extends Module {
        this.pitch = pitch;
     }
 
-    @Subscribe
-    public void packetEvent(PacketEvent e) {
-        if((e.getPacket() instanceof S08PacketPlayerPosLook) && disableOnTp.isToggled() && (coolDown.getTimeLeft() < 2000)) {
-            coolDown.setCooldown(2000);
-            coolDown.start();
-        }
+    private double MouseSens() {
+        final float sens = mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
+        final float pow = sens * sens * sens * 8.0F;
+        return pow * 0.15D;
+    }
+
+    private float[] getPatchedRots(final float[] currentRots, final float[] prevRots) {
+        final float yawDif = currentRots[0] - prevRots[0];
+        final float pitchDif = currentRots[1] - prevRots[1];
+        final double gcd = MouseSens();
+
+        currentRots[0] -= yawDif % gcd;
+        currentRots[1] -= pitchDif % gcd;
+        return currentRots;
     }
 
     @Subscribe
@@ -143,6 +147,11 @@ public class KillAura extends Module {
         e.setYaw(yaw);
         e.setPitch(pitch);
     }
+
+    /**
+     * TODO: Recode whatever is below this and finish autoblock
+     * will do it in the near future when i get time to open my intellij
+     */
 
     private void ravenClick() {
         this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
@@ -195,19 +204,9 @@ public class KillAura extends Module {
         this.leftDownTime = (System.currentTimeMillis() + (delay / 2L)) - Utils.Java.rand().nextInt(10);
     }
 
-    public double getReach() {
-        return reach.getInput();
-    }
-
     public enum BlockMode {
         NONE,
-        FUCKY;
+        Vanilla,
+        Damage;
     }
-
-    private enum RotatingState {
-        SYNC,
-        TARGET,
-        TTS;
-    }
-
 }
