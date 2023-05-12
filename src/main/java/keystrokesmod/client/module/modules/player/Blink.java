@@ -2,6 +2,9 @@ package keystrokesmod.client.module.modules.player;
 
 import java.util.ArrayList;
 
+import club.maxstats.weave.loader.api.event.ShutdownEvent;
+import club.maxstats.weave.loader.api.event.StartGameEvent;
+import club.maxstats.weave.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
 
 import keystrokesmod.client.event.EventDirection;
@@ -41,7 +44,7 @@ public class Blink extends Module {
         outboundPackets.clear();
         inboundPackets.clear();
     }
-    
+
     @Override
     public void onDisable() {
         for (Packet packet : outboundPackets) {
@@ -51,4 +54,16 @@ public class Blink extends Module {
         outboundPackets.clear();
         inboundPackets.clear();
     }
+
+    @SubscribeEvent
+    public void onDisconnect(ShutdownEvent event) {
+        this.disable();
+    }
+
+    @SubscribeEvent
+    public void onStart(StartGameEvent event) {
+        this.disable();
+    }
+
+
 }
