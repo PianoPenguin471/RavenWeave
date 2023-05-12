@@ -24,14 +24,17 @@ import org.lwjgl.input.Keyboard;
 
 public class Velocity extends Module {
     public static SliderSetting horizontal, vertical, chance, horizontalProjectiles, verticalProjectiles, chanceProjectiles, distanceProjectiles;
+    public static TickSetting invertHorizontal, invertVertical;
     public static TickSetting onlyWhileTargeting, disableWhileHoldingS, differentVeloForProjectiles;
     public static ComboSetting projectilesMode;
     public Mode mode = Mode.Distance;
 
     public Velocity() {
         super("Velocity", ModuleCategory.combat);
-        this.registerSetting(horizontal = new SliderSetting("Horizontal", 90.0D, -100.0D, 100.0D, 1.0D));
-        this.registerSetting(vertical = new SliderSetting("Vertical", 100.0D, -100.0D, 100.0D, 1.0D));
+        this.registerSetting(horizontal = new SliderSetting("Horizontal", 90.0D, 0.0D, 200.0D, 1.0D));
+        this.registerSetting(invertHorizontal = new TickSetting("Invert Horizontal", false));
+        this.registerSetting(vertical = new SliderSetting("Vertical", 100.0D, 0.0D, 200.0D, 1.0D));
+        this.registerSetting(invertVertical= new TickSetting("Invert Vertical", false));
         this.registerSetting(chance = new SliderSetting("Chance", 100.0D, 0.0D, 100.0D, 1.0D));
         this.registerSetting(onlyWhileTargeting = new TickSetting("Only while targeting", false));
         this.registerSetting(disableWhileHoldingS = new TickSetting("Disable while holding S", false));
@@ -48,22 +51,22 @@ public class Velocity extends Module {
         try {
             if (!packetEvent.isIncoming()) return;
 //         RANDOM DEBUGGING PLS IGNORE
-            if (packetEvent.getPacket() instanceof S12PacketEntityVelocity) {
-                S12PacketEntityVelocity packet = packetEvent.getPacket();
-                Entity entity = mc.theWorld.getEntityByID(((S12PacketEntityVelocity) packetEvent.getPacket()).getEntityID());
-                int packetX = packet.getMotionX(), packetY = packet.getMotionY(), packetZ = packet.getMotionZ();
-                if (entity == mc.thePlayer) System.out.println("MotionX: " + packetX +
-                        ", MotionY: " + packetY +
-                        ", MotionZ: " + packetZ +
-                        ", Entity Name: " + entity.getName());
-                else return;
-            }
+            if (!(packetEvent.getPacket() instanceof S12PacketEntityVelocity)) return;
             if (chance.getInput() != 100.0D) {
                 double ch = Math.random() * 100;
                 if (ch >= chance.getInput()) {
                     return;
                 }
             }
+            S12PacketEntityVelocity packet = packetEvent.getPacket();
+            Entity entity = mc.theWorld.getEntityByID(((S12PacketEntityVelocity) packetEvent.getPacket()).getEntityID());
+            int packetX = packet.getMotionX(), packetY = packet.getMotionY(), packetZ = packet.getMotionZ();
+            if (entity == mc.thePlayer) System.out.println("MotionX: " + packetX +
+                    ", MotionY: " + packetY +
+                    ", MotionZ: " + packetZ +
+                    ", Entity Name: " + entity.getName());
+            else return;
+            velo(packetEvent);
 /*
         if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
             return;
@@ -82,7 +85,7 @@ public class Velocity extends Module {
                 return;
             }
         }*/
-            velo(packetEvent);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,12 +93,21 @@ public class Velocity extends Module {
 
     public void velo(PacketEvent packetEvent) {
         S12PacketEntityVelocity packet = packetEvent.getPacket();
+        S12PacketEntityVelocityAccessor accessorPacket = (S12PacketEntityVelocityAccessor) packet;
         mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You have been hit"));
 
-        mc.thePlayer.motionX = packet.getMotionX() * horizontal.getInput()/100;
-        mc.thePlayer.motionY = packet.getMotionY() * vertical.getInput()/100;
-        mc.thePlayer.motionZ = packet.getMotionZ() * horizontal.getInput()/100;
-        packetEvent.setCancelled(true);
+        if (invertHorizontal.isToggled()) {
+            accessorPacket.setMotionX((int) (packet.getMotionX() * -horizontal.getInput()/100));
+            accessorPacket.setMotionZ((int) (packet.getMotionZ() * -horizontal.getInput()/100));
+        } else {
+            accessorPacket.setMotionX((int) (packet.getMotionX() * horizontal.getInput()/100));
+            accessorPacket.setMotionZ((int) (packet.getMotionZ() * horizontal.getInput()/100));
+        }
+
+        if (invertVertical.isToggled()) accessorPacket.setMotionY((int) (packet.getMotionY() * -vertical.getInput()/100));
+        else accessorPacket.setMotionY((int) (packet.getMotionY() * vertical.getInput()/100));
+
+        packetEvent.setPacket(accessorPacket);
     }
 
     public enum Mode {
