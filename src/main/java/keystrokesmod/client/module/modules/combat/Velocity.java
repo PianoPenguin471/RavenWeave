@@ -94,7 +94,7 @@ public class Velocity extends Module {
     public void velo(PacketEvent packetEvent) {
         S12PacketEntityVelocity packet = packetEvent.getPacket();
         S12PacketEntityVelocityAccessor accessorPacket = (S12PacketEntityVelocityAccessor) packet;
-        mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You have been hit"));
+        //mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You have been hit"));
 
         if (invertHorizontal.isToggled()) {
             accessorPacket.setMotionX((int) (packet.getMotionX() * -horizontal.getInput()/100));
