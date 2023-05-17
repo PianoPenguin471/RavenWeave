@@ -30,7 +30,7 @@ import keystrokesmod.client.module.modules.combat.STap;
 import keystrokesmod.client.module.modules.combat.ShiftTap;
 import keystrokesmod.client.module.modules.combat.Velocity;
 import keystrokesmod.client.module.modules.combat.WTap;
-import keystrokesmod.client.module.modules.combat.aura.KillAura;
+import keystrokesmod.client.module.modules.combat.KillAura;
 import keystrokesmod.client.module.modules.config.ConfigSettings;
 import keystrokesmod.client.module.modules.hotkey.Armour;
 import keystrokesmod.client.module.modules.hotkey.Blocks;

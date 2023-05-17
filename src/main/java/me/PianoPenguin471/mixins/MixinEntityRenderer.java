@@ -12,7 +12,7 @@ import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.HitBox;
 import keystrokesmod.client.module.modules.combat.Reach;
-import keystrokesmod.client.module.modules.combat.aura.KillAura;
+import keystrokesmod.client.module.modules.combat.KillAura;
 import keystrokesmod.client.module.modules.render.Fullbright;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
