@@ -1,6 +1,6 @@
 package me.PianoPenguin471.mixins;
 
-import club.maxstats.weave.loader.api.event.EventBus;
+import net.weavemc.loader.api.event.EventBus;
 import me.PianoPenguin471.events.DrawBlockHighlightEvent;
 import net.minecraft.client.renderer.RenderGlobal;
 import org.spongepowered.asm.mixin.Mixin;

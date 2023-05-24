@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "me.PianoPenguin471"
-version = "1.1"
+version = "1.1.2"
 
 minecraft.version("1.8.9")
 
@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.github.weave-mc:weave-loader:v0.1.0")
+    compileOnly("com.github.weave-mc:weave-loader:70bd82faa6")
 
     compileOnly("org.spongepowered:mixin:0.8.5")
 }

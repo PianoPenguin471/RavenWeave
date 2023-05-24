@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.movement;
 
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
-import club.maxstats.weave.loader.api.event.TickEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.EventDirection;
 import keystrokesmod.client.event.impl.PacketEvent;

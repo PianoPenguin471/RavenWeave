@@ -168,6 +168,7 @@ public class RenderUtils {
         GL11.glPopAttrib();
         GL11.glLineWidth(1.0f);
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        GL11.glColor4f(1,1,1,1);
     }
 
     public static void drawBorderedRoundedRect(float x, float y, float d, float y1, float radius, float borderSize, int borderC, int insideC, boolean[] round) {

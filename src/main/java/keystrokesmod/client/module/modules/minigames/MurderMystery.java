@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import club.maxstats.weave.loader.api.event.RenderWorldEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.RenderWorldEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;

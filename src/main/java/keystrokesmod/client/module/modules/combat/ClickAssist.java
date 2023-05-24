@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.combat;
 
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
-import club.maxstats.weave.loader.api.event.MouseEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.MouseEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;

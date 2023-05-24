@@ -3,7 +3,7 @@ package keystrokesmod.client.module.modules.client;
 import java.util.Comparator;
 import java.util.List;
 
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;

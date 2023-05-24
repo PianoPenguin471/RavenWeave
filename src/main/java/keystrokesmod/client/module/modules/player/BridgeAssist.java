@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.player;
 
-import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.RenderGameOverlayEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;

@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.minigames;
 
-import club.maxstats.weave.loader.api.event.ChatReceivedEvent;
-import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.ChatReceivedEvent;
+import net.weavemc.loader.api.event.RenderGameOverlayEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.JsonObject;
 import keystrokesmod.client.main.Raven;

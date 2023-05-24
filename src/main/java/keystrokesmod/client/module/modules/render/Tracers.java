@@ -3,8 +3,8 @@ package keystrokesmod.client.module.modules.render;
 import java.awt.Color;
 import java.util.Iterator;
 
-import club.maxstats.weave.loader.api.event.RenderWorldEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.RenderWorldEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
 
 import keystrokesmod.client.event.impl.TickEvent;

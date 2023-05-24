@@ -3,8 +3,8 @@ package keystrokesmod.client.module.modules.combat;
 import java.awt.Color;
 import java.util.List;
 
-import club.maxstats.weave.loader.api.event.RenderWorldEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.RenderWorldEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 import com.google.common.eventbus.Subscribe;
@@ -43,7 +43,7 @@ public class KillAura extends Module {
     private CoolDown coolDown = new CoolDown(1);
     private boolean leftDown, leftn, locked;
     private long leftDownTime, leftUpTime, leftk, leftl;
-    private float yaw, pitch, prevYaw, prevPitch;
+    public static float yaw, pitch, prevYaw, prevPitch;
     private double leftm;
     private float lrtt;
 
@@ -62,24 +62,28 @@ public class KillAura extends Module {
 
     @Subscribe
     public void gameLoopEvent(GameLoopEvent e) {
-        Mouse.poll();
-        EntityPlayer pTarget = Targets.getTarget();
-        if(
-                        (pTarget == null)
-                        || (mc.currentScreen != null)
-                        || !(!onlySurvival.isToggled() || (mc.playerController.getCurrentGameType() == GameType.SURVIVAL))
-                        || !coolDown.hasFinished()
-                        || !(!mouseDown.isToggled() || Mouse.isButtonDown(0))
-                        || !(!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying)) {
-            target = null;
-            rotate(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch, true);
-            return;
+        try {
+            Mouse.poll();
+            EntityPlayer pTarget = Targets.getTarget();
+            if (
+                    (pTarget == null)
+                            || (mc.currentScreen != null)
+                            || !(!onlySurvival.isToggled() || (mc.playerController.getCurrentGameType() == GameType.SURVIVAL))
+                            || !coolDown.hasFinished()
+                            || !(!mouseDown.isToggled() || Mouse.isButtonDown(0))
+                            || !(!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying)) {
+                target = null;
+                rotate(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch, true);
+                return;
+            }
+            target = pTarget;
+            ravenClick();
+            float[] i = Utils.Player.getTargetRotations(target, 0);
+            locked = false;
+            rotate(i[0], i[1], false);
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
-        target = pTarget;
-        ravenClick();
-        float[] i = Utils.Player.getTargetRotations(target, 0);
-        locked = false;
-        rotate(i[0], i[1], false);
     }
 
     @Subscribe

@@ -1,6 +1,6 @@
 package me.PianoPenguin471.command;
 
-import club.maxstats.weave.loader.api.command.Command;
+import net.weavemc.loader.api.command.Command;
 import keystrokesmod.client.main.Raven;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;

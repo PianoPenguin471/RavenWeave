@@ -3,7 +3,7 @@ package keystrokesmod.client.module.modules.combat;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.modules.world.AntiBot;

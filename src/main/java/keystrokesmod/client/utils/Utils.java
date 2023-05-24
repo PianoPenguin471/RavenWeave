@@ -1,7 +1,5 @@
 package keystrokesmod.client.utils;
 
-import club.maxstats.weave.loader.api.event.EventBus;
-import club.maxstats.weave.loader.api.event.MouseEvent;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -37,6 +35,8 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.*;
+import net.weavemc.loader.api.event.EventBus;
+import net.weavemc.loader.api.event.MouseEvent;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;

@@ -1,10 +1,10 @@
 package me.PianoPenguin471;
 
-import club.maxstats.weave.loader.api.ModInitializer;
-import club.maxstats.weave.loader.api.command.CommandBus;
-import club.maxstats.weave.loader.api.event.EventBus;
-import club.maxstats.weave.loader.api.event.KeyboardEvent;
-import club.maxstats.weave.loader.api.event.ShutdownEvent;
+import net.weavemc.loader.api.ModInitializer;
+import net.weavemc.loader.api.command.CommandBus;
+import net.weavemc.loader.api.event.EventBus;
+import net.weavemc.loader.api.event.KeyboardEvent;
+import net.weavemc.loader.api.event.ShutdownEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import me.PianoPenguin471.command.TestCommand;
@@ -16,7 +16,7 @@ import java.awt.*;
 
 public class RavenWeave implements ModInitializer {
     @Override
-    public void init() {
+    public void preInit() {
         System.out.println("Initializing ExampleMod!");
 
         Raven.init();

@@ -5,9 +5,9 @@ import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import club.maxstats.weave.loader.api.event.RenderGameOverlayEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
-import club.maxstats.weave.loader.api.event.TickEvent;
+import net.weavemc.loader.api.event.RenderGameOverlayEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import keystrokesmod.client.utils.ReflectionUtils;
 import me.PianoPenguin471.events.AttackEntityEvent;
 import org.lwjgl.input.Keyboard;

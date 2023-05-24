@@ -1,7 +1,7 @@
 package keystrokesmod.client.utils;
 
-import club.maxstats.weave.loader.api.event.MouseEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.MouseEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import net.minecraft.client.Minecraft;

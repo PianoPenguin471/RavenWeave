@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import club.maxstats.weave.loader.api.event.EventBus;
+
+import net.weavemc.loader.api.event.EventBus;
 import org.lwjgl.input.Keyboard;
 
 import com.google.gson.JsonObject;
