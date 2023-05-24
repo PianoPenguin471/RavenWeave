@@ -74,6 +74,7 @@ public class Targets extends Module {
 
     public static EntityPlayer getTarget() {
         List<EntityPlayer> en = Utils.Player.getClosePlayers(distance.getInput());
+        if (en == null) return null;
         en.removeIf(player -> !isValidTarget(player));
         if(debug.isToggled()) en.forEach(target -> Utils.Player.sendMessageToSelf(sortMode.getMode().sv.value(target) + " " ));
         return en.isEmpty() ? null : en.stream().min(Comparator.comparingDouble(target -> sortMode.getMode().sv.value(target))).get();
