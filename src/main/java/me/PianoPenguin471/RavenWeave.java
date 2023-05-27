@@ -10,6 +10,7 @@ import keystrokesmod.client.module.Module;
 import me.PianoPenguin471.command.TestCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
+import net.weavemc.loader.api.event.StartGameEvent;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
@@ -17,9 +18,7 @@ import java.awt.*;
 public class RavenWeave implements ModInitializer {
     @Override
     public void preInit() {
-        System.out.println("Initializing ExampleMod!");
-
-        Raven.init();
+        System.out.println("Initializing RavenWeave!");
 
         CommandBus.register(new TestCommand());
         EventBus.subscribe(KeyboardEvent.class, (keyboardEvent) -> {
@@ -32,5 +31,8 @@ public class RavenWeave implements ModInitializer {
             Raven.moduleManager.getModuleByName("Blink").disable();
         });
 
+        EventBus.subscribe(StartGameEvent.Post.class, startGameEvent -> {
+            Raven.init();
+        });
     }
 }
