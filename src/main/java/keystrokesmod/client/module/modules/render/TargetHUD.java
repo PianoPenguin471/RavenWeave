@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.render;
 
+import net.minecraft.world.biome.BiomeGenBase;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 
@@ -17,21 +18,25 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
 
 import static net.minecraft.client.gui.Gui.drawScaledCustomSizeModalRect;
 
 public class TargetHUD extends Module {
-    public static final int HEAD_X = 5, HEAD_Y = 5, WIDTH = 200, NAME_OFFSET_X = 40, NAME_OFFSET_Y = 15;
+    public static final int HEAD_X = 7, HEAD_Y = 7, WIDTH = 200, HEIGHT = 75, NAME_OFFSET_X = 40, NAME_OFFSET_Y = 15;
     public int screenHeight, screenWidth;
     public FontRenderer fr;
     private static EntityOtherPlayerMP target;
-    public static RGBSetting borderColor;
+    public static RGBSetting borderColor, mainColor;
     public static SliderSetting xSetting, ySetting, nameOffsetX, nameOffsetY;
     ScaledResolution sr;
 
     public TargetHUD() {
         super("Target HUD", /*ModuleCategory.render*/ModuleCategory.beta);
-        this.registerSetting(borderColor = new RGBSetting("Border", 49, 203, 113));
+        this.registerSetting(borderColor = new RGBSetting("Border",     49, 203, 113));
+        this.registerSetting(mainColor   = new RGBSetting("Main Color", 49, 203, 113));
         this.registerSettings(
                 xSetting    = new SliderSetting("X",             5, 0,  10, 1),
                 ySetting    = new SliderSetting("Y",             5, 0,  10, 1),
@@ -53,7 +58,7 @@ public class TargetHUD extends Module {
 
 
     @SubscribeEvent
-    public void onRender2d(RenderGameOverlayEvent e) {
+    public void onRender2d(RenderGameOverlayEvent.Pre e) {
         drawTargetHUD((int) xSetting.getInput(), (int) ySetting.getInput());
     }
 
@@ -66,8 +71,9 @@ public class TargetHUD extends Module {
         target = (EntityOtherPlayerMP) thatGuy;
 
 
+
         // Draw Border
-        RenderUtils.drawRoundedOutline(x, y, x + WIDTH, y + 75, 15, 5, borderColor.getRGB());
+        RenderUtils.drawBorderedRoundedRect(x, y, x + WIDTH, y + HEIGHT, 15, 5, borderColor.getRGB(), mainColor.getRGB());
 
         // Draw Face
         mc.getTextureManager().bindTexture(target.getLocationSkin());
@@ -76,8 +82,22 @@ public class TargetHUD extends Module {
             drawScaledCustomSizeModalRect(x+HEAD_X, y+HEAD_Y, 40.0f, 8.0f, 8, 8, 24, 24, 64.0f, 64.0f);
         }
         GlStateManager.bindTexture(0);
+        GL11.glScalef(1.5f,1.5f,1);
+
+        int currentY = y;
+
+        currentY += (NAME_OFFSET_Y);
 
         // Draw Name
-        mc.fontRendererObj.drawString(target.getName(), x + NAME_OFFSET_X, y + NAME_OFFSET_Y, 0xff00ffff);
+        mc.fontRendererObj.drawString("Name: " + target.getName(), (int) ((x + NAME_OFFSET_X)/1.5), (int) (currentY/1.5), 0xff00ffff);
+
+        // Draw Distance
+        currentY += (NAME_OFFSET_Y + mc.fontRendererObj.FONT_HEIGHT);
+        mc.fontRendererObj.drawString("Distance: " + String.format("%.2f", target.getDistanceToEntity(mc.thePlayer)) + " blocks", (int) ((x + HEAD_X)/1.5), (int) (currentY/1.5), 0x00ff00ff);
+
+        // Draw Health Bar
+
+        currentY += mc.fontRendererObj.FONT_HEIGHT + HEAD_Y;
+        RenderUtils.drawBorderedRoundedRect((x + HEAD_X)/1.5f, currentY/1.5f, (x + WIDTH - HEAD_X)/1.5f, (y+HEIGHT - HEAD_Y)/1.5f, 5, 7,Color.GRAY.getRGB(), Color.RED.getRGB());
     }
 }
