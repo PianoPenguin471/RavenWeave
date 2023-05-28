@@ -99,5 +99,7 @@ public class TargetHUD extends Module {
 
         currentY += mc.fontRendererObj.FONT_HEIGHT + HEAD_Y;
         RenderUtils.drawBorderedRoundedRect((x + HEAD_X)/1.5f, currentY/1.5f, (x + WIDTH - HEAD_X)/1.5f, (y+HEIGHT - HEAD_Y)/1.5f, 5, 7,Color.GRAY.getRGB(), Color.RED.getRGB());
+
+        GL11.glScalef(1,1,1);
     }
 }
