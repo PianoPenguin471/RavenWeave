@@ -99,6 +99,10 @@ public class KillAura extends Module {
         e.setYaw(gcdPatch[0]);
         e.setPitch(gcdPatch[1]);
         
+        //Third Person Rots
+        mc.thePlayer.renderYawOffset = gcdPatch[0];
+        mc.thePlayer.rotationYawHead = gcdPatch[0];
+        
         //for GCD
         prevYaw = e.getYaw();
         prevPitch = e.getPitch();
