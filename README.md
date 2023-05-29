@@ -5,7 +5,7 @@ RavenWeave is a port of [RavenB++](https://github.com/K-ov/Raven-bPLUS) to [Weav
 
 ## Installation
 1. Install [Weave-Manager](https://github.com/exejar/Weave-Manager/releases)
-2. Add [RavenWeave](https://github.com/PianoPenguin471/RavenWeave/releases) to Weave-Manager
+2. Install & add [RavenWeave](https://github.com/PianoPenguin471/RavenWeave/releases) to Weave-Manager
 3. Launch Lunar Client
 4. Enjoy!
 
