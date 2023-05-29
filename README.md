@@ -1,5 +1,15 @@
 # RavenWeave
+RavenWeave is a port of [RavenB++](https://github.com/K-ov/Raven-bPLUS) to [Weave](https://github.com/Weave-MC/Weave-Loader) to make Raven usable on Lunar Client! This project still has some bugs, so feel free to commit to help fix them.
 
-## Installation Instructions
+---
 
-To use RavenWeave, you will need to download the latest version of https://github.com/Nilsen84/lunar-launcher-inject and install it on your computer. Once you have that installed, download the latest version of [Weave-Loader](https://github.com/Weave-MC/Weave-Loader/releases) and follow the Usage instructions on the lunar-launcher-inject repository. Follow the instructions for the weave mod loader and put RavenWeave in the mods folder you just created.
+## Installation
+1. Install [Weave-Manager](https://github.com/exejar/Weave-Manager/releases)
+2. Add [RavenWeave](https://github.com/PianoPenguin471/RavenWeave/releases) to Weave-Manager
+3. Launch Lunar Client
+4. Enjoy!
+
+## Usage
+You can open the GUI of RavenWeave by pressing RShift. You can change this key in GUI's settings.
+
+---
