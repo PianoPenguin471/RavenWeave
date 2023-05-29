@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.util.Comparator;
 import java.util.List;
 
-import club.maxstats.weave.loader.api.event.RenderWorldEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.RenderWorldEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
 import com.google.common.eventbus.Subscribe;

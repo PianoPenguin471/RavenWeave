@@ -1,7 +1,7 @@
 package keystrokesmod.client.module.modules.world;
 
-import club.maxstats.weave.loader.api.event.ChatReceivedEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.ChatReceivedEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import keystrokesmod.client.module.Module;
 
 import java.io.*;

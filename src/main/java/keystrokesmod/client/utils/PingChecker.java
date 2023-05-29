@@ -1,7 +1,7 @@
 package keystrokesmod.client.utils;
 
-import club.maxstats.weave.loader.api.event.ChatReceivedEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.ChatReceivedEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import keystrokesmod.client.clickgui.raven.Terminal;
 
 public class PingChecker {

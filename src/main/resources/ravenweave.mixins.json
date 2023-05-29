@@ -15,6 +15,7 @@
     "EntityPlayerSPMixin",
     "WorldMixin",
     "MixinEntityLivingBase",
+    "RendererLivingEntityMixin",
     "S12PacketEntityVelocityAccessor"
   ],
   "client": [

@@ -7,7 +7,7 @@
     <option name="SCRIPT_NAME" value="./Test RavenWeave.bat" />
     <option name="PARAMETERS" value="" />
     <method v="2">
-      <option name="Make" enabled="true" />
+      <option name="Gradle.BeforeRunTask" enabled="true" tasks="build" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
     </method>
   </configuration>
 </component>

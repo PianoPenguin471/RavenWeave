@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import club.maxstats.weave.loader.api.event.ChatReceivedEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.ChatReceivedEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.EventBus;
 
 import keystrokesmod.client.clickgui.kv.KvCompactGui;
@@ -110,7 +110,7 @@ public class Raven {
         register(new Raven());
         register(new MouseManager());
         register(new PingChecker());
-        club.maxstats.weave.loader.api.event.EventBus.subscribe(NotificationRenderer.notificationRenderer);
+        net.weavemc.loader.api.event.EventBus.subscribe(NotificationRenderer.notificationRenderer);
 
         FontUtil.bootstrap();
 
@@ -143,7 +143,7 @@ public class Raven {
 
     public static void register(Object obj) {
         registered.add(obj);
-        club.maxstats.weave.loader.api.event.EventBus.subscribe(obj);
+        net.weavemc.loader.api.event.EventBus.subscribe(obj);
     }
 
     public static ScheduledExecutorService getExecutor() {

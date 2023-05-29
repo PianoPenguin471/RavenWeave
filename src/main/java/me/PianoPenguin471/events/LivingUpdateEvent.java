@@ -1,6 +1,6 @@
 package me.PianoPenguin471.events;
 
-import club.maxstats.weave.loader.api.event.CancellableEvent;
+import net.weavemc.loader.api.event.CancellableEvent;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

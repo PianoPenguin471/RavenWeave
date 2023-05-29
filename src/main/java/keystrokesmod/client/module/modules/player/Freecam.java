@@ -1,8 +1,8 @@
 package keystrokesmod.client.module.modules.player;
 
-import club.maxstats.weave.loader.api.event.MouseEvent;
-import club.maxstats.weave.loader.api.event.RenderWorldEvent;
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.MouseEvent;
+import net.weavemc.loader.api.event.RenderWorldEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;

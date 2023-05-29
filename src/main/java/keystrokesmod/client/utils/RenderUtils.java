@@ -45,11 +45,11 @@ public class RenderUtils {
 
     }
 
-    public static void drawBorderedRect(float f, float f1, float f2, float f3, float f4, int i, int j) {
-        float f5 = (float) ((i >> 24) & 255) / 255.0F;
-        float f6 = (float) ((i >> 16) & 255) / 255.0F;
-        float f7 = (float) ((i >> 8) & 255) / 255.0F;
-        float f8 = (float) (i & 255) / 255.0F;
+    public static void drawBorderedRect(float x1, float y1, float x2, float y2, float lineWidth, int color) {
+        float f5 = (float) ((color >> 24) & 255) / 255.0F;
+        float f6 = (float) ((color >> 16) & 255) / 255.0F;
+        float f7 = (float) ((color >> 8) & 255) / 255.0F;
+        float f8 = (float) (color & 255) / 255.0F;
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -57,16 +57,16 @@ public class RenderUtils {
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         GL11.glPushMatrix();
         GL11.glColor4f(f6, f7, f8, f5);
-        GL11.glLineWidth(f4);
+        GL11.glLineWidth(lineWidth);
         GL11.glBegin(1);
-        GL11.glVertex2d(f, f1);
-        GL11.glVertex2d(f, f3);
-        GL11.glVertex2d(f2, f3);
-        GL11.glVertex2d(f2, f1);
-        GL11.glVertex2d(f, f1);
-        GL11.glVertex2d(f2, f1);
-        GL11.glVertex2d(f, f3);
-        GL11.glVertex2d(f2, f3);
+        GL11.glVertex2d(x1, y1);
+        GL11.glVertex2d(x1, y2);
+        GL11.glVertex2d(x2, y2);
+        GL11.glVertex2d(x2, y1);
+        GL11.glVertex2d(x1, y1);
+        GL11.glVertex2d(x2, y1);
+        GL11.glVertex2d(x1, y2);
+        GL11.glVertex2d(x2, y2);
         GL11.glEnd();
         GL11.glPopMatrix();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -168,6 +168,7 @@ public class RenderUtils {
         GL11.glPopAttrib();
         GL11.glLineWidth(1.0f);
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        GL11.glColor4f(1,1,1,1);
     }
 
     public static void drawBorderedRoundedRect(float x, float y, float d, float y1, float radius, float borderSize, int borderC, int insideC, boolean[] round) {

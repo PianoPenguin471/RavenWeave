@@ -3,12 +3,12 @@ package keystrokesmod.client.module.modules.client;
 import java.util.Comparator;
 import java.util.List;
 
-import club.maxstats.weave.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.combat.AimAssist;
-import keystrokesmod.client.module.modules.combat.aura.KillAura;
+import keystrokesmod.client.module.modules.combat.KillAura;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
@@ -74,6 +74,7 @@ public class Targets extends Module {
 
     public static EntityPlayer getTarget() {
         List<EntityPlayer> en = Utils.Player.getClosePlayers(distance.getInput());
+        if (en == null) return null;
         en.removeIf(player -> !isValidTarget(player));
         if(debug.isToggled()) en.forEach(target -> Utils.Player.sendMessageToSelf(sortMode.getMode().sv.value(target) + " " ));
         return en.isEmpty() ? null : en.stream().min(Comparator.comparingDouble(target -> sortMode.getMode().sv.value(target))).get();
