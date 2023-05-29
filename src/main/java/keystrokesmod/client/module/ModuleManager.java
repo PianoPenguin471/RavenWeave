@@ -119,7 +119,7 @@ public class ModuleManager {
         // addModule(new SelfDestruct()); Too lazy to worry about
         addModule(new ChatLogger());
         addModule(new BridgeAssist());
-        addModule(new Fullbright());
+        // addModule(new Fullbright()); Lunar alr got fullbright
         addModule(new UpdateCheck());
         addModule(new AutoHeader());
         addModule(new Blocks());
