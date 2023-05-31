@@ -24,7 +24,7 @@ public class ConfigManager {
     public final ConfigModuleManager configModuleManager;
     public static boolean applyingConfig;
     private final File configDirectory = new File(
-            Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes" + File.separator + "configs" + File.separator + "weave");
+            Minecraft.getMinecraft().mcDataDir + File.separator + "RavenWeave" + File.separator + "configs");
     private Config config;
     private final ArrayList<Config> configs = new ArrayList<>();
 
