@@ -24,7 +24,7 @@ public class ConfigManager {
     public final ConfigModuleManager configModuleManager;
     public static boolean applyingConfig;
     private final File configDirectory = new File(
-            Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes" + File.separator + "configs");
+            Minecraft.getMinecraft().mcDataDir + File.separator + "RavenWeave" + File.separator + "configs");
     private Config config;
     private final ArrayList<Config> configs = new ArrayList<>();
 
@@ -32,7 +32,7 @@ public class ConfigManager {
         if (!configDirectory.isDirectory()) {
             configDirectory.mkdirs();
         }
-        File defaultFile = new File(configDirectory, "default.bplus");
+        File defaultFile = new File(configDirectory, "default.rwcfg");
         this.config = new Config(defaultFile);
         discoverConfigs();
         configModuleManager = new ConfigModuleManager();
@@ -73,7 +73,7 @@ public class ConfigManager {
             return; // nothing to discover if there are no files in the directory
 
         for (File file : Objects.requireNonNull(configDirectory.listFiles())) {
-            if (file.getName().endsWith(".bplus")) {
+            if (file.getName().endsWith(".rwcfg")) {
                 if (!isOutdated(file)) {
                     configs.add(new Config(new File(file.getPath())));
                 }

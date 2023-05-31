@@ -34,7 +34,7 @@ public class Config {
     }
 
     public String getName() {
-        return file.getName().replace(".bplus", "");
+        return file.getName().replace(".rwcfg", "");
     }
 
     public JsonObject getData() {
