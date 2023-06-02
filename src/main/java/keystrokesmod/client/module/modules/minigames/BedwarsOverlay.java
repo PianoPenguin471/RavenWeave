@@ -61,7 +61,7 @@ public class BedwarsOverlay extends Module {
     }
 
     @SubscribeEvent
-    public void onRender2D(RenderGameOverlayEvent e) {
+    public void onRender2D(RenderGameOverlayEvent.Pre e) {
         if (!this.enabled) return;
         if (!active) {
             return;
