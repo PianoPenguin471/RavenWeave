@@ -1,5 +1,6 @@
 package keystrokesmod.client.module.modules.minigames;
 
+import keystrokesmod.client.module.setting.impl.RGBSetting;
 import net.weavemc.loader.api.event.ChatReceivedEvent;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
@@ -23,12 +24,10 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 
-import java.awt.*;
-
 public class BridgeInfo extends Module {
     public static DescriptionSetting a;
     public static TickSetting ep;
-    private static final int rgb = (new Color(0, 200, 200)).getRGB();
+    public static RGBSetting rgb;
     private static int hudX = 5;
     private static int hudY = 70;
     private String en = "";
@@ -43,6 +42,7 @@ public class BridgeInfo extends Module {
         super("Bridge Info", ModuleCategory.minigames);
         this.registerSetting(a = new DescriptionSetting("Only for solos."));
         this.registerSetting(ep = new TickSetting("Edit position", false));
+        this.registerSetting(rgb = new RGBSetting("Text Color", 0,200,200));
     }
 
     public void onDisable() {
@@ -116,20 +116,20 @@ public class BridgeInfo extends Module {
     }
 
     @SubscribeEvent
-    public void onRender2D(RenderGameOverlayEvent ignoredEv) {
+    public void onRender2D(RenderGameOverlayEvent.Pre ignoredEv) {
         if (Utils.Player.isPlayerInGame() && this.inBridgeGame()) {
             if (mc.currentScreen != null || mc.gameSettings.showDebugInfo) {
                 return;
             }
 
             String t1 = "Enemy: ";
-            mc.fontRendererObj.drawString(t1 + this.en, (float) hudX, (float) hudY, rgb, true);
+            mc.fontRendererObj.drawString(t1 + this.en, (float) hudX, (float) hudY, rgb.getRGB(), true);
             String t2 = "Distance to goal: ";
-            mc.fontRendererObj.drawString(t2 + this.d1, (float) hudX, (float) (hudY + 11), rgb, true);
+            mc.fontRendererObj.drawString(t2 + this.d1, (float) hudX, (float) (hudY + 11), rgb.getRGB(), true);
             String t3 = "Enemy distance to goal: ";
-            mc.fontRendererObj.drawString(t3 + this.d2, (float) hudX, (float) (hudY + 22), rgb, true);
+            mc.fontRendererObj.drawString(t3 + this.d2, (float) hudX, (float) (hudY + 22), rgb.getRGB(), true);
             String t4 = "Blocks: ";
-            mc.fontRendererObj.drawString(t4 + this.blc, (float) hudX, (float) (hudY + 33), rgb, true);
+            mc.fontRendererObj.drawString(t4 + this.blc, (float) hudX, (float) (hudY + 33), rgb.getRGB(), true);
         }
     }
 
@@ -168,7 +168,8 @@ public class BridgeInfo extends Module {
             for (String s : Utils.Client.getPlayersFromScoreboard()) {
                 System.out.println(s);
                 String s2 = s.toLowerCase();
-                String bd = "bridge duel";
+                String bd = "bridge";
+                if (s2.contains("mode")) System.out.println(s);
                 if (s2.contains("mode") && s2.contains(bd)) {
                     return true;
                 }
@@ -189,9 +190,9 @@ public class BridgeInfo extends Module {
     }
 
     static class eh extends GuiScreen {
-        final String a = "Enemy: Player123-Distance to goal: 17.2-Enemy distance to goal: 16.3-Blocks: 98";
-        GuiButton rp;
-        boolean d;
+        final String displayString = "Enemy: Player123-Distance to goal: 17.2-Enemy distance to goal: 16.3-Blocks: 98";
+        GuiButton resetPositionButton;
+        boolean dragging;
         int miX;
         int miY;
         int maX;
@@ -205,7 +206,7 @@ public class BridgeInfo extends Module {
 
         public void initGui() {
             super.initGui();
-            this.buttonList.add(this.rp = new GuiButton(1, this.width - 90, 5, 85, 20, "Reset position"));
+            this.buttonList.add(this.resetPositionButton = new GuiButton(1, this.width - 90, 5, 85, 20, "Reset position"));
             this.aX = hudX;
             this.aY = hudY;
         }
@@ -216,7 +217,7 @@ public class BridgeInfo extends Module {
             int miY = this.aY;
             int maX = miX + 140;
             int maY = miY + 41;
-            this.d(this.mc.fontRendererObj, this.a);
+            this.draw(this.mc.fontRendererObj, this.displayString);
             this.miX = miX;
             this.miY = miY;
             this.maX = maX;
@@ -234,13 +235,13 @@ public class BridgeInfo extends Module {
             super.drawScreen(mX, mY, pt);
         }
 
-        private void d(FontRenderer fr, String t) {
+        private void draw(FontRenderer fr, String t) {
             int x = this.miX;
             int y = this.miY;
             String[] var5 = t.split("-");
 
             for (String s : var5) {
-                fr.drawString(s, (float) x, (float) y, rgb, true);
+                fr.drawString(s, (float) x, (float) y, rgb.getRGB(), true);
                 y += fr.FONT_HEIGHT + 2;
             }
 
@@ -249,11 +250,11 @@ public class BridgeInfo extends Module {
         protected void mouseClickMove(int mX, int mY, int b, long t) {
             super.mouseClickMove(mX, mY, b, t);
             if (b == 0) {
-                if (this.d) {
+                if (this.dragging) {
                     this.aX = this.laX + (mX - this.lmX);
                     this.aY = this.laY + (mY - this.lmY);
                 } else if (mX > this.miX && mX < this.maX && mY > this.miY && mY < this.maY) {
-                    this.d = true;
+                    this.dragging = true;
                     this.lmX = mX;
                     this.lmY = mY;
                     this.laX = this.aX;
@@ -266,13 +267,13 @@ public class BridgeInfo extends Module {
         protected void mouseReleased(int mX, int mY, int s) {
             super.mouseReleased(mX, mY, s);
             if (s == 0) {
-                this.d = false;
+                this.dragging = false;
             }
 
         }
 
         public void actionPerformed(GuiButton b) {
-            if (b == this.rp) {
+            if (b == this.resetPositionButton) {
                 this.aX = hudX = 5;
                 this.aY = hudY = 70;
             }
