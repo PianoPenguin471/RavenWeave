@@ -3,6 +3,7 @@ package keystrokesmod.client.module.modules.render;
 import java.awt.Color;
 import java.util.Iterator;
 
+import keystrokesmod.client.module.modules.client.Targets;
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
@@ -17,22 +18,20 @@ import keystrokesmod.client.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class Tracers extends Module {
-    public static TickSetting a;
-    public static RGBSetting rgb;
-    public static TickSetting e;
-    public static TickSetting o;
-    public static SliderSetting f, sl;
+    public static RGBSetting color;
+    public static TickSetting rainbow, redshift, showInvalidTargets, showInvis;
+    public static SliderSetting lineWidth, distance;
     private boolean g;
-    private int rgb_c;
 
     public Tracers() {
         super("Tracers", ModuleCategory.render);
-        this.registerSetting(a = new TickSetting("Show invis", true));
-        this.registerSetting(f = new SliderSetting("Line Width", 1.0D, 1.0D, 5.0D, 1.0D));
-        this.registerSetting(sl = new SliderSetting("Distance", 1.0D, 1.0D, 512.0D, 1.0D));
-        this.registerSetting(rgb = new RGBSetting("Color:", 0, 255, 0));
-        this.registerSetting(e = new TickSetting("Rainbow", false));
-        this.registerSetting(o = new TickSetting("Redshift w distance", false));
+        this.registerSetting(showInvis = new TickSetting("Show invis", true));
+        this.registerSetting(lineWidth = new SliderSetting("Line Width", 1.0D, 1.0D, 5.0D, 1.0D));
+        this.registerSetting(distance = new SliderSetting("Distance", 1.0D, 1.0D, 512.0D, 1.0D));
+        this.registerSetting(color = new RGBSetting("Color", 0, 255, 0));
+        this.registerSetting(rainbow = new TickSetting("Rainbow", false));
+        this.registerSetting(redshift = new TickSetting("Redshift w distance", false));
+        this.registerSetting(showInvalidTargets = new TickSetting("Show invalid targets", false));
     }
 
     @Override
@@ -54,42 +53,32 @@ public class Tracers extends Module {
             mc.gameSettings.viewBobbing = false;
     }
 
-    @Override
-    public void guiUpdate() {
-        this.rgb_c = rgb.getRGB();
-    }
-
     @SubscribeEvent
-    public void onForgeEvent(RenderWorldEvent event) {
+    public void onRender(RenderWorldEvent event) {
         if (!this.enabled) return;
         if (Utils.Player.isPlayerInGame()) {
-            int rgb = e.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : this.rgb_c;
-            Iterator<EntityPlayer> var3 = mc.theWorld.playerEntities.iterator();
+            int rgb = rainbow.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : this.color.getRGB();
+            Iterator<EntityPlayer> players = mc.theWorld.playerEntities.iterator();
 
-            while (true) {
-                EntityPlayer en;
-                do
-                    do
-                        do {
-                            if (!var3.hasNext())
-                                return;
+            for (EntityPlayer player: mc.theWorld.playerEntities) {
+                // Hide invisibles
+                if (player.isInvisible() && !showInvis.isToggled()) continue;
 
-                            en = (EntityPlayer) var3.next();
-                        } while (en == mc.thePlayer);
-                    while (en.deathTime != 0);
-                while (!a.isToggled() && en.isInvisible());
+                // Hide dead players
+                if (player.deathTime != 0) continue;
 
-                if (!AntiBot.bot(en))
-                    if (o.isToggled() && (mc.thePlayer.getDistanceToEntity(en) < 25)) {
-                        // ik i can use a lot of tenary statements but my brain
-                        int red = (int) (Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10);
-                        int green = Math.abs(red - 255);
-                        int rgbs = new Color(red, green, this.rgb.getBlue()).getRGB();
-                        Utils.HUD.dtl(en, rgbs, (float) f.getInput());
-                    } else
-                        Utils.HUD.dtl(en, rgb, (float) f.getInput());
+                // Don't draw ourselves
+                if (player == mc.thePlayer) continue;
+
+                // Hide invalid targets
+                if (!Targets.isValidTarget(player) && !showInvalidTargets.isToggled()) continue;
+                if (redshift.isToggled() && (mc.thePlayer.getDistanceToEntity(player) < 25)) {
+                    int red = (int) (Math.abs(mc.thePlayer.getDistanceToEntity(player) - 25) * 10);
+                    int green = Math.abs(red - 255);
+                    rgb = new Color(red, green, this.color.getBlue()).getRGB();
+                }
+                Utils.HUD.dtl(player, rgb, (float) lineWidth.getInput());
             }
-
         }
     }
 }
