@@ -40,14 +40,20 @@ public class LegitAura2 extends Module {
 
     private EntityPlayer target;
 
-    private SliderSetting rotationDistance, fov, reach;
-    private DoubleSliderSetting cps;
-    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement;
-    private ComboSetting blockMode;
+    private final SliderSetting rotationDistance;
+    private final SliderSetting fov;
+    private final SliderSetting reach;
+    private final DoubleSliderSetting cps;
+    private final TickSetting disableOnTp;
+    private final TickSetting disableWhenFlying;
+    private final TickSetting mouseDown;
+    private final TickSetting onlySurvival;
+    private final TickSetting fixMovement;
+    private final ComboSetting blockMode;
 
     private List<EntityPlayer> pTargets;
-    private ComboSetting sortMode;
-    private CoolDown coolDown = new CoolDown(1);
+    private final ComboSetting sortMode;
+    private final CoolDown coolDown = new CoolDown(1);
     private boolean leftDown, leftn;
     private long leftDownTime, leftUpTime, leftk, leftl;
     private float yaw, pitch, prevYaw, prevPitch;
@@ -55,7 +61,7 @@ public class LegitAura2 extends Module {
 
     public LegitAura2() {
         super("Aura", ModuleCategory.combat);
-        this.registerSetting(new DescriptionSetting(EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + "Does not work with patcher"));
+        this.registerSetting(new DescriptionSetting(EnumChatFormatting.RED + String.valueOf(EnumChatFormatting.BOLD) + "Does not work with patcher"));
         this.registerSetting(reach = new SliderSetting("Reach (Blocks)", 3.3, 3, 6, 0.05));
         this.registerSetting(rotationDistance = new SliderSetting("Rotation Range", 3.5, 3, 6, 0.05));
         this.registerSetting(cps = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
@@ -223,7 +229,7 @@ public class LegitAura2 extends Module {
 
     	private final SortValue sv;
 
-    	private SortMode(SortValue sv) {
+    	SortMode(SortValue sv) {
     		this.sv = sv;
     	}
 
@@ -239,7 +245,7 @@ public class LegitAura2 extends Module {
 
     public enum BlockMode {
         NONE,
-        FUCKY;
+        FUCKY
     }
 
 }

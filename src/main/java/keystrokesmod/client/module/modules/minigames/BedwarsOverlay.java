@@ -140,20 +140,20 @@ public class BedwarsOverlay extends Module {
             bbblr = stats[4] != 0 ? round((double) stats[3] / (double) stats[4], 2) : stats[3];
             fkdr = stats[6] != 0 ? round((double) stats[5] / (double) stats[6], 2) : stats[5];
             wlr = stats[8] != 0 ? round((double) stats[7] / (double) stats[8], 2) : stats[7];
-            fr.drawString(stats[0] + "", statStart.get(StatType.LEVEL), (int) textY, getStarColour(stats[0]));
+            fr.drawString(String.valueOf(stats[0]), statStart.get(StatType.LEVEL), (int) textY, getStarColour(stats[0]));
             fr.drawString(name, statStart.get(StatType.PLAYER_NAME), (int) textY, Colours.WHITE);
             if (stats[1] == 0) {
                 fr.drawString("  -", statStart.get(StatType.NICKED), (int) textY, Colours.GREY);
             } else {
                 fr.drawString("  +", statStart.get(StatType.NICKED), (int) textY, Colours.RED);
             }
-            fr.drawString(stats[2] + "", statStart.get(StatType.WS), (int) textY, getWSColour(stats[2]));
+            fr.drawString(String.valueOf(stats[2]), statStart.get(StatType.WS), (int) textY, getWSColour(stats[2]));
 
-            fr.drawString(bbblr + "", statStart.get(StatType.BBBLR), (int) textY, getBBBLRColour(bbblr));
-            fr.drawString(fkdr + "", statStart.get(StatType.FKDR), (int) textY, getFKDRColour(fkdr));
-            fr.drawString(wlr + "", statStart.get(StatType.WLR), (int) textY, getWLRColour(wlr));
-            fr.drawString(stats[6] + "", statStart.get(StatType.FINALS), (int) textY, getFinalColour(stats[6]));
-            fr.drawString(stats[7] + "", statStart.get(StatType.WINS), (int) textY, getFinalColour(stats[7]));
+            fr.drawString(String.valueOf(bbblr), statStart.get(StatType.BBBLR), (int) textY, getBBBLRColour(bbblr));
+            fr.drawString(String.valueOf(fkdr), statStart.get(StatType.FKDR), (int) textY, getFKDRColour(fkdr));
+            fr.drawString(String.valueOf(wlr), statStart.get(StatType.WLR), (int) textY, getWLRColour(wlr));
+            fr.drawString(String.valueOf(stats[6]), statStart.get(StatType.FINALS), (int) textY, getFinalColour(stats[6]));
+            fr.drawString(String.valueOf(stats[7]), statStart.get(StatType.WINS), (int) textY, getFinalColour(stats[7]));
 
             textY += marginTextY.getInput() + fr.FONT_HEIGHT;
             linesDrawn++;
@@ -358,9 +358,9 @@ public class BedwarsOverlay extends Module {
         textY = margin.getInput() + overlayY.getInput();
         int stringWidth = 0;
         for (StatType statType : StatType.values()) {
-            fr.drawString(statType + "", (int) textX, (int) textY, mainTextColour);
+            fr.drawString(String.valueOf(statType), (int) textX, (int) textY, mainTextColour);
             statStart.put(statType, (int) textX);
-            stringWidth = fr.getStringWidth(statType + "");
+            stringWidth = fr.getStringWidth(String.valueOf(statType));
             textX += stringWidth + marginTextX.getInput();
         }
         textY += marginTextY.getInput() + fr.FONT_HEIGHT;

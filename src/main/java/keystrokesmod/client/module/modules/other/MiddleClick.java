@@ -1,9 +1,9 @@
 package keystrokesmod.client.module.modules.other;
 
 import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.command.commands.Friends;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.combat.AimAssist;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.Utils;
@@ -94,7 +94,7 @@ public class MiddleClick extends Module {
         if (player == null) {
             Utils.Player.sendMessageToSelf("Please aim at a player/entity when removing them.");
         } else {
-            if (AimAssist.removeFriend(player)) {
+            if (Friends.removeFriend(player)) {
                 Utils.Player.sendMessageToSelf("Successfully removed " + player.getName() + " from friends list!");
             } else {
                 Utils.Player.sendMessageToSelf(player.getName() + " was not found in the friends list!");
@@ -107,7 +107,7 @@ public class MiddleClick extends Module {
         if (player == null) {
             Utils.Player.sendMessageToSelf("Please aim at a player/entity when adding them.");
         } else {
-            AimAssist.addFriend(player);
+            Friends.addFriend(player);
             Utils.Player.sendMessageToSelf("Successfully added " + player.getName() + " to friends list.");
         }
     }

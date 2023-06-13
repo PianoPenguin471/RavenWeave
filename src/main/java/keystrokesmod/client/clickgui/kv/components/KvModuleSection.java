@@ -18,9 +18,9 @@ import net.minecraft.client.gui.ScaledResolution;
 public class KvModuleSection extends KvSection {
 
     private final List<KvCategoryComponent> topCategories;
-    private List<KvCategoryComponent> currentCategories = new ArrayList<KvCategoryComponent>();
-    private List<KvComponent> currentComponents = new ArrayList<KvComponent>(); // settings/modules
-    private List<KvComponent> allCurrentComponents = new ArrayList<KvComponent>(); // settings/modules + categories
+    private final List<KvCategoryComponent> currentCategories = new ArrayList<KvCategoryComponent>();
+    private final List<KvComponent> currentComponents = new ArrayList<KvComponent>(); // settings/modules
+    private final List<KvComponent> allCurrentComponents = new ArrayList<KvComponent>(); // settings/modules + categories
     public static final int padding = 5;
     public static int categoryScroll, moduleScroll;
     public KvModuleComponent openModule;
@@ -42,7 +42,7 @@ public class KvModuleSection extends KvSection {
 
     @Override
     public void refresh() {
-        super.initGui(containerX, containerY, containerWidth, containerHeight);
+        initGui(containerX, containerY, containerWidth, containerHeight);
         refreshCategories();
         refreshModules();
         refreshList();

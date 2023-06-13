@@ -12,7 +12,7 @@ import net.minecraft.client.gui.Gui;
 
 public class NotificationRenderer {
     public static final NotificationRenderer notificationRenderer = new NotificationRenderer();
-    private static Minecraft mc = Minecraft.getMinecraft();
+    private static final Minecraft mc = Minecraft.getMinecraft();
 
     @SubscribeEvent
     public void onRender(RenderGameOverlayEvent e) {

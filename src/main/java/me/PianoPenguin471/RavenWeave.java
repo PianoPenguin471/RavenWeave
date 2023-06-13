@@ -8,12 +8,7 @@ import net.weavemc.loader.api.event.ShutdownEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import me.PianoPenguin471.command.TestCommand;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
 import net.weavemc.loader.api.event.StartGameEvent;
-import org.lwjgl.input.Keyboard;
-
-import java.awt.*;
 
 public class RavenWeave implements ModInitializer {
     @Override

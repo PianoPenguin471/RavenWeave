@@ -13,13 +13,13 @@ public class Healing extends Module {
     private final TickSetting preferSlot;
     private final SliderSetting hotbarSlotPreference;
     private final ComboSetting itemMode;
-    private final HealingItems mode = HealingItems.HEAL_POT;
 
     public Healing() {
         super("Healing", ModuleCategory.hotkey);
 
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
         this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 8, 1, 9, 1));
+        HealingItems mode = HealingItems.HEAL_POT;
         this.registerSetting(itemMode = new ComboSetting("Mode:", mode));
     }
 
@@ -118,7 +118,7 @@ public class Healing extends Module {
 
         if (itemInSlot.getItem() instanceof ItemPotion) {
             ItemPotion ip = (ItemPotion) itemInSlot.getItem();
-            Utils.Player.sendMessageToSelf("" + slot);
+            Utils.Player.sendMessageToSelf(String.valueOf(slot));
             for (PotionEffect pe : ip.getEffects(itemInSlot)) {
                 if (pe.getPotionID() == Potion.heal.id) {
                     return true;

@@ -1,10 +1,8 @@
 package keystrokesmod.client.clickgui.raven.components;
-
 import java.awt.Color;
 import java.util.ArrayList;
-
+import keystrokesmod.client.module.setting.impl.ComboSetting;
 import org.lwjgl.opengl.GL11;
-
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
@@ -14,11 +12,16 @@ import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.font.FontUtil;
 import net.minecraft.client.renderer.GlStateManager;
 
+
 public class ModuleComponent extends Component {
     public Module mod;
     public CategoryComponent category;
     public ArrayList<SettingComponent> settings = new ArrayList<>();
-    public BindComponent bind;
+
+    public ComboSetting bindModeSetting;
+    public ComboComponent bindmode;
+    private final BindComponent bind;
+
     public int aHeight = 20;
 
     public ModuleComponent(Module mod, CategoryComponent p) {
@@ -31,12 +34,16 @@ public class ModuleComponent extends Component {
                 settings.add(clazz.getDeclaredConstructor(Setting.class, this.getClass()).newInstance(setting, this));
             } catch (Exception e) {
                 System.out.println(clazz);
-            };
+            }
         });
+        bindModeSetting = new ComboSetting("Bind Mode:", BindComponent.EventType.Toggle);
+        bindmode = new ComboComponent(bindModeSetting, this);
         bind = new BindComponent(this);
         setDimensions(p.getWidth(), aHeight);
     }
-
+    public ComboComponent getBindmode() {
+        return bindmode;
+    }
 
     public static void e() {
         GL11.glDisable(2929);
@@ -112,14 +119,16 @@ public class ModuleComponent extends Component {
                 if(!setting.visable) continue;
                 setting.setCoords(x, y + aHeight + yOffset);
                 setting.draw(mouseX, mouseY);
-                yOffset += setting.getHeight() + 3;
+                yOffset += setting.getHeight() + 6;
             }
             if(mod.isBindable()) {
-                bind.setCoords(x, y + aHeight + yOffset);
+                bindmode.setCoords(x, y + aHeight + yOffset + 1);
+                bindmode.draw(mouseX, mouseY);
+                bind.setCoords(x, y + aHeight + yOffset + 6);
                 bind.draw(mouseX, mouseY);
                 yOffset += bind.getHeight();
             }
-            setDimensions(width, aHeight + yOffset + 3);
+            setDimensions(width, aHeight + yOffset + 10);
         }
     }
 
@@ -136,19 +145,21 @@ public class ModuleComponent extends Component {
                 if(category.getOpenModule() == this) {
                     for(SettingComponent setting : settings) {
                         setting.setCoords(x, y + aHeight + yOffset);
-                        yOffset += setting.getHeight() + 2;
+                        yOffset += setting.getHeight() + 6;
                     }
                     if(mod.isBindable()) {
-                        bind.setCoords(x, y + aHeight + yOffset);
+                        bindmode.setCoords(x, y + aHeight + yOffset + 1);
+                        bind.setCoords(x, y + aHeight + yOffset + 6);
                         yOffset += bind.getHeight();
                     }
-                    setDimensions(width, aHeight + yOffset + 3);
+                    setDimensions(width, aHeight + yOffset + 10);
                 } else
                     setDimensions(category.getWidth(), aHeight);
                 return;
             }
 
         if(category.getOpenModule() == this) settings.forEach(setting -> {if(setting.visable);setting.mouseDown(x, y, b);});
+        bindmode.mouseDown(x, y, b);
         bind.mouseDown(x, y, b);
     }
 

@@ -9,6 +9,8 @@ import java.lang.reflect.Field;
 import javax.imageio.ImageIO;
 
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.main.Raven;
@@ -73,6 +75,36 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
     }
+
+    public static void drawOutlinedBoundingBox(final AxisAlignedBB bb) {
+        GL11.glBegin(1);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.minY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.minZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.maxX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.maxZ);
+        GL11.glVertex3d(bb.minX, bb.maxY, bb.minZ);
+        GL11.glEnd();
+    }
+
 
     public static void setColor(final int color) {
         final float a = ((color >> 24) & 0xFF) / 255.0f;

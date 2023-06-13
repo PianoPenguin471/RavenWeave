@@ -188,7 +188,7 @@ public class Utils {
         }
 
         public static double PitchFromEntity(Entity en, float f) {
-            return (double) (mc.thePlayer.rotationPitch - pitchToEntity(en, f));
+            return mc.thePlayer.rotationPitch - pitchToEntity(en, f);
         }
 
         public static float pitchToEntity(Entity ent, float f) {
@@ -583,7 +583,7 @@ public class Utils {
         }
 
         public static int getColorBetween(int min, int max, int delay) {
-            int c = (int) Math.abs((((System.currentTimeMillis() / 10) + delay) % (2 * (max - min))) - (max - min))
+            int c = (int) Math.abs((((System.currentTimeMillis() / 10) + delay) % (2L * (max - min))) - (max - min))
                     + min;
             // System.out.println(Math.abs((System.currentTimeMillis() % (2 * (max-min)) -
             // (max-min))) + min);
@@ -909,10 +909,9 @@ public class Utils {
             // https://api.paste.ee/v1/pastes/<id>
             // https://paste.ee/p/XZKFL
 
-            StringBuilder rawLink = new StringBuilder();
-            rawLink.append(base_url);
-            rawLink.append(arg.split("/")[arg.split("/").length - 1]);
-            return rawLink.toString();
+            String rawLink = base_url +
+                    arg.split("/")[arg.split("/").length - 1];
+            return rawLink;
         }
 
         public static String createPaste(String name, String content) {
@@ -975,8 +974,8 @@ public class Utils {
                 JsonObject json2 = json.getAsJsonObject("paste");
                 finall.add(true + "");
                 JsonObject json3 = (JsonObject) json2.getAsJsonArray("sections").get(0);
-                finall.add(json3.get("name") + "");
-                finall.add(json3.get("contents") + "");
+                finall.add(String.valueOf(json3.get("name")));
+                finall.add(String.valueOf(json3.get("contents")));
 
                 request.disconnect();
                 return finall;

@@ -15,9 +15,8 @@ import net.minecraft.client.Minecraft;
 
 public class TickComponent extends SettingComponent {
 
-    private TickSetting setting;
-    private CoolDown timer = new CoolDown(1);
-    private final int buttonWidth = 13;
+    private final TickSetting setting;
+    private final CoolDown timer = new CoolDown(1);
 
     public TickComponent(Setting setting, ModuleComponent category) {
         super(setting, category);
@@ -34,11 +33,12 @@ public class TickComponent extends SettingComponent {
         int green = (int) (percent * 255);
         int red = 255 - green;
         final int colour = new Color(red, green, 0).getRGB();
+        int buttonWidth = 13;
         float offSet = (percent * buttonWidth)/3;
         int fh = (Raven.mc.fontRendererObj.FONT_HEIGHT/2) + 1;
 
         RenderUtils.drawBorderedRoundedRect(x, y + fh, x + buttonWidth, y + height, height/2, 2, GuiModule.getBoarderColour(), 0xFF000000);
-        RenderUtils.drawBorderedRoundedRect(x + offSet, y + fh, x + ((buttonWidth/3)*2) + offSet, y + height, height/2, 2, GuiModule.getBoarderColour(), colour);
+        RenderUtils.drawBorderedRoundedRect(x + offSet, y + fh, x + ((buttonWidth /3)*2) + offSet, y + height, height/2, 2, GuiModule.getBoarderColour(), colour);
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
         Minecraft.getMinecraft().fontRendererObj.drawString(

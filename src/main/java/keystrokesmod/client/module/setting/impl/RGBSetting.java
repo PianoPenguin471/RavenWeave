@@ -18,7 +18,7 @@ import keystrokesmod.client.utils.Utils.Client;
 public class RGBSetting extends Setting {
 
     private int[] colour;
-    private int[] defaultColour;
+    private final int[] defaultColour;
     private int colorRGB;
 
     public RGBSetting(String name, int defaultRed, int defaultGreen, int defaultBlue) {
@@ -32,9 +32,7 @@ public class RGBSetting extends Setting {
     @Override
     public void resetToDefaults() {
         System.out.println("Color length: " + colour.length + ", Default color length: " + defaultColour.length);
-        for (int i = 0; i < colour.length; i++) {
-            this.colour[i] = this.defaultColour[i];
-        }
+        System.arraycopy(this.defaultColour, 0, this.colour, 0, colour.length);
     }
 
     @Override
@@ -134,7 +132,7 @@ public class RGBSetting extends Setting {
 
 	    private final ColorM c;
 
-	    private NSColor(ColorM c) {
+	    NSColor(ColorM c) {
 	        this.c = c;
 	    }
 
@@ -146,7 +144,7 @@ public class RGBSetting extends Setting {
             return c.color(delay);
         }
 
-        private static NSColor[] vals = values();
+        private static final NSColor[] vals = values();
         public NSColor next() {
             return vals[(this.ordinal()+1) % vals.length];
         }

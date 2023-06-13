@@ -34,7 +34,6 @@ public class Terminal {
             53, 41, 145, 144, 147, 146, 57, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 30, 31, 32, 33, 34, 35, 36, 37, 38,
             44, 45, 46, 47, 48, 49, 50 };
 
-    private final Minecraft mc;
     private final FontRenderer fr;
 
     private String inputText = "";
@@ -55,7 +54,7 @@ public class Terminal {
         this.height = 214;
         this.minHeight = 67;
         this.barHeight = 13;
-        this.mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getMinecraft();
         this.fr = mc.fontRendererObj;
         this.border = 2;
         this.resizeButtonSize = 10;

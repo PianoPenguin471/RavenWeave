@@ -74,7 +74,7 @@ public class Tracers extends Module {
                             if (!var3.hasNext())
                                 return;
 
-                            en = (EntityPlayer) var3.next();
+                            en = var3.next();
                         } while (en == mc.thePlayer);
                     while (en.deathTime != 0);
                 while (!a.isToggled() && en.isInvisible());
@@ -84,7 +84,7 @@ public class Tracers extends Module {
                         // ik i can use a lot of tenary statements but my brain
                         int red = (int) (Math.abs(mc.thePlayer.getDistanceToEntity(en) - 25) * 10);
                         int green = Math.abs(red - 255);
-                        int rgbs = new Color(red, green, this.rgb.getBlue()).getRGB();
+                        int rgbs = new Color(red, green, Tracers.rgb.getBlue()).getRGB();
                         Utils.HUD.dtl(en, rgbs, (float) f.getInput());
                     } else
                         Utils.HUD.dtl(en, rgb, (float) f.getInput());

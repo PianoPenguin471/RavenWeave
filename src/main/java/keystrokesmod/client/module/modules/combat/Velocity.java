@@ -1,26 +1,14 @@
 package keystrokesmod.client.module.modules.combat;
 
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
-import com.mojang.realmsclient.gui.ChatFormatting;
 import keystrokesmod.client.event.impl.PacketEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
-import keystrokesmod.client.utils.Utils;
 import me.PianoPenguin471.mixins.S12PacketEntityVelocityAccessor;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
-import net.minecraft.network.play.server.S14PacketEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-import org.lwjgl.input.Keyboard;
 
 public class Velocity extends Module {
     public static SliderSetting horizontal, vertical, chance, horizontalProjectiles, verticalProjectiles, chanceProjectiles, distanceProjectiles;

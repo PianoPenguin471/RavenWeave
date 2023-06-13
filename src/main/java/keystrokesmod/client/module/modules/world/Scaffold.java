@@ -16,15 +16,14 @@ import net.minecraft.client.gui.ScaledResolution;
 
 public class Scaffold extends Module {
 
-    private TickSetting eagle;
-    private SliderSetting rps;
-
     private float yaw, pitch, locked;
     private int blockCount;
 
 
     public Scaffold() {
         super("Scaffold", /*ModuleCategory.world*/ModuleCategory.beta);
+        SliderSetting rps;
+        TickSetting eagle;
         this.registerSettings(
                         eagle = new TickSetting("Shift", false),
                         rps = new SliderSetting("Rotation speed", 80, 0, 300, 1));

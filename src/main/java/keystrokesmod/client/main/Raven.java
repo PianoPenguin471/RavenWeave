@@ -1,6 +1,5 @@
 package keystrokesmod.client.main;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -14,7 +13,6 @@ import keystrokesmod.client.clickgui.kv.KvCompactGui;
 import keystrokesmod.client.clickgui.raven.ClickGui;
 import keystrokesmod.client.command.CommandManager;
 import keystrokesmod.client.config.ConfigManager;
-import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.ModuleManager;
 import keystrokesmod.client.notifications.NotificationRenderer;
 import keystrokesmod.client.utils.MouseManager;
@@ -124,7 +122,7 @@ public class Raven {
         configManager = new ConfigManager();
         clientConfig = new ClientConfig();
         clientConfig.applyConfig();
-        System.out.println("AAAAAAH");
+        System.out.println("Starting Raven B+++");
     }
 
     @SuppressWarnings("unused")

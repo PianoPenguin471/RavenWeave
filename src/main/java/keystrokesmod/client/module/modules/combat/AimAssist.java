@@ -3,19 +3,16 @@ package keystrokesmod.client.module.modules.combat;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-import net.weavemc.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
+import keystrokesmod.client.command.commands.Friends;
 import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.modules.world.AntiBot;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MovingObjectPosition;
 import org.lwjgl.input.Mouse;
 
-import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.Targets;
-import keystrokesmod.client.module.modules.player.RightClicker;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -28,6 +25,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 
 public class AimAssist extends Module {
+
     public static SliderSetting speedYaw, complimentYaw, speedPitch, complimentPitch;
     public static SliderSetting fov;
     public static SliderSetting distance;
@@ -39,7 +37,6 @@ public class AimAssist extends Module {
     public static TickSetting aimInvis;
     public static TickSetting breakBlocks;
     public static TickSetting blatantMode;
-    public static ArrayList<Entity> friends = new ArrayList<>();
     public static TickSetting aimWhileTargeting;
 
     public AimAssist() {
@@ -61,9 +58,7 @@ public class AimAssist extends Module {
     public boolean isLookingAtPlayer() {
         if (mc.objectMouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.ENTITY) return false;
         if (!(mc.objectMouseOver.entityHit instanceof EntityPlayer)) return false;
-        if (AntiBot.bot(mc.objectMouseOver.entityHit)) return false;
-
-        return true;
+        return !AntiBot.bot(mc.objectMouseOver.entityHit);
     }
 
     @Subscribe
@@ -86,7 +81,7 @@ public class AimAssist extends Module {
                 if (shouldAim) {
                     if (isLookingAtPlayer() && !aimWhileTargeting.isToggled()) return;
 
-                    Entity en = this.getEnemy();
+                    Entity en = Friends.getEnemy();
                     if (en != null) {
                         if (blatantMode.isToggled())
                             Utils.Player.aim(en, (float) pitchOffSet.getInput());
@@ -123,51 +118,5 @@ public class AimAssist extends Module {
         }
     }
 
-    public Entity getEnemy() {
-       return Targets.getTarget();
-    }
 
-    public static void addFriend(Entity entityPlayer) {
-        friends.add(entityPlayer);
-    }
-
-    public static boolean addFriend(String name) {
-        boolean found = false;
-        for (Entity entity : mc.theWorld.getLoadedEntityList())
-            if (entity.getName().equalsIgnoreCase(name) || entity.getCustomNameTag().equalsIgnoreCase(name))
-                if (!Targets.isAFriend(entity)) {
-                    addFriend(entity);
-                    found = true;
-                }
-
-        return found;
-    }
-
-    public static boolean removeFriend(String name) {
-        boolean removed = false;
-        boolean found = false;
-        for (NetworkPlayerInfo networkPlayerInfo : new ArrayList<>(mc.getNetHandler().getPlayerInfoMap())) {
-            Entity entity = mc.theWorld.getPlayerEntityByName(networkPlayerInfo.getDisplayName().getUnformattedText());
-            if (entity.getName().equalsIgnoreCase(name) || entity.getCustomNameTag().equalsIgnoreCase(name)) {
-                removed = removeFriend(entity);
-                found = true;
-            }
-        }
-
-        return found && removed;
-    }
-
-    public static boolean removeFriend(Entity entityPlayer) {
-        try {
-            friends.remove(entityPlayer);
-        } catch (Exception eeeeee) {
-            eeeeee.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public static ArrayList<Entity> getFriends() {
-        return friends;
-    }
 }

@@ -9,7 +9,7 @@ import keystrokesmod.client.utils.Utils;
 public class Fullbright extends Module {
 
     private float originalGamma;
-    private ComboSetting mode;
+    private final ComboSetting mode;
     public static boolean nightVision;
 
     public Fullbright() {
@@ -45,7 +45,7 @@ public class Fullbright extends Module {
         switch (mode) {
         case GAMMA:
             mc.gameSettings.gammaSetting = originalGamma > 10 ? 1 : originalGamma;
-            Utils.Player.sendMessageToSelf("" + mc.gameSettings.gammaSetting);
+            Utils.Player.sendMessageToSelf(String.valueOf(mc.gameSettings.gammaSetting));
             break;
         case NIGHTVISION:
             nightVision = false;

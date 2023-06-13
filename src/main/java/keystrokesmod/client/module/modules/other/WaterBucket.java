@@ -5,7 +5,6 @@ import keystrokesmod.client.event.impl.TickEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
-import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.DimensionHelper;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.block.Block;

@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 
 public class KvDoubleSliderComponent extends KvComponent {
 
-    private DoubleSliderSetting setting;
+    private final DoubleSliderSetting setting;
     private boolean mouseDown;
     private Helping helping;
 
@@ -77,6 +77,6 @@ public class KvDoubleSliderComponent extends KvComponent {
 
     public enum Helping {
         Min,
-        Max;
+        Max
     }
 }

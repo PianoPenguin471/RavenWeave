@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.GlStateManager;
 
 public class ComboComponent extends SettingComponent {
 
-    private ComboSetting setting;
+    private final ComboSetting setting;
 
     public ComboComponent(Setting setting, ModuleComponent category) {
         super(setting, category);

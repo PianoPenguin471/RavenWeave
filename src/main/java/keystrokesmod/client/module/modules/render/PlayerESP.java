@@ -61,7 +61,7 @@ public class PlayerESP extends Module {
     public void onForgeEvent(RenderWorldEvent fe) {
         if (!this.enabled) return;
         if (Utils.Player.isPlayerInGame()) {
-            int rgb = rainbow.isToggled() ? 0 : this.rgb.getRGB();
+            int rgb = rainbow.isToggled() ? 0 : PlayerESP.rgb.getRGB();
             Iterator var3;
             if (Raven.debugger) {
                 var3 = mc.theWorld.loadedEntityList.iterator();

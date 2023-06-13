@@ -9,10 +9,6 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class VersionManager {
-	private final String versionFilePath = "/assets/keystrokesmod/version";
-	private final String branchFilePath = "/assets/keystrokesmod/branch";
-    private final String versionUrl = "https://raw.githubusercontent.com/K-ov/Raven-bPLUS/stable/src/main/resources/assets/keystrokesmod/version";
-    private final String branchUrl = "https://raw.githubusercontent.com/K-ov/Raven-bPLUS/stable/src/main/resources/assets/keystrokesmod/branch";
 
     private Version latestVersion;
     private Version clientVersion;
@@ -32,6 +28,7 @@ public class VersionManager {
         BufferedReader bufferedReader;
 
         try {
+            String versionUrl = "https://raw.githubusercontent.com/K-ov/Raven-bPLUS/stable/src/main/resources/assets/keystrokesmod/version";
             url = new URL(versionUrl);
             bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()));
             scanner = new Scanner(bufferedReader);
@@ -43,6 +40,7 @@ public class VersionManager {
         }
 
         try {
+            String branchUrl = "https://raw.githubusercontent.com/K-ov/Raven-bPLUS/stable/src/main/resources/assets/keystrokesmod/branch";
             url = new URL(branchUrl);
             bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()));
             scanner = new Scanner(bufferedReader);
@@ -67,11 +65,13 @@ public class VersionManager {
         InputStream input;
         Scanner scanner;
 
+        String versionFilePath = "/assets/keystrokesmod/version";
         input = VersionManager.class.getResourceAsStream(versionFilePath);
         assert input != null;
         scanner = new Scanner(input);
         version = scanner.nextLine();
 
+        String branchFilePath = "/assets/keystrokesmod/branch";
         input = VersionManager.class.getResourceAsStream(branchFilePath);
         scanner = new Scanner(input);
         String[] line = scanner.nextLine().split("-");

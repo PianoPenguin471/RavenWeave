@@ -14,6 +14,7 @@ public class MixinMinecraft {
 
     @Inject(method = "runTick", at = @At("HEAD"))
     public void onTick(CallbackInfo ci) {
+
         Raven.eventBus.post(new GameLoopEvent());
     }
 

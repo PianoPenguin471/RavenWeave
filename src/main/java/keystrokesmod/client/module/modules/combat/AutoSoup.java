@@ -141,7 +141,7 @@ public class AutoSoup extends Module {
         SWITCHEDANDCLICKED,
         SWITCHEDANDDROPPED;
 
-        private static State[] vals = values();
+        private static final State[] vals = values();
         public State next() {
             return vals[(this.ordinal()+1) % vals.length];
         }

@@ -149,7 +149,7 @@ public class SumoFences extends Module {
         BARRIER(Blocks.barrier),
         FENCE(Blocks.oak_fence);
 
-        public Block blockType;
+        public final Block blockType;
         SumoBlockType(Block blockType) {
             this.blockType = blockType;
         }

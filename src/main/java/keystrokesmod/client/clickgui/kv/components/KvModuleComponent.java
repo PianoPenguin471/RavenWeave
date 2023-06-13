@@ -19,19 +19,37 @@ import net.minecraft.util.ResourceLocation;
 
 public class KvModuleComponent extends KvComponent{
 
-    private Module module;
+    private final Module module;
 
-    private final static ResourceLocation settingIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/gear.png");;
-    private ResourceLocation moduleIcon;
-    private int toggleX, toggleY, toggleWidth, toggleHeight,
-    			settingX, settingY, settingWidth, settingHeight,
-    			settingX2, settingY2, settingWidth2, settingHeight2,
-    			titleBoxX, titleBoxY, titleBoxWidth, titleBoxHeight,
-    			settingsBoxX, settingsBoxY, settingsBoxWidth, settingsBoxHeight,
-    			nameHeight, bindBoxY, bindBoxHeight, halfSettingsBoxWidth,
-    			rx, ry;
-    private List<KvComponent> settings = new ArrayList<KvComponent>();
-    private KvBindComponent bindComponent;
+    private final static ResourceLocation settingIcon = RenderUtils.getResourcePath("/assets/keystrokesmod/kvclickgui/gear.png");
+    private final ResourceLocation moduleIcon;
+    private int toggleX;
+    private int toggleY;
+    private int toggleWidth;
+    private int toggleHeight;
+    private int settingX;
+    private int settingY;
+    private int settingWidth;
+    private int settingHeight;
+    private int settingX2;
+    private int settingY2;
+    private int settingWidth2;
+    private int settingHeight2;
+    private int titleBoxX;
+    private int titleBoxY;
+    private int titleBoxWidth;
+    private int titleBoxHeight;
+    private int settingsBoxX;
+    private int settingsBoxY;
+    private int settingsBoxWidth;
+    private int settingsBoxHeight;
+    private int bindBoxY;
+    private int bindBoxHeight;
+    private int halfSettingsBoxWidth;
+    private int rx;
+    private int ry;
+    private final List<KvComponent> settings = new ArrayList<KvComponent>();
+    private final KvBindComponent bindComponent;
 
     public KvModuleComponent(Module module) {
         this.module = module;
@@ -58,7 +76,7 @@ public class KvModuleComponent extends KvComponent{
         settingY = toggleY;
         settingWidth = width - toggleWidth;
         settingHeight = toggleHeight + 1;
-        nameHeight = height - toggleHeight - FontUtil.normal.getHeight() - 1;
+        int nameHeight = height - toggleHeight - FontUtil.normal.getHeight() - 1;
 
         RenderUtils.drawRoundedRect(x, y, x + width, y + height, 12, 0xA0000000);
         RenderUtils.drawRoundedRect(toggleX, toggleY + 1, toggleX + toggleWidth, toggleY + toggleHeight + 1,12, module.isEnabled() ? 0xFF00FF00 : 0xFFFF0000, new boolean[] {false, true, false, false});
@@ -209,7 +227,7 @@ public class KvModuleComponent extends KvComponent{
     }
 
     public int maxScroll() {
-    	return settings.isEmpty() ? 0 : (int) -(settings.size()/2) * settings.get(0).getHeight();
+    	return settings.isEmpty() ? 0 : -(settings.size()/2) * settings.get(0).getHeight();
     }
 
 }

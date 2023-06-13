@@ -25,7 +25,6 @@ public class ChestStealer extends Module {
     private final CoolDown delayTimer = new CoolDown(0);
     private final CoolDown closeTimer = new CoolDown(0);
     private ArrayList<Slot> sortedSlots;
-    private ContainerChest chest;
 
     public ChestStealer() {
         super("ChestStealer", ModuleCategory.player);
@@ -40,7 +39,7 @@ public class ChestStealer extends Module {
         if (!this.enabled) return;
         if (Utils.Player.isPlayerInChest()) {
             if (!inChest) {
-                chest = (ContainerChest) mc.thePlayer.openContainer;
+                ContainerChest chest = (ContainerChest) mc.thePlayer.openContainer;
                 delayTimer.setCooldown((long) ThreadLocalRandom.current().nextDouble(firstDelay.getInputMin(),
                         firstDelay.getInputMax() + 0.01));
                 delayTimer.start();

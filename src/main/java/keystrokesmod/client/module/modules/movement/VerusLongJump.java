@@ -6,7 +6,6 @@ import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.EventDirection;
 import keystrokesmod.client.event.impl.PacketEvent;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 

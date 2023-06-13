@@ -14,9 +14,11 @@ import net.minecraft.entity.Entity;
 
 public class Radar extends Module {
 
-    private int x = 200, y = 0, width = 50, height = 50;
-    private SliderSetting distance;
-    private RGBSetting boxColor, boarderColor, playerColor, selfColor;
+    private final SliderSetting distance;
+    private final RGBSetting boxColor;
+    private final RGBSetting boarderColor;
+    private final RGBSetting playerColor;
+    private final RGBSetting selfColor;
 
     public Radar() {
         super("Radar", /*ModuleCategory.render*/ModuleCategory.beta);
@@ -33,15 +35,19 @@ public class Radar extends Module {
         if (!this.enabled) return;
         if(!Utils.Player.isPlayerInGame() || (mc.currentScreen != null))
             return;
-        int centreX = x + (width/2), centreY = y + (height/2);
+        int height = 50;
+        int width = 50;
+        int y = 0;
+        int x = 200;
+        int centreX = x + (width /2), centreY = y + (height /2);
         RenderUtils.drawBorderedRoundedRect(x, y, x + width, y + height, 5, 5, boarderColor.getRGB(), boxColor.getRGB());
         for(Entity en : mc.theWorld.playerEntities) {
         	if((en == mc.thePlayer) || AntiBot.bot(en)) continue;
             int radius = (int) mc.thePlayer.getDistanceToEntity(en);
             if(radius > distance.getInput()) continue;
             int theta = (int) Utils.Player.fovFromEntity(en) -180; //why do i need to put the 180 here huh
-            int 	enX = (int) ((radius * Math.sin(Math.toRadians(theta)))*((width/2)/distance.getInput())),
-            		enY = (int) ((radius * Math.cos(Math.toRadians(theta)))*((height/2)/distance.getInput()));
+            int 	enX = (int) ((radius * Math.sin(Math.toRadians(theta)))*((width /2)/distance.getInput())),
+            		enY = (int) ((radius * Math.cos(Math.toRadians(theta)))*((height /2)/distance.getInput()));
             Gui.drawRect((centreX + enX) -1 , (centreY + enY) - 1 , centreX + enX + 1, centreY + enY + 1, playerColor.getRGB());
         }
         Gui.drawRect(centreX - 1, centreY - 1, centreX + 1, centreY + 1, selfColor.getRGB());

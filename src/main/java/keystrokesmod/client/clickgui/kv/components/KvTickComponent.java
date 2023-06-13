@@ -15,8 +15,8 @@ import net.minecraft.client.Minecraft;
 
 public class KvTickComponent extends KvComponent {
 
-	private TickSetting setting;
-	private CoolDown timer = new CoolDown(1);
+	private final TickSetting setting;
+	private final CoolDown timer = new CoolDown(1);
 
 	public KvTickComponent(Setting setting) {
 		this.setting = (TickSetting) setting;

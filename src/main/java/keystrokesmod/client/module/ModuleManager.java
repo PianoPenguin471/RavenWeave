@@ -5,68 +5,29 @@ import java.util.Comparator;
 import java.util.List;
 
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.Module.ModuleCategory;
-import keystrokesmod.client.module.modules.HUD;
-import keystrokesmod.client.module.modules.client.FPSSpoofer;
-import keystrokesmod.client.module.modules.client.FakeHud;
 import keystrokesmod.client.module.modules.client.GuiModule;
-import keystrokesmod.client.module.modules.client.SelfDestruct;
-import keystrokesmod.client.module.modules.client.Targets;
-import keystrokesmod.client.module.modules.client.Terminal;
-import keystrokesmod.client.module.modules.client.UpdateCheck;
-import keystrokesmod.client.module.modules.combat.AimAssist;
-import keystrokesmod.client.module.modules.combat.AutoBlock;
-import keystrokesmod.client.module.modules.combat.AutoGHead;
-import keystrokesmod.client.module.modules.combat.AutoSoup;
-import keystrokesmod.client.module.modules.combat.AutoWeapon;
-import keystrokesmod.client.module.modules.combat.BlockHit;
-import keystrokesmod.client.module.modules.combat.DelayRemover;
-import keystrokesmod.client.module.modules.combat.HitBox;
-import keystrokesmod.client.module.modules.combat.JumpReset;
-import keystrokesmod.client.module.modules.combat.LeftClicker;
-import keystrokesmod.client.module.modules.combat.ClickAssist;
-import keystrokesmod.client.module.modules.combat.Reach;
-import keystrokesmod.client.module.modules.combat.STap;
-import keystrokesmod.client.module.modules.combat.ShiftTap;
-import keystrokesmod.client.module.modules.combat.Velocity;
-import keystrokesmod.client.module.modules.combat.WTap;
-import keystrokesmod.client.module.modules.combat.KillAura;
-import keystrokesmod.client.module.modules.config.ConfigSettings;
-import keystrokesmod.client.module.modules.hotkey.Armour;
-import keystrokesmod.client.module.modules.hotkey.Blocks;
-import keystrokesmod.client.module.modules.hotkey.Healing;
-import keystrokesmod.client.module.modules.hotkey.Ladders;
-import keystrokesmod.client.module.modules.hotkey.Pearl;
-import keystrokesmod.client.module.modules.hotkey.Trajectories;
-import keystrokesmod.client.module.modules.hotkey.Weapon;
-import keystrokesmod.client.module.modules.minigames.BedwarsOverlay;
-import keystrokesmod.client.module.modules.minigames.BridgeInfo;
-import keystrokesmod.client.module.modules.minigames.DuelsStats;
-import keystrokesmod.client.module.modules.minigames.MurderMystery;
-import keystrokesmod.client.module.modules.minigames.SumoFences;
-import keystrokesmod.client.module.modules.movement.*;
-import keystrokesmod.client.module.modules.other.Disabler;
-import keystrokesmod.client.module.modules.other.FakeChat;
-import keystrokesmod.client.module.modules.other.MiddleClick;
-import keystrokesmod.client.module.modules.other.NameHider;
-import keystrokesmod.client.module.modules.other.Spin;
-import keystrokesmod.client.module.modules.other.WaterBucket;
+import keystrokesmod.client.module.modules.HUD;
+import keystrokesmod.client.module.modules.minigames.*;
 import keystrokesmod.client.module.modules.player.*;
+import keystrokesmod.client.module.modules.hotkey.*;
+import keystrokesmod.client.module.modules.combat.*;
 import keystrokesmod.client.module.modules.render.*;
-import keystrokesmod.client.module.modules.world.AntiBot;
-import keystrokesmod.client.module.modules.world.ChatLogger;
-import keystrokesmod.client.module.modules.world.Scaffold;
+import keystrokesmod.client.module.modules.config.*;
+import keystrokesmod.client.module.modules.other.*;
+import keystrokesmod.client.module.modules.movement.*;
+import keystrokesmod.client.module.modules.client.*;
+import keystrokesmod.client.module.modules.world.*;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.gui.FontRenderer;
 
 public class ModuleManager {
-    private List<Module> modules = new ArrayList<>();
+    private final List<Module> modules = new ArrayList<>();
 
     public static boolean initialized;
     public GuiModuleManager guiModuleManager;
 
     public ModuleManager() {
-        System.out.println(ModuleCategory.values());
+        System.out.println(Module.ModuleCategory.values());
         if(initialized)
             return;
         this.guiModuleManager = new GuiModuleManager();
@@ -84,6 +45,7 @@ public class ModuleManager {
         addModule(new Fly());
         addModule(new InvMove());
         addModule(new KeepSprint());
+        addModule(new BlockESP());
         addModule(new NoSlow());
         addModule(new Sprint());
         addModule(new StopMotion());
@@ -116,10 +78,9 @@ public class ModuleManager {
         addModule(new WaterBucket());
         addModule(new Terminal());
         addModule(new GuiModule());
-        // addModule(new SelfDestruct()); Too lazy to worry about
+        addModule(new AutoTool());
         addModule(new ChatLogger());
         addModule(new BridgeAssist());
-        // addModule(new Fullbright()); Lunar alr got fullbright
         addModule(new UpdateCheck());
         addModule(new AutoHeader());
         addModule(new Blocks());
@@ -137,7 +98,7 @@ public class ModuleManager {
 
         addModule(new ShiftTap());
         addModule(new FPSSpoofer());
-
+        addModule(new AutoClutch());
         addModule(new AutoBlock());
         addModule(new MiddleClick());
         addModule(new Projectiles());

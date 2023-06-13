@@ -2,7 +2,6 @@ package keystrokesmod.client.module.modules.render;
 
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;

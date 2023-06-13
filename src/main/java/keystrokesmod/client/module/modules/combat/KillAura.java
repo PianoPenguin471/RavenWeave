@@ -12,12 +12,10 @@ import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.impl.GameLoopEvent;
 import keystrokesmod.client.event.impl.LookEvent;
 import keystrokesmod.client.event.impl.MoveInputEvent;
-import keystrokesmod.client.event.impl.PacketEvent;
 import keystrokesmod.client.event.impl.UpdateEvent;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.modules.client.Targets;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
-import keystrokesmod.client.module.setting.impl.DescriptionSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
@@ -25,7 +23,6 @@ import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.world.WorldSettings.GameType;
 
 //todo change the clicking system
@@ -34,13 +31,15 @@ public class KillAura extends Module {
     private EntityPlayer target;
 
     public static SliderSetting reach/*,rps*/;
-    private DoubleSliderSetting cps;
-    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement;
-    private ComboSetting<BlockMode> blockMode;
+    private final DoubleSliderSetting cps;
+    private final TickSetting disableWhenFlying;
+    private final TickSetting mouseDown;
+    private final TickSetting onlySurvival;
+    private final TickSetting fixMovement;
 
     private List<EntityPlayer> pTargets;
     private ComboSetting sortMode;
-    private CoolDown coolDown = new CoolDown(1);
+    private final CoolDown coolDown = new CoolDown(1);
     private boolean leftDown, leftn, locked;
     private long leftDownTime, leftUpTime, leftk, leftl;
     public static float yaw, pitch, prevYaw, prevPitch;
@@ -53,10 +52,12 @@ public class KillAura extends Module {
         //this.registerSetting(rps = new SliderSetting("Max rotation speed", 36, 0, 200, 1));
         this.registerSetting(cps = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
         this.registerSetting(onlySurvival = new TickSetting("Only Survival", false));
+        TickSetting disableOnTp;
         this.registerSetting(disableOnTp = new TickSetting("Disable after tp", false));
         this.registerSetting(disableWhenFlying = new TickSetting("Disable when flying", true));
         this.registerSetting(mouseDown = new TickSetting("Mouse Down", false));
         this.registerSetting(fixMovement = new TickSetting("Movement Fix", true));
+        ComboSetting<BlockMode> blockMode;
         this.registerSetting(blockMode = new ComboSetting<BlockMode>("Block mode", BlockMode.NONE));
     }
 
@@ -121,8 +122,8 @@ public class KillAura extends Module {
     }
 
     public void rotate(float yaw, float pitch, boolean e) {
-       this.yaw = yaw;
-       this.pitch = pitch;
+       KillAura.yaw = yaw;
+       KillAura.pitch = pitch;
     }
 
     private double MouseSens() {
@@ -215,6 +216,6 @@ public class KillAura extends Module {
     public enum BlockMode {
         NONE,
         Vanilla,
-        Damage;
+        Damage
     }
 }

@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 
 public class SliderComponent extends SettingComponent {
 
-    private SliderSetting setting;
+    private final SliderSetting setting;
     private boolean mouseDown;
 
     public SliderComponent(Setting setting, ModuleComponent category) {

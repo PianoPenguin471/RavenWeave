@@ -10,8 +10,8 @@ import net.minecraft.client.Minecraft;
 
 public class BindComponent extends Component {
 
-    private ModuleComponent module;
-    private Module mod;
+    private final ModuleComponent module;
+    private final Module mod;
     private boolean isBinding;
 
     public BindComponent(ModuleComponent moduleComponent) {
@@ -28,7 +28,7 @@ public class BindComponent extends Component {
 
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
-        Minecraft.getMinecraft().fontRendererObj.drawString(isBinding ? "Press a key" : "Bind: " + mod.getBindAsString(),
+        Minecraft.getMinecraft().fontRendererObj.drawString(isBinding ? "Press a key" : "Bind : " + mod.getBindAsString(),
                         (float) ((x) * 2),
                         (float) ((y + (height/2)) * 2),
                         0xFFFFFFFE,
@@ -36,6 +36,10 @@ public class BindComponent extends Component {
         GL11.glPopMatrix();
     }
 
+
+    public enum EventType {
+        Toggle, Hold,
+    }
     @Override
     public void clicked(int x, int y, int button) {
         if(button == 0)

@@ -1,7 +1,8 @@
 package keystrokesmod.client.module.modules.combat;
 
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import me.PianoPenguin471.events.AttackEntityEvent;
+import me.PianoPenguin471.events.LivingUpdateEvent;
+import net.weavemc.loader.api.event.*;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.ComboSetting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
@@ -16,6 +17,26 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
+
+
+import net.weavemc.loader.api.event.RenderGameOverlayEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import keystrokesmod.client.module.Module;
+import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
+import keystrokesmod.client.module.setting.impl.SliderSetting;
+import keystrokesmod.client.module.setting.impl.TickSetting;
+import keystrokesmod.client.utils.CoolDown;
+import keystrokesmod.client.utils.Utils;
+import me.PianoPenguin471.events.AttackEntityEvent;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+
 
 public class WTap extends Module {
     public ComboSetting eventType;
@@ -37,7 +58,7 @@ public class WTap extends Module {
 
     public WTap() {
         super("WTap", ModuleCategory.combat);
-
+        this.registerSetting(eventType = new ComboSetting("Event:", EventType.Attack));
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
         this.registerSetting(onlySword = new TickSetting("Only sword", false));
 
@@ -49,6 +70,19 @@ public class WTap extends Module {
 
         this.registerSetting(dynamic = new TickSetting("Dynamic tap time", false));
         this.registerSetting(tapMultiplier = new SliderSetting("wait time sensitivity", 1F, 0F, 5F, 0.1F));
+    }
+
+    @SubscribeEvent
+    public void onEvent(Event event) {
+        if (event instanceof AttackEntityEvent) {
+            target = ((AttackEntityEvent) event).target;
+            if (isSecondCall() && eventType.getMode() == EventType.Attack)
+                wTap();
+        } else if (event instanceof LivingUpdateEvent) {
+            LivingUpdateEvent e = ((LivingUpdateEvent) event);
+            if (eventType.getMode() == EventType.Hurt && e.getEntityLiving().hurtTime > 0 && e.getEntityLiving().hurtTime == e.getEntityLiving().maxHurtTime && e.entity == this.target)
+                wTap();
+        }
     }
 
     @SubscribeEvent
@@ -116,6 +150,9 @@ public class WTap extends Module {
             call = true;
             return false;
         }
+    }
+    public enum EventType {
+        Attack, Hurt,
     }
 
     public enum WtapState {

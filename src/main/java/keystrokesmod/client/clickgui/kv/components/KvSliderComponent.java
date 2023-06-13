@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 
 public class KvSliderComponent extends KvComponent {
 
-	private SliderSetting setting;
+	private final SliderSetting setting;
 	private boolean mouseDown;
 
 	public KvSliderComponent(Setting setting) {

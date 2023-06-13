@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 
 public class KvBindComponent extends KvComponent {
 
-	private Module mod;
+	private final Module mod;
 	private boolean isBinding;
 
 	public KvBindComponent(Module mod) {
@@ -20,7 +20,7 @@ public class KvBindComponent extends KvComponent {
 	@Override
 	public void draw(int mouseX, int mouseY) {
 		Minecraft.getMinecraft().fontRendererObj.drawString(
-				isBinding ? "Press a key" : "Bind: " + mod.getBindAsString(),
+				isBinding ? "Press a key test" : "Bind test: " + mod.getBindAsString(),
 				(float) (x + KvModuleSection.padding),
 				(float) (((y + (height/2)) - (Raven.mc.fontRendererObj.FONT_HEIGHT/2))),
 				0xFEFFFFFF,

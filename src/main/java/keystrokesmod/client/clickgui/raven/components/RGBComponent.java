@@ -11,7 +11,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class RGBComponent extends SettingComponent {
 
-        private RGBSetting setting;
+        private final RGBSetting setting;
         private boolean mouseDown;
         private Helping helping;
 

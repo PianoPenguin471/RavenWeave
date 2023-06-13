@@ -11,8 +11,9 @@ import net.minecraft.client.settings.KeyBinding;
 
 public class SpeedTest extends Module {
 
-    private CoolDown coolDown = new CoolDown(1);
-    private SliderSetting delay, stopPercent;
+    private final CoolDown coolDown = new CoolDown(1);
+    private final SliderSetting delay;
+    private final SliderSetting stopPercent;
     
     public SpeedTest() {
         super("SpeedTest", /*ModuleCategory.movement*/ModuleCategory.beta);

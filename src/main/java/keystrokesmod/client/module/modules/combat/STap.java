@@ -1,7 +1,11 @@
 package keystrokesmod.client.module.modules.combat;
 
+import keystrokesmod.client.module.setting.impl.ComboSetting;
+import me.PianoPenguin471.events.LivingUpdateEvent;
+import net.weavemc.loader.api.event.Event;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
+import keystrokesmod.client.module.modules.combat.WTap.EventType;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
@@ -17,6 +21,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class STap extends Module {
+    public ComboSetting eventType;
     public SliderSetting range, chance, tapMultiplier;
     public TickSetting onlyPlayers;
     public TickSetting onlySword;
@@ -35,7 +40,7 @@ public class STap extends Module {
 
     public STap() {
         super("STap", ModuleCategory.combat);
-
+        this.registerSetting(eventType = new ComboSetting("Event:", EventType.Attack));
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
         this.registerSetting(onlySword = new TickSetting("Only sword", false));
         this.registerSetting(waitMs = new DoubleSliderSetting("Press s for ... ms", 30, 40, 1, 300, 1));
@@ -60,13 +65,18 @@ public class STap extends Module {
     }
 
     @SubscribeEvent
-    public void onForgeEvent(AttackEntityEvent e) {
-        if (!this.enabled) return;
-        target = e.target;
-
-        if (isSecondCall())
-            sTap();
+    public void onEvent(Event event) {
+        if (event instanceof AttackEntityEvent) {
+            target = ((AttackEntityEvent) event).target;
+            if (isSecondCall() && eventType.getMode() == WTap.EventType.Attack)
+                sTap();
+        } else if (event instanceof LivingUpdateEvent) {
+            LivingUpdateEvent e = ((LivingUpdateEvent) event);
+            if (eventType.getMode() == WTap.EventType.Hurt && e.getEntityLiving().hurtTime > 0 && e.getEntityLiving().hurtTime == e.getEntityLiving().maxHurtTime && e.entity == this.target)
+                sTap();
+        }
     }
+
 
 
     public void sTap() {

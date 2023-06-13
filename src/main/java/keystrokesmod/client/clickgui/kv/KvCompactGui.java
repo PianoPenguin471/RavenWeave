@@ -1,6 +1,5 @@
 package keystrokesmod.client.clickgui.kv;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,7 @@ import net.minecraft.client.gui.GuiScreen;
 public class KvCompactGui extends GuiScreen {
 
     private KvSection currentSection;
-    private List<KvSection> sections;
+    private final List<KvSection> sections;
 
     public static int containerX, containerY, containerWidth, containerHeight, horizontalBoarderY;
     private int a;

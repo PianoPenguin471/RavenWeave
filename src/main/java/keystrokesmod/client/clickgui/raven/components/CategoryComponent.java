@@ -29,14 +29,10 @@ public class CategoryComponent extends Component {
     public double theta, velo = 0.1;
     public int aHeight = 13;
 
-    private CoolDown timer = new CoolDown(500);
+    private final CoolDown timer = new CoolDown(500);
     public float tPercent;
 
-    private final int marginX = 80
-                    ,marginY = 3;
-
-    private final float gravity = 0.9f,
-                    friction = 0.7f;
+    private final int marginX = 80;
 
 
     public CategoryComponent(Module.ModuleCategory category) {
@@ -113,7 +109,9 @@ public class CategoryComponent extends Component {
                             (2 * height * height)
                             ));
 
+            float gravity = 0.9f;
             velo = velo + (theta * gravity);
+            float friction = 0.7f;
             double ntheta = theta + (velo * friction);
             bottomX = x - (int) (Math.sin(Math.toRadians(ntheta)) * height);
             bottomY = y - (int) (Math.cos(Math.toRadians(ntheta)) * height);
@@ -158,6 +156,7 @@ public class CategoryComponent extends Component {
         int red = (int) (tPercent * 255);
         int green = 255 - red;
         final int colour = new Color(red, green, 0).getRGB();
+        int marginY = 3;
         mc.fontRendererObj.drawString(categoryOpened ? "-" : "+", x + marginX, y + marginY, colour, false);
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);

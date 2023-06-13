@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 
 public class DescriptionComponent extends SettingComponent {
 
-    private DescriptionSetting setting;
+    private final DescriptionSetting setting;
 
     public DescriptionComponent(Setting setting, ModuleComponent category) {
         super(setting, category);

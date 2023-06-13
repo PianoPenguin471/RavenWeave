@@ -3,11 +3,11 @@ package keystrokesmod.client.module.modules.client;
 import java.util.Comparator;
 import java.util.List;
 
+import keystrokesmod.client.command.commands.Friends;
 import net.weavemc.loader.api.event.SubscribeEvent;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.combat.AimAssist;
 import keystrokesmod.client.module.modules.combat.KillAura;
 import keystrokesmod.client.module.modules.world.AntiBot;
 import keystrokesmod.client.module.setting.Setting;
@@ -96,7 +96,7 @@ public class Targets extends Module {
         if (entity == mc.thePlayer)
             return true;
 
-        for (Entity wut : AimAssist.friends)
+        for (Entity wut : Friends.friends)
             if (wut.equals(entity))
                 return true;
         return false;
@@ -133,7 +133,7 @@ public class Targets extends Module {
 
         private final SortValue sv;
 
-        private SortMode(SortValue sv) {
+        SortMode(SortValue sv) {
             this.sv = sv;
         }
 

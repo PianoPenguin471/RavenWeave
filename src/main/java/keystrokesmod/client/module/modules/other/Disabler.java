@@ -13,6 +13,7 @@ import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Disabler extends Module {
     public static DescriptionSetting warning, mmcSafeWarning1, mmcSafeWarning2;
@@ -46,8 +47,7 @@ public class Disabler extends Module {
 
     @Subscribe
     public void onPacket(PacketEvent e) {
-        switch ((Mode) mode.getMode()) {
-        case MMCSafe:
+        if (Objects.requireNonNull((Mode) mode.getMode()) == Mode.MMCSafe) {
             if (e.isOutgoing() && !mmc) {
                 if (e.getPacket() instanceof C00PacketKeepAlive) {
                     mmcPackets.add(e.getPacket());
@@ -67,7 +67,6 @@ public class Disabler extends Module {
                 }
                 mmc = false;
             }
-            break;
         }
     }
 

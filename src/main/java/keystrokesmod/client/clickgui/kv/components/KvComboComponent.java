@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 
 public class KvComboComponent extends KvComponent {
 
-	private ComboSetting setting;
+	private final ComboSetting setting;
 
 	public KvComboComponent(Setting setting) {
 		this.setting = (ComboSetting) setting;

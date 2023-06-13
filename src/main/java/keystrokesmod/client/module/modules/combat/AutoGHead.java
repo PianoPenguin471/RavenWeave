@@ -78,7 +78,7 @@ public class AutoGHead extends Module {
         SWITCHED,
         SWITCHEDANDCLICKED;
 
-        private static State[] vals = values();
+        private static final State[] vals = values();
         public State next() {
             return vals[(this.ordinal()+1) % vals.length];
         }

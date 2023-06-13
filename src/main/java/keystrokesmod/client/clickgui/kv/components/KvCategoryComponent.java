@@ -33,7 +33,7 @@ public class KvCategoryComponent extends KvComponent {
 
     @Override
     public void draw(int mouseX, int mouseY) {
-    	y = (int) (actualY + KvModuleSection.categoryScroll);
+    	y = actualY + KvModuleSection.categoryScroll;
 		int color = KvModuleSection.moduleSec.currentCategory == this ? 0xFFFFFF00: isMouseOver(mouseX, mouseY) ? 0xA000FF00 : 0xFF00FF00;
 		FontUtil.normal.drawStringWithShadow(category.getName(), x, y, color);
 

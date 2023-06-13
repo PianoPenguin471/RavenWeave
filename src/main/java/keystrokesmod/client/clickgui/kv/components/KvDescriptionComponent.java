@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 
 public class KvDescriptionComponent extends KvComponent {
 
-	private DescriptionSetting setting;
+	private final DescriptionSetting setting;
 
 	public KvDescriptionComponent(Setting setting) {
 		this.setting = (DescriptionSetting) setting;

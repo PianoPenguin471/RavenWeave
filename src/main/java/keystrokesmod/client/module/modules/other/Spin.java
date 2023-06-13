@@ -10,9 +10,10 @@ import keystrokesmod.client.utils.CoolDown;
 
 public class Spin extends Module {
 
-    private SliderSetting time, fov;
-    private CoolDown cd = new CoolDown(1);
-    private ComboSetting mode;
+    private final SliderSetting time;
+    private final SliderSetting fov;
+    private final CoolDown cd = new CoolDown(1);
+    private final ComboSetting mode;
     private float yaw, finalYaw, lastYaw, yawOffSet;
 
     public Spin() {
@@ -38,7 +39,7 @@ public class Spin extends Module {
             this.disable();
             return;
         }
-        float timeleft = (float) (cd.getElapsedTime()/(float) cd.getCooldownTime());
+        float timeleft = cd.getElapsedTime()/(float) cd.getCooldownTime();
         float percent = 0;
         if(mode.getMode() == aimMode.LINEAR) {
             percent = timeleft;
@@ -47,7 +48,7 @@ public class Spin extends Module {
         } else if (mode.getMode() == aimMode.SMOOTH) {
             percent = (float) ((0.5f * (Math.sin(Math.toRadians(180f * (timeleft - 0.5f)))))+ 0.5f);
             yawOffSet += mc.thePlayer.rotationYaw - lastYaw;
-            mc.thePlayer.rotationYaw = (float) (yaw + ((finalYaw - yaw) * percent));
+            mc.thePlayer.rotationYaw = yaw + ((finalYaw - yaw) * percent);
         }
         lastYaw =  mc.thePlayer.rotationYaw;
     }

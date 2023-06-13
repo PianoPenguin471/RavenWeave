@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 
 public class DoubleSliderComponent extends SettingComponent {
 
-    private DoubleSliderSetting setting;
+    private final DoubleSliderSetting setting;
     private boolean mouseDown;
     private Helping helping;
 
@@ -80,6 +80,6 @@ public class DoubleSliderComponent extends SettingComponent {
 
     public enum Helping {
         Min,
-        Max;
+        Max
     }
 }

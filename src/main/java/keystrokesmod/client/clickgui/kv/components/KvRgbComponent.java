@@ -6,15 +6,12 @@ import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.RGBSetting;
 import keystrokesmod.client.utils.RenderUtils;
-import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 
-import java.awt.*;
-
 public class KvRgbComponent extends KvComponent {
 
-	private RGBSetting setting;
+	private final RGBSetting setting;
     private boolean mouseDown;
     private Helping helping;
 

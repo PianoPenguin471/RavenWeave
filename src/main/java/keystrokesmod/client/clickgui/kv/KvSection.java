@@ -8,14 +8,16 @@ import keystrokesmod.client.utils.font.FontUtil;
 public class KvSection {
 
 	private final String name;
-	private int sectionX, sectionY, height;
-	private int width;
+	private int sectionX;
+	private int sectionY;
+	private final int height;
+	private final int width;
 	protected static int containerX, containerY, containerWidth, containerHeight;
 
 	public KvSection(String name) {
 		this.name = name;
 		this.width = (int) FontUtil.normal.getStringWidth(name) + 8;
-		this.height = (int) FontUtil.normal.getHeight() + 8;
+		this.height = FontUtil.normal.getHeight() + 8;
 	}
 
 	public static void initGui(int containerX, int containerY, int containerWidth, int containerHeight) {

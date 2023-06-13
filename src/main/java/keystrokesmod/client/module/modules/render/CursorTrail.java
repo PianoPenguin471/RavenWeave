@@ -14,8 +14,8 @@ import keystrokesmod.client.utils.Utils;
 
 public class CursorTrail extends Module {
 
-	private List<CursorTrailPoint> trailPoints = new ArrayList<CursorTrailPoint>();
-	private SliderSetting length;
+	private final List<CursorTrailPoint> trailPoints = new ArrayList<CursorTrailPoint>();
+	private final SliderSetting length;
 
 	//help me unfuck this sigma
 	//will implement new hud colors for this later
@@ -71,9 +71,8 @@ public class CursorTrail extends Module {
 			//Utils.Player.sendMessageToSelf(x + " " + y);
 			if(cd.hasFinished()) {
 				Utils.Player.sendMessageToSelf("removed");
-				Utils.Player.sendMessageToSelf(trailPoints.size() + "");
+				Utils.Player.sendMessageToSelf(String.valueOf(trailPoints.size()));
 				trailPoints.remove(this);
-				return;
 			}
 		}
 	}

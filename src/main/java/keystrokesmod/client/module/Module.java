@@ -1,48 +1,42 @@
 package keystrokesmod.client.module;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-
-import net.weavemc.loader.api.event.EventBus;
-import org.lwjgl.input.Keyboard;
-
 import com.google.gson.JsonObject;
-
+import keystrokesmod.client.clickgui.raven.components.BindComponent;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.notifications.NotificationRenderer;
 import net.minecraft.client.Minecraft;
+import net.weavemc.loader.api.event.EventBus;
+import org.lwjgl.input.Keyboard;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Module {
-    protected ArrayList<Setting> settings;
+    protected static Minecraft mc;
     private final String moduleName;
     private final ModuleCategory moduleCategory;
+    protected ArrayList<Setting> settings;
     protected boolean hasBind = true, showInHud = true, clientConfig, enabled;
     protected boolean defaultEnabled = enabled;
     protected int keycode;
+    protected int bindmode = 1;
     protected int defualtKeyCode = keycode;
-
     protected ModuleComponent component;
-
-    protected static Minecraft mc;
-    private boolean isToggled;
-
-    private String description = "";
-
     protected boolean registered;
-
-    public void guiUpdate() {
-
-    }
+    private boolean isToggled;
 
     public Module(String name, ModuleCategory moduleCategory) {
         this.moduleName = name;
         this.moduleCategory = moduleCategory;
         this.settings = new ArrayList<>();
         mc = Minecraft.getMinecraft();
+    }
+
+    public void guiUpdate() {
+
     }
 
     protected <E extends Module> E withKeycode(int i) {
@@ -62,7 +56,6 @@ public class Module {
     }
 
     public <E extends Module> E withDescription(String i) {
-        this.description = i;
         return (E) this;
     }
 
@@ -78,7 +71,14 @@ public class Module {
         JsonObject data = new JsonObject();
         data.addProperty("enabled", enabled);
         if (hasBind)
-            data.addProperty("keycode", keycode);
+            if (this.component.bindModeSetting.getMode() == BindComponent.EventType.Toggle) {
+                this.bindmode = 1;
+            }
+        if (this.component.bindModeSetting.getMode() == BindComponent.EventType.Hold) {
+            this.bindmode = 2;
+        }
+        data.addProperty("keycode", keycode);
+        data.addProperty("bindmode", bindmode);
         data.addProperty("showInHud", showInHud);
         data.add("settings", settings);
 
@@ -89,6 +89,14 @@ public class Module {
         try {
             if (hasBind)
                 this.keycode = data.get("keycode").getAsInt();
+            this.bindmode = data.get("bindmode").getAsInt();
+            if (this.bindmode == 1) {
+                this.component.bindModeSetting.setMode(BindComponent.EventType.Toggle);
+            }
+            if (this.bindmode == 2) {
+                this.component.bindModeSetting.setMode(BindComponent.EventType.Hold);
+            }
+
             setToggled(data.get("enabled").getAsBoolean());
             JsonObject settingsData = data.get("settings").getAsJsonObject();
             for (Setting setting : getSettings())
@@ -96,7 +104,6 @@ public class Module {
                     setting.applyConfigFromJson(settingsData.get(setting.getName()).getAsJsonObject());
             this.showInHud = data.get("showInHud").getAsBoolean();
         } catch (NullPointerException ignored) {
-
         }
         postApplyConfig();
     }
@@ -106,13 +113,26 @@ public class Module {
     }
 
     public void keybind() {
-        if ((this.keycode != 0) && this.canBeEnabled())
-            if (!this.isToggled && Keyboard.isKeyDown(this.keycode)) {
-                this.toggle();
-                this.isToggled = true;
-            } else if (!Keyboard.isKeyDown(this.keycode))
-                this.isToggled = false;
+        if ((this.keycode != 0) && this.canBeEnabled()) {
+            if (this.component.bindModeSetting.getMode() == BindComponent.EventType.Hold) {
+                // For 'Hold' mode
+                if (Keyboard.isKeyDown(this.keycode)) {
+                    this.enable();
+                } else {
+                    this.disable();
+                }
+            } else {
+                // For 'Toggle' mode
+                if (!this.isToggled && Keyboard.isKeyDown(this.keycode)) {
+                    this.toggle();
+                    this.isToggled = true;
+                } else if (!Keyboard.isKeyDown(this.keycode)) {
+                    this.isToggled = false;
+                }
+            }
+        }
     }
+
 
     public boolean canBeEnabled() {
         return true;
@@ -123,13 +143,12 @@ public class Module {
     }
 
     public void enable() {
-        if(!canBeEnabled())
+        if (!canBeEnabled())
             return;
         this.enabled = true;
         this.onEnable();
         if (enabled && !registered) {
             Raven.eventBus.register(this);
-            System.out.println(this.moduleName);
             registered = true;
             EventBus.subscribe(this);
         }
@@ -137,7 +156,7 @@ public class Module {
     }
 
     public void disable() {
-        if(!canBeEnabled())
+        if (!canBeEnabled())
             return;
         this.enabled = false;
         if (registered) {
@@ -147,10 +166,12 @@ public class Module {
         }
         this.onDisable();
         NotificationRenderer.moduleStateChanged(this);
+
     }
 
+
     public void setToggled(boolean enabled) {
-        if(!canBeEnabled())
+        if (!canBeEnabled())
             return;
         if (enabled)
             enable();
@@ -242,9 +263,6 @@ public class Module {
         return keycode == 0 ? "None" : Keyboard.getKeyName(keycode);
     }
 
-    public void clearBinds() {
-        this.keycode = 0;
-    }
 
     public boolean isClientConfig() {
         return clientConfig;
@@ -255,7 +273,7 @@ public class Module {
     }
 
     public void unRegister() {
-        if(registered) {
+        if (registered) {
             registered = false;
             Raven.eventBus.unregister(this);
             onDisable();
@@ -279,10 +297,10 @@ public class Module {
         private final boolean defaultShown;
         private final ModuleCategory topCategory;
         private final String name;
-        private List<ModuleCategory> childCategories = new ArrayList<ModuleCategory>();
+        private final List<ModuleCategory> childCategories = new ArrayList<ModuleCategory>();
 
         ModuleCategory(boolean defaultShown, ModuleCategory topCategory, String name) {
-            if(topCategory != null)
+            if (topCategory != null)
                 topCategory.addChildCategory(this);
             this.defaultShown = defaultShown;
             this.topCategory = topCategory;

@@ -4,7 +4,6 @@ import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.clickgui.theme.Theme;
 import keystrokesmod.client.clickgui.theme.themes.ArcDark;
 import keystrokesmod.client.clickgui.theme.themes.MaterialDark;
-import keystrokesmod.client.clickgui.theme.themes.RavenB3;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.Setting;
@@ -278,12 +277,29 @@ public class GuiModule extends Module {
                         in -> Utils.Client.otherAstolfoColorsDraw(in, 10)
                         );
 
-        public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground, roundedCorners, swing, boarder;
-        public ColorM categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB,
-        enabledTextRGB, disabledTopRGB, disabledBottomRGB, disabledTextRGB, backgroundRGB, boarderColor, categoryOutlineColor, categoryOutlineColor2;
-        public CNColor cnColor;
+        public final boolean showGradientEnabled;
+        public final boolean showGradientDisabled;
+        public final boolean useCustomFont;
+        public final boolean categoryBackground;
+        public final boolean roundedCorners;
+        public final boolean swing;
+        public final boolean boarder;
+        public final ColorM categoryNameRGB;
+        public final ColorM settingBackgroundRGB;
+        public final ColorM categoryBackgroundRGB;
+        public final ColorM enabledTopRGB;
+        public final ColorM enabledBottomRGB;
+        public final ColorM enabledTextRGB;
+        public final ColorM disabledTopRGB;
+        public final ColorM disabledBottomRGB;
+        public final ColorM disabledTextRGB;
+        public final ColorM backgroundRGB;
+        public final ColorM boarderColor;
+        public final ColorM categoryOutlineColor;
+        public final ColorM categoryOutlineColor2;
+        public final CNColor cnColor;
 
-        private Preset(
+        Preset(
                         boolean showGradientEnabled, boolean showGradientDisabled, boolean useCustomFont,
                         boolean categoryBackground, CNColor cnColor, ColorM categoryNameRGB, ColorM settingBackgroundRGB,
                         ColorM categoryBackgroundRGB, ColorM enabledTopRGB, ColorM enabledBottomRGB, ColorM enabledTextRGB,
@@ -312,7 +328,7 @@ public class GuiModule extends Module {
             this.categoryOutlineColor2 = categoryOutlineColor2;
         }
 
-        private Preset(Theme theme) {
+        Preset(Theme theme) {
             this.showGradientEnabled = true;
             this.showGradientDisabled = false;
             this.useCustomFont = true;

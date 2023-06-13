@@ -7,7 +7,6 @@ import keystrokesmod.client.module.modules.client.GuiModule;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -15,22 +14,22 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public class Notification {
-    private NotificationType type;
-    private String title;
-    private String messsage;
+    private final NotificationType type;
+    private final String title;
+    private final String messsage;
     private long start;
 
-    private long fadedIn;
-    private long fadeOut;
-    private long end;
+    private final long fadedIn;
+    private final long fadeOut;
+    private final long end;
 
     public Notification(NotificationType type, String title, String messsage, int length) {
         this.type = type;
         this.title = title;
         this.messsage = messsage;
 
-        fadedIn = 200 * length;
-        fadeOut = fadedIn + 500 * length;
+        fadedIn = 200L * length;
+        fadeOut = fadedIn + 500L * length;
         end = fadeOut + fadedIn;
     }
 

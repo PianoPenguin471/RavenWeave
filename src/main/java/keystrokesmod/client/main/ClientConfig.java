@@ -22,19 +22,19 @@ import net.minecraft.client.Minecraft;
 
 public class ClientConfig {
     public static boolean applyingConfig;
-    // when you are coding the config manager and life be like
-    // public static String
-    // ip_token_discord_webhook_logger_spyware_malware_minecraft_block_hacker_sigma_miner_100_percent_haram_no_cap_m8_Kopamed(kv_is_still_sexier_tho)_is_sexy
-    // = "https://imgur.com/a/hYd1023";
-    // dude wtf bro i was not expecting that i opened that up on my school bus
-    private final File cfgDir = new File(Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes");
     private final File cfgFile;
-    private final String fileName = "clientconfig.kv";
     private JsonObject config;
 
     public ClientConfig() {
+        // when you are coding the config manager and life be like
+        // public static String
+        // ip_token_discord_webhook_logger_spyware_malware_minecraft_block_hacker_sigma_miner_100_percent_haram_no_cap_m8_Kopamed(kv_is_still_sexier_tho)_is_sexy
+        // = "https://imgur.com/a/hYd1023";
+        // dude wtf bro i was not expecting that i opened that up on my school bus
+        File cfgDir = new File(Minecraft.getMinecraft().mcDataDir + File.separator + "keystrokes");
         if (!cfgDir.exists())
             cfgDir.mkdir();
+        String fileName = "clientconfig.kv";
         cfgFile = new File(cfgDir, fileName);
         if (!cfgFile.exists())
             try {

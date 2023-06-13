@@ -1,5 +1,4 @@
 package keystrokesmod.client.module.modules.player;
-
 import java.util.ArrayList;
 
 import net.weavemc.loader.api.event.ShutdownEvent;
@@ -17,8 +16,8 @@ public class Blink extends Module {
 
     public static TickSetting inbound, outbound;
 
-    private ArrayList<? extends Packet> outboundPackets = new ArrayList<>();
-    private ArrayList<? extends Packet> inboundPackets = new ArrayList<>();
+    private final ArrayList<? extends Packet> outboundPackets = new ArrayList<>();
+    private final ArrayList<? extends Packet> inboundPackets = new ArrayList<>();
 
     public Blink() {
         super("Blink", /*ModuleCategory.player*/ModuleCategory.beta);
