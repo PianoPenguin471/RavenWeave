@@ -64,7 +64,7 @@ public class HUD extends Module {
     }
 
     private void setUpLogo() {
-        ravenLogo = RenderUtils.getResourcePath("/assets/keystrokes/logohud/" + logoMode.getMode().toString() + ".png");
+        ravenLogo = new ResourceLocation("keystrokesmod", "logohud/ravenweave.png");
     }
 
     @Override
@@ -93,8 +93,7 @@ public class HUD extends Module {
     }
 
     @SubscribeEvent
-    public void onRender2D(RenderGameOverlayEvent ev) {
-        if (!this.enabled) return;
+    public void onRender2D(RenderGameOverlayEvent.Pre ev) {
         if (Utils.Player.isPlayerInGame()) {
             if ((mc.currentScreen != null) || mc.gameSettings.showDebugInfo)
                 return;
@@ -226,16 +225,13 @@ public class HUD extends Module {
         ScaledResolution sr = new ScaledResolution(mc);
         logoHeight = (sr.getScaledHeight() * logoScaleh.getInput()) / 10;
         if (logoLoaded()) {
+            double logoWidth = (sr.getScaledWidth() * logoScalew.getInput()) / 8;
+            Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
+            GL11.glColor4f(1, 1, 1, 1);
             if ((positionMode == Utils.HUD.PositionMode.DOWNRIGHT) || (positionMode == Utils.HUD.PositionMode.UPRIGHT)) {
-                double logoWidth = (sr.getScaledWidth() * logoScalew.getInput()) / 8;
-                Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
-                GL11.glColor4f(1, 1, 1, 1);
 				Gui.drawModalRectWithCustomSizedTexture((int) ((hudX + e) - logoWidth), hudY, 0, 0, (int) logoWidth,
 						(int) logoHeight, (int) logoWidth, (int) logoHeight);
             } else {
-                double logoWidth = (sr.getScaledWidth() * logoScalew.getInput()) / 8;
-                Minecraft.getMinecraft().getTextureManager().bindTexture(ravenLogo);
-                GL11.glColor4f(1, 1, 1, 1);
                 Gui.drawModalRectWithCustomSizedTexture(hudX, hudY, 0, 0, (int) logoWidth, (int) logoHeight,
                         (int) logoWidth, (int) logoHeight);
             }

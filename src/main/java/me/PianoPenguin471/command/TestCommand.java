@@ -12,6 +12,6 @@ public class TestCommand extends Command {
 
     @Override
     public void handle(String[] args) {
-        Raven.moduleManager.getModuleByName("Gui").enable();
+        Raven.moduleManager.getModuleByName("Gui").toggle();
     }
 }
