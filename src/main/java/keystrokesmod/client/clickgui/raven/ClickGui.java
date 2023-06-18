@@ -106,7 +106,7 @@ public class ClickGui extends GuiScreen {
                     Utils.Client.astolfoColorsDraw(10, 14, speed));
         else
             mc.fontRendererObj.drawStringWithShadow(
-                    "Raven B+++ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4,
+                    "Raven B+ + v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4,
                     this.height - 3 - mc.fontRendererObj.FONT_HEIGHT,
                     Utils.Client.astolfoColorsDraw(10, 14, speed));
 
