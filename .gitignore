@@ -6,3 +6,6 @@
 
 # Ignore build directory
 build/
+
+# Ignore .github directory
+.github/
