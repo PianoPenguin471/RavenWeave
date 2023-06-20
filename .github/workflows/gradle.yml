@@ -19,7 +19,7 @@ jobs:
     - name: Set up JDK 17
       uses: actions/setup-java@v3.11.0
       with:
-        java-version: '17.0.7'
+        java-version: '17'
         distribution: 'corretto'
     - name: Grant execute permission for gradlew
       run: powershell -command "Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process"
