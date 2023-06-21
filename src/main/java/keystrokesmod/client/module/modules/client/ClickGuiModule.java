@@ -11,23 +11,21 @@ import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.ColorM;
 import keystrokesmod.client.utils.Utils;
 
-public class GuiModule extends Module {
+public class ClickGuiModule extends Module {
 
     private static ComboSetting preset;
 
-    private static TickSetting cleanUp, reset, betagui, rainbowNotification, notifications;
+    private static TickSetting cleanUp, reset, betagui;
 
     public static int guiScale;
 
-    public GuiModule() {
+    public ClickGuiModule() {
         super("Gui", ModuleCategory.client);
         withKeycode(54);
 
         this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));
         this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
         this.registerSetting(reset = new TickSetting("Reset position", false));
-        this.registerSetting(notifications = new TickSetting("Notifications", false));
-        this.registerSetting(rainbowNotification = new TickSetting("Reset position", false));
         this.registerSetting(preset = new ComboSetting("Preset", Preset.PlusPlus));
     }
 
@@ -204,14 +202,6 @@ public class GuiModule extends Module {
         return  getPresetMode().boarder;
     }
 
-    public static boolean rainbowNotification() {
-        return rainbowNotification.isToggled();
-    }
-
-    public static boolean notifications() {
-        return notifications.isToggled();
-    }
-
     public enum Preset {
         Vape(new Vape()),
         ArcDark(new ArcDark()),
@@ -278,8 +268,6 @@ public class GuiModule extends Module {
         }
 
     }
-
-
 
     public enum CNColor {
         RAINBOW, STATIC

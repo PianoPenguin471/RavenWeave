@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.ClickGuiModule;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.font.FontUtil;
@@ -93,15 +93,15 @@ public class ModuleComponent extends Component {
         //background
         GlStateManager.pushMatrix();
         GlStateManager.pushAttrib();
-        if (GuiModule.showGradientEnabled() && mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getEnabledBottomRGB((((y + aHeight))) * 20), GuiModule.getEnabledTopRGB((y) * 20));
-        if (GuiModule.showGradientDisabled() && !mod.isEnabled()) v(x, y, x2, y + aHeight, GuiModule.getDisabledBottomRGB(((y + aHeight)) * 20), GuiModule.getDisabledTopRGB((y) * 20));
+        if (ClickGuiModule.showGradientEnabled() && mod.isEnabled()) v(x, y, x2, y + aHeight, ClickGuiModule.getEnabledBottomRGB((((y + aHeight))) * 20), ClickGuiModule.getEnabledTopRGB((y) * 20));
+        if (ClickGuiModule.showGradientDisabled() && !mod.isEnabled()) v(x, y, x2, y + aHeight, ClickGuiModule.getDisabledBottomRGB(((y + aHeight)) * 20), ClickGuiModule.getDisabledTopRGB((y) * 20));
         GlStateManager.popAttrib();
         GlStateManager.popMatrix();
 
         //name
-        int button_rgb = mod.isEnabled() ? GuiModule.getEnabledTextRGB() : this.mod.canBeEnabled() ? GuiModule.getDisabledTextRGB() : 0xFF999999;
+        int button_rgb = mod.isEnabled() ? ClickGuiModule.getEnabledTextRGB() : this.mod.canBeEnabled() ? ClickGuiModule.getDisabledTextRGB() : 0xFF999999;
         GL11.glPushMatrix();
-        if (GuiModule.useCustomFont()) FontUtil.normal.drawCenteredSmoothString(mod.getName(), x + (width/2), y + (aHeight/2), button_rgb);
+        if (ClickGuiModule.useCustomFont()) FontUtil.normal.drawCenteredSmoothString(mod.getName(), x + (width/2), y + (aHeight/2), button_rgb);
         else Raven.mc.fontRendererObj.drawString(mod.getName(), (x + (width/2)) - (Raven.mc.fontRendererObj.getStringWidth(mod.getName())/2), y + (aHeight/2), button_rgb, true);
         GL11.glPopMatrix();
 

@@ -7,20 +7,15 @@ import net.weavemc.loader.api.event.KeyboardEvent;
 import net.weavemc.loader.api.event.ShutdownEvent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import me.PianoPenguin471.command.TestCommand;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
+import me.PianoPenguin471.command.GUICommand;
 import net.weavemc.loader.api.event.StartGameEvent;
-import org.lwjgl.input.Keyboard;
-
-import java.awt.*;
 
 public class RavenWeave implements ModInitializer {
     @Override
     public void preInit() {
         System.out.println("Initializing RavenWeave!");
 
-        CommandBus.register(new TestCommand());
+        CommandBus.register(new GUICommand());
         EventBus.subscribe(KeyboardEvent.class, (keyboardEvent) -> {
             for (Module module: Raven.moduleManager.getModules()) {
                 module.keybind();

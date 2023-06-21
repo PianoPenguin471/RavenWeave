@@ -26,7 +26,6 @@ public class CommandManager {
         this.addCommand(new Fakechat());
         this.addCommand(new Ping());
         this.addCommand(new Shoutout());
-        this.addCommand(new Uwu());
         this.addCommand(new Friends());
         this.addCommand(new VersionCommand());
         this.addCommand(new CFakeHud());

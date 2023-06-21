@@ -2,7 +2,7 @@ package keystrokesmod.client.clickgui.raven.components;
 
 import org.lwjgl.opengl.GL11;
 
-import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.ClickGuiModule;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import keystrokesmod.client.utils.RenderUtils;
@@ -45,7 +45,7 @@ public class SliderComponent extends SettingComponent {
         int percentWidth = (int) (width * ((setting.getInput() - setting.getMin())/(setting.getMax() - setting.getMin())));
         int boxY = y + (Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT/2) + 1;
         int boxHeight = height - (boxY - y);
-        RenderUtils.drawBorderedRoundedRect(x, boxY , x + width, (boxY + boxHeight) , 7, 2, GuiModule.getBoarderColour(), 0x20FFFFFF);
+        RenderUtils.drawBorderedRoundedRect(x, boxY , x + width, (boxY + boxHeight) , 7, 2, ClickGuiModule.getBoarderColour(), 0x20FFFFFF);
         RenderUtils.drawBorderedRoundedRect(x, boxY , x + percentWidth, (boxY + boxHeight), percentWidth > 7 ? 7 : percentWidth, 2, 0xFFA020F0, 0x90FFFFFF);
     }
 

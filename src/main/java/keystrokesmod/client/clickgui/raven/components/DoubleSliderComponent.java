@@ -2,7 +2,7 @@ package keystrokesmod.client.clickgui.raven.components;
 
 import org.lwjgl.opengl.GL11;
 
-import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.ClickGuiModule;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.utils.RenderUtils;
@@ -51,7 +51,7 @@ public class DoubleSliderComponent extends SettingComponent {
         int offSetDiff = percentMaxOffSet - percentMinOffSet;
         int boxY = y + (Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT/2) + 1;
         int boxHeight = height - (boxY - y);
-        RenderUtils.drawBorderedRoundedRect(x, boxY, x + width, (boxY + boxHeight) , 7, 2, GuiModule.getBoarderColour(), 0x20FFFFFF);
+        RenderUtils.drawBorderedRoundedRect(x, boxY, x + width, (boxY + boxHeight) , 7, 2, ClickGuiModule.getBoarderColour(), 0x20FFFFFF);
         RenderUtils.drawBorderedRoundedRect(
                 x + percentMinOffSet,
                 boxY,

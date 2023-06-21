@@ -1,6 +1,5 @@
 package keystrokesmod.client.clickgui.kv;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.kv.components.KvModuleSection;
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.ClickGuiModule;
 import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -132,7 +131,7 @@ public class KvCompactGui extends GuiScreen {
     public void onGuiClosed() {
         Raven.configManager.save();
         Raven.clientConfig.saveConfig();
-        Raven.mc.gameSettings.guiScale = GuiModule.guiScale;
+        Raven.mc.gameSettings.guiScale = ClickGuiModule.guiScale;
     }
 
 }

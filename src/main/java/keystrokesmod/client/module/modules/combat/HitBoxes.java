@@ -17,12 +17,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 
-public class HitBox extends Module {
+public class HitBoxes extends Module {
     public static SliderSetting a;
     public static TickSetting b;
     private static MovingObjectPosition mv;
 
-    public HitBox() {
+    public HitBoxes() {
         super("HitBoxes", ModuleCategory.combat);
         this.registerSetting(new DescriptionSetting("Changed from multiplier to extra blocks!"));
         this.registerSetting(a = new SliderSetting("Extra Blocks", 0.2D, 0.05D, 2.0D, 0.05D));
@@ -30,7 +30,7 @@ public class HitBox extends Module {
     }
 
     public static double exp(Entity en) {
-        Module hitBox = Raven.moduleManager.getModuleByClazz(HitBox.class);
+        Module hitBox = Raven.moduleManager.getModuleByClazz(HitBoxes.class);
         return ((hitBox != null) && hitBox.isEnabled() && !AntiBot.bot(en)) ? a.getInput() : 0D;
     }
 

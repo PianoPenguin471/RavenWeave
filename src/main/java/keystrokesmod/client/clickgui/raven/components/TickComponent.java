@@ -5,7 +5,7 @@ import java.awt.Color;
 import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.main.Raven;
-import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.ClickGuiModule;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.CoolDown;
@@ -37,8 +37,8 @@ public class TickComponent extends SettingComponent {
         float offSet = (percent * buttonWidth)/3;
         int fh = (Raven.mc.fontRendererObj.FONT_HEIGHT/2) + 1;
 
-        RenderUtils.drawBorderedRoundedRect(x, y + fh, x + buttonWidth, y + height, height/2, 2, GuiModule.getBoarderColour(), 0xFF000000);
-        RenderUtils.drawBorderedRoundedRect(x + offSet, y + fh, x + ((buttonWidth/3)*2) + offSet, y + height, height/2, 2, GuiModule.getBoarderColour(), colour);
+        RenderUtils.drawBorderedRoundedRect(x, y + fh, x + buttonWidth, y + height, height/2, 2, ClickGuiModule.getBoarderColour(), 0xFF000000);
+        RenderUtils.drawBorderedRoundedRect(x + offSet, y + fh, x + ((buttonWidth/3)*2) + offSet, y + height, height/2, 2, ClickGuiModule.getBoarderColour(), colour);
         GL11.glPushMatrix();
         GL11.glScaled(0.5D, 0.5D, 0.5D);
         Minecraft.getMinecraft().fontRendererObj.drawString(
