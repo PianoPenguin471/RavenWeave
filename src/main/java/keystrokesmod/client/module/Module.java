@@ -13,7 +13,6 @@ import com.google.gson.JsonObject;
 import keystrokesmod.client.clickgui.raven.components.ModuleComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.setting.Setting;
-import keystrokesmod.client.notifications.NotificationRenderer;
 import net.minecraft.client.Minecraft;
 
 public class Module {
@@ -133,7 +132,6 @@ public class Module {
             registered = true;
             EventBus.subscribe(this);
         }
-        NotificationRenderer.moduleStateChanged(this);
     }
 
     public void disable() {
@@ -146,7 +144,6 @@ public class Module {
             registered = false;
         }
         this.onDisable();
-        NotificationRenderer.moduleStateChanged(this);
     }
 
     public void setToggled(boolean enabled) {

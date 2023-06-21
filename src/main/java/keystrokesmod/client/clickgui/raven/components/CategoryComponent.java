@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.ClickGuiModule;
 import keystrokesmod.client.utils.CoolDown;
 import keystrokesmod.client.utils.RenderUtils;
 import keystrokesmod.client.utils.Utils;
@@ -102,7 +102,7 @@ public class CategoryComponent extends Component {
 
         //swing bit VERY BROKEN
         GL11.glPushMatrix();
-        if(GuiModule.isSwingToggled() && GuiModule.isSwingToggled()) { //to make it not work
+        if(ClickGuiModule.isSwingToggled() && ClickGuiModule.isSwingToggled()) { //to make it not work
             int topX = x + (width/2),
                 topY = y + (height/2);
 
@@ -122,8 +122,8 @@ public class CategoryComponent extends Component {
         // background
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         RenderUtils.glScissor(x - 1, y, x2 + 1, y2 + 1);
-        int bgColor = openComponent != null ? GuiModule.getCategoryBackgroundRGB() : GuiModule.getSettingBackgroundRGB();
-        if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, bgColor);
+        int bgColor = openComponent != null ? ClickGuiModule.getCategoryBackgroundRGB() : ClickGuiModule.getSettingBackgroundRGB();
+        if (!ClickGuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, bgColor);
         else RenderUtils.drawRoundedRect(x, y, x2, y2, 12, bgColor);
 
         // drawing modules
@@ -141,18 +141,18 @@ public class CategoryComponent extends Component {
             }
 
         // boarder
-        if (GuiModule.isBoarderToggled()) {
+        if (ClickGuiModule.isBoarderToggled()) {
             if(isMouseOver(mouseX, mouseY)) {
-                if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, GuiModule.getCategoryOutlineColor2());
-                else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, GuiModule.getCategoryOutlineColor2());
-            } else if (!GuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, GuiModule.getCategoryOutlineColor1());
-            else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, GuiModule.getCategoryOutlineColor1());
+                if (!ClickGuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, ClickGuiModule.getCategoryOutlineColor2());
+                else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, ClickGuiModule.getCategoryOutlineColor2());
+            } else if (!ClickGuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, ClickGuiModule.getCategoryOutlineColor1());
+            else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, ClickGuiModule.getCategoryOutlineColor1());
             GlStateManager.resetColor();
         }
 
         // category name
-        if (GuiModule.useCustomFont()) FontUtil.two.drawSmoothString(categoryName.getName(), (float) (x + 2), (float) (y + 4), GuiModule.getCategoryNameRGB());
-        else mc.fontRendererObj.drawString(categoryName.getName(), (float) (x + 2), (float) (y + 4),GuiModule.getCategoryBackgroundRGB(), false);
+        if (ClickGuiModule.useCustomFont()) FontUtil.two.drawSmoothString(categoryName.getName(), (float) (x + 2), (float) (y + 4), ClickGuiModule.getCategoryNameRGB());
+        else mc.fontRendererObj.drawString(categoryName.getName(), (float) (x + 2), (float) (y + 4), ClickGuiModule.getCategoryBackgroundRGB(), false);
 
         // +/- bit
         int red = (int) (tPercent * 255);

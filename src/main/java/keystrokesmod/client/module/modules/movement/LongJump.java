@@ -6,16 +6,15 @@ import com.google.common.eventbus.Subscribe;
 import keystrokesmod.client.event.EventDirection;
 import keystrokesmod.client.event.impl.PacketEvent;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.setting.impl.DoubleSliderSetting;
 import keystrokesmod.client.module.setting.impl.SliderSetting;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
-public class VerusLongJump extends Module {
+public class LongJump extends Module {
     public boolean hasJumped = false, shouldJump = false;
     public static SliderSetting speed;
 
-    public VerusLongJump() {
-        super("VerusLongJump", ModuleCategory.beta);
+    public LongJump() {
+        super("LongJump", ModuleCategory.beta);
         this.registerSetting(speed = new SliderSetting("Speed:", 5, 1, 10, 0.25));
     }
 
@@ -42,7 +41,7 @@ public class VerusLongJump extends Module {
                     return;
                 }
 
-                double s = 1.94D * speed.getInput();
+                double s = 1.94D * (speed.getInput() / 4);
                 double r = Math.toRadians(Module.mc.thePlayer.rotationYaw + 90.0F);
                 Module.mc.thePlayer.motionX = s * Math.cos(r);
                 Module.mc.thePlayer.motionZ = s * Math.sin(r);

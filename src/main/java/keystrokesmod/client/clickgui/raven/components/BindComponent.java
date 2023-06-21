@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL11;
 
 import keystrokesmod.client.clickgui.raven.Component;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.ClickGuiModule;
 import net.minecraft.client.Minecraft;
 
 public class BindComponent extends Component {
@@ -46,7 +46,7 @@ public class BindComponent extends Component {
     public void keyTyped(char t, int k) {
         if (isBinding) {
             if ((k == Keyboard.KEY_0) || (k == Keyboard.KEY_ESCAPE)) {
-                if (mod instanceof GuiModule)
+                if (mod instanceof ClickGuiModule)
                     mod.setBind(54);
                 else
                     mod.setBind(0);

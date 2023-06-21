@@ -10,7 +10,7 @@ import com.google.common.base.Predicates;
 
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.combat.HitBox;
+import keystrokesmod.client.module.modules.combat.HitBoxes;
 import keystrokesmod.client.module.modules.combat.Reach;
 import keystrokesmod.client.module.modules.combat.KillAura;
 // import keystrokesmod.client.module.modules.render.Fullbright;
@@ -98,8 +98,8 @@ public class MixinEntityRenderer {
 
             for (Entity entity1 : list) {
                 float f1 = entity1.getCollisionBorderSize();
-                double kms = HitBox.exp(entity1);
-                AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1).expand(kms, HitBox.b.isToggled()? kms : 0, kms);
+                double kms = HitBoxes.exp(entity1);
+                AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1).expand(kms, HitBoxes.b.isToggled()? kms : 0, kms);
                 MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
                 if (axisalignedbb.isVecInside(vec3)) {
                     if (d2 >= 0.0D) {

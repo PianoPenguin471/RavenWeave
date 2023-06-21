@@ -2,9 +2,7 @@ package keystrokesmod.client.module.modules.client;
 
 import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.clickgui.theme.Theme;
-import keystrokesmod.client.clickgui.theme.themes.ArcDark;
-import keystrokesmod.client.clickgui.theme.themes.MaterialDark;
-import keystrokesmod.client.clickgui.theme.themes.RavenB3;
+import keystrokesmod.client.clickgui.theme.themes.*;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.setting.Setting;
@@ -13,23 +11,21 @@ import keystrokesmod.client.module.setting.impl.TickSetting;
 import keystrokesmod.client.utils.ColorM;
 import keystrokesmod.client.utils.Utils;
 
-public class GuiModule extends Module {
+public class ClickGuiModule extends Module {
 
     private static ComboSetting preset;
 
-    private static TickSetting cleanUp, reset, betagui, rainbowNotification, notifications;
+    private static TickSetting cleanUp, reset, betagui;
 
     public static int guiScale;
 
-    public GuiModule() {
+    public ClickGuiModule() {
         super("Gui", ModuleCategory.client);
         withKeycode(54);
 
         this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));
         this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
         this.registerSetting(reset = new TickSetting("Reset position", false));
-        this.registerSetting(notifications = new TickSetting("Notifications", false));
-        this.registerSetting(rainbowNotification = new TickSetting("Reset position", false));
         this.registerSetting(preset = new ComboSetting("Preset", Preset.PlusPlus));
     }
 
@@ -54,7 +50,7 @@ public class GuiModule extends Module {
                 mc.gameSettings.guiScale = 3;
                 mc.displayGuiScreen(Raven.kvCompactGui);
                 Raven.kvCompactGui.initGui();
-                Raven.kvCompactGui.initGui(); //no idea why this works
+                Raven.kvCompactGui.initGui();
             }
             else {
                 mc.displayGuiScreen(Raven.clickGui);
@@ -68,8 +64,6 @@ public class GuiModule extends Module {
     private static Preset getPresetMode() {
         return (Preset) preset.getMode();
     }
-
-    // sgimas going to tell me theres a better way to do this isnt he
 
     public static boolean isCategoryBackgroundToggled() {
         return getPresetMode().categoryBackground;
@@ -208,75 +202,12 @@ public class GuiModule extends Module {
         return  getPresetMode().boarder;
     }
 
-    public static boolean rainbowNotification() {
-        return rainbowNotification.isToggled();
-    }
-
-    public static boolean notifications() {
-        return notifications.isToggled();
-    }
-
     public enum Preset {
-        /* Vape(true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
-                // categoryBackground
-                CNColor.STATIC, // just leave this
-                // new Color(red, green, blue, alpha (optional out of 255 default is 255))
-                new Color(255, 255, 255), // categoryNameRGB
-                new Color(27, 25, 26, 255), // settingBackgroundRGB
-                new Color(27, 25, 26), // categoryBackgroundRGB
-                new Color(59, 132, 107), // enabledTopRGB
-                new Color(59, 132, 107), // enabledBottomRGB
-                new Color(250, 250, 250), // enabledTextRGB
-                new Color(27, 25, 26), // disabledTopRGB
-                new Color(27, 25, 26), // disabledBottomRGB
-                new Color(255, 255, 255), // disabledTextRGB
-                new Color(27, 25, 26), // backgroundRGBW
-                false, //rounded
-                false //swing
-                ), */
-        Vape( // name
-                        true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
-                        CNColor.STATIC, // just leave this
-                        in -> 0xFFFFFFFE, // categoryNameRGB
-                        in -> 0x99808080, // settingBackgroundRGB
-                        in -> 0x99808080, // categoryBackgroundRGB
-                        in -> -12876693, // enabledTopRGB
-                        in -> -12876693, // enabledBottomRGB
-                        in -> 0xFFFFFFFE, // enabledTextRGB
-                        in -> 0xFF000000, // disabledTopRGB
-                        in -> 0xFF000000, // disabledBottomRGB
-                        in -> 0xFFFFFFFE, // disabledTextRGB
-                        in -> 0x99808080, // backgroundRGB
-                        true, //rounded
-                        true, //swing
-                        false, //boarder
-                        in -> -12876693,
-                        in -> -12876693,
-                        in -> Utils.Client.otherAstolfoColorsDraw(in, 10)
-                        ),
+        Vape(new Vape()),
         ArcDark(new ArcDark()),
         MaterialDark(new MaterialDark()),
 
-        PlusPlus( // name
-                        true, false, true, true, // showGradientEnabled - showGradientDisabled - useCustomFont -
-                        CNColor.STATIC, // just leave this
-                        in -> 0xFFFFFFFE, // categoryNameRGB
-                        in -> -15001318, // settingBackgroundRGB
-                        in -> -15001318, // categoryBackgroundRGB
-                        in -> Utils.Client.rainbowDraw(2, in), // enabledTopRGB
-                        in -> Utils.Client.rainbowDraw(2, in), // enabledBottomRGB
-                        in -> 0xFF000000, // enabledTextRGB
-                        in -> 0xFF000000, // disabledTopRGB
-                        in -> 0xFF000000, // disabledBottomRGB
-                        in -> 0xFFFFFFFE, // disabledTextRGB
-                        in -> 0xFF808080, // backgroundRGB
-                        true, //rounded
-                        true, //swing
-                        true, //boarder
-                        in -> 0xFFFFFFFE,
-                        in -> Utils.Client.astolfoColorsDraw(in, 10),
-                        in -> Utils.Client.otherAstolfoColorsDraw(in, 10)
-                        );
+        PlusPlus(true, false, true, true, CNColor.STATIC, in -> 0xFFFFFFFE, in -> -15001318, in -> -15001318, in -> Utils.Client.rainbowDraw(2, in), in -> Utils.Client.rainbowDraw(2, in), in -> 0xFF000000, in -> 0xFF000000,in -> 0xFF000000, in -> 0xFFFFFFFE, in -> 0xFF808080, true, true, true, in -> 0xFFFFFFFE, in -> Utils.Client.astolfoColorsDraw(in, 10), in -> Utils.Client.otherAstolfoColorsDraw(in, 10));
 
         public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground, roundedCorners, swing, boarder;
         public ColorM categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB,
@@ -337,8 +268,6 @@ public class GuiModule extends Module {
         }
 
     }
-
-
 
     public enum CNColor {
         RAINBOW, STATIC

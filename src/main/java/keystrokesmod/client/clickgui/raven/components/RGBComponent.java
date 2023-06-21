@@ -2,7 +2,7 @@ package keystrokesmod.client.clickgui.raven.components;
 
 import org.lwjgl.opengl.GL11;
 
-import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.ClickGuiModule;
 import keystrokesmod.client.module.setting.Setting;
 import keystrokesmod.client.module.setting.impl.RGBSetting;
 import keystrokesmod.client.utils.RenderUtils;
@@ -49,7 +49,7 @@ public class RGBComponent extends SettingComponent {
             //bars
             int boxY = y + (Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT/2) + 1;
             int boxHeight = height - (boxY - y);
-            RenderUtils.drawBorderedRoundedRect(x, boxY, x + width, (boxY + boxHeight) , 4, 2, GuiModule.getBoarderColour(), 0x20FFFFFF);
+            RenderUtils.drawBorderedRoundedRect(x, boxY, x + width, (boxY + boxHeight) , 4, 2, ClickGuiModule.getBoarderColour(), 0x20FFFFFF);
             int[] drawColor = { 0xffff0000, 0xff00ff00, 0xff0000ff };
             for (int i = 0; i < 3; i++) {
                 int colorX = (int) (((width * this.setting.getColor(i))/ 255f) + x);

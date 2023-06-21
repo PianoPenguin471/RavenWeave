@@ -1,6 +1,5 @@
 package keystrokesmod.client.clickgui.raven;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -12,7 +11,7 @@ import keystrokesmod.client.clickgui.raven.components.CategoryComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
 import keystrokesmod.client.module.Module.ModuleCategory;
-import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.ClickGuiModule;
 import keystrokesmod.client.utils.Timer;
 import keystrokesmod.client.utils.Utils;
 import keystrokesmod.client.utils.font.FontUtil;
@@ -98,7 +97,7 @@ public class ClickGui extends GuiScreen {
             int rows = 1;
             for (int i = Raven.updateText.length - 1; i >= 0; i--) {
                 String up = Raven.updateText[i];
-                if (GuiModule.useCustomFont())
+                if (ClickGuiModule.useCustomFont())
 					FontUtil.normal.drawSmoothString(up, halfScreenWidth - (this.fontRendererObj.getStringWidth(up) / 2),
                             this.height - (this.fontRendererObj.FONT_HEIGHT * rows) - margin,
                             Utils.Client.astolfoColorsDraw(10, 28, speed));
@@ -110,7 +109,7 @@ public class ClickGui extends GuiScreen {
                 rows++;
                 margin += 2;
             }
-        } else if (GuiModule.useCustomFont())
+        } else if (ClickGuiModule.useCustomFont())
 			FontUtil.normal.drawSmoothString(
 		            "Raven B++ v" + clientVersion + " | Config: " + Raven.configManager.getConfig().getName(), 4,
 		            this.height - 3 - mc.fontRendererObj.FONT_HEIGHT,

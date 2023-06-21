@@ -5,7 +5,7 @@ import org.lwjgl.input.Keyboard;
 import keystrokesmod.client.clickgui.kv.KvComponent;
 import keystrokesmod.client.main.Raven;
 import keystrokesmod.client.module.Module;
-import keystrokesmod.client.module.modules.client.GuiModule;
+import keystrokesmod.client.module.modules.client.ClickGuiModule;
 import net.minecraft.client.Minecraft;
 
 public class KvBindComponent extends KvComponent {
@@ -37,7 +37,7 @@ public class KvBindComponent extends KvComponent {
     public void keyTyped(char t, int k) {
     	if (isBinding) {
     		if ((k == Keyboard.KEY_0) || (k == Keyboard.KEY_ESCAPE)) {
-    			if (mod instanceof GuiModule)
+    			if (mod instanceof ClickGuiModule)
 					mod.setBind(54);
 				else
 					mod.setBind(0);
