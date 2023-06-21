@@ -15,7 +15,7 @@ public class GuiModule extends Module {
 
     private static ComboSetting preset;
 
-    private static TickSetting cleanUp, reset, betagui, rainbowNotification, notifications;
+    private static TickSetting cleanUp, reset, betagui;
 
     public static int guiScale;
 
@@ -26,8 +26,6 @@ public class GuiModule extends Module {
         this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));
         this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
         this.registerSetting(reset = new TickSetting("Reset position", false));
-        this.registerSetting(notifications = new TickSetting("Notifications", false));
-        this.registerSetting(rainbowNotification = new TickSetting("Reset position", false));
         this.registerSetting(preset = new ComboSetting("Preset", Preset.PlusPlus));
     }
 
@@ -202,14 +200,6 @@ public class GuiModule extends Module {
 
     public static boolean isBoarderToggled() {
         return  getPresetMode().boarder;
-    }
-
-    public static boolean rainbowNotification() {
-        return rainbowNotification.isToggled();
-    }
-
-    public static boolean notifications() {
-        return notifications.isToggled();
     }
 
     public enum Preset {
