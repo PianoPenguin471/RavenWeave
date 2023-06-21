@@ -13,7 +13,7 @@ public class LongJump extends Module {
     public boolean hasJumped = false, shouldJump = false;
     public static SliderSetting speed;
 
-    public VerusLongJump() {
+    public LongJump() {
         super("LongJump", ModuleCategory.beta);
         this.registerSetting(speed = new SliderSetting("Speed:", 5, 1, 10, 0.25));
     }
