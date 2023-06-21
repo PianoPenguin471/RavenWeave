@@ -1,5 +1,5 @@
 # RavenWeave
-RavenWeave is a port of [RavenB++](https://github.com/K-ov/Raven-bPLUS) to [Weave](https://github.com/Weave-MC/Weave-Loader) to make Raven usable on Lunar Client! This project still has some bugs, so feel free to commit to help fix them.
+RavenWeave is a port of [Raven B++](https://github.com/K-ov/Raven-bPLUS) to [Weave](https://github.com/Weave-MC/Weave-Loader) to make Raven usable on Lunar Client! This project still has some bugs, so feel free to commit to help fix them.
 
 ---
 
