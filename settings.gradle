@@ -7,4 +7,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "RavenWeave-main"
+rootProject.name = "RavenWeave"
