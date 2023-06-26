@@ -2,7 +2,7 @@ package ravenweave.client.module.modules.client;
 
 import ravenweave.client.clickgui.raven.components.CategoryComponent;
 import ravenweave.client.clickgui.theme.Theme;
-import keystrokesmod.client.clickgui.theme.themes.*;
+import ravenweave.client.clickgui.theme.themes.*;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
@@ -10,9 +10,6 @@ import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.ColorM;
 import ravenweave.client.utils.Utils;
-import ravenweave.client.clickgui.theme.themes.ArcDark;
-import ravenweave.client.clickgui.theme.themes.MaterialDark;
-import ravenweave.client.clickgui.theme.themes.Vape;
 
 public class ClickGuiModule extends Module {
 

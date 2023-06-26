@@ -1,10 +1,9 @@
 package ravenweave.client.command;
 
 import ravenweave.client.clickgui.raven.Terminal;
-import keystrokesmod.client.command.commands.*;
+import ravenweave.client.command.commands.*;
 import ravenweave.client.main.Raven;
 import ravenweave.client.utils.Utils;
-import ravenweave.client.command.commands.*;
 
 import java.util.ArrayList;
 import java.util.List;
