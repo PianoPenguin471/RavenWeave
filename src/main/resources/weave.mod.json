@@ -3,10 +3,10 @@
     "ravenweave.mixins.json"
   ],
   "entrypoints": [
-    "me.PianoPenguin471.RavenWeave"
+    "me.pianopenguin471.RavenWeave"
   ],
   "hooks": [
-    "me.PianoPenguin471.hook.MinecraftHook"
+    "me.pianopenguin471.hook.MinecraftHook"
   ],
   "about": {
     "name": "RavenWeave",

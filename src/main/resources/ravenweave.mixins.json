@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "me.PianoPenguin471.mixins",
+  "package": "me.pianopenguin471.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinEntity",

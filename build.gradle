@@ -3,7 +3,7 @@ plugins {
     id 'com.github.weave-mc.weave' version '8b70bcc707'
 }
 
-group = 'me.PianoPenguin471'
+group = 'me.pianopenguin471'
 version = '1.1.2'
 
 minecraft.version '1.8.9'
