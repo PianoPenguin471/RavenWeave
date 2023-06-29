@@ -110,6 +110,7 @@ public class ModuleManager {
         addModule(new SpeedTest());
         addModule(new TargetHUD());
         addModule(new LongJump());
+        addModule(new BHop());
         initialized = true;
     }
 
