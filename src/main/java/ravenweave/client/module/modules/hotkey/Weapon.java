@@ -1,9 +1,9 @@
 package ravenweave.client.module.modules.hotkey;
 
-import ravenweave.client.module.Module;
-import ravenweave.client.utils.Utils;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.ItemStack;
+import ravenweave.client.module.Module;
+import ravenweave.client.utils.Utils;
 
 public class Weapon extends Module {
     public Weapon() {

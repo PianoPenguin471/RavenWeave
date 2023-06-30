@@ -1,17 +1,16 @@
 package ravenweave.client.module.modules.world;
 
-import java.util.HashMap;
-
 import com.google.common.eventbus.Subscribe;
-
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.player.Freecam;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+
+import java.util.HashMap;
 
 public class AntiBot extends Module {
     private static final HashMap<EntityPlayer, Long> newEnt = new HashMap<>();

@@ -1,14 +1,14 @@
 package ravenweave.client.module.modules.combat;
 
+import net.minecraft.client.settings.KeyBinding;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
+import org.lwjgl.input.Mouse;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.settings.KeyBinding;
-import org.lwjgl.input.Mouse;
 
 public class AutoBlock extends Module {
     public static DoubleSliderSetting duration, distance;

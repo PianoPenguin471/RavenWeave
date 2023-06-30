@@ -1,16 +1,16 @@
 package ravenweave.client.module.modules.combat;
 
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.weavemc.loader.api.event.MouseEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import org.lwjgl.input.Mouse;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
-import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.MouseManager;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import org.lwjgl.input.Mouse;
+import ravenweave.client.utils.Utils;
 
 import java.awt.*;
 

@@ -1,16 +1,15 @@
 package ravenweave.client.module.modules.render;
 
+import net.minecraft.client.gui.Gui;
+import net.minecraft.entity.Entity;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.module.setting.impl.RGBSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.entity.Entity;
 
 public class Radar extends Module {
 

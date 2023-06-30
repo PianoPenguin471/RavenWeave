@@ -1,13 +1,5 @@
 package ravenweave.client.module.modules.render;
 
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
-
-import ravenweave.client.module.Module;
-import ravenweave.client.module.modules.client.Targets;
-import ravenweave.client.module.setting.impl.RGBSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.utils.RenderUtils;
 import me.pianopenguin471.events.AttackEntityEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -17,7 +9,14 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.weavemc.loader.api.event.RenderGameOverlayEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.modules.client.Targets;
+import ravenweave.client.module.setting.impl.RGBSetting;
+import ravenweave.client.module.setting.impl.SliderSetting;
+import ravenweave.client.utils.RenderUtils;
 
 import java.awt.*;
 

@@ -1,20 +1,19 @@
 package ravenweave.client.module.modules.render;
 
-import java.awt.Color;
-import java.util.Iterator;
-
-import ravenweave.client.module.modules.client.Targets;
+import com.google.common.eventbus.Subscribe;
+import net.minecraft.entity.player.EntityPlayer;
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import com.google.common.eventbus.Subscribe;
-
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.modules.client.Targets;
 import ravenweave.client.module.setting.impl.RGBSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
-import net.minecraft.entity.player.EntityPlayer;
+
+import java.awt.*;
+import java.util.Iterator;
 
 public class Tracers extends Module {
     public static RGBSetting color;

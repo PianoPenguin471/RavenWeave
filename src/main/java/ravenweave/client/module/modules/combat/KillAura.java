@@ -1,14 +1,12 @@
 package ravenweave.client.module.modules.combat;
 
-import java.awt.Color;
-import java.util.List;
-
+import com.google.common.eventbus.Subscribe;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.WorldSettings.GameType;
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Mouse;
-
-import com.google.common.eventbus.Subscribe;
-
 import ravenweave.client.event.impl.GameLoopEvent;
 import ravenweave.client.event.impl.LookEvent;
 import ravenweave.client.event.impl.MoveInputEvent;
@@ -21,9 +19,9 @@ import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.WorldSettings.GameType;
+
+import java.awt.*;
+import java.util.List;
 
 //todo change the clicking system
 public class KillAura extends Module {

@@ -1,21 +1,20 @@
 package ravenweave.client.module.modules.player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
-
-import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.DoubleSliderSetting;
-import ravenweave.client.utils.CoolDown;
-import ravenweave.client.utils.Utils;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.weavemc.loader.api.event.RenderGameOverlayEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DoubleSliderSetting;
+import ravenweave.client.utils.CoolDown;
+import ravenweave.client.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AutoArmour extends Module {
 

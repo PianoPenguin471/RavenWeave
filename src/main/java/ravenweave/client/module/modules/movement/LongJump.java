@@ -1,13 +1,13 @@
 package ravenweave.client.module.modules.movement;
 
+import com.google.common.eventbus.Subscribe;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.TickEvent;
-import com.google.common.eventbus.Subscribe;
 import ravenweave.client.event.EventDirection;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
-import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class LongJump extends Module {
     public boolean hasJumped = false, shouldJump = false;

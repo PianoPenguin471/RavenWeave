@@ -1,12 +1,12 @@
 package ravenweave.client.module.modules.movement;
 
+import net.minecraft.entity.Entity;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.Reach;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
-import net.minecraft.entity.Entity;
 
 public class KeepSprint extends Module {
     public static DescriptionSetting a, a2;

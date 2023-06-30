@@ -28,7 +28,7 @@ public class HUD extends Module {
     public static ComboSetting<lmv> logoMode;
     public static ComboSetting<ColourModes> colorMode;
     public static SliderSetting logoScaleh, logoScalew;
-    public static DescriptionSetting logoDesc1;
+    public static DescriptionSetting description, logoDesc1;
     private static int hudX = 5;
     private static int hudY = 70;
     private double logoHeight;
@@ -48,16 +48,16 @@ public class HUD extends Module {
 
     public HUD() {
         super("HUD", ModuleCategory.render);
+        this.registerSetting(description = new DescriptionSetting(("Show a list of modules.")));
         this.registerSetting(editPosition = new TickSetting("Edit position", false));
         this.registerSetting(dropShadow = new TickSetting("Drop shadow", true));
-        this.registerSetting(logo = new TickSetting("Logo", true));
-
-        this.registerSetting(colorMode = new ComboSetting("Value: ", ColourModes.KV));
-        this.registerSetting(logoScaleh = new SliderSetting("Logo Scale height ", 1, 0, 10, 0.01));
-        this.registerSetting(logoScalew = new SliderSetting("Logo Scale width ", 2, 0, 10, 0.01));
-        this.registerSetting(logoMode = new ComboSetting("Logo Mode:", lmv.l7));
-        this.registerSetting(logoDesc1 = new DescriptionSetting("cd logomode put an image logo.png"));
-        this.registerSetting(logoDesc1 = new DescriptionSetting("in the keystrokes folder"));
+        //this.registerSetting(logo = new TickSetting("Logo", true));
+        this.registerSetting(colorMode = new ComboSetting("Value: ", ColourModes.RAVEN));
+        //this.registerSetting(logoScaleh = new SliderSetting("Logo Scale height ", 1, 0, 10, 0.01));
+        //this.registerSetting(logoScalew = new SliderSetting("Logo Scale width ", 2, 0, 10, 0.01));
+        //this.registerSetting(logoMode = new ComboSetting("Logo Mode:", lmv.l7));
+        //this.registerSetting(logoDesc1 = new DescriptionSetting("cd logomode put an image logo.png"));
+        //this.registerSetting(logoDesc1 = new DescriptionSetting("in the keystrokes folder"));
         showedError = false;
         showInHud = false;
     }
@@ -135,8 +135,8 @@ public class HUD extends Module {
             if ((hudY + textBoxHeight) > (mc.displayHeight / 2))
                 hudY = (mc.displayHeight / 2) - textBoxHeight;
 
-            drawLogo(textBoxWidth);
-            y += logoHeight;
+            //drawLogo(textBoxWidth);
+            //y += logoHeight;
             for (Module m : en) {
                 if (m.isEnabled() && m.showInHud()) {
                     if ((positionMode == Utils.HUD.PositionMode.DOWNRIGHT) || (positionMode == Utils.HUD.PositionMode.UPRIGHT)) {
@@ -219,6 +219,7 @@ public class HUD extends Module {
         }
     }
 
+    /*
     private void drawLogo(int e) {
 
         ScaledResolution sr = new ScaledResolution(mc);
@@ -237,6 +238,7 @@ public class HUD extends Module {
         } else
 			logoHeight = 0;
     }
+     */
 
     static class EditHudPositionScreen extends GuiScreen {
         final String hudTextExample = "This is an-Example-HUD";

@@ -1,7 +1,6 @@
 package ravenweave.client.module.modules.other;
 
 import com.google.common.eventbus.Subscribe;
-
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;

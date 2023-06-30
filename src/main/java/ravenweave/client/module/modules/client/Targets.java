@@ -1,10 +1,10 @@
 package ravenweave.client.module.modules.client;
 
-import java.util.Comparator;
-import java.util.List;
-
+import me.pianopenguin471.events.AttackEntityEvent;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.weavemc.loader.api.event.SubscribeEvent;
-
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.AimAssist;
@@ -12,24 +12,25 @@ import ravenweave.client.module.modules.combat.KillAura;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.ComboSetting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
-import me.pianopenguin471.events.AttackEntityEvent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+
+import java.util.Comparator;
+import java.util.List;
 
 public class Targets extends Module {
 
+    public DescriptionSetting description;
     private static TickSetting friends, teams, invis, bots, naked, debug;
     private static SliderSetting fov, distance, lockDist,auraFov;
     private static ComboSetting<SortMode> sortMode;
-
     public static EntityPlayer lockedTarget;
 
     public Targets() {
         super("Targets", ModuleCategory.client);
+        this.registerSetting(description = new DescriptionSetting("Sets targets for Killaura, Aimassist, ETC."));
         this.registerSettings(
                         friends = new TickSetting("Target friends", false),
                         teams = new TickSetting("Target teammates", false),

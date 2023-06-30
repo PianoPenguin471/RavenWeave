@@ -1,16 +1,15 @@
 package ravenweave.client.module.modules.combat;
 
 import com.google.common.eventbus.Subscribe;
-
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.ItemSkull;
+import net.minecraft.item.ItemStack;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.ItemSkull;
-import net.minecraft.item.ItemStack;
 
 public class AutoGHead extends Module {
 

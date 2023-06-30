@@ -1,18 +1,18 @@
 package ravenweave.client.module.modules.minigames;
 
-import net.weavemc.loader.api.event.MouseEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.ComboSetting;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.weavemc.loader.api.event.MouseEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Mouse;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.ComboSetting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
+import ravenweave.client.module.setting.impl.SliderSetting;
+import ravenweave.client.utils.Utils;
 
 import java.util.Arrays;
 import java.util.List;

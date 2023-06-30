@@ -2,10 +2,10 @@ package ravenweave.client.module.modules.combat;
 
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
+import org.lwjgl.input.Mouse;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
-import org.lwjgl.input.Mouse;
 
 public class AutoWeapon extends Module {
     public static TickSetting onlyWhenHoldingDown;

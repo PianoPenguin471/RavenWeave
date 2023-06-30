@@ -1,14 +1,14 @@
 package ravenweave.client.module.modules.player;
 
-import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.utils.Utils;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
+import ravenweave.client.module.setting.impl.SliderSetting;
+import ravenweave.client.utils.Utils;
 
 import java.util.TimerTask;
 

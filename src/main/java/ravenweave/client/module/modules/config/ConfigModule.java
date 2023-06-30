@@ -1,8 +1,8 @@
 package ravenweave.client.module.modules.config;
 
+import org.lwjgl.input.Keyboard;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
-import org.lwjgl.input.Keyboard;
 
 public class ConfigModule extends Module {
 

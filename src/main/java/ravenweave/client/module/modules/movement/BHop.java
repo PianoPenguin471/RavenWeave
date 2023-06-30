@@ -1,15 +1,12 @@
 package ravenweave.client.module.modules.movement;
 
 import com.google.common.eventbus.Subscribe;
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.MoveInputEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.settings.KeyBinding;
 
 public class BHop extends Module {
     public static SliderSetting pspd;

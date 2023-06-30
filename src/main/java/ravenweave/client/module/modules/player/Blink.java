@@ -1,17 +1,16 @@
 package ravenweave.client.module.modules.player;
 
-import java.util.ArrayList;
-
+import com.google.common.eventbus.Subscribe;
+import net.minecraft.network.Packet;
 import net.weavemc.loader.api.event.ShutdownEvent;
 import net.weavemc.loader.api.event.StartGameEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import com.google.common.eventbus.Subscribe;
-
 import ravenweave.client.event.EventDirection;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.TickSetting;
-import net.minecraft.network.Packet;
+
+import java.util.ArrayList;
 
 public class Blink extends Module {
 

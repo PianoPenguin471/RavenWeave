@@ -1,16 +1,16 @@
 package ravenweave.client.module.modules.movement;
 
 import com.google.common.eventbus.Subscribe;
-import ravenweave.client.clickgui.raven.ClickGui;
-import ravenweave.client.event.impl.TickEvent;
-import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
-import ravenweave.client.module.setting.impl.TickSetting;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Keyboard;
+import ravenweave.client.clickgui.raven.ClickGui;
+import ravenweave.client.event.impl.TickEvent;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
+import ravenweave.client.module.setting.impl.TickSetting;
 
 public class InvMove extends Module {
 

@@ -1,11 +1,11 @@
 package ravenweave.client.module.modules.movement;
 
 import com.google.common.eventbus.Subscribe;
+import net.minecraft.client.settings.KeyBinding;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.settings.KeyBinding;
 
 public class Sprint extends Module {
     public static TickSetting multiDir, ignoreBlindness;

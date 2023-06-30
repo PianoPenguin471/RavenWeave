@@ -75,10 +75,8 @@ public class ModuleManager {
         addModule(new WaterBucket());
         addModule(new Terminal());
         addModule(new ClickGuiModule());
-        addModule(new ChatLogger());
         addModule(new BridgeAssist());
         addModule(new UpdateCheck());
-        addModule(new AutoHeader());
         addModule(new Blocks());
         addModule(new Ladders());
         addModule(new Weapon());
@@ -97,7 +95,6 @@ public class ModuleManager {
         addModule(new Projectiles());
         addModule(new FakeHud());
         addModule(new ConfigSettings());
-        addModule(new Parkour());
         addModule(new JumpReset());
         addModule(new KillAura());
         addModule(new Spin());

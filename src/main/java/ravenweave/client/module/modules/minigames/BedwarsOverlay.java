@@ -1,20 +1,20 @@
 package ravenweave.client.module.modules.minigames;
 
-import net.weavemc.loader.api.event.ChatReceivedEvent;
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.JsonObject;
-import ravenweave.client.main.Raven;
-import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.weavemc.loader.api.event.ChatReceivedEvent;
+import net.weavemc.loader.api.event.RenderGameOverlayEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import ravenweave.client.main.Raven;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
+import ravenweave.client.module.setting.impl.SliderSetting;
+import ravenweave.client.utils.Utils;
 
 import java.util.HashMap;
 
