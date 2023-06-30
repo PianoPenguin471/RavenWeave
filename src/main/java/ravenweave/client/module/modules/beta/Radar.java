@@ -1,4 +1,4 @@
-package ravenweave.client.module.modules.render;
+package ravenweave.client.module.modules.beta;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.Entity;
@@ -18,7 +18,7 @@ public class Radar extends Module {
     private RGBSetting boxColor, boarderColor, playerColor, selfColor;
 
     public Radar() {
-        super("Radar", /*ModuleCategory.render*/ModuleCategory.beta);
+        super("Radar", ModuleCategory.beta); // Category: Render
         this.registerSetting(distance = new SliderSetting("distance", 25, 5, 100, 1));
         this.registerSetting(boxColor = new RGBSetting("box color", 0, 200, 0));
         this.registerSetting(boarderColor = new RGBSetting("boarder color", 255, 200, 255));

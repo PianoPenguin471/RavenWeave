@@ -1,4 +1,4 @@
-package ravenweave.client.module.modules.render;
+package ravenweave.client.module.modules.beta;
 
 import me.pianopenguin471.events.AttackEntityEvent;
 import net.minecraft.client.Minecraft;
@@ -32,7 +32,7 @@ public class TargetHUD extends Module {
     ScaledResolution sr;
 
     public TargetHUD() {
-        super("Target HUD", /*ModuleCategory.render*/ModuleCategory.beta);
+        super("Target HUD", ModuleCategory.beta); // Category: Render
         this.registerSetting(borderColor = new RGBSetting("Border",     49, 203, 113));
         this.registerSetting(mainColor   = new RGBSetting("Main Color", 49, 203, 113));
         this.registerSettings(

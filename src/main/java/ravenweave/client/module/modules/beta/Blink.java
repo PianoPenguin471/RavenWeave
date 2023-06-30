@@ -1,4 +1,4 @@
-package ravenweave.client.module.modules.player;
+package ravenweave.client.module.modules.beta;
 
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.network.Packet;
@@ -20,7 +20,7 @@ public class Blink extends Module {
     private ArrayList<? extends Packet> inboundPackets = new ArrayList<>();
 
     public Blink() {
-        super("Blink", /*ModuleCategory.player*/ModuleCategory.beta);
+        super("Blink", ModuleCategory.beta); // Category: Player
         this.registerSetting(inbound = new TickSetting("Block Inbound", true));
         this.registerSetting(outbound = new TickSetting("Block Outbound", true));
     }

@@ -7,6 +7,7 @@ import java.util.List;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.module.modules.HUD;
+import ravenweave.client.module.modules.beta.*;
 import ravenweave.client.module.modules.client.*;
 import ravenweave.client.module.modules.combat.*;
 import ravenweave.client.module.modules.config.*;
@@ -99,15 +100,18 @@ public class ModuleManager {
         addModule(new KillAura());
         addModule(new Spin());
         addModule(new AutoGHead());
-        addModule(new Radar());
-        addModule(new Scaffold());
-        addModule(new Blink());
         addModule(new AutoSoup());
         addModule(new Targets());
+        addModule(new BHop());
+
+        // BETA
+        addModule(new Blink());
+        addModule(new LongJump());
+        addModule(new Radar());
+        addModule(new Scaffold());
         addModule(new SpeedTest());
         addModule(new TargetHUD());
-        addModule(new LongJump());
-        addModule(new BHop());
+
         initialized = true;
     }
 
