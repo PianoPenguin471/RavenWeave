@@ -1,17 +1,17 @@
 package ravenweave.client.module.modules.player;
 
 import com.google.common.eventbus.Subscribe;
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemEgg;
+import net.minecraft.item.ItemSnowball;
+import net.minecraft.item.ItemStack;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.ReflectionUtils;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemEgg;
-import net.minecraft.item.ItemSnowball;
-import net.minecraft.item.ItemStack;
 
 import java.lang.reflect.Field;
 

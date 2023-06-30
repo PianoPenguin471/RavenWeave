@@ -1,11 +1,11 @@
 package ravenweave.client.module.modules.config;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ravenweave.client.config.Config;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module.ModuleCategory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfigModuleManager {
 

@@ -1,9 +1,9 @@
-package ravenweave.client.module.modules.world;
+package ravenweave.client.module.modules.beta;
 
+import com.google.common.eventbus.Subscribe;
+import net.minecraft.client.gui.ScaledResolution;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import com.google.common.eventbus.Subscribe;
-
 import ravenweave.client.event.impl.GameLoopEvent;
 import ravenweave.client.event.impl.LookEvent;
 import ravenweave.client.event.impl.MoveInputEvent;
@@ -12,7 +12,6 @@ import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.font.FontUtil;
-import net.minecraft.client.gui.ScaledResolution;
 
 public class Scaffold extends Module {
 
@@ -24,7 +23,7 @@ public class Scaffold extends Module {
 
 
     public Scaffold() {
-        super("Scaffold", /*ModuleCategory.world*/ModuleCategory.beta);
+        super("Scaffold", ModuleCategory.beta); // Category: World
         this.registerSettings(
                         eagle = new TickSetting("Shift", false),
                         rps = new SliderSetting("Rotation speed", 80, 0, 300, 1));

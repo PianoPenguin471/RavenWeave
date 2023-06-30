@@ -1,16 +1,6 @@
 package ravenweave.client.module.modules.minigames;
 
-import ravenweave.client.module.setting.impl.RGBSetting;
-import net.weavemc.loader.api.event.ChatReceivedEvent;
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
 import com.google.common.eventbus.Subscribe;
-import ravenweave.client.event.impl.TickEvent;
-import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.Setting;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
-import ravenweave.client.module.setting.impl.TickSetting;
-import ravenweave.client.utils.Utils;
 import me.pianopenguin471.events.EntityJoinWorldEvent;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -23,6 +13,16 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.weavemc.loader.api.event.ChatReceivedEvent;
+import net.weavemc.loader.api.event.RenderGameOverlayEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import ravenweave.client.event.impl.TickEvent;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.Setting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
+import ravenweave.client.module.setting.impl.RGBSetting;
+import ravenweave.client.module.setting.impl.TickSetting;
+import ravenweave.client.utils.Utils;
 
 public class BridgeInfo extends Module {
     public static DescriptionSetting a;

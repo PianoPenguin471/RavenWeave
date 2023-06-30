@@ -1,21 +1,25 @@
-package ravenweave.client.module.modules.movement;
+package ravenweave.client.module.modules.beta;
 
+import com.google.common.eventbus.Subscribe;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.TickEvent;
-import com.google.common.eventbus.Subscribe;
 import ravenweave.client.event.EventDirection;
 import ravenweave.client.event.impl.PacketEvent;
+import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
-import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import ravenweave.client.module.setting.impl.TickSetting;
 
 public class LongJump extends Module {
     public boolean hasJumped = false, shouldJump = false;
     public static SliderSetting speed;
+    public static TickSetting autodisable;
 
     public LongJump() {
-        super("LongJump", ModuleCategory.beta);
+        super("LongJump", ModuleCategory.beta); // Category: Movement
         this.registerSetting(speed = new SliderSetting("Speed:", 5, 1, 10, 0.25));
+        this.registerSetting(autodisable = new TickSetting("Auto Disable", true));
     }
 
     @Subscribe
@@ -45,6 +49,9 @@ public class LongJump extends Module {
                 double r = Math.toRadians(Module.mc.thePlayer.rotationYaw + 90.0F);
                 Module.mc.thePlayer.motionX = s * Math.cos(r);
                 Module.mc.thePlayer.motionZ = s * Math.sin(r);
+                if (autodisable.isToggled()) {
+                    Raven.moduleManager.getModuleByName("LongJump").disable();
+                }
             }
         }
     }

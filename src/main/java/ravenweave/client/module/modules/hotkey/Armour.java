@@ -1,10 +1,10 @@
 package ravenweave.client.module.modules.hotkey;
 
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
 
 public class Armour extends Module {
     public static TickSetting ignoreIfAlreadyEquipped;

@@ -1,16 +1,16 @@
 package ravenweave.client.module.modules.other;
 
 import com.google.common.eventbus.Subscribe;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemEnderPearl;
+import net.minecraft.item.ItemStack;
+import org.lwjgl.input.Mouse;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.AimAssist;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemEnderPearl;
-import net.minecraft.item.ItemStack;
-import org.lwjgl.input.Mouse;
 
 import java.awt.*;
 import java.awt.event.InputEvent;

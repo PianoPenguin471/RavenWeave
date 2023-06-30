@@ -1,10 +1,10 @@
 package ravenweave.client.module.modules.combat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.eventbus.Subscribe;
-
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.inventory.ContainerPlayer;
+import net.minecraft.item.ItemSoup;
+import net.minecraft.item.ItemStack;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
@@ -13,10 +13,9 @@ import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.inventory.ContainerPlayer;
-import net.minecraft.item.ItemSoup;
-import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AutoSoup extends Module {
 

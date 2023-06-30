@@ -1,8 +1,13 @@
 package ravenweave.client.module.modules.player;
 
+import com.google.common.eventbus.Subscribe;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import com.google.common.eventbus.Subscribe;
+import org.lwjgl.input.Keyboard;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
@@ -12,11 +17,6 @@ import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 

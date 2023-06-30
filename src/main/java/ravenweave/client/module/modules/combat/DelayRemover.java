@@ -1,12 +1,12 @@
 package ravenweave.client.module.modules.combat;
 
 import com.google.common.eventbus.Subscribe;
+import net.minecraft.client.Minecraft;
 import ravenweave.client.event.impl.GameLoopEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.utils.ReflectionUtils;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.Minecraft;
 
 import java.lang.reflect.Field;
 

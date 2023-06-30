@@ -1,9 +1,9 @@
 package ravenweave.client.module.modules.other;
 
+import net.minecraft.util.ChatComponentText;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.utils.Utils;
-import net.minecraft.util.ChatComponentText;
 
 public class FakeChat extends Module {
     public static DescriptionSetting a;

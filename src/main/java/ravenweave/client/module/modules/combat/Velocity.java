@@ -1,14 +1,14 @@
 package ravenweave.client.module.modules.combat;
 
 import com.google.common.eventbus.Subscribe;
+import me.pianopenguin471.mixins.S12PacketEntityVelocityAccessor;
+import net.minecraft.entity.Entity;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
-import me.pianopenguin471.mixins.S12PacketEntityVelocityAccessor;
-import net.minecraft.entity.Entity;
-import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class Velocity extends Module {
     public static SliderSetting horizontal, vertical, chance, horizontalProjectiles, verticalProjectiles, chanceProjectiles, distanceProjectiles;

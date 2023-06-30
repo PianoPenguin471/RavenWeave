@@ -1,11 +1,11 @@
 package ravenweave.client.module.modules.hotkey;
 
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.ItemStack;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 

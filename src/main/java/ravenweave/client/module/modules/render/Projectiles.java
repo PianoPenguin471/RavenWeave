@@ -1,17 +1,17 @@
 package ravenweave.client.module.modules.render;
 
-import net.weavemc.loader.api.event.RenderWorldEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.utils.Utils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.util.Timer;
 import net.minecraft.util.Vec3;
+import net.weavemc.loader.api.event.RenderWorldEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.SliderSetting;
+import ravenweave.client.utils.Utils;
 
 public class Projectiles extends Module {
 

@@ -1,26 +1,6 @@
 package ravenweave.client.module.modules.combat;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
-import ravenweave.client.utils.ReflectionUtils;
 import me.pianopenguin471.events.AttackEntityEvent;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-
-import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.ComboSetting;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
-import ravenweave.client.module.setting.impl.DoubleSliderSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.module.setting.impl.TickSetting;
-import ravenweave.client.utils.SoundUtils;
-import ravenweave.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.Minecraft;
@@ -32,6 +12,21 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import net.weavemc.loader.api.event.RenderGameOverlayEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.*;
+import ravenweave.client.utils.ReflectionUtils;
+import ravenweave.client.utils.SoundUtils;
+import ravenweave.client.utils.Utils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LeftClicker extends Module {
     public static DescriptionSetting bestWithDelayRemover;

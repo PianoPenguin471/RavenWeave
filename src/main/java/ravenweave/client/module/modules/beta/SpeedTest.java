@@ -1,13 +1,12 @@
-package ravenweave.client.module.modules.movement;
+package ravenweave.client.module.modules.beta;
 
+import net.minecraft.client.settings.KeyBinding;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.settings.KeyBinding;
 
 public class SpeedTest extends Module {
 
@@ -15,7 +14,7 @@ public class SpeedTest extends Module {
     private SliderSetting delay, stopPercent;
     
     public SpeedTest() {
-        super("SpeedTest", /*ModuleCategory.movement*/ModuleCategory.beta);
+        super("SpeedTest", ModuleCategory.beta); // Category: Movement
         this.registerSetting(delay = new SliderSetting("Delay", 20, 0, 300 ,1));
         this.registerSetting(stopPercent = new SliderSetting("Stop Percent", 0, 0, 200 ,1));
     }

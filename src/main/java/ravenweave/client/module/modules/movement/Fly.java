@@ -1,12 +1,12 @@
 package ravenweave.client.module.modules.movement;
 
 import com.google.common.eventbus.Subscribe;
+import net.minecraft.client.Minecraft;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.Minecraft;
 
 public class Fly extends Module {
     private final Fly.VanFly vanFly = new VanFly();

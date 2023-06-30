@@ -2,27 +2,30 @@ package ravenweave.client.module.modules.client;
 
 import ravenweave.client.clickgui.raven.components.CategoryComponent;
 import ravenweave.client.clickgui.theme.Theme;
-import ravenweave.client.clickgui.theme.themes.*;
+import ravenweave.client.clickgui.theme.themes.ArcDark;
+import ravenweave.client.clickgui.theme.themes.MaterialDark;
+import ravenweave.client.clickgui.theme.themes.Vape;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.ComboSetting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.ColorM;
 import ravenweave.client.utils.Utils;
 
 public class ClickGuiModule extends Module {
 
+    public DescriptionSetting description;
     private static ComboSetting preset;
-
     private static TickSetting cleanUp, reset, betagui;
-
     public static int guiScale;
 
     public ClickGuiModule() {
         super("Gui", ModuleCategory.client);
         withKeycode(54);
 
+        this.registerSetting(description = new DescriptionSetting("Opens this GUI"));
         this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));
         this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
         this.registerSetting(reset = new TickSetting("Reset position", false));

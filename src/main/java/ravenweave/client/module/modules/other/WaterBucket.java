@@ -1,12 +1,6 @@
 package ravenweave.client.module.modules.other;
 
 import com.google.common.eventbus.Subscribe;
-import ravenweave.client.event.impl.TickEvent;
-import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.utils.DimensionHelper;
-import ravenweave.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -16,6 +10,12 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import ravenweave.client.event.impl.TickEvent;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
+import ravenweave.client.module.setting.impl.SliderSetting;
+import ravenweave.client.utils.DimensionHelper;
+import ravenweave.client.utils.Utils;
 
 public class WaterBucket extends Module {
     public static DescriptionSetting moduleDesc;

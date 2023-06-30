@@ -7,6 +7,7 @@ import java.util.List;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.module.modules.HUD;
+import ravenweave.client.module.modules.beta.*;
 import ravenweave.client.module.modules.client.*;
 import ravenweave.client.module.modules.combat.*;
 import ravenweave.client.module.modules.config.*;
@@ -75,10 +76,8 @@ public class ModuleManager {
         addModule(new WaterBucket());
         addModule(new Terminal());
         addModule(new ClickGuiModule());
-        addModule(new ChatLogger());
         addModule(new BridgeAssist());
         addModule(new UpdateCheck());
-        addModule(new AutoHeader());
         addModule(new Blocks());
         addModule(new Ladders());
         addModule(new Weapon());
@@ -97,20 +96,22 @@ public class ModuleManager {
         addModule(new Projectiles());
         addModule(new FakeHud());
         addModule(new ConfigSettings());
-        addModule(new Parkour());
         addModule(new JumpReset());
         addModule(new KillAura());
         addModule(new Spin());
         addModule(new AutoGHead());
-        addModule(new Radar());
-        addModule(new Scaffold());
-        addModule(new Blink());
         addModule(new AutoSoup());
         addModule(new Targets());
+        addModule(new BHop());
+
+        // BETA
+        addModule(new Blink());
+        addModule(new LongJump());
+        addModule(new Radar());
+        addModule(new Scaffold());
         addModule(new SpeedTest());
         addModule(new TargetHUD());
-        addModule(new LongJump());
-        addModule(new BHop());
+
         initialized = true;
     }
 

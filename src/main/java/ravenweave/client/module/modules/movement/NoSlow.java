@@ -1,12 +1,12 @@
 package ravenweave.client.module.modules.movement;
 
 import com.google.common.eventbus.Subscribe;
+import net.minecraft.network.play.server.S30PacketWindowItems;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
-import net.minecraft.network.play.server.S30PacketWindowItems;
 
 public class NoSlow extends Module {
     public static DescriptionSetting a;

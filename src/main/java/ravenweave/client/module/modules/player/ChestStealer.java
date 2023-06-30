@@ -1,5 +1,6 @@
 package ravenweave.client.module.modules.player;
 
+import net.minecraft.inventory.ContainerChest;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.module.Module;
@@ -7,7 +8,6 @@ import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
-import net.minecraft.inventory.ContainerChest;
 
 import java.util.ArrayList;
 import java.util.Arrays;

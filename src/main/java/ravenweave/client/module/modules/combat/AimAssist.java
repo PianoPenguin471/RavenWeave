@@ -1,27 +1,26 @@
 package ravenweave.client.module.modules.combat;
 
-import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
-
 import com.google.common.eventbus.Subscribe;
-import ravenweave.client.event.impl.TickEvent;
-import ravenweave.client.module.modules.world.AntiBot;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MovingObjectPosition;
-import org.lwjgl.input.Mouse;
-
-import ravenweave.client.module.Module;
-import ravenweave.client.module.modules.client.Targets;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.module.setting.impl.TickSetting;
-import ravenweave.client.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
+import org.lwjgl.input.Mouse;
+import ravenweave.client.event.impl.TickEvent;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.modules.client.Targets;
+import ravenweave.client.module.modules.world.AntiBot;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
+import ravenweave.client.module.setting.impl.SliderSetting;
+import ravenweave.client.module.setting.impl.TickSetting;
+import ravenweave.client.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AimAssist extends Module {
     public static SliderSetting speedYaw, complimentYaw, speedPitch, complimentPitch;

@@ -8,7 +8,6 @@
     "MixinEntityPlayer",
     "MixinEntityPlayerSP",
     "MixinEntityRenderer",
-    "MixinGuiMainMenu",
     "MixinMinecraft",
     "MixinNetworkManager",
     "AttackMixin",

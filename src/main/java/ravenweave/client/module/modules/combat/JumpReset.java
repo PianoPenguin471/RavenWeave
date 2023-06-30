@@ -1,10 +1,10 @@
 package ravenweave.client.module.modules.combat;
 
 import com.google.common.eventbus.Subscribe;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
-import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class JumpReset extends Module {
 
