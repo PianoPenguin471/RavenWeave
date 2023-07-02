@@ -19,7 +19,7 @@ public class FakeHud extends Module {
     public static List<Module> list = new ArrayList<>();
 
     public FakeHud() {
-        super("Fake Hud", ModuleCategory.client);
+        super("FakeHud", ModuleCategory.client);
         enableAll();
         this.registerSetting(description = new DescriptionSetting("Command: fakehud add/remove <name>"));
     }

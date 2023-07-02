@@ -241,7 +241,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             MovementInput var10000 = this.movementInput;
 
             if (noSlow.isEnabled()) {
-                float slowdown = (float) ((100 - NoSlow.b.getInput()) / 100F);
+                float slowdown = (float) ((100 - NoSlow.speed.getInput()) / 100F);
                 var10000.moveStrafe *= slowdown;
                 var10000.moveForward *= slowdown;
             } else {

@@ -7,6 +7,7 @@ import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.Targets;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.RGBSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -19,10 +20,12 @@ public class Tracers extends Module {
     public static RGBSetting color;
     public static TickSetting rainbow, redshift, showInvalidTargets, showInvis;
     public static SliderSetting lineWidth, distance;
-    private boolean g;
+    public static DescriptionSetting description;
+    private boolean viewBobbing;
 
     public Tracers() {
         super("Tracers", ModuleCategory.render);
+        this.registerSetting(description = new DescriptionSetting("Draws lines to targets."));
         this.registerSetting(showInvis = new TickSetting("Show invis", true));
         this.registerSetting(lineWidth = new SliderSetting("Line Width", 1.0D, 1.0D, 5.0D, 1.0D));
         this.registerSetting(distance = new SliderSetting("Distance", 1.0D, 1.0D, 512.0D, 1.0D));
@@ -34,15 +37,15 @@ public class Tracers extends Module {
 
     @Override
     public void onEnable() {
-        this.g = mc.gameSettings.viewBobbing;
-        if (this.g)
+        this.viewBobbing = mc.gameSettings.viewBobbing;
+        if (this.viewBobbing)
             mc.gameSettings.viewBobbing = false;
 
     }
 
     @Override
     public void onDisable() {
-        mc.gameSettings.viewBobbing = this.g;
+        mc.gameSettings.viewBobbing = this.viewBobbing;
     }
 
     @Subscribe

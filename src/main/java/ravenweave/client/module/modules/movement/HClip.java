@@ -1,13 +1,16 @@
 package ravenweave.client.module.modules.movement;
 
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 
 public class HClip extends Module {
+    public static DescriptionSetting description;
     public static SliderSetting distance;
 
     public HClip() {
         super("HClip", ModuleCategory.movement);
+        this.registerSetting(description = new DescriptionSetting("Clip forwards"));
         this.registerSetting(distance = new SliderSetting("Distance", 2.0D, -10.0D, 10.0D, 0.5D));
     }
 

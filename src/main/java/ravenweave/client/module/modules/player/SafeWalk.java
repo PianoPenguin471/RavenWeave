@@ -40,6 +40,7 @@ public class SafeWalk extends Module {
 
     public SafeWalk() {
         super("SafeWalk", ModuleCategory.player);
+        this.registerSetting(new DescriptionSetting("Stops you from falling"));
         this.registerSetting(doShift = new TickSetting("Shift", false));
         this.registerSetting(shiftOnJump = new TickSetting("Shift during jumps", false));
         this.registerSetting(shiftTime = new DoubleSliderSetting("Shift time: (s)", 140, 200, 0, 280, 5));

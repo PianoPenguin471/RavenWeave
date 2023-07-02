@@ -17,20 +17,19 @@ import ravenweave.client.utils.Utils;
 import java.awt.*;
 
 public class HitBoxes extends Module {
-    public static SliderSetting a;
-    public static TickSetting b;
-    private static MovingObjectPosition mv;
+    public static SliderSetting distance;
+    public static TickSetting vertical;
 
     public HitBoxes() {
         super("HitBoxes", ModuleCategory.combat);
         this.registerSetting(new DescriptionSetting("Changed from multiplier to extra blocks!"));
-        this.registerSetting(a = new SliderSetting("Extra Blocks", 0.2D, 0.05D, 2.0D, 0.05D));
-        this.registerSetting(b = new TickSetting("Vertical", false));
+        this.registerSetting(distance = new SliderSetting("Extra Blocks", 0.2D, 0.05D, 2.0D, 0.05D));
+        this.registerSetting(vertical = new TickSetting("Vertical", false));
     }
 
     public static double exp(Entity en) {
         Module hitBox = Raven.moduleManager.getModuleByClazz(HitBoxes.class);
-        return ((hitBox != null) && hitBox.isEnabled() && !AntiBot.bot(en)) ? a.getInput() : 0D;
+        return ((hitBox != null) && hitBox.isEnabled() && !AntiBot.bot(en)) ? distance.getInput() : 0D;
     }
 
     private void rh(Entity e, Color c) {
@@ -41,7 +40,7 @@ public class HitBoxes extends Module {
                     - mc.getRenderManager().viewerPosY;
             double z = (e.lastTickPosZ + ((e.posZ - e.lastTickPosZ) * (double) Utils.Client.getTimer().renderPartialTicks))
                     - mc.getRenderManager().viewerPosZ;
-            float ex = (float) ((double) e.getCollisionBorderSize() * a.getInput());
+            float ex = (float) ((double) e.getCollisionBorderSize() * distance.getInput());
             AxisAlignedBB bbox = e.getEntityBoundingBox().expand(ex, ex, ex);
             AxisAlignedBB axis = new AxisAlignedBB((bbox.minX - e.posX) + x, (bbox.minY - e.posY) + y,
                     (bbox.minZ - e.posZ) + z, (bbox.maxX - e.posX) + x, (bbox.maxY - e.posY) + y, (bbox.maxZ - e.posZ) + z);

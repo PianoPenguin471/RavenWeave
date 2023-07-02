@@ -8,13 +8,12 @@ import ravenweave.client.utils.Utils;
 public class FakeChat extends Module {
     public static DescriptionSetting a;
     public static String msg = "&eThis is a fake chat message.";
-    public static final String command = "fakechat";
+    public static String command = "fakechat";
     public static final String c4 = "&cInvalid message.";
 
     public FakeChat() {
-        super("Fake Chat", ModuleCategory.other);
-        this.registerSetting(
-                a = new DescriptionSetting(Utils.Java.capitalizeWord("command") + ": " + command + " [msg]"));
+        super("FakeChat", ModuleCategory.other);
+        this.registerSetting(new DescriptionSetting("Command: fakechat [message]"));
     }
 
     public void onEnable() {

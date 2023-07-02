@@ -96,7 +96,7 @@ public class HUD extends Module {
         if (Utils.Player.isPlayerInGame()) {
             if ((mc.currentScreen != null) || mc.gameSettings.showDebugInfo)
                 return;
-            boolean fakeHUDEnabled = Raven.moduleManager.getModuleByName("Fake Hud").isEnabled();
+            boolean fakeHUDEnabled = Raven.moduleManager.getModuleByName("FakeHud").isEnabled();
             if (!e) {
                 ScaledResolution sr = new ScaledResolution(mc);
                 positionMode = Utils.HUD.getPostitionMode(hudX, hudY, sr.getScaledWidth(), sr.getScaledHeight());

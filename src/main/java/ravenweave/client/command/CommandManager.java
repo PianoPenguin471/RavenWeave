@@ -23,7 +23,7 @@ public class CommandManager {
         this.addCommand(new Clear());
         this.addCommand(new Debug());
         this.addCommand(new Duels());
-        this.addCommand(new Fakechat());
+        this.addCommand(new FakeChatCMD());
         this.addCommand(new Ping());
         this.addCommand(new Shoutout());
         this.addCommand(new Friends());

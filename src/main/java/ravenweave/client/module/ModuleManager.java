@@ -33,7 +33,7 @@ public class ModuleManager {
             return;
         this.guiModuleManager = new GuiModuleManager();
         addModule(new ChestStealer());
-        addModule(new AutoArmour());
+        addModule(new AutoArmor());
         addModule(new LeftClicker());
         addModule(new ClickAssist());
         addModule(new RightClicker());
@@ -67,7 +67,6 @@ public class ModuleManager {
         addModule(new PlayerESP());
         addModule(new Tracers());
         addModule(new HUD());
-        addModule(new BridgeInfo());
         addModule(new DuelsStats());
         addModule(new MurderMystery());
         addModule(new SumoFences());
@@ -82,7 +81,7 @@ public class ModuleManager {
         addModule(new Ladders());
         addModule(new Weapon());
         addModule(new Pearl());
-        addModule(new Armour());
+        addModule(new Armor());
         addModule(new Healing());
         addModule(new Trajectories());
         addModule(new WTap());
@@ -91,7 +90,6 @@ public class ModuleManager {
         addModule(new AutoWeapon());
         addModule(new BedwarsOverlay());
         addModule(new ShiftTap());
-        addModule(new AutoBlock());
         addModule(new MiddleClick());
         addModule(new Projectiles());
         addModule(new FakeHud());
@@ -102,14 +100,13 @@ public class ModuleManager {
         addModule(new AutoGHead());
         addModule(new AutoSoup());
         addModule(new Targets());
-        addModule(new BHop());
+        addModule(new Speed());
 
         // BETA
         addModule(new Blink());
         addModule(new LongJump());
         addModule(new Radar());
         addModule(new Scaffold());
-        addModule(new SpeedTest());
         addModule(new TargetHUD());
 
         initialized = true;

@@ -25,7 +25,7 @@ public class ClickGuiModule extends Module {
         super("Gui", ModuleCategory.client);
         withKeycode(54);
 
-        this.registerSetting(description = new DescriptionSetting("Opens this GUI"));
+        this.registerSetting(description = new DescriptionSetting("Opens this menu"));
         this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));
         this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
         this.registerSetting(reset = new TickSetting("Reset position", false));

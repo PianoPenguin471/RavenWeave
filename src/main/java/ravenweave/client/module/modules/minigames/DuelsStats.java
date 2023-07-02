@@ -12,6 +12,7 @@ import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.profile.PlayerProfile;
@@ -31,9 +32,8 @@ public class DuelsStats extends Module {
 
     public DuelsStats() {
         super("Duels Stats", ModuleCategory.minigames);
-
-        this.registerSetting(
-                selectedGameMode = new ComboSetting("Stats for mode:", Utils.Profiles.DuelsStatsMode.OVERALL));
+        this.registerSetting(new DescriptionSetting("Gets stats in duels"));
+        this.registerSetting(selectedGameMode = new ComboSetting("Stats for mode:", Utils.Profiles.DuelsStatsMode.OVERALL));
         this.registerSetting(sendIgnOnJoin = new TickSetting("Send ign on join", false));
     }
 

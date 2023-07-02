@@ -3,6 +3,7 @@ package ravenweave.client.module.modules.hotkey;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
@@ -13,9 +14,9 @@ public class Blocks extends Module {
 
     public Blocks() {
         super("Blocks", ModuleCategory.hotkey);
-
+        this.registerSetting(new DescriptionSetting("Quickly hotkey to blocks"));
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 9, 1, 9, 1));
+        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer which slot", 9, 1, 9, 1));
     }
 
     @Override

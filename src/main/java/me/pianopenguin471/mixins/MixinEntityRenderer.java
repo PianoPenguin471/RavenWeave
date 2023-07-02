@@ -99,7 +99,7 @@ public class MixinEntityRenderer {
             for (Entity entity1 : list) {
                 float f1 = entity1.getCollisionBorderSize();
                 double kms = HitBoxes.exp(entity1);
-                AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1).expand(kms, HitBoxes.b.isToggled()? kms : 0, kms);
+                AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1).expand(kms, HitBoxes.vertical.isToggled()? kms : 0, kms);
                 MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
                 if (axisalignedbb.isVecInside(vec3)) {
                     if (d2 >= 0.0D) {

@@ -7,6 +7,7 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 
@@ -19,6 +20,7 @@ public class Velocity extends Module {
 
     public Velocity() {
         super("Velocity", ModuleCategory.combat);
+        this.registerSetting(new DescriptionSetting("Change knockback"));
         this.registerSetting(horizontal = new SliderSetting("Horizontal", 90.0D, 0.0D, 200.0D, 1.0D));
         this.registerSetting(invertHorizontal = new TickSetting("Invert Horizontal", false));
         this.registerSetting(vertical = new SliderSetting("Vertical", 100.0D, 0.0D, 200.0D, 1.0D));

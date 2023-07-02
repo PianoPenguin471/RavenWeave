@@ -5,17 +5,20 @@ import net.minecraft.client.Minecraft;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.Utils;
 
 public class Fly extends Module {
-    private final Fly.VanFly vanFly = new VanFly();
-    private final Fly.GliFly gliFly = new Fly.GliFly();
+    private final VanFly vanFly = new VanFly();
+    private final GliFly gliFly = new GliFly();
+    public static DescriptionSetting description;
     public static SliderSetting speed;
     public static ComboSetting<FlyMode> mode;
 
     public Fly() {
         super("Fly", ModuleCategory.movement);
+        this.registerSetting(description = new DescriptionSetting("Lets you fly"));
         this.registerSetting(mode = new ComboSetting<>(Utils.md, FlyMode.VANILLA));
         this.registerSetting(speed = new SliderSetting("Speed", 2.0D, 1.0D, 5.0D, 0.1D));
     }
@@ -23,51 +26,51 @@ public class Fly extends Module {
     public void onEnable() {
         switch (mode.getMode()) {
             case VANILLA:
-                this.vanFly.onEnable();
+                vanFly.onEnable();
                 break;
             case GLIDE:
-                this.gliFly.onEnable();
+                gliFly.onEnable();
+                break;
         }
-
     }
 
     public void onDisable() {
         switch (mode.getMode()) {
             case VANILLA:
-                this.vanFly.onDisable();
+                vanFly.onDisable();
                 break;
             case GLIDE:
-                this.gliFly.onDisable();
+                gliFly.onDisable();
+                break;
         }
-
     }
 
     @Subscribe
     public void onTick(TickEvent e) {
         switch (mode.getMode()) {
             case VANILLA:
-                this.vanFly.update();
+                vanFly.update();
                 break;
             case GLIDE:
-                this.gliFly.update();
+                gliFly.update();
+                break;
         }
-
     }
 
-    class GliFly {
-        boolean opf;
+    private class GliFly {
+        private boolean opf;
 
         public void onEnable() {
         }
 
         public void onDisable() {
-            this.opf = false;
+            opf = false;
         }
 
         public void update() {
             if (Module.mc.thePlayer.movementInput.moveForward > 0.0F) {
-                if (!this.opf) {
-                    this.opf = true;
+                if (!opf) {
+                    opf = true;
                     if (Module.mc.thePlayer.onGround) {
                         Module.mc.thePlayer.jump();
                     }
@@ -76,19 +79,17 @@ public class Fly extends Module {
                         Fly.this.disable();
                         return;
                     }
-
                     double s = 1.94D * speed.getInput();
                     double r = Math.toRadians(Module.mc.thePlayer.rotationYaw + 90.0F);
                     Module.mc.thePlayer.motionX = s * Math.cos(r);
                     Module.mc.thePlayer.motionZ = s * Math.sin(r);
                 }
             }
-
         }
     }
 
-    static class VanFly {
-        private final float dfs = 0.05F;
+    private static class VanFly {
+        private static final float DEFAULT_SPEED = 0.05F;
 
         public void onEnable() {
         }
@@ -101,7 +102,7 @@ public class Fly extends Module {
                 Minecraft.getMinecraft().thePlayer.capabilities.isFlying = false;
             }
 
-            Minecraft.getMinecraft().thePlayer.capabilities.setFlySpeed(0.05F);
+            Minecraft.getMinecraft().thePlayer.capabilities.setFlySpeed(DEFAULT_SPEED);
         }
 
         public void update() {

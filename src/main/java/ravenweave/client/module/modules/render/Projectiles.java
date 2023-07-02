@@ -10,16 +10,18 @@ import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.Utils;
 
 public class Projectiles extends Module {
 
-    public static SliderSetting w;
+    public static SliderSetting lineWidth;
 
     public Projectiles() {
         super("Projectiles", ModuleCategory.render);
-        this.registerSetting(w = new SliderSetting("Thickness", 2.0D, 1.0D, 10.0D, 1.0D));
+        this.registerSettings(new DescriptionSetting("Draws a line of Projectiles' path"));
+        this.registerSetting(lineWidth = new SliderSetting("Thickness", 2.0D, 1.0D, 10.0D, 1.0D));
     }
 
     @SubscribeEvent
@@ -79,7 +81,7 @@ public class Projectiles extends Module {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(false);
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
-        GL11.glLineWidth((int) w.getInput());
+        GL11.glLineWidth((int) lineWidth.getInput());
 
         RenderManager renderManager = mc.getRenderManager();
 

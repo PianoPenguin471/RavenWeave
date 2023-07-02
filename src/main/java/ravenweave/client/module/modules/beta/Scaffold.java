@@ -9,6 +9,7 @@ import ravenweave.client.event.impl.LookEvent;
 import ravenweave.client.event.impl.MoveInputEvent;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.font.FontUtil;
@@ -17,6 +18,7 @@ public class Scaffold extends Module {
 
     private TickSetting eagle;
     private SliderSetting rps;
+    private DescriptionSetting description;
 
     private float yaw, pitch, locked;
     private int blockCount;
@@ -24,9 +26,9 @@ public class Scaffold extends Module {
 
     public Scaffold() {
         super("Scaffold", ModuleCategory.beta); // Category: World
-        this.registerSettings(
-                        eagle = new TickSetting("Shift", false),
-                        rps = new SliderSetting("Rotation speed", 80, 0, 300, 1));
+        this.registerSetting(description = new DescriptionSetting("Bridges for you"));
+        this.registerSettings(eagle = new TickSetting("Shift", false));
+        this.registerSettings(rps = new SliderSetting("Rotation speed", 80, 0, 300, 1));
     }
 
     @Subscribe

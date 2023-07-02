@@ -2,6 +2,7 @@ package ravenweave.client.module.modules.combat;
 
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
@@ -15,6 +16,7 @@ public class Reach extends Module {
 
     public Reach() {
         super("Reach", ModuleCategory.combat);
+        this.registerSetting(new DescriptionSetting("Hit further"));
         this.registerSetting(reach = new DoubleSliderSetting("Reach (Blocks)", 3.1, 3.3, 3, 6, 0.05));
         this.registerSetting(weapon_only = new TickSetting("Weapon only", false));
         this.registerSetting(moving_only = new TickSetting("Moving only", false));

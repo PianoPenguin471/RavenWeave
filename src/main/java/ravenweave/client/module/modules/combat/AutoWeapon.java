@@ -4,6 +4,7 @@ import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
@@ -15,7 +16,7 @@ public class AutoWeapon extends Module {
 
     public AutoWeapon() {
         super("AutoWeapon", ModuleCategory.combat);
-
+        this.registerSetting(new DescriptionSetting("Automatically swaps to your weapon"));
         this.registerSetting(onlyWhenHoldingDown = new TickSetting("Only when holding lmb", true));
         this.registerSetting(goBackToPrevSlot = new TickSetting("Revert to old slot", true));
     }

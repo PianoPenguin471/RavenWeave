@@ -14,20 +14,19 @@ import ravenweave.client.utils.Utils;
 import java.util.Iterator;
 
 public class SlyPort extends Module {
-    public static DescriptionSetting f;
-    public static SliderSetting r;
-    public static TickSetting b;
-    public static TickSetting d;
-    public static TickSetting e;
-    private final boolean s = false;
+    public static DescriptionSetting description;
+    public static SliderSetting range;
+    public static TickSetting sound;
+    public static TickSetting players;
+    public static TickSetting aim;
 
     public SlyPort() {
         super("SlyPort", ModuleCategory.movement);
-        this.registerSetting(f = new DescriptionSetting("Teleport behind enemies."));
-        this.registerSetting(r = new SliderSetting("Range", 6.0D, 2.0D, 15.0D, 1.0D));
-        this.registerSetting(e = new TickSetting("Aim", true));
-        this.registerSetting(b = new TickSetting("Play sound", true));
-        this.registerSetting(d = new TickSetting("Players only", true));
+        this.registerSetting(description = new DescriptionSetting("Teleport behind enemies."));
+        this.registerSetting(range = new SliderSetting("Range", 6.0D, 2.0D, 15.0D, 1.0D));
+        this.registerSetting(aim = new TickSetting("Aim", true));
+        this.registerSetting(sound = new TickSetting("Play sound", true));
+        this.registerSetting(players = new TickSetting("Players only", true));
     }
 
     @Override
@@ -40,22 +39,22 @@ public class SlyPort extends Module {
     }
 
     private void tp(Entity en) {
-        if (b.isToggled())
+        if (sound.isToggled())
             mc.thePlayer.playSound("mob.endermen.portal", 1.0F, 1.0F);
 
         Vec3 vec = en.getLookVec();
         double x = en.posX - (vec.xCoord * 2.5D);
         double z = en.posZ - (vec.zCoord * 2.5D);
         mc.thePlayer.setPosition(x, mc.thePlayer.posY, z);
-        if (e.isToggled())
+        if (aim.isToggled())
             Utils.Player.aim(en, 0.0F);
 
     }
 
     private Entity ge() {
         Entity en = null;
-        double r = Math.pow(SlyPort.r.getInput(), 2.0D);
-        double dist = r + 1.0D;
+        double range = Math.pow(SlyPort.range.getInput(), 2.0D);
+        double dist = range + 1.0D;
         Iterator var6 = mc.theWorld.loadedEntityList.iterator();
 
         while (true) {
@@ -71,11 +70,11 @@ public class SlyPort extends Module {
                         } while (ent == mc.thePlayer);
                     while (!(ent instanceof EntityLivingBase));
                 while (((EntityLivingBase) ent).deathTime != 0);
-            while (d.isToggled() && !(ent instanceof EntityPlayer));
+            while (players.isToggled() && !(ent instanceof EntityPlayer));
 
             if (!AntiBot.bot(ent)) {
                 double d = mc.thePlayer.getDistanceSqToEntity(ent);
-                if (!(d > r) && !(dist < d)) {
+                if (!(d > range) && !(dist < d)) {
                     dist = d;
                     en = ent;
                 }

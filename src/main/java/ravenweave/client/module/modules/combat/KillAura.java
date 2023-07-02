@@ -45,7 +45,6 @@ public class KillAura extends Module {
     public KillAura() {
         super("KillAura", ModuleCategory.combat);
         this.registerSetting(reach = new SliderSetting("Reach (Blocks)", 3.3, 3, 6, 0.05));
-        //this.registerSetting(rps = new SliderSetting("Max rotation speed", 36, 0, 200, 1));
         this.registerSetting(cps = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
         this.registerSetting(onlySurvival = new TickSetting("Only Survival", false));
         this.registerSetting(disableOnTp = new TickSetting("Disable after tp", false));

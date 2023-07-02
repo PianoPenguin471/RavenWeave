@@ -23,9 +23,9 @@ public class WaterBucket extends Module {
     private boolean handling;
 
     public WaterBucket() {
-        super("Water bucket", ModuleCategory.other);
-        this.registerSetting(moduleDesc = new DescriptionSetting("Credits: aycy"));
-        this.registerSetting(moduleDesc = new DescriptionSetting("Disabled in the Nether"));
+        super("WaterBucket", ModuleCategory.other);
+        this.registerSetting(new DescriptionSetting("automatically mlg"));
+        this.registerSetting(moduleDesc = new DescriptionSetting("Credits: aycy")); // who is aycy
         this.registerSetting(distance = new SliderSetting("Fall Distance", 3, 1, 10, 0.1));
     }
 

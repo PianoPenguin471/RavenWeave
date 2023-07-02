@@ -3,11 +3,13 @@ package ravenweave.client.module.modules.hotkey;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.ItemStack;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.utils.Utils;
 
 public class Weapon extends Module {
     public Weapon() {
         super("Weapon", ModuleCategory.hotkey);
+        this.registerSetting(new DescriptionSetting("Quickly hotkey to weapon"));
     }
 
     @Override

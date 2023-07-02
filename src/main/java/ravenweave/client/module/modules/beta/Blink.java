@@ -8,19 +8,21 @@ import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.EventDirection;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 
 import java.util.ArrayList;
 
 public class Blink extends Module {
-
     public static TickSetting inbound, outbound;
+    public static DescriptionSetting description;
 
     private ArrayList<? extends Packet> outboundPackets = new ArrayList<>();
     private ArrayList<? extends Packet> inboundPackets = new ArrayList<>();
 
     public Blink() {
         super("Blink", ModuleCategory.beta); // Category: Player
+        this.registerSetting(description = new DescriptionSetting("Chokes packets"));
         this.registerSetting(inbound = new TickSetting("Block Inbound", true));
         this.registerSetting(outbound = new TickSetting("Block Outbound", true));
     }

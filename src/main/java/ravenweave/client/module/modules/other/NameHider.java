@@ -10,8 +10,8 @@ public class NameHider extends Module {
     public static String playerNick = "";
 
     public NameHider() {
-        super("Name Hider", ModuleCategory.other);
-        this.registerSetting(a = new DescriptionSetting(Utils.Java.capitalizeWord("command") + ": cname [name]"));
+        super("NameHider", ModuleCategory.other);
+        this.registerSetting(a = new DescriptionSetting("Command: cname [name]"));
     }
 
     public static String format(String s) {
