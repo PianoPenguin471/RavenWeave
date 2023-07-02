@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -35,7 +36,7 @@ public class STap extends Module {
 
     public STap() {
         super("STap", ModuleCategory.combat);
-
+        this.registerSetting(new DescriptionSetting("S taps for you"));
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
         this.registerSetting(onlySword = new TickSetting("Only sword", false));
         this.registerSetting(waitMs = new DoubleSliderSetting("Press s for ... ms", 30, 40, 1, 300, 1));

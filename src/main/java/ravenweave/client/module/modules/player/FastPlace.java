@@ -8,6 +8,7 @@ import net.minecraft.item.ItemSnowball;
 import net.minecraft.item.ItemStack;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.ReflectionUtils;
@@ -31,7 +32,7 @@ public class FastPlace extends Module {
 
     public FastPlace() {
         super("FastPlace", ModuleCategory.player);
-
+        this.registerSetting(new DescriptionSetting("Place blocks faster"));
         this.registerSetting(delaySlider = new SliderSetting("Delay", 0.0D, 0.0D, 4.0D, 1.0D));
         this.registerSetting(blockOnly = new TickSetting("Blocks only", true));
         this.registerSetting(projSeparate = new TickSetting("Separate Projectile Delay", true));

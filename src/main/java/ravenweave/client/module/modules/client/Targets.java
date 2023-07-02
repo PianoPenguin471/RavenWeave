@@ -30,7 +30,7 @@ public class Targets extends Module {
 
     public Targets() {
         super("Targets", ModuleCategory.client);
-        this.registerSetting(description = new DescriptionSetting("Sets targets for Killaura, Aimassist, ETC."));
+        this.registerSetting(description = new DescriptionSetting("Sets targets for killaura and aimassist"));
         this.registerSettings(
                         friends = new TickSetting("Target friends", false),
                         teams = new TickSetting("Target teammates", false),

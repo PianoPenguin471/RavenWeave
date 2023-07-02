@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -30,6 +31,7 @@ public class AutoSoup extends Module {
 
     public AutoSoup() {
         super("AutoSoup", ModuleCategory.combat);
+        this.registerSetting(new DescriptionSetting("Eats soup for you"));
         this.registerSetting(delay = new DoubleSliderSetting("delay(ms)", 50, 100, 0, 200, 1));
         this.registerSetting(coolDown = new DoubleSliderSetting("cooldown(ms)", 1000, 1200, 0, 5000, 1));
         this.registerSetting(health = new SliderSetting("health", 7, 0, 20, 0.1));

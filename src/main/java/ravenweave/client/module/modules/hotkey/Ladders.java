@@ -2,6 +2,7 @@ package ravenweave.client.module.modules.hotkey;
 
 import net.minecraft.item.ItemStack;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
@@ -12,9 +13,9 @@ public class Ladders extends Module {
 
     public Ladders() {
         super("Ladders", ModuleCategory.hotkey);
-
+        this.registerSetting(new DescriptionSetting("Quickly hotkey to ladders"));
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 8, 1, 9, 1));
+        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer which slot", 8, 1, 9, 1));
     }
 
     @Override

@@ -3,6 +3,7 @@ package ravenweave.client.module.modules.movement;
 import com.google.common.eventbus.Subscribe;
 import ravenweave.client.event.impl.MoveInputEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
@@ -14,7 +15,7 @@ public class LegitSpeed extends Module {
 
     public LegitSpeed() {
         super("LegitSpeed", ModuleCategory.movement);
-
+        this.registerSetting(new DescriptionSetting("Customizable Speed"));
         this.registerSetting(speed = new TickSetting("Increase Speed", true));
         this.registerSetting(speedInc = new SliderSetting("Speed", 1.12, 1, 1.4, 0.01));
         this.registerSetting(fastFall = new TickSetting("Fast Fall", false));

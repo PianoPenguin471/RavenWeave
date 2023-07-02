@@ -4,6 +4,7 @@ import net.minecraft.inventory.ContainerChest;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.CoolDown;
@@ -29,6 +30,7 @@ public class ChestStealer extends Module {
 
     public ChestStealer() {
         super("ChestStealer", ModuleCategory.player);
+        this.registerSetting(new DescriptionSetting("Steals items from chest"));
         this.registerSetting(firstDelay = new DoubleSliderSetting("Open delay", 250, 450, 0, 1000, 1));
         this.registerSetting(delay = new DoubleSliderSetting("Delay", 150, 250, 0, 1000, 1));
         this.registerSetting(autoClose = new TickSetting("Auto Close", false));

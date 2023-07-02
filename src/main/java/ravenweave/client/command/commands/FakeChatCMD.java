@@ -5,8 +5,8 @@ import ravenweave.client.command.Command;
 import ravenweave.client.module.modules.other.FakeChat;
 import ravenweave.client.utils.Utils;
 
-public class Fakechat extends Command {
-    public Fakechat() {
+public class FakeChatCMD extends Command {
+    public FakeChatCMD() {
         super(FakeChat.command, "Sends a message in chat", 1, 600, new String[] { "text" }, new String[] { "fkct" });
     }
 

@@ -3,15 +3,16 @@ package ravenweave.client.module.modules.hotkey;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
-public class Armour extends Module {
+public class Armor extends Module {
     public static TickSetting ignoreIfAlreadyEquipped;
 
-    public Armour() {
+    public Armor() {
         super("Armour", ModuleCategory.hotkey);
-
+        this.registerSetting(new DescriptionSetting("Quickly hotkey to armor"));
         this.registerSetting(ignoreIfAlreadyEquipped = new TickSetting("Ignore if already equipped", true));
     }
 

@@ -10,20 +10,22 @@ import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
 public class Nametags extends Module {
+    public static DescriptionSetting description;
     public static SliderSetting offset;
     public static TickSetting rect;
     public static TickSetting showHealth;
     public static TickSetting showInvis;
     public static TickSetting removeTags;
-    public static TickSetting e;
 
     public Nametags() {
         super("Nametags", ModuleCategory.render);
+        this.registerSetting(description = new DescriptionSetting("Changes nametags"));
         this.registerSetting(offset = new SliderSetting("Offset", 0.0D, -40.0D, 40.0D, 1.0D));
         this.registerSetting(rect = new TickSetting("Rect", true));
         this.registerSetting(showHealth = new TickSetting("Show health", true));

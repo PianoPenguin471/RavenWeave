@@ -13,16 +13,14 @@ import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 
 public class InvMove extends Module {
-
-    private final DescriptionSetting ds;
-    private final DescriptionSetting ds2;
+    private final DescriptionSetting description, description2;
     private final TickSetting undetectable;
 
     public InvMove() {
         super("InvMove", ModuleCategory.movement);
-        registerSetting(ds = new DescriptionSetting("Does NOT work on Hypixel!"));
+        registerSetting(description = new DescriptionSetting("Lets you move while in menus."));
         registerSetting(undetectable = new TickSetting("Only ClickGui", true));
-        registerSetting(ds2 = new DescriptionSetting(EnumChatFormatting.GRAY + "Only ClickGui is fully undetectable!"));
+        registerSetting(description2 = new DescriptionSetting(EnumChatFormatting.GRAY + "Only ClickGui is undetectable."));
     }
 
     @Subscribe

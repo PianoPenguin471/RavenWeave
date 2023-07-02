@@ -7,10 +7,7 @@ import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.ComboSetting;
-import ravenweave.client.module.setting.impl.DoubleSliderSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.module.setting.impl.TickSetting;
+import ravenweave.client.module.setting.impl.*;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
 
@@ -18,7 +15,6 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class WTap extends Module {
-    public ComboSetting eventType;
     public SliderSetting range, chance, tapMultiplier;
     public TickSetting onlyPlayers;
     public TickSetting onlySword;
@@ -37,7 +33,7 @@ public class WTap extends Module {
 
     public WTap() {
         super("WTap", ModuleCategory.combat);
-
+        this.registerSetting(new DescriptionSetting("W taps for you"));
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
         this.registerSetting(onlySword = new TickSetting("Only sword", false));
 

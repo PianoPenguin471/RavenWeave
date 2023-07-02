@@ -14,6 +14,7 @@ import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.Targets;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.RGBSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.RenderUtils;
@@ -32,15 +33,14 @@ public class TargetHUD extends Module {
     ScaledResolution sr;
 
     public TargetHUD() {
-        super("Target HUD", ModuleCategory.beta); // Category: Render
-        this.registerSetting(borderColor = new RGBSetting("Border",     49, 203, 113));
-        this.registerSetting(mainColor   = new RGBSetting("Main Color", 49, 203, 113));
-        this.registerSettings(
-                xSetting    = new SliderSetting("X",             5, 0,  10, 1),
-                ySetting    = new SliderSetting("Y",             5, 0,  10, 1),
-                nameOffsetX = new SliderSetting("Name Offset X", 5, 0, 400, 5),
-                nameOffsetY = new SliderSetting("Name Offset Y", 5, 0, 400, 5)
-        );
+        super("TargetHUD", ModuleCategory.beta); // Category: Render
+        this.registerSettings(new DescriptionSetting("Shows target info"));
+        this.registerSetting(borderColor = new RGBSetting("Border", 49, 203, 113));
+        this.registerSetting(mainColor = new RGBSetting("Main Color",49, 203, 113));
+        this.registerSettings(xSetting = new SliderSetting("X", 5, 0, 10, 1));
+        this.registerSettings(ySetting = new SliderSetting("Y", 5, 0, 10, 1));
+        this.registerSettings(nameOffsetX = new SliderSetting("Name Offset X", 5, 0, 400, 5));
+        this.registerSettings(nameOffsetY = new SliderSetting("Name Offset Y", 5, 0, 400, 5));
         sr = new ScaledResolution(Minecraft.getMinecraft());
         screenHeight = sr.getScaledHeight();
         screenWidth = sr.getScaledWidth();

@@ -3,6 +3,7 @@ package ravenweave.client.module.modules.hotkey;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
@@ -16,9 +17,9 @@ public class Pearl extends Module {
 
     public Pearl() {
         super("Pearl", ModuleCategory.hotkey);
-
+        this.registerSetting(new DescriptionSetting("Quickly hotkey to pearl"));
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 6, 1, 9, 1));
+        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer which slot", 6, 1, 9, 1));
     }
 
     public static boolean checkSlot(int slot) {

@@ -8,6 +8,7 @@ import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
@@ -24,6 +25,7 @@ public class Freecam extends Module {
 
     public Freecam() {
         super("Freecam", ModuleCategory.player);
+        this.registerSetting(new DescriptionSetting("Freely move the camera"));
         this.registerSetting(a = new SliderSetting("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
         this.registerSetting(b = new TickSetting("Disable on damage", true));
     }

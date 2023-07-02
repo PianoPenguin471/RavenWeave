@@ -24,14 +24,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AimAssist extends Module {
     public static SliderSetting speedYaw, complimentYaw, speedPitch, complimentPitch;
-    public static SliderSetting fov;
-    public static SliderSetting distance;
     public static SliderSetting pitchOffSet;
     public static TickSetting clickAim;
-    public static TickSetting stopWhenOver;
     public static TickSetting aimPitch;
     public static TickSetting weaponOnly;
-    public static TickSetting aimInvis;
     public static TickSetting breakBlocks;
     public static TickSetting blatantMode;
     public static ArrayList<Entity> friends = new ArrayList<>();
@@ -39,7 +35,7 @@ public class AimAssist extends Module {
 
     public AimAssist() {
         super("AimAssist", ModuleCategory.combat);
-        this.registerSetting(new DescriptionSetting("Set targets in Client->Targets"));
+        this.registerSetting(new DescriptionSetting("Assist with your Aim"));
         this.registerSetting(speedYaw = new SliderSetting("Speed 1 (yaw)", 45.0D, 5.0D, 100.0D, 1.0D));
         this.registerSetting(complimentYaw = new SliderSetting("Speed 2 (yaw)", 15.0D, 2D, 97.0D, 1.0D));
         this.registerSetting(speedPitch = new SliderSetting("Speed 1 (pitch)", 45.0D, 5.0D, 100.0D, 1.0D));
@@ -51,6 +47,7 @@ public class AimAssist extends Module {
         this.registerSetting(blatantMode = new TickSetting("Blatant mode", false));
         this.registerSetting(aimPitch = new TickSetting("Aim pitch", false));
         this.registerSetting(aimWhileTargeting = new TickSetting("Aim while targeting", true));
+        this.registerSetting(new DescriptionSetting("Set targets in Client->Targets"));
     }
 
     public boolean isLookingAtPlayer() {

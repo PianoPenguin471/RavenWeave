@@ -5,6 +5,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
@@ -17,9 +18,9 @@ public class Healing extends Module {
 
     public Healing() {
         super("Healing", ModuleCategory.hotkey);
-
+        this.registerSetting(new DescriptionSetting("Quickly hotkey to healing"));
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 8, 1, 9, 1));
+        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer which slot", 8, 1, 9, 1));
         this.registerSetting(itemMode = new ComboSetting("Mode:", mode));
     }
 

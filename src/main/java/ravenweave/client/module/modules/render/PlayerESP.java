@@ -20,7 +20,7 @@ import java.awt.*;
 import java.util.Iterator;
 
 public class PlayerESP extends Module {
-    public static DescriptionSetting g;
+    public static DescriptionSetting description, type;
     public static SliderSetting expand;
     public static SliderSetting xShift;
     public static TickSetting rainbow;
@@ -37,9 +37,10 @@ public class PlayerESP extends Module {
 
     public PlayerESP() {
         super("PlayerESP", ModuleCategory.render);
+        this.registerSetting(type = new DescriptionSetting("Renders an ESP on players"));
         this.registerSetting(rgb = new RGBSetting("RGB", 0, 255, 0));
         this.registerSetting(rainbow = new TickSetting("Rainbow", false));
-        this.registerSetting(g = new DescriptionSetting("ESP Types"));
+        this.registerSetting(type = new DescriptionSetting("ESP Types"));
         this.registerSetting(enabled2D = new TickSetting("2D", false));
         this.registerSetting(enabledArrow = new TickSetting("Arrow", false));
         this.registerSetting(enabledBox = new TickSetting("Box", false));

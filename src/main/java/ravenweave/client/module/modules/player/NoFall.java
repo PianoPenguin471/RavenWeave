@@ -16,7 +16,7 @@ public class NoFall extends Module {
 
     public NoFall() {
         super("NoFall", ModuleCategory.player);
-
+        this.registerSetting(new DescriptionSetting("No fall damage"));
         this.registerSetting(warning = new DescriptionSetting("HypixelSpoof silent flags."));
         this.registerSetting(mode = new ComboSetting("Mode", Mode.Spoof));
     }

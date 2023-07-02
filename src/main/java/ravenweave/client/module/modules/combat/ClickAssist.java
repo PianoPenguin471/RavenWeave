@@ -29,7 +29,6 @@ public class ClickAssist extends Module {
 
     public ClickAssist() {
         super("ClickAssist", ModuleCategory.combat);
-
         this.registerSetting(desc = new DescriptionSetting("Boost your CPS."));
         this.registerSetting(chance = new SliderSetting("Chance", 80.0D, 0.0D, 100.0D, 1.0D));
         this.registerSetting(L = new TickSetting("Left click", true));

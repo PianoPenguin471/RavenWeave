@@ -31,6 +31,7 @@ public class BridgeAssist extends Module {
     public BridgeAssist() {
         super("Bridge Assist", ModuleCategory.player);
         this.registerSetting(new DescriptionSetting("Best with fastplace, not autoplace"));
+        this.registerSetting(new DescriptionSetting("Auto aims for bridging"));
         this.registerSetting(waitFor = new SliderSetting("Wait time (ms)", 500, 0, 5000, 25));
         this.registerSetting(setLook = new TickSetting("Set look pos", true));
         this.registerSetting(onSneak = new TickSetting("Work only when sneaking", true));

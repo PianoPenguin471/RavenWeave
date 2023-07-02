@@ -8,6 +8,7 @@ import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.render.PlayerESP;
 import ravenweave.client.module.modules.world.AntiBot;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
@@ -25,6 +26,7 @@ public class MurderMystery extends Module {
 
     public MurderMystery() {
         super("Murder Mystery", ModuleCategory.minigames);
+        this.registerSetting(new DescriptionSetting("Assist you in mm"));
         this.registerSetting(alertMurderers = new TickSetting("Alert", true));
         this.registerSetting(searchDetectives = new TickSetting("Search detectives", true));
         this.registerSetting(announceMurder = new TickSetting("Announce murderer", false));

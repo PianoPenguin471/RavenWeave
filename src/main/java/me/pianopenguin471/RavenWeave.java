@@ -7,7 +7,7 @@ import net.weavemc.loader.api.event.KeyboardEvent;
 import net.weavemc.loader.api.event.ShutdownEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
-import me.pianopenguin471.command.GUICommand;
+import me.pianopenguin471.command.RavenCommand;
 import net.weavemc.loader.api.event.StartGameEvent;
 
 public class RavenWeave implements ModInitializer {
@@ -15,7 +15,7 @@ public class RavenWeave implements ModInitializer {
     public void preInit() {
         System.out.println("Initializing RavenWeave!");
 
-        CommandBus.register(new GUICommand());
+        CommandBus.register(new RavenCommand());
         EventBus.subscribe(KeyboardEvent.class, (keyboardEvent) -> {
             for (Module module: Raven.moduleManager.getModules()) {
                 module.keybind();

@@ -4,6 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.CoolDown;
 
@@ -16,6 +17,7 @@ public class Spin extends Module {
 
     public Spin() {
         super("Spin", ModuleCategory.other);
+        this.registerSetting(new DescriptionSetting("You spin me right round"));
         this.registerSetting(mode = new ComboSetting("Mode", aimMode.SMOOTH));
         this.registerSetting(fov = new SliderSetting("fov", 30, -360, 360, 1));
         this.registerSetting(time = new SliderSetting("time (ms)", 200, 0, 1000, 1));

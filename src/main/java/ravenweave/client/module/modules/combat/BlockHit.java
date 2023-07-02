@@ -7,6 +7,7 @@ import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -31,7 +32,7 @@ public class BlockHit extends Module {
 
     public BlockHit() {
         super("BlockHit", ModuleCategory.combat);
-
+        this.registerSetting(new DescriptionSetting("Block hits for you"));
         this.registerSetting(onlyPlayers = new TickSetting("Only combo players", true));
         this.registerSetting(onlyForward = new TickSetting("Only blockhit when walking forward", false));
         this.registerSetting(waitMs = new DoubleSliderSetting("Action Time (MS)", 30, 40, 1, 300, 1));

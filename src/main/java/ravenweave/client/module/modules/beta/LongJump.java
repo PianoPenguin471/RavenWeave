@@ -8,6 +8,7 @@ import ravenweave.client.event.EventDirection;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 
@@ -15,9 +16,11 @@ public class LongJump extends Module {
     public boolean hasJumped = false, shouldJump = false;
     public static SliderSetting speed;
     public static TickSetting autodisable;
+    public static DescriptionSetting description;
 
     public LongJump() {
         super("LongJump", ModuleCategory.beta); // Category: Movement
+        this.registerSetting(description = new DescriptionSetting("Long jump"));
         this.registerSetting(speed = new SliderSetting("Speed:", 5, 1, 10, 0.25));
         this.registerSetting(autodisable = new TickSetting("Auto Disable", true));
     }

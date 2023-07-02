@@ -14,10 +14,7 @@ import org.lwjgl.input.Mouse;
 import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.ComboSetting;
-import ravenweave.client.module.setting.impl.DoubleSliderSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.module.setting.impl.TickSetting;
+import ravenweave.client.module.setting.impl.*;
 import ravenweave.client.utils.ReflectionUtils;
 import ravenweave.client.utils.Utils;
 
@@ -53,7 +50,7 @@ public class RightClicker extends Module {
 
     public RightClicker() {
         super("Right Clicker", ModuleCategory.player);
-
+        this.registerSetting(new DescriptionSetting("Clicks for you"));
         this.registerSetting(rightCPS = new DoubleSliderSetting("RightCPS", 12, 16, 1, 60, 0.5));
         this.registerSetting(jitterRight = new SliderSetting("Jitter right", 0.0D, 0.0D, 3.0D, 0.1D));
         this.registerSetting(rightClickDelay = new SliderSetting("Rightclick delay (ms)", 85D, 0D, 500D, 1.0D));

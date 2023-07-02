@@ -56,7 +56,7 @@ public class LeftClicker extends Module {
     public LeftClicker() {
         super("Left Clicker", ModuleCategory.combat);
 
-        this.registerSetting(bestWithDelayRemover = new DescriptionSetting("Best with delay remover."));
+        this.registerSetting(new DescriptionSetting("Clicks for you"));
         this.registerSetting(leftCPS = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
         this.registerSetting(jitterLeft = new SliderSetting("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
         this.registerSetting(inventoryFill = new TickSetting("Inventory fill", false));
@@ -65,7 +65,7 @@ public class LeftClicker extends Module {
         this.registerSetting(hitSelect = new TickSetting("Hit Select", false));
         this.registerSetting(hitSelectTick = new SliderSetting("HitSelect Hurttick", 7, 1, 10, 1));
 
-        this.registerSetting(sound = new TickSetting("Play sound (may kill fps)", true));
+        this.registerSetting(sound = new TickSetting("Play sound", true));
         this.registerSetting(clickTimings = new ComboSetting("Click event", ClickEvent.Render));
         this.registerSetting(clickStyle = new ComboSetting("Click Style", ClickStyle.Raven));
         this.registerSetting(soundMode = new ComboSetting("Click sound", SoundMode.click));

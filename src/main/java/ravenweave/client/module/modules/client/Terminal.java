@@ -7,19 +7,20 @@ import ravenweave.client.event.impl.GameLoopEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.Timer;
 import ravenweave.client.utils.Utils;
 
 public class Terminal extends Module {
-    public static boolean b;
     public static Timer animation;
     public static SliderSetting opacity;
+    public static DescriptionSetting description;
 
     public Terminal() {
         super("Terminal", ModuleCategory.client);
         withEnabled(true);
-
+        this.registerSetting(description = new DescriptionSetting("For commands"));
         this.registerSetting(opacity = new SliderSetting("Terminal background opacity", 100, 0, 255, 1));
     }
 
