@@ -122,7 +122,7 @@ public class Raven {
         configManager = new ConfigManager();
         clientConfig = new ClientConfig();
         clientConfig.applyConfig();
-        System.out.println("Starting Raven B+++");
+        System.out.println("Starting RavenWeave");
     }
 
     @SuppressWarnings("unused")
