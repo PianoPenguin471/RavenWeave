@@ -10,6 +10,6 @@ RavenWeave is a port of [Raven B++](https://github.com/K-ov/Raven-bPLUS) to [Wea
 4. Enjoy!
 
 ## Usage
-You can open the GUI of RavenWeave by pressing RShift. You can change this key in GUI's settings.
+You can open the GUI of RavenWeave by pressing RShift. You can change this key using `/gui <key>`.
 
 ---
