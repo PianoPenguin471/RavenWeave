@@ -27,8 +27,10 @@ public class Reach extends Module {
     }
 
     public static double getReach() {
-        if(killAura.isEnabled())
+        killAura = (KillAura) Raven.moduleManager.getModuleByClazz(KillAura.class);
+        if(killAura != null && killAura.isEnabled()) {
             return KillAura.reach.getInput();
+        }
 
         double normal = mc.playerController.extendedReach()? 5 : 3;
 
