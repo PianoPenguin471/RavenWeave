@@ -25,7 +25,7 @@ public class FontUtil {
             if (locationMap.containsKey(location))
 				font = locationMap.get(location).deriveFont(Font.PLAIN, size);
 			else {
-                InputStream is = HUD.class.getResourceAsStream("/assets/keystrokes/fonts/" + location);
+                InputStream is = HUD.class.getResourceAsStream("/assets/ravenweave/fonts/" + location);
                 assert is != null;
                 font = Font.createFont(Font.TRUETYPE_FONT, is);
                 locationMap.put(location, font);
