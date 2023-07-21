@@ -4,7 +4,6 @@ import ravenweave.client.clickgui.raven.components.CategoryComponent;
 import ravenweave.client.clickgui.theme.Theme;
 import ravenweave.client.clickgui.theme.themes.ArcDark;
 import ravenweave.client.clickgui.theme.themes.MaterialDark;
-import ravenweave.client.clickgui.theme.themes.Vape;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
@@ -206,10 +205,9 @@ public class ClickGuiModule extends Module {
     }
 
     public enum Preset {
-        Vape(new Vape()),
+        Vape(true, false, true, true, CNColor.STATIC, in -> 0xFFFFFFFE, in -> 0x99808080, in -> 0x99808080, in -> -12876693, in -> -12876693, in -> 0xFFFFFFFE, in -> 0xFF000000, in -> 0xFF000000, in -> 0xFFFFFFFE, in -> 0x99808080, true, true, false, in -> -12876693, in -> -12876693, in -> Utils.Client.otherAstolfoColorsDraw(in, 10)),
         ArcDark(new ArcDark()),
         MaterialDark(new MaterialDark()),
-
         PlusPlus(true, false, true, true, CNColor.STATIC, in -> 0xFFFFFFFE, in -> -15001318, in -> -15001318, in -> Utils.Client.rainbowDraw(2, in), in -> Utils.Client.rainbowDraw(2, in), in -> 0xFF000000, in -> 0xFF000000,in -> 0xFF000000, in -> 0xFFFFFFFE, in -> 0xFF808080, true, true, true, in -> 0xFFFFFFFE, in -> Utils.Client.astolfoColorsDraw(in, 10), in -> Utils.Client.otherAstolfoColorsDraw(in, 10));
 
         public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground, roundedCorners, swing, boarder;
