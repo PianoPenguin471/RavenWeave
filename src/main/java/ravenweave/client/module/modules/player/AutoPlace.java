@@ -6,10 +6,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
@@ -76,9 +73,8 @@ public class AutoPlace extends Module {
         if (movingObjectPosition == null || movingObjectPosition.typeOfHit != MovingObjectType.BLOCK) return;
 
         // Make sure we're looking at the correct side of the block
-        if (movingObjectPosition.sideHit == EnumFacing.UP && !placeOnTops.isToggled())
-            return;
-        mc.thePlayer.addChatMessage(new ChatComponentText(movingObjectPosition.toString()));
+        if (movingObjectPosition.sideHit == EnumFacing.UP && !placeOnTops.isToggled()) return;
+
         BlockPos pos = movingObjectPosition.getBlockPos();
 
         Block block = mc.theWorld.getBlockState(pos).getBlock();
@@ -87,31 +83,14 @@ public class AutoPlace extends Module {
         if (block == null || block == Blocks.air || block instanceof BlockLiquid) return;
 
         if (holdRight.isToggled() && !Mouse.isButtonDown(1)) return;
-
-        if (lastPos == null || lastPos.equals(pos)) return;
-
-        lastPos = pos;
-
-        long now = System.currentTimeMillis();
-        if (now - this.lastPlace >= delay.getInput()) {
-            this.lastPlace = now;
-
-            clickBlock();
-        }
+        clickBlock(pos, movingObjectPosition.sideHit, movingObjectPosition.hitVec);
     }
 
-    public void clickBlock() {
+    public void clickBlock(BlockPos pos, EnumFacing enumFacing, Vec3 vec3) {
         new Thread(() -> {
             try {
-                int keyCode = mc.gameSettings.keyBindUseItem.getKeyCode();
-                KeyBinding.setKeyBindState(keyCode, true);
                 mc.thePlayer.swingItem();
-                KeyBinding.onTick(keyCode);
-
-                Thread.sleep(2);
-
-                mc.getItemRenderer().resetEquippedProgress();
-                KeyBinding.setKeyBindState(keyCode, false);
+                mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), pos, enumFacing, vec3);
             } catch (Exception ignored) {}
         }).start();
     }
