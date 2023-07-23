@@ -59,6 +59,7 @@ import java.util.*;
 public class Utils {
     private static final Random rand = new Random();
     public static final Minecraft mc = Minecraft.getMinecraft();
+    public static final float DEGREES_TO_RADIANS = 0.017453292f;
     public static final String md = "Mode: ";
 
     public static class Player {
@@ -143,7 +144,7 @@ public class Utils {
 
         public static void sendMessageToSelf(String txt) {
             if (isPlayerInGame()) {
-                String m = Client.reformat("&7[&6R&7]&r " + txt);
+                String m = Client.reformat("&7[&3Raven&5Weave&7]&r " + txt);
                 mc.thePlayer.addChatMessage(new ChatComponentText(m));
             }
         }
@@ -191,6 +192,13 @@ public class Utils {
         public static float pitchToEntity(Entity ent, float f) {
             double x = mc.thePlayer.getDistanceToEntity(ent);
             double y = mc.thePlayer.posY - (ent.posY + f);
+            double pitch = (((Math.atan2(x, y) * 180.0D) / 3.141592653589793D));
+            return (float) (90 - pitch);
+        }
+
+        public static float pitchToBlockPos(BlockPos pos) {
+            double x = mc.thePlayer.getDistanceSqToCenter(pos);
+            double y = mc.thePlayer.posY - (pos.getY());
             double pitch = (((Math.atan2(x, y) * 180.0D) / 3.141592653589793D));
             return (float) (90 - pitch);
         }
@@ -302,20 +310,36 @@ public class Utils {
             return Mouse.isButtonDown(0) && Mouse.isButtonDown(1);
         }
 
-        public static float[] getTargetRotations(Entity q, float ps) {
-            if (q == null)
+        public static float[] getBlockPosRotations(BlockPos pos) {
+            if (pos == null)
                 return null;
-            double diffX = q.posX - mc.thePlayer.posX;
+            double diffX = pos.getX() - mc.thePlayer.posX;
+            double diffY = pos.getY() - mc.thePlayer.posY;
+
+            double diffZ = pos.getZ() - mc.thePlayer.posZ;
+
+            double dist = MathHelper.sqrt_double((diffX * diffX) + (diffZ * diffZ));
+            float yaw = (float) ((Math.atan2(diffZ, diffX) * 180.0D) / 3.141592653589793D) - 90.0F;
+            float pitch = (float) (-((Math.atan2(diffY, dist) * 180.0D) / 3.141592653589793D));
+            return new float[] {
+                    mc.thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - mc.thePlayer.rotationYaw),
+                    mc.thePlayer.rotationPitch
+                            + MathHelper.wrapAngleTo180_float(pitch - mc.thePlayer.rotationPitch) };
+        }
+
+        public static float[] getTargetRotations(Entity entityIn, float ps) {
+            if (entityIn == null)
+                return null;
+            double diffX = entityIn.posX - mc.thePlayer.posX;
             double diffY;
-            if (q instanceof EntityLivingBase) {
-                EntityLivingBase en = (EntityLivingBase) q;
+            if (entityIn instanceof EntityLivingBase en) {
                 diffY = (en.posY + ((double) en.getEyeHeight() * 0.9D))
                         - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
             } else
-                diffY = (((q.getEntityBoundingBox().minY + q.getEntityBoundingBox().maxY) / 2.0D) + ps)
+                diffY = (((entityIn.getEntityBoundingBox().minY + entityIn.getEntityBoundingBox().maxY) / 2.0D) + ps)
                 - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
 
-            double diffZ = q.posZ - mc.thePlayer.posZ;
+            double diffZ = entityIn.posZ - mc.thePlayer.posZ;
             double dist = MathHelper.sqrt_double((diffX * diffX) + (diffZ * diffZ));
             float yaw = (float) ((Math.atan2(diffZ, diffX) * 180.0D) / 3.141592653589793D) - 90.0F;
             float pitch = (float) (-((Math.atan2(diffY, dist) * 180.0D) / 3.141592653589793D));
@@ -323,7 +347,6 @@ public class Utils {
                     mc.thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - mc.thePlayer.rotationYaw),
                     mc.thePlayer.rotationPitch
                     + MathHelper.wrapAngleTo180_float(pitch - mc.thePlayer.rotationPitch) };
-            // tf is happening here
         }
 
         public static void fixMovementSpeed(double s, boolean m) {
@@ -403,7 +426,7 @@ public class Utils {
                 yw += 90.0F * f;
 
             // what
-            yw *= 0.017453292F;
+            yw *= DEGREES_TO_RADIANS;
 
             return yw;
         }
@@ -735,7 +758,7 @@ public class Utils {
         }
 
         public static String reformat(String txt) {
-            return txt.replace("&", "§");
+            return txt.replace("&", Character.toString(0x00A7));
         }
     }
 
