@@ -1,78 +1,171 @@
 package ravenweave.client.module.modules.player;
 
+import net.minecraft.block.BlockBed;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.network.play.client.C07PacketPlayerDigging;
-import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.Utils;
 
-import java.util.TimerTask;
+import java.util.*;
 
 public class BedAura extends Module {
-    public static DescriptionSetting d;
-    public static SliderSetting r;
-    private java.util.Timer t;
-    private BlockPos m;
+    public static SliderSetting rangeInput;
+    public static ComboSetting<BypassMode> bypassMode;
+    public State state = State.LOOKING_FOR_BED;
+    private boolean notifiedSearching = false, notifiedBreaking = false, notifiedBypassing = false;
+    private Timer timer;
+    private BlockPos bedPos;
     private final long per = 600L;
 
     public BedAura() {
         super("BedAura", ModuleCategory.player);
-        this.registerSetting(d = new DescriptionSetting("Might silent flag on Hypixel."));
-        this.registerSetting(r = new SliderSetting("Range", 5.0D, 2.0D, 10.0D, 1.0D));
+        this.registerSetting(new DescriptionSetting("Might silent flag on Hypixel."));
+        this.registerSetting(rangeInput = new SliderSetting("Range", 5.0D, 2.0D, 10.0D, 1.0D));
+        this.registerSetting(bypassMode = new ComboSetting<>("Bypass Mode", BypassMode.NONE));
     }
 
     public void onEnable() {
-        (this.t = new java.util.Timer()).scheduleAtFixedRate(this.t(), 0L, 600L);
+        reset();
+        (this.timer = new Timer()).scheduleAtFixedRate(this.timerTask(), 0L, 60L);
+    }
+
+    public void reset() {
+        this.state = State.LOOKING_FOR_BED;
+        this.notifiedBreaking = false;
+        this.notifiedBypassing = false;
+        this.notifiedSearching = false;
+        this.bedPos = null;
     }
 
     public void onDisable() {
-        if (this.t != null) {
-            this.t.cancel();
-            this.t.purge();
-            this.t = null;
+        if (this.timer != null) {
+            this.timer.cancel();
+            this.timer.purge();
+            this.timer = null;
         }
-
-        this.m = null;
+        reset();
     }
 
-    public TimerTask t() {
+
+    public TimerTask timerTask() {
         return new TimerTask() {
             public void run() {
-                int ra = (int) r.getInput();
 
-                for (int y = ra; y >= -ra; --y) {
-                    for (int x = -ra; x <= ra; ++x) {
-                        for (int z = -ra; z <= ra; ++z) {
-                            if (Utils.Player.isPlayerInGame()) {
-                                BlockPos p = new BlockPos(Module.mc.thePlayer.posX + (double) x,
-                                        Module.mc.thePlayer.posY + (double) y, Module.mc.thePlayer.posZ + (double) z);
-                                boolean bed = Module.mc.theWorld.getBlockState(p).getBlock() == Blocks.bed;
-                                if (BedAura.this.m == p) {
-                                    if (!bed) {
-                                        BedAura.this.m = null;
-                                    }
-                                } else if (bed) {
-                                    BedAura.this.mi(p);
-                                    BedAura.this.m = p;
-                                    break;
-                                }
+                // Don't bother breaking a bed if we're not even in a game
+                if (!Utils.Player.isPlayerInGame()) return;
+                switch (BedAura.this.state) {
+                    case LOOKING_FOR_BED -> {
+                        if (!notifiedSearching) {
+                            Utils.Player.sendMessageToSelf("Looking for valid bed block");
+                            notifiedSearching = true;
+                        }
+                        BedAura.this.bedPos = getClosestBedPosition((int) rangeInput.getInput());
+                        // We'll check again next time
+                        if (BedAura.this.bedPos == null) break;
+                        else {
+                            Utils.Player.sendMessageToSelf("Found bed block at " + bedPos);
+                            if (bypassMode.getMode() == BypassMode.NONE) {
+                                BedAura.this.state = State.BREAKING_BED;
+                            } else {
+                                BedAura.this.state = State.BYPASS;
                             }
+                        }
+                    }
+                    case BYPASS -> {
+                        if (bypassMode.getMode() == BypassMode.BLOCK_ABOVE) {
+                            // Get block above the bed
+                            BlockPos blockAbove = BedAura.this.bedPos.up();
+
+                            // If the bed is exposed, move on
+                            if (mc.theWorld.getBlockState(blockAbove).getBlock() == Blocks.air) {
+                                BedAura.this.state = State.BREAKING_BED;
+                                break;
+                            }
+
+                            // Break the block
+                            mineBlock(blockAbove);
+                            if (!notifiedBypassing) {
+                                Utils.Player.sendMessageToSelf("Mining Bypass Block");
+                                notifiedBypassing = true;
+                            }
+                        }
+                    }
+                    case BREAKING_BED -> {
+                        mineBlock(BedAura.this.bedPos);
+                        if (!notifiedBreaking) {
+                            Utils.Player.sendMessageToSelf("Mining Bed Block");
+                            notifiedBreaking = true;
                         }
                     }
                 }
 
+
+
+
+                updateState();
             }
         };
     }
 
-    private void mi(BlockPos p) {
+    public void updateState() {
+        if (this.bedPos == null) this.state = State.LOOKING_FOR_BED;
+        else if (mc.theWorld.getBlockState(bedPos).getBlock() != Blocks.bed) {
+            Utils.Player.sendMessageToSelf("Broke bed");
+            this.state = State.LOOKING_FOR_BED;
+        }
+    }
+
+    public BlockPos getClosestBedPosition(int range) {
+        List<BlockPos> bedPositions = new ArrayList<>();
+        for (int y = range; y >= -range; --y) {
+            for (int x = -range; x <= range; ++x) {
+                for (int z = -range; z <= range; ++z) {
+                    // Get BlockPos objects for all bed blocks around us
+                    BlockPos pos = new BlockPos(Module.mc.thePlayer.posX + (double) x, mc.thePlayer.posY + (double) y, mc.thePlayer.posZ + (double) z);
+                    IBlockState blockState = mc.theWorld.getBlockState(pos);
+                    boolean isBed = blockState.getBlock() == Blocks.bed;
+
+                    // Ignore block if it isn't a bed
+                    if (!isBed) continue;
+
+                    // Only break the foot of the bed (to simplify calculations and bypasses later)
+                    if (blockState.getValue(BlockBed.PART) == BlockBed.EnumPartType.HEAD) continue;
+                    // TODO: allow the module to focus on only one bed block at a time
+                    // TODO: break block above the foot of the bed as a method of bypassing
+
+                    bedPositions.add(pos);
+                }
+            }
+        }
+        if (bedPositions.isEmpty()) return null;
+        bedPositions.sort((o1, o2) -> (int) (Utils.Player.getBlockPosRotations(o2)[0] - Utils.Player.getBlockPosRotations(o1)[0]));
+        return bedPositions.get(0);
+    }
+
+    private void mineBlock(BlockPos pos) {
+        mc.playerController.onPlayerDamageBlock(pos, EnumFacing.NORTH);
+        //mc.playerController.clickBlock(pos, EnumFacing.NORTH);
+        mc.thePlayer.swingItem();
+        /*
         mc.thePlayer.sendQueue
-                .addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, p, EnumFacing.NORTH));
+                .addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, pos, EnumFacing.NORTH));
         mc.thePlayer.sendQueue
-                .addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, p, EnumFacing.NORTH));
+                .addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, pos, EnumFacing.NORTH));
+         */
+    }
+    public enum State {
+        LOOKING_FOR_BED,
+        BYPASS,
+        BREAKING_BED
+    }
+
+    public enum BypassMode {
+        NONE,
+        BLOCK_ABOVE
     }
 }
