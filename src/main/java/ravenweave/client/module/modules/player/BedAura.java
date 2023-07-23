@@ -9,6 +9,7 @@ import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
+import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
 import java.util.*;
@@ -16,17 +17,18 @@ import java.util.*;
 public class BedAura extends Module {
     public static SliderSetting rangeInput;
     public static ComboSetting<BypassMode> bypassMode;
+    public static TickSetting disableOnBreak;
     public State state = State.LOOKING_FOR_BED;
     private boolean notifiedSearching = false, notifiedBreaking = false, notifiedBypassing = false;
     private Timer timer;
     private BlockPos bedPos;
-    private final long per = 600L;
 
     public BedAura() {
         super("BedAura", ModuleCategory.player);
         this.registerSetting(new DescriptionSetting("Might silent flag on Hypixel."));
         this.registerSetting(rangeInput = new SliderSetting("Range", 5.0D, 2.0D, 10.0D, 1.0D));
         this.registerSetting(bypassMode = new ComboSetting<>("Bypass Mode", BypassMode.NONE));
+        this.registerSetting(disableOnBreak = new TickSetting("Disable after break", true));
     }
 
     public void onEnable() {
@@ -66,8 +68,7 @@ public class BedAura extends Module {
                         }
                         BedAura.this.bedPos = getClosestBedPosition((int) rangeInput.getInput());
                         // We'll check again next time
-                        if (BedAura.this.bedPos == null) break;
-                        else {
+                        if (BedAura.this.bedPos != null) {
                             Utils.Player.sendMessageToSelf("Found bed block at " + bedPos);
                             if (bypassMode.getMode() == BypassMode.NONE) {
                                 BedAura.this.state = State.BREAKING_BED;
@@ -143,7 +144,7 @@ public class BedAura extends Module {
             }
         }
         if (bedPositions.isEmpty()) return null;
-        bedPositions.sort((o1, o2) -> (int) (Utils.Player.getBlockPosRotations(o2)[0] - Utils.Player.getBlockPosRotations(o1)[0]));
+        bedPositions.sort((o1, o2) -> (int) (mc.thePlayer.getDistanceSq(o2) - mc.thePlayer.getDistanceSq(o1)));
         return bedPositions.get(0);
     }
 
