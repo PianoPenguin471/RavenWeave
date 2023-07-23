@@ -14,6 +14,7 @@ import ravenweave.client.clickgui.raven.components.ModuleComponent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.setting.Setting;
 import net.minecraft.client.Minecraft;
+import ravenweave.client.utils.Utils;
 
 public class Module {
     protected ArrayList<Setting> settings;
@@ -132,6 +133,7 @@ public class Module {
             registered = true;
             EventBus.subscribe(this);
         }
+        Utils.Player.sendMessageToSelf(this.moduleName + " has been &aenabled");
     }
 
     public void disable() {
@@ -144,6 +146,7 @@ public class Module {
             registered = false;
         }
         this.onDisable();
+        Utils.Player.sendMessageToSelf(this.moduleName + " has been &4disabled");
     }
 
     public void setToggled(boolean enabled) {
