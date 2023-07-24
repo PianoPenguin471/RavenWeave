@@ -2,6 +2,7 @@ package ravenweave.client.module.modules.beta;
 
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.network.Packet;
+import net.minecraft.network.status.client.C00PacketServerQuery;
 import net.weavemc.loader.api.event.ShutdownEvent;
 import net.weavemc.loader.api.event.StartGameEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
@@ -32,9 +33,9 @@ public class Blink extends Module {
             inboundPackets.add(p.getPacket());
         } else {
             if (!outbound.isToggled()) return;
+            if (!p.getPacket().getClass().getCanonicalName().startsWith("net.minecraft.network.play.client")) return;
             outboundPackets.add(p.getPacket());
         }
-
         p.setCancelled(true);
     }
     
@@ -47,6 +48,7 @@ public class Blink extends Module {
     @Override
     public void onDisable() {
         for (Packet packet : outboundPackets) {
+            System.out.println(packet);
             mc.getNetHandler().addToSendQueue(packet);
         }
 
