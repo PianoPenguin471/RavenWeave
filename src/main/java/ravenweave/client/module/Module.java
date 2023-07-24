@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 
 import ravenweave.client.clickgui.raven.components.ModuleComponent;
 import ravenweave.client.main.Raven;
+import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.module.setting.Setting;
 import net.minecraft.client.Minecraft;
 import ravenweave.client.utils.Utils;
@@ -29,8 +30,6 @@ public class Module {
 
     protected static Minecraft mc;
     private boolean isToggled;
-
-    private String description = "";
 
     protected boolean registered;
 
@@ -56,13 +55,12 @@ public class Module {
         this.defaultEnabled = i;
         try {
             setToggled(i);
-        } catch (Exception e) {
+        } catch (Exception ignore) {
         }
         return (E) this;
     }
 
     public <E extends Module> E withDescription(String i) {
-        this.description = i;
         return (E) this;
     }
 
@@ -133,6 +131,12 @@ public class Module {
             registered = true;
             EventBus.subscribe(this);
         }
+
+        // Skip categories
+        if (this.moduleCategory == ModuleCategory.category) return;
+
+        // Only show if the user enables notifications
+        if (!ClickGuiModule.notifications.isToggled()) return;
         Utils.Player.sendMessageToSelf(this.moduleName + " has been &aenabled");
     }
 
@@ -146,6 +150,15 @@ public class Module {
             registered = false;
         }
         this.onDisable();
+
+        // Skip categories
+        if (this.moduleCategory == ModuleCategory.category) return;
+
+        // Only show if the user enables notifications
+        if (!ClickGuiModule.notifications.isToggled()) return;
+
+        // Hacky fix to remove double notifications
+        if (this.moduleName.equals("Gui")) return;
         Utils.Player.sendMessageToSelf(this.moduleName + " has been &4disabled");
     }
 

@@ -17,7 +17,7 @@ public class ClickGuiModule extends Module {
 
     public DescriptionSetting description;
     private static ComboSetting preset;
-    private static TickSetting cleanUp, reset, betagui;
+    public static TickSetting cleanUp, reset, notifications;
     public static int guiScale;
 
     public ClickGuiModule() {
@@ -25,9 +25,9 @@ public class ClickGuiModule extends Module {
         withKeycode(54);
 
         this.registerSetting(description = new DescriptionSetting("Opens this GUI"));
-        this.registerSetting(betagui = new TickSetting("beta gui (VERY BETA)", false));
         this.registerSetting(cleanUp = new TickSetting("Clean Up", false));
         this.registerSetting(reset = new TickSetting("Reset position", false));
+        this.registerSetting(notifications = new TickSetting("Notifications", false));
         this.registerSetting(preset = new ComboSetting("Preset", Preset.PlusPlus));
     }
 
@@ -46,18 +46,10 @@ public class ClickGuiModule extends Module {
 
     @Override
     public void onEnable() {
-        if (Utils.Player.isPlayerInGame() && ((mc.currentScreen != Raven.clickGui) || (mc.currentScreen != Raven.kvCompactGui)))
-            if(betagui.isToggled()) {
-                guiScale = mc.gameSettings.guiScale;
-                mc.gameSettings.guiScale = 3;
-                mc.displayGuiScreen(Raven.kvCompactGui);
-                Raven.kvCompactGui.initGui();
-                Raven.kvCompactGui.initGui();
-            }
-            else {
-                mc.displayGuiScreen(Raven.clickGui);
-                Raven.clickGui.initMain();
-            }
+        if (Utils.Player.isPlayerInGame() && ((mc.currentScreen != Raven.clickGui) || (mc.currentScreen != Raven.kvCompactGui))) {
+            mc.displayGuiScreen(Raven.clickGui);
+            Raven.clickGui.initMain();
+        }
 
         this.disable();
     }

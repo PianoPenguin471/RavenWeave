@@ -7,11 +7,12 @@ import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.client.Minecraft;
+import ravenweave.client.utils.Utils;
 
 public class GUICommand extends Command {
-    private static final String UsageMessage = EnumChatFormatting.WHITE + "[" + EnumChatFormatting.LIGHT_PURPLE + "Raven" + EnumChatFormatting.WHITE + "] " + EnumChatFormatting.RED + "/gui <key>";
-    private static final String InvalidKeyMessage = EnumChatFormatting.WHITE + "[" + EnumChatFormatting.LIGHT_PURPLE + "Raven" + EnumChatFormatting.WHITE + "] " + EnumChatFormatting.RED + "Invalid key.";
-    private static final String SuccessMessage = EnumChatFormatting.WHITE + "[" + EnumChatFormatting.LIGHT_PURPLE + "Raven" + EnumChatFormatting.WHITE + "] " + EnumChatFormatting.WHITE + "GUI Bind set to " + EnumChatFormatting.GREEN + "%s" + EnumChatFormatting.WHITE + ".";
+    private static final String UsageMessage = EnumChatFormatting.RED + "/gui <key>";
+    private static final String InvalidKeyMessage = EnumChatFormatting.RED + "Invalid key.";
+    private static final String SuccessMessage = EnumChatFormatting.WHITE + "GUI Bind set to " + EnumChatFormatting.GREEN + "%s" + EnumChatFormatting.WHITE + ".";
 
     public GUICommand() {
         super("clickgui", "gui", "raven");
@@ -38,7 +39,7 @@ public class GUICommand extends Command {
         Module guiModule = Raven.moduleManager.getModuleByName("Gui");
 
         if (args.length != 1) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(UsageMessage));
+            Utils.Player.sendMessageToSelf(UsageMessage);
             return;
         }
 
@@ -47,11 +48,11 @@ public class GUICommand extends Command {
         keyString = getKeycodeAsString(keyCode);
 
         if (keyString.equalsIgnoreCase("none")) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(InvalidKeyMessage));
+            Utils.Player.sendMessageToSelf(InvalidKeyMessage);
             return;
         }
 
         guiModule.setBind(keyCode);
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(String.format(SuccessMessage, keyString)));
+        Utils.Player.sendMessageToSelf(String.format(SuccessMessage, keyString));
     }
 }
