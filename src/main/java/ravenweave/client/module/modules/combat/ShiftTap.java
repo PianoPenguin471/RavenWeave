@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.combat;
 
-import me.pianopenguin471.events.AttackEntityEvent;
-import me.pianopenguin471.events.LivingUpdateEvent;
+import ravenweave.client.event.impl.AttackEntityEvent;
+import ravenweave.client.event.impl.LivingUpdateEvent;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

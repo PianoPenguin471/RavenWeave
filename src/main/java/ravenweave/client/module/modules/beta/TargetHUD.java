@@ -1,6 +1,6 @@
 package ravenweave.client.module.modules.beta;
 
-import me.pianopenguin471.events.AttackEntityEvent;
+import ravenweave.client.event.impl.AttackEntityEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityOtherPlayerMP;

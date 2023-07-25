@@ -1,6 +1,6 @@
 package ravenweave.client.module.modules.combat;
 
-import me.pianopenguin471.events.AttackEntityEvent;
+import ravenweave.client.event.impl.AttackEntityEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.Minecraft;

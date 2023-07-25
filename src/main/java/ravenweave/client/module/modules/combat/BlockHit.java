@@ -1,6 +1,6 @@
 package ravenweave.client.module.modules.combat;
 
-import me.pianopenguin471.events.AttackEntityEvent;
+import ravenweave.client.event.impl.AttackEntityEvent;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;

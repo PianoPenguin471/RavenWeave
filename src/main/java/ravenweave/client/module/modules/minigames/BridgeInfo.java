@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.minigames;
 
 import com.google.common.eventbus.Subscribe;
-import me.pianopenguin471.events.EntityJoinWorldEvent;
+import ravenweave.client.event.impl.EntityJoinWorldEvent;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
