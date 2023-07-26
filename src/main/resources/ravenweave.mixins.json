@@ -3,19 +3,20 @@
   "package": "me.pianopenguin471.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AttackMixin",
+    "EntityPlayerSPMixin",
+    "MixinAttackEntity",
     "MixinEntity",
     "MixinEntity2",
-    "MixinEntityPlayer",
+    "MixinEntityLivingBase",
     "MixinEntityPlayerSP",
     "MixinEntityRenderer",
     "MixinMinecraft",
     "MixinNetworkManager",
-    "AttackMixin",
-    "EntityPlayerSPMixin",
-    "WorldMixin",
-    "MixinEntityLivingBase",
     "RendererLivingEntityMixin",
-    "S12PacketEntityVelocityAccessor"
+    "RenderGlobalMixin",
+    "S12PacketEntityVelocityAccessor",
+    "WorldMixin"
   ],
   "client": [
     "IMinecraft"

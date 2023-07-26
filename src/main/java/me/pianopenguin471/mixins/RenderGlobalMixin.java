@@ -12,7 +12,6 @@ import ravenweave.client.main.Raven;
 public abstract class RenderGlobalMixin {
     @Inject(method = "drawSelectionBox", at = @At("HEAD"))
     public void onDrawSelectionBox(CallbackInfo ci) {
-        System.out.println("Drawing Selection Box");
         Raven.eventBus.post(new DrawBlockHighlightEvent());
     }
 }
