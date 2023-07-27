@@ -1,13 +1,16 @@
 package ravenweave.client.module.modules.render;
 
+import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentText;
 import net.weavemc.loader.api.event.RenderLivingEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
+import ravenweave.client.event.impl.RenderLabelEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.module.setting.impl.SliderSetting;
@@ -19,7 +22,6 @@ public class Nametags extends Module {
     public static TickSetting rect;
     public static TickSetting showHealth;
     public static TickSetting showInvis;
-    public static TickSetting removeTags;
     public static TickSetting e;
 
     public Nametags() {
@@ -28,15 +30,11 @@ public class Nametags extends Module {
         this.registerSetting(rect = new TickSetting("Rect", true));
         this.registerSetting(showHealth = new TickSetting("Show health", true));
         this.registerSetting(showInvis = new TickSetting("Show invis", true));
-        this.registerSetting(removeTags = new TickSetting("Remove tags", false));
     }
 
     @SubscribeEvent
-    public void onForgeEvent(RenderLivingEvent.Pre event) {
+    public void onRenderLivingEvent(RenderLivingEvent.Pre event) {
         if (!this.enabled) return;
-        if (removeTags.isToggled()) {
-            event.setCancelled(true);
-        }
         if (event.getEntity() instanceof EntityPlayer && event.getEntity() != mc.thePlayer && event.getEntity().deathTime == 0) {
             EntityPlayer en = (EntityPlayer) event.getEntity();
             if (!showInvis.isToggled() && en.isInvisible()) {
@@ -45,11 +43,10 @@ public class Nametags extends Module {
 
             if (AntiBot.bot(en) || en.getDisplayName().getUnformattedText().isEmpty()) return;
 
-            event.setCancelled(true);
             String str = en.getDisplayName().getFormattedText();
             if (showHealth.isToggled()) {
                 double r = en.getHealth() / en.getMaxHealth();
-                String h = (r < 0.3D ? "§c" : (r < 0.5D ? "§6" : (r < 0.7D ? "§e" : "§a")))
+                String h = (r < 0.3D ? "\u00A7c" : (r < 0.5D ? "\u00A76" : (r < 0.7D ? "\u00A7e" : "\u00A7a")))
                         + Utils.Java.round(en.getHealth(), 1);
                 str = str + " " + h;
             }
@@ -94,4 +91,13 @@ public class Nametags extends Module {
             GlStateManager.popMatrix();
         }
     }
+
+    @SubscribeEvent
+    public void onRenderLabel(RenderLabelEvent e) {
+        if(this.enabled) {
+            e.setCancelled(true);
+            mc.thePlayer.addChatMessage(new ChatComponentText("Hello Raven User"));
+        }
+    }
+
 }
