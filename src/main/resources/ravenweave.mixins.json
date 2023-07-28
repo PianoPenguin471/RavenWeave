@@ -15,7 +15,8 @@
     "WorldMixin",
     "MixinEntityLivingBase",
     "RendererLivingEntityMixin",
-    "S12PacketEntityVelocityAccessor"
+    "S12PacketEntityVelocityAccessor",
+    "RenderNameMixin"
   ],
   "client": [
     "IMinecraft"
