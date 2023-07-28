@@ -117,6 +117,7 @@ public class BedAura extends Module {
         if (this.bedPos == null) this.state = State.LOOKING_FOR_BED;
         else if (mc.theWorld.getBlockState(bedPos).getBlock() != Blocks.bed) {
             Utils.Player.sendMessageToSelf("Broke bed");
+            if (disableOnBreak.isToggled()) this.disable();
             this.state = State.LOOKING_FOR_BED;
         }
     }
