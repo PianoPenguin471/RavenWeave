@@ -21,7 +21,6 @@ public class SpeedTest extends Module {
     
     @SubscribeEvent
     public void onRender2D(RenderGameOverlayEvent e) {
-        if (!this.enabled) return;
         if(!Utils.Player.isPlayerInGame())
             return;
         if(mc.thePlayer.onGround && coolDown.hasFinished()) {
