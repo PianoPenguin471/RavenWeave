@@ -57,40 +57,51 @@ public class AutoPlace extends Module {
 
     @SubscribeEvent
     public void onRender(RenderGameOverlayEvent.Pre event) {
-        // Check that we're not in a menu
-        if (!Utils.Player.isPlayerInGame()) return;
-        if (mc.currentScreen != null) return;
+        MovingObjectPosition mop = mc.objectMouseOver;
 
+        if (shouldClickBlock(mop, mop.getBlockPos()))
+            clickBlock(mop.getBlockPos(), mop.sideHit, mop.hitVec);
+    }
+
+    public boolean shouldClickBlock(MovingObjectPosition mop, BlockPos pos) {
+        if (!Utils.Player.isPlayerInGame()) return false;
+        if (pos == null || lastPos == null) return false;
+        if (pos.equals(lastPos) || System.currentTimeMillis() - lastPlace < delay.getInput()) return false;
         // Check that we're holding a block
         ItemStack heldItem = mc.thePlayer.getHeldItem();
-        if (heldItem == null) return;
-        if (!(heldItem.getItem() instanceof ItemBlock)) return;
 
-
-        MovingObjectPosition movingObjectPosition = mc.objectMouseOver;
+        // Null checks
+        if (mc.currentScreen != null || heldItem == null || mop == null) return false;
+        if (!(heldItem.getItem() instanceof ItemBlock)) return false;
 
         // Make sure we're looking at a block
-        if (movingObjectPosition == null || movingObjectPosition.typeOfHit != MovingObjectType.BLOCK) return;
+        if (mop.typeOfHit != MovingObjectType.BLOCK) return false;
 
         // Make sure we're looking at the correct side of the block
-        if (movingObjectPosition.sideHit == EnumFacing.UP && !placeOnTops.isToggled()) return;
+        if (mop.sideHit == EnumFacing.UP && !placeOnTops.isToggled()) return false;
 
-        BlockPos pos = movingObjectPosition.getBlockPos();
+        // Prevent sus downstacks and excessive packets
+        if (mop.sideHit == EnumFacing.DOWN) return false;
 
         Block block = mc.theWorld.getBlockState(pos).getBlock();
 
         // Make sure it's a valid block
-        if (block == null || block == Blocks.air || block instanceof BlockLiquid) return;
+        if (block == null || block == Blocks.air || block instanceof BlockLiquid) return false;
 
-        if (holdRight.isToggled() && !Mouse.isButtonDown(1)) return;
-        clickBlock(pos, movingObjectPosition.sideHit, movingObjectPosition.hitVec);
+        if (holdRight.isToggled() && Mouse.isButtonDown(1)) return false;
+        return true;
     }
 
     public void clickBlock(BlockPos pos, EnumFacing enumFacing, Vec3 vec3) {
         new Thread(() -> {
             try {
+                boolean success = mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), pos, enumFacing, vec3);
                 mc.thePlayer.swingItem();
-                mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), pos, enumFacing, vec3);
+
+                if (success) {
+                    lastPlace = System.currentTimeMillis();
+                    lastPos = pos;
+                }
             } catch (Exception ignored) {}
         }).start();
     }
