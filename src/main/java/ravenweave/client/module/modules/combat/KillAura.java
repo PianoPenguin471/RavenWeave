@@ -28,13 +28,10 @@ public class KillAura extends Module {
 
     private EntityPlayer target;
 
-    public static SliderSetting reach/*,rps*/;
+    public static SliderSetting reach;
     private DoubleSliderSetting cps;
-    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement;
+    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement, highlightTarget;
     private ComboSetting<BlockMode> blockMode;
-
-    private List<EntityPlayer> pTargets;
-    private ComboSetting sortMode;
     private CoolDown coolDown = new CoolDown(1);
     private boolean leftDown, leftn, locked;
     private long leftDownTime, leftUpTime, leftk, leftl;
@@ -45,13 +42,13 @@ public class KillAura extends Module {
     public KillAura() {
         super("KillAura", ModuleCategory.combat);
         this.registerSetting(reach = new SliderSetting("Reach (Blocks)", 3.3, 3, 6, 0.05));
-        //this.registerSetting(rps = new SliderSetting("Max rotation speed", 36, 0, 200, 1));
         this.registerSetting(cps = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
         this.registerSetting(onlySurvival = new TickSetting("Only Survival", false));
         this.registerSetting(disableOnTp = new TickSetting("Disable after tp", false));
         this.registerSetting(disableWhenFlying = new TickSetting("Disable when flying", true));
         this.registerSetting(mouseDown = new TickSetting("Mouse Down", false));
         this.registerSetting(fixMovement = new TickSetting("Movement Fix", true));
+        this.registerSetting(highlightTarget = new TickSetting("Highlight target", true));
         this.registerSetting(blockMode = new ComboSetting<BlockMode>("Block mode", BlockMode.NONE));
     }
 
@@ -105,19 +102,17 @@ public class KillAura extends Module {
 
     @SubscribeEvent
     public void renderWorldLast(RenderWorldEvent renderWorldEvent) {
-        if(target != null && pTargets != null) {
-            int red = (int) (((20 - target.getHealth()) * 13) > 255 ? 255 : (20 - target.getHealth()) * 13);
-            int green =  255 - red;
-            final int rgb = new Color(red, green, 0).getRGB();
-            Utils.HUD.drawBoxAroundEntity(target, 2, 0, 0, rgb, false);
-            for(EntityPlayer p : pTargets)
-                Utils.HUD.drawBoxAroundEntity(p, 2, 0, 0, 0x800000FF, false);
-        }
+        if (target == null)
+            return;
+        int red = (int) (((20 - target.getHealth()) * 13) > 255 ? 255 : (20 - target.getHealth()) * 13);
+        int green = 255 - red;
+        final int rgb = new Color(red, green, 0).getRGB();
+        Utils.HUD.drawBoxAroundEntity(target, 2, 0, 0, rgb, false);
     }
 
     public void rotate(float yaw, float pitch, boolean e) {
-       this.yaw = yaw;
-       this.pitch = pitch;
+       KillAura.yaw = yaw;
+       KillAura.pitch = pitch;
     }
 
     private double MouseSens() {
