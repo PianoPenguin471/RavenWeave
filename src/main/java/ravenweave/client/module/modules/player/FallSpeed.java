@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.player;
 
-import com.google.common.eventbus.Subscribe;
-import ravenweave.client.event.impl.TickEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.movement.Fly;
@@ -21,7 +21,7 @@ public class FallSpeed extends Module {
         this.registerSetting(b = new TickSetting("Disable XZ motion", true));
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onTick(TickEvent e) {
         if ((double) mc.thePlayer.fallDistance >= 2.5D) {
             Module fly = Raven.moduleManager.getModuleByClazz(Fly.class);

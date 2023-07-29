@@ -1,9 +1,9 @@
 package ravenweave.client.event.impl;
 
-import ravenweave.client.event.types.CancellableEvent;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.weavemc.loader.api.event.CancellableEvent;
 
 public class LivingUpdateEvent extends CancellableEvent {
     public Entity entity;

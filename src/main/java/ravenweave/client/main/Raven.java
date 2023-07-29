@@ -6,8 +6,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import net.weavemc.loader.api.event.ChatReceivedEvent;
+import net.weavemc.loader.api.event.EventBus;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import com.google.common.eventbus.EventBus;
 
 import ravenweave.client.clickgui.kv.KvCompactGui;
 import ravenweave.client.clickgui.raven.ClickGui;
@@ -43,7 +43,6 @@ public class Raven {
 
     public static ClickGui clickGui;
     public static KvCompactGui kvCompactGui;
-    // public static TabGui tabGui;
 
     private static final ScheduledExecutorService ex = Executors.newScheduledThreadPool(2);
 
@@ -51,7 +50,6 @@ public class Raven {
 
     public static final String osName, osArch;
     public static final List<Object> registered = new ArrayList<>();
-    public static final EventBus eventBus = new EventBus(); // use this
     public static final Minecraft mc = Minecraft.getMinecraft();
 
     static {
@@ -78,7 +76,6 @@ public class Raven {
         clientConfig.applyConfig();
     }
 
-    @SuppressWarnings("unused")
     @SubscribeEvent
     public void onChatMessageReceived(ChatReceivedEvent event) {
         if (Utils.Player.isPlayerInGame()) {
@@ -94,7 +91,7 @@ public class Raven {
 
     public static void register(Object obj) {
         registered.add(obj);
-        net.weavemc.loader.api.event.EventBus.subscribe(obj);
+        EventBus.subscribe(obj);
     }
 
     public static ScheduledExecutorService getExecutor() {

@@ -59,7 +59,7 @@ public class BlockHit extends Module {
     }
 
     @SubscribeEvent
-    public void onHit(AttackEntityEvent e) {
+    public void onAttackEntity(AttackEntityEvent e) {
 
         if (isSecondCall() || executingAction)
             return;

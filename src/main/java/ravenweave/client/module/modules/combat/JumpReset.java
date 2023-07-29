@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.combat;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -14,7 +14,7 @@ public class JumpReset extends Module {
         this.registerSetting(new DescriptionSetting("Auto Jump Reset. That's it."));
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onPacket(PacketEvent e) {
         if (e.isIncoming()) {
             if (e.getPacket() instanceof S12PacketEntityVelocity) {

@@ -1,10 +1,9 @@
 package ravenweave.client.module.modules.beta;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.TickEvent;
-import ravenweave.client.event.EventDirection;
+import ravenweave.client.event.types.EventDirection;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
@@ -22,7 +21,7 @@ public class LongJump extends Module {
         this.registerSetting(autodisable = new TickSetting("Auto Disable", true));
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onPacket(PacketEvent event) {
         if (event.getDirection() == EventDirection.OUTGOING) return;
         if (!(event.getPacket() instanceof S12PacketEntityVelocity)) return;

@@ -2,7 +2,7 @@ package ravenweave.client.event.impl;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
-import ravenweave.client.event.types.Event;
+import net.weavemc.loader.api.event.Event;
 
 public class EntityJoinWorldEvent extends Event {
     public Entity entity;

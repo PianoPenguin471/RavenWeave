@@ -2,6 +2,7 @@ package ravenweave.client.module.modules.combat;
 
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.Minecraft;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.GameLoopEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -30,7 +31,7 @@ public class DelayRemover extends Module {
         return this.leftClickCounterField != null;
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onGameLoop(GameLoopEvent event) {
         if (Utils.Player.isPlayerInGame() && this.leftClickCounterField != null) {
             if (!mc.inGameHasFocus || mc.thePlayer.capabilities.isCreativeMode) {

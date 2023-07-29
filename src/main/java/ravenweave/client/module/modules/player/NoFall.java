@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.player;
 
-import com.google.common.eventbus.Subscribe;
-import ravenweave.client.event.impl.TickEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -21,7 +21,7 @@ public class NoFall extends Module {
         this.registerSetting(mode = new ComboSetting("Mode", Mode.Spoof));
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onTick(TickEvent e) {
         switch ((Mode) mode.getMode()) {
             case Spoof -> {

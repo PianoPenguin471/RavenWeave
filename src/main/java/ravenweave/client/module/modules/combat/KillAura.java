@@ -52,8 +52,8 @@ public class KillAura extends Module {
         this.registerSetting(blockMode = new ComboSetting<BlockMode>("Block mode", BlockMode.NONE));
     }
 
-    @Subscribe
-    public void gameLoopEvent(GameLoopEvent e) {
+    @SubscribeEvent
+    public void onGameLoop(GameLoopEvent e) {
         try {
             Mouse.poll();
             EntityPlayer pTarget = Targets.getTarget();
@@ -131,17 +131,15 @@ public class KillAura extends Module {
         return currentRots;
     }
 
-    @Subscribe
-    public void move(MoveInputEvent e) {
+    @SubscribeEvent
+    public void onMoveInput(MoveInputEvent e) {
         if(!fixMovement.isToggled() || locked) return;
         e.setYaw(yaw);
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void lookEvent(LookEvent e) {
         if(locked) return;
-        e.setPrevYaw(prevYaw);
-        e.setPrevPitch(prevPitch);
         e.setYaw(yaw);
         e.setPitch(pitch);
     }

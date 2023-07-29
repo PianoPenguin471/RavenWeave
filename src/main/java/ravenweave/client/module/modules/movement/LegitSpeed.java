@@ -1,6 +1,7 @@
 package ravenweave.client.module.modules.movement;
 
 import com.google.common.eventbus.Subscribe;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.MoveInputEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
@@ -21,7 +22,7 @@ public class LegitSpeed extends Module {
         this.registerSetting(legitStrafe = new TickSetting("Legit Strafe", false));
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onMoveInput(MoveInputEvent e) {
         if(speed.isToggled()) {
             e.setFriction((float) (e.getFriction()*speedInc.getInput()));

@@ -1,6 +1,7 @@
 package ravenweave.client.module.modules.client;
 
 import com.google.common.eventbus.Subscribe;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.GameLoopEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
@@ -69,7 +70,7 @@ public class UpdateCheck extends Module {
         };
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onGameLoop(GameLoopEvent e) {
         if (f == null) {
             f = executor.submit(task);

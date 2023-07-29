@@ -1,12 +1,10 @@
 package ravenweave.client.module.modules.beta;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.network.Packet;
-import net.minecraft.network.status.client.C00PacketServerQuery;
 import net.weavemc.loader.api.event.ShutdownEvent;
 import net.weavemc.loader.api.event.StartGameEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.event.EventDirection;
+import ravenweave.client.event.types.EventDirection;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -26,17 +24,17 @@ public class Blink extends Module {
         this.registerSetting(outbound = new TickSetting("Block Outbound", true));
     }
     
-    @Subscribe
-    public void packetEvent(PacketEvent p) {
-        if (p.getDirection() == EventDirection.INCOMING) {
+    @SubscribeEvent
+    public void onPacket(PacketEvent e) {
+        if (e.getDirection() == EventDirection.INCOMING) {
             if (!inbound.isToggled()) return;
-            inboundPackets.add(p.getPacket());
+            inboundPackets.add(e.getPacket());
         } else {
             if (!outbound.isToggled()) return;
-            if (!p.getPacket().getClass().getCanonicalName().startsWith("net.minecraft.network.play.client")) return;
-            outboundPackets.add(p.getPacket());
+            if (!e.getPacket().getClass().getCanonicalName().startsWith("net.minecraft.network.play.client")) return;
+            outboundPackets.add(e.getPacket());
         }
-        p.setCancelled(true);
+        e.setCancelled(true);
     }
     
     @Override
@@ -57,12 +55,12 @@ public class Blink extends Module {
     }
 
     @SubscribeEvent
-    public void onDisconnect(ShutdownEvent event) {
+    public void onDisconnect(ShutdownEvent e) {
         this.disable();
     }
 
     @SubscribeEvent
-    public void onStart(StartGameEvent event) {
+    public void onStart(StartGameEvent e) {
         this.disable();
     }
 

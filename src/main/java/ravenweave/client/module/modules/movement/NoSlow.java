@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.movement;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.network.play.server.S30PacketWindowItems;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -22,12 +22,12 @@ public class NoSlow extends Module {
         this.registerSetting(noReset = new TickSetting("No Reset", false));
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onPacket(PacketEvent e) {
         if (noReset.isToggled()) {
             if (e.getPacket() instanceof S30PacketWindowItems) {
                 if (mc.thePlayer.isUsingItem()) {
-                    e.cancel();
+                    e.setCancelled(true);
                 }
             }
         }

@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.movement;
 
-import com.google.common.eventbus.Subscribe;
-import ravenweave.client.event.impl.TickEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -46,7 +46,7 @@ public class Boost extends Module {
         this.t = false;
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onTick(TickEvent e) {
         if (this.i == 0) {
             this.i = mc.thePlayer.ticksExisted;

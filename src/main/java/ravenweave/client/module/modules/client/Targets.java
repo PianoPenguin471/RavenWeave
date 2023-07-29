@@ -69,7 +69,7 @@ public class Targets extends Module {
     }
 
     @SubscribeEvent
-    public void onForgeEvent(AttackEntityEvent e) {
+    public void onAttackEntity(AttackEntityEvent e) {
         lockedTarget = e.target instanceof EntityPlayer ? (EntityPlayer) e.target : lockedTarget;
     }
 

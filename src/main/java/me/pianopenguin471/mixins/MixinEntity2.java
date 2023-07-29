@@ -1,15 +1,14 @@
 package me.pianopenguin471.mixins;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-
-import ravenweave.client.event.impl.LookEvent;
-import ravenweave.client.main.Raven;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
+import net.weavemc.loader.api.event.EventBus;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+import ravenweave.client.event.impl.LookEvent;
 
 @Mixin(priority = 1005, value = Entity.class)
 public abstract class MixinEntity2 {
@@ -20,36 +19,15 @@ public abstract class MixinEntity2 {
     @Shadow
     public float rotationPitch;
 
-    @Shadow
-    public float prevRotationPitch;
-
-    @Shadow
-    public float prevRotationYaw;
-
-    /*
+   /**
     * @author mc code
-    * @reason lookevent
+    * @reason look event
     */
-    /*
    @Overwrite
-   public Vec3 getLook(float partialTicks)
-   {
-       LookEvent e = new LookEvent(rotationPitch, prevRotationPitch, rotationYaw, prevRotationYaw);
-       if((Object) this == Minecraft.getMinecraft().thePlayer)
-           Raven.eventBus.post(e);
-
-       if (partialTicks == 1.0F)
-           return this.getVectorForRotation(e.getPitch(), e.getYaw());
-       float f = e.getPrevPitch() + ((e.getPitch() - e.getPrevPitch()) * partialTicks);
-       float f1 = e.getPrevYaw() + ((e.getYaw() - e.getPrevYaw()) * partialTicks);
-       return this.getVectorForRotation(f, f1);
-   } */
-
-   @Overwrite
-   public Vec3 getVectorForRotation(float pitch, float yaw) {
+   public final Vec3 getVectorForRotation(float pitch, float yaw) {
        if((Object) this == Minecraft.getMinecraft().thePlayer) {
            LookEvent e = new LookEvent(pitch, yaw);
-           Raven.eventBus.post(e);
+           EventBus.callEvent(e);
            pitch = e.getPitch();
            yaw = e.getYaw();
        }
@@ -57,7 +35,7 @@ public abstract class MixinEntity2 {
        float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
        float f2 = -MathHelper.cos(-pitch * 0.017453292F);
        float f3 = MathHelper.sin(-pitch * 0.017453292F);
-       return new Vec3((double)(f1 * f2), (double)f3, (double)(f * f2));
+       return new Vec3(f1 * f2, f3, f * f2);
    }
 
 }

@@ -3,7 +3,6 @@ package ravenweave.client.module.modules.beta;
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -14,8 +13,6 @@ import net.minecraft.util.Vec3;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import ravenweave.client.event.impl.GameLoopEvent;
 import ravenweave.client.event.impl.LookEvent;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.main.Raven;
@@ -76,10 +73,8 @@ public class Scaffold extends Module {
         prevYaw = e.getYaw();
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void lookEvent(LookEvent e) {
-        e.setPrevYaw(prevYaw);
-        e.setPrevPitch((float) pitch.getInput());
         e.setYaw(yaw);
         e.setPitch((float) pitch.getInput());
     }

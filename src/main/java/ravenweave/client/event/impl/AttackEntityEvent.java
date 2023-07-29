@@ -1,9 +1,9 @@
 package ravenweave.client.event.impl;
 
-import ravenweave.client.event.types.Event;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.weavemc.loader.api.event.Event;
 
 public class AttackEntityEvent extends Event {
     public Entity target;
