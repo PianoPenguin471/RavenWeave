@@ -158,7 +158,7 @@ public class ConfigManager {
             discoverConfigs();
             if (this.configs.size() < 2) {
                 this.resetConfig();
-                File defaultFile = new File(configDirectory, "default.bplus");
+                File defaultFile = new File(configDirectory, "default.rwcfg");
                 this.config = new Config(defaultFile);
                 save();
             } else {
