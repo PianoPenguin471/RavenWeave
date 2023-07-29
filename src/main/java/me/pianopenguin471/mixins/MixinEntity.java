@@ -1,18 +1,5 @@
 package me.pianopenguin471.mixins;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
-import net.weavemc.loader.api.event.EventBus;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-
-import ravenweave.client.event.impl.MoveInputEvent;
-import ravenweave.client.main.Raven;
-import ravenweave.client.module.Module;
-import ravenweave.client.module.modules.player.SafeWalk;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -30,6 +17,18 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ReportedException;
 import net.minecraft.world.World;
+import net.weavemc.loader.api.event.EventBus;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+import ravenweave.client.event.impl.MoveInputEvent;
+import ravenweave.client.main.Raven;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.modules.player.SafeWalk;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 @Mixin(priority = 995, value = Entity.class)
 public abstract class MixinEntity {

@@ -1,10 +1,7 @@
 package ravenweave.client.clickgui.raven.components;
 
-import java.awt.Color;
-import java.util.ArrayList;
-
+import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.clickgui.raven.Component;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
@@ -12,7 +9,9 @@ import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.font.FontUtil;
-import net.minecraft.client.renderer.GlStateManager;
+
+import java.awt.*;
+import java.util.ArrayList;
 
 public class ModuleComponent extends Component {
     public Module mod;

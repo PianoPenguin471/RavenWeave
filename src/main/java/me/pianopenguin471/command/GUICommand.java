@@ -1,12 +1,10 @@
 package me.pianopenguin471.command;
 
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.weavemc.loader.api.command.Command;
 import org.lwjgl.input.Keyboard;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.client.Minecraft;
 import ravenweave.client.utils.Utils;
 
 public class GUICommand extends Command {

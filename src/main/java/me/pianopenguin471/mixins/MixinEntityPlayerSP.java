@@ -1,19 +1,6 @@
 package me.pianopenguin471.mixins;
 
-import net.weavemc.loader.api.event.EventBus;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-
 import com.mojang.authlib.GameProfile;
-
-import ravenweave.client.event.types.EventTiming;
-import ravenweave.client.event.impl.UpdateEvent;
-import ravenweave.client.main.Raven;
-import ravenweave.client.module.Module;
-import ravenweave.client.module.modules.movement.NoSlow;
-import ravenweave.client.module.modules.movement.Sprint;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -25,6 +12,17 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.weavemc.loader.api.event.EventBus;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+import ravenweave.client.event.ext.EventTiming;
+import ravenweave.client.event.impl.UpdateEvent;
+import ravenweave.client.main.Raven;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.modules.movement.NoSlow;
+import ravenweave.client.module.modules.movement.Sprint;
 
 @Mixin(priority = 995, value = EntityPlayerSP.class)
 public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {

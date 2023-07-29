@@ -1,20 +1,6 @@
 package me.pianopenguin471.mixins;
 
-import java.util.List;
-
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-
 import com.google.common.base.Predicates;
-
-import ravenweave.client.main.Raven;
-import ravenweave.client.module.Module;
-import ravenweave.client.module.modules.combat.HitBoxes;
-import ravenweave.client.module.modules.combat.Reach;
-import ravenweave.client.module.modules.combat.KillAura;
-// import keystrokesmod.client.module.modules.render.Fullbright;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -22,13 +8,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+import ravenweave.client.main.Raven;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.modules.combat.HitBoxes;
+import ravenweave.client.module.modules.combat.KillAura;
+import ravenweave.client.module.modules.combat.Reach;
+
+import java.util.List;
 
 @Mixin(priority = 995, value = EntityRenderer.class)
 public class MixinEntityRenderer {

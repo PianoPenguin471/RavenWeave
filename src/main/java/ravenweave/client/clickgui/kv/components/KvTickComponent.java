@@ -1,9 +1,7 @@
 package ravenweave.client.clickgui.kv.components;
 
-import java.awt.Color;
-
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.setting.Setting;
@@ -11,7 +9,8 @@ import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.Minecraft;
+
+import java.awt.*;
 
 public class KvTickComponent extends KvComponent {
 

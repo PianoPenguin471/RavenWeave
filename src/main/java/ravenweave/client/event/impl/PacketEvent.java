@@ -1,9 +1,9 @@
 package ravenweave.client.event.impl;
 
-import ravenweave.client.event.types.EventDirection;
-import net.weavemc.loader.api.event.CancellableEvent;
-import ravenweave.client.event.types.IEventDirection;
 import net.minecraft.network.Packet;
+import net.weavemc.loader.api.event.CancellableEvent;
+import ravenweave.client.event.ext.EventDirection;
+import ravenweave.client.event.ext.IEventDirection;
 
 public class PacketEvent extends CancellableEvent implements IEventDirection {
 

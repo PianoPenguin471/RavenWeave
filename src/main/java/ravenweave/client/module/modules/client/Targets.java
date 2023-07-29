@@ -1,10 +1,10 @@
 package ravenweave.client.module.modules.client;
 
-import ravenweave.client.event.impl.AttackEntityEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.weavemc.loader.api.event.SubscribeEvent;
+import ravenweave.client.event.impl.AttackEntityEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.AimAssist;

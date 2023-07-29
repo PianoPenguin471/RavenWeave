@@ -1,12 +1,9 @@
 package ravenweave.client.clickgui.raven.components;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.clickgui.raven.Component;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
@@ -15,9 +12,11 @@ import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.font.FontUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class CategoryComponent extends Component {
     public ArrayList<ModuleComponent> modulesInCategory = new ArrayList<>();

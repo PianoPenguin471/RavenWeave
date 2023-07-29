@@ -4,8 +4,8 @@ import net.minecraft.network.Packet;
 import net.weavemc.loader.api.event.ShutdownEvent;
 import net.weavemc.loader.api.event.StartGameEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.event.types.EventDirection;
 import ravenweave.client.event.impl.PacketEvent;
+import ravenweave.client.event.ext.EventDirection;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.TickSetting;
 

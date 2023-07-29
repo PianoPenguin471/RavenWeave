@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.combat;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.network.NetworkPlayerInfo;

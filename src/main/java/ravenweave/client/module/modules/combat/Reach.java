@@ -3,7 +3,6 @@ package ravenweave.client.module.modules.combat;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
-import ravenweave.client.module.modules.combat.KillAura;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 

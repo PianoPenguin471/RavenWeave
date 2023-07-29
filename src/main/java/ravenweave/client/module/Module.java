@@ -1,21 +1,17 @@
 package ravenweave.client.module;
 
+import com.google.gson.JsonObject;
+import net.minecraft.client.Minecraft;
+import net.weavemc.loader.api.event.EventBus;
+import org.lwjgl.input.Keyboard;
+import ravenweave.client.clickgui.raven.components.ModuleComponent;
+import ravenweave.client.module.modules.client.ClickGuiModule;
+import ravenweave.client.module.setting.Setting;
+import ravenweave.client.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-
-import net.weavemc.loader.api.event.EventBus;
-import org.lwjgl.input.Keyboard;
-
-import com.google.gson.JsonObject;
-
-import ravenweave.client.clickgui.raven.components.ModuleComponent;
-import ravenweave.client.main.Raven;
-import ravenweave.client.module.modules.client.ClickGuiModule;
-import ravenweave.client.module.setting.Setting;
-import net.minecraft.client.Minecraft;
-import ravenweave.client.utils.Utils;
 
 public class Module {
     protected ArrayList<Setting> settings;

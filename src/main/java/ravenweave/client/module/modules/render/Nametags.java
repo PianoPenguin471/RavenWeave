@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.render;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;

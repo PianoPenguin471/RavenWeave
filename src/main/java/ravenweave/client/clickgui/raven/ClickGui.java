@@ -1,12 +1,9 @@
 package ravenweave.client.clickgui.raven;
 
-import java.util.ArrayList;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.clickgui.raven.components.CategoryComponent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
@@ -16,8 +13,10 @@ import ravenweave.client.utils.Timer;
 import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.font.FontUtil;
 import ravenweave.client.utils.version.Version;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiInventory;
+
+import java.util.ArrayList;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class ClickGui extends GuiScreen {
     private ScheduledFuture<?> sf;

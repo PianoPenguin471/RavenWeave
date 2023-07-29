@@ -1,16 +1,15 @@
 package ravenweave.client.clickgui.raven;
 
-import java.awt.Color;
-import java.util.ArrayList;
-
-import org.apache.commons.lang3.ArrayUtils;
-import org.lwjgl.opengl.GL11;
-
-import ravenweave.client.main.Raven;
-import ravenweave.client.utils.CoolDown;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import org.apache.commons.lang3.ArrayUtils;
+import org.lwjgl.opengl.GL11;
+import ravenweave.client.main.Raven;
+import ravenweave.client.utils.CoolDown;
+
+import java.awt.*;
+import java.util.ArrayList;
 
 public class Terminal {
     private int x;

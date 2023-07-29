@@ -1,10 +1,9 @@
 package ravenweave.client.clickgui.raven.components;
 
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
-import net.minecraft.client.Minecraft;
 
 public class DescriptionComponent extends SettingComponent {
 

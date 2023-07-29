@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.client;
 
-import com.google.common.eventbus.Subscribe;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.GameLoopEvent;
 import ravenweave.client.main.Raven;

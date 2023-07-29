@@ -1,14 +1,14 @@
 package me.pianopenguin471;
 
+import me.pianopenguin471.command.GUICommand;
 import net.weavemc.loader.api.ModInitializer;
 import net.weavemc.loader.api.command.CommandBus;
 import net.weavemc.loader.api.event.EventBus;
 import net.weavemc.loader.api.event.KeyboardEvent;
 import net.weavemc.loader.api.event.ShutdownEvent;
+import net.weavemc.loader.api.event.StartGameEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
-import me.pianopenguin471.command.GUICommand;
-import net.weavemc.loader.api.event.StartGameEvent;
 
 public class RavenWeave implements ModInitializer {
     @Override

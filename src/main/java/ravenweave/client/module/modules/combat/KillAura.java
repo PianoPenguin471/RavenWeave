@@ -21,7 +21,6 @@ import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
 
 import java.awt.*;
-import java.util.List;
 
 //todo change the clicking system
 public class KillAura extends Module {

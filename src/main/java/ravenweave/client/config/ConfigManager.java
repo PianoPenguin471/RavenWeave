@@ -3,10 +3,10 @@ package ravenweave.client.config;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.client.Minecraft;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.config.ConfigModuleManager;
-import net.minecraft.client.Minecraft;
 
 import java.io.File;
 import java.io.FileReader;

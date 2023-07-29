@@ -1,12 +1,11 @@
 package ravenweave.client.clickgui.raven.components;
 
+import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.clickgui.raven.Component;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.ClickGuiModule;
-import net.minecraft.client.Minecraft;
 
 public class BindComponent extends Component {
 

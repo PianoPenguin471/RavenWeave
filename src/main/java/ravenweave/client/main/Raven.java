@@ -1,14 +1,10 @@
 package ravenweave.client.main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 import net.weavemc.loader.api.event.ChatReceivedEvent;
 import net.weavemc.loader.api.event.EventBus;
 import net.weavemc.loader.api.event.SubscribeEvent;
-
 import ravenweave.client.clickgui.kv.KvCompactGui;
 import ravenweave.client.clickgui.raven.ClickGui;
 import ravenweave.client.command.CommandManager;
@@ -20,8 +16,11 @@ import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.font.FontUtil;
 import ravenweave.client.utils.version.VersionManager;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class Raven {
 

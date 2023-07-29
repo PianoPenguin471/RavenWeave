@@ -1,11 +1,10 @@
 package ravenweave.client.clickgui.raven.components;
 
-import org.lwjgl.opengl.GL11;
-
-import ravenweave.client.module.setting.Setting;
-import ravenweave.client.module.setting.impl.ComboSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import org.lwjgl.opengl.GL11;
+import ravenweave.client.module.setting.Setting;
+import ravenweave.client.module.setting.impl.ComboSetting;
 
 public class ComboComponent extends SettingComponent {
 

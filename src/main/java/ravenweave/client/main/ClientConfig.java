@@ -1,24 +1,19 @@
 package ravenweave.client.main;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-
+import net.minecraft.client.Minecraft;
 import ravenweave.client.clickgui.raven.components.CategoryComponent;
 import ravenweave.client.module.GuiModule;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.module.modules.HUD;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.Minecraft;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientConfig {
     public static boolean applyingConfig;

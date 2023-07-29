@@ -1,11 +1,11 @@
 package ravenweave.client.utils.font;
 
-import java.awt.Font;
+import ravenweave.client.module.modules.HUD;
+
+import java.awt.*;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import ravenweave.client.module.modules.HUD;
 
 public class FontUtil {
     public static volatile int completed;

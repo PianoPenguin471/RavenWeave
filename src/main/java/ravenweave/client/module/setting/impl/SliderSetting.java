@@ -1,10 +1,6 @@
 package ravenweave.client.module.setting.impl;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import com.google.gson.JsonObject;
-
 import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.clickgui.kv.components.KvSliderComponent;
 import ravenweave.client.clickgui.raven.Component;
@@ -12,6 +8,9 @@ import ravenweave.client.clickgui.raven.components.ModuleComponent;
 import ravenweave.client.clickgui.raven.components.SettingComponent;
 import ravenweave.client.clickgui.raven.components.SliderComponent;
 import ravenweave.client.module.setting.Setting;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class SliderSetting extends Setting {
     private final String name;

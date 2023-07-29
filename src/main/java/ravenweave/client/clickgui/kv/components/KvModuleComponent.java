@@ -1,10 +1,10 @@
 package ravenweave.client.clickgui.kv.components;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
@@ -12,10 +12,9 @@ import ravenweave.client.module.setting.Setting;
 import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.font.FontUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ResourceLocation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class KvModuleComponent extends KvComponent{
 
