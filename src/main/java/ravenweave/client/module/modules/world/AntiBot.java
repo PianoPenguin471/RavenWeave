@@ -1,9 +1,9 @@
 package ravenweave.client.module.modules.world;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import ravenweave.client.event.impl.TickEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.player.Freecam;
@@ -31,7 +31,7 @@ public class AntiBot extends Module {
     }
 
 
-    @Subscribe
+    @SubscribeEvent
     public void onTick(TickEvent ev) {
         if (a.isToggled() && !newEnt.isEmpty()) {
             long now = System.currentTimeMillis();

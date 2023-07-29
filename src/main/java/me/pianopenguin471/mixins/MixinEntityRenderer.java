@@ -2,6 +2,7 @@ package me.pianopenguin471.mixins;
 
 import java.util.List;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -51,6 +52,7 @@ public class MixinEntityRenderer {
 
     /**
      * @author mc code
+     * @reason idk (intellij wanted a reason)
      */
     @Overwrite
     public void getMouseOver(float p_getMouseOver_1_) {

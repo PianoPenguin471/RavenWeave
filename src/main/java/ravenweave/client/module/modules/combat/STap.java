@@ -60,7 +60,7 @@ public class STap extends Module {
     }
 
     @SubscribeEvent
-    public void onForgeEvent(AttackEntityEvent e) {
+    public void onAttackEntity(AttackEntityEvent e) {
         if (!this.enabled) return;
         target = e.target;
 

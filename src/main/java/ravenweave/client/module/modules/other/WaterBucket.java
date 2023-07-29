@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.other;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -10,7 +9,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import ravenweave.client.event.impl.TickEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
@@ -34,8 +34,8 @@ public class WaterBucket extends Module {
         return !DimensionHelper.isPlayerInNether();
     }
 
-    @Subscribe
-    public void onTick(TickEvent ev) {
+    @SubscribeEvent
+    public void onTick(TickEvent e) {
         if (Utils.Player.isPlayerInGame() && !mc.isGamePaused()) {
             if (DimensionHelper.isPlayerInNether())
                 this.disable();

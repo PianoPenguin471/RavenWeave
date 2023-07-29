@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import net.weavemc.loader.api.event.EventBus;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -483,7 +484,7 @@ public abstract class MixinEntity {
     public void moveFlying(float strafe, float forward, float fric) {
         MoveInputEvent e = new MoveInputEvent(strafe, forward, fric, this.rotationYaw);
         if((Object) this == Minecraft.getMinecraft().thePlayer)
-            Raven.eventBus.post(e);
+            EventBus.callEvent(e);
 
         strafe = e.getStrafe();
         forward = e.getForward();

@@ -5,7 +5,6 @@
   "mixins": [
     "MixinEntity",
     "MixinEntity2",
-    "MixinEntityPlayer",
     "MixinEntityPlayerSP",
     "MixinEntityRenderer",
     "MixinMinecraft",

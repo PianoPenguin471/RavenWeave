@@ -1,7 +1,5 @@
 package ravenweave.client.event.types;
 
-import ravenweave.client.event.EventDirection;
-
 public interface IEventDirection {
 
     EventDirection getDirection();

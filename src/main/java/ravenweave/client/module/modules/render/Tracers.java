@@ -1,10 +1,9 @@
 package ravenweave.client.module.modules.render;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.event.impl.TickEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.Targets;
 import ravenweave.client.module.setting.impl.RGBSetting;
@@ -45,7 +44,7 @@ public class Tracers extends Module {
         mc.gameSettings.viewBobbing = this.g;
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onTick(TickEvent e) {
         if (mc.gameSettings.viewBobbing)
             mc.gameSettings.viewBobbing = false;

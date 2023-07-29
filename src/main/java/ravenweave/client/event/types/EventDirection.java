@@ -1,4 +1,4 @@
-package ravenweave.client.event;
+package ravenweave.client.event.types;
 
 public enum EventDirection {
     INCOMING, OUTGOING

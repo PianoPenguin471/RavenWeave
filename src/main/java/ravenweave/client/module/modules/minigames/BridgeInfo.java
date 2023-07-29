@@ -1,6 +1,6 @@
 package ravenweave.client.module.modules.minigames;
 
-import com.google.common.eventbus.Subscribe;
+import net.weavemc.loader.api.event.TickEvent;
 import ravenweave.client.event.impl.EntityJoinWorldEvent;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -16,7 +16,6 @@ import net.minecraft.util.BlockPos;
 import net.weavemc.loader.api.event.ChatReceivedEvent;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -57,8 +56,8 @@ public class BridgeInfo extends Module {
 
     }
 
-    @Subscribe
-    public void onTick(TickEvent ignoredEv) {
+    @SubscribeEvent
+    public void onTick(TickEvent ev) {
         if (!this.en.isEmpty() && this.inBridgeGame()) {
             EntityPlayer enemy = null;
 

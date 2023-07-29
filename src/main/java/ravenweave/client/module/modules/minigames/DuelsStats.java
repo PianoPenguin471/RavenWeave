@@ -5,10 +5,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.weavemc.loader.api.event.TickEvent;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
@@ -53,9 +53,6 @@ public class DuelsStats extends Module {
     public void onTick(TickEvent e) {
         if (!this.isDuel())
             return;
-
-        // Thanks to https://github.com/Scherso for the code from
-        // https://github.com/Scherso/Seraph
 
         for (ScorePlayerTeam team : Minecraft.getMinecraft().theWorld.getScoreboard().getTeams()) {
             for (String playerName : team.getMembershipCollection()) {

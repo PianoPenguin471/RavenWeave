@@ -1,6 +1,6 @@
 package ravenweave.client.event.impl;
 
-import ravenweave.client.event.types.Event;
+import net.weavemc.loader.api.event.Event;
 
 public class GameLoopEvent extends Event {
 }

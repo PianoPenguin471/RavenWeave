@@ -2,6 +2,7 @@ package ravenweave.client.module.modules.client;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.JsonObject;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.clickgui.raven.ClickGui;
 import ravenweave.client.event.impl.GameLoopEvent;
 import ravenweave.client.main.Raven;
@@ -28,7 +29,7 @@ public class Terminal extends Module {
         (animation = new Timer(500.0F)).start();
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onGameLoop(GameLoopEvent e) {
         if (Utils.Player.isPlayerInGame() && mc.currentScreen instanceof ClickGui && Raven.clickGui.terminal.hidden())
             Raven.clickGui.terminal.show();

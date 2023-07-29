@@ -1,5 +1,6 @@
 package me.pianopenguin471.mixins;
 
+import net.weavemc.loader.api.event.EventBus;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -7,8 +8,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import com.mojang.authlib.GameProfile;
 
-import ravenweave.client.event.EventTiming;
-import ravenweave.client.event.impl.TickEvent;
+import ravenweave.client.event.types.EventTiming;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
@@ -104,9 +104,6 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
      */
     @Overwrite
     public void onUpdateWalkingPlayer() {
-
-        Raven.eventBus.post(new TickEvent());
-
         boolean flag = this.isSprinting();
         if (flag != this.serverSprintState) {
             if (flag)
@@ -135,7 +132,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
             UpdateEvent e = new UpdateEvent(EventTiming.PRE, this.posX, this.getEntityBoundingBox().minY, this.posZ,
                     this.rotationYaw, this.rotationPitch, this.onGround);
-            Raven.eventBus.post(e);
+            EventBus.callEvent(e);
 
             double d0 = e.getX() - this.lastReportedPosX;
             double d1 = e.getY() - this.lastReportedPosY;
@@ -175,8 +172,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
                 this.lastReportedPitch = e.getPitch();
             }
 
-            e = UpdateEvent.convertPost(e);
-            Raven.eventBus.post(e);
+            EventBus.callEvent(e);
 
         }
 

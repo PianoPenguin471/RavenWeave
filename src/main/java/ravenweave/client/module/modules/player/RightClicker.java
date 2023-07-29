@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.player;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
@@ -10,8 +9,8 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.*;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Mouse;
-import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
@@ -112,10 +111,10 @@ public class RightClicker extends Module {
         }
     }
 
-    @Subscribe
-    public void onTick(TickEvent tick) {
+    @SubscribeEvent
+    public void onTick(TickEvent e) {
         if (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
-                && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
+                && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest)
         )
             return;
 

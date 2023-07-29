@@ -126,7 +126,6 @@ public class Module {
         this.enabled = true;
         this.onEnable();
         if (enabled && !registered) {
-            Raven.eventBus.register(this);
             System.out.println(this.moduleName);
             registered = true;
             EventBus.subscribe(this);
@@ -145,7 +144,6 @@ public class Module {
             return;
         this.enabled = false;
         if (registered) {
-            Raven.eventBus.unregister(this);
             EventBus.unsubscribe(this);
             registered = false;
         }
@@ -270,7 +268,7 @@ public class Module {
     public void unRegister() {
         if(registered) {
             registered = false;
-            Raven.eventBus.unregister(this);
+            EventBus.unsubscribe(this);
             onDisable();
         }
     }

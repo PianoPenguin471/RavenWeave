@@ -1,12 +1,12 @@
 package ravenweave.client.module.modules.player;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemEgg;
 import net.minecraft.item.ItemSnowball;
 import net.minecraft.item.ItemStack;
-import ravenweave.client.event.impl.TickEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -44,8 +44,8 @@ public class FastPlace extends Module {
         return rightClickDelayTimerField != null;
     }
 
-    @Subscribe
-    public void onTick(TickEvent event) {
+    @SubscribeEvent
+    public void onTick(TickEvent e) {
         if (Utils.Player.isPlayerInGame() && mc.inGameHasFocus && rightClickDelayTimerField != null) {
             if (blockOnly.isToggled()) {
                 ItemStack item = mc.thePlayer.getHeldItem();

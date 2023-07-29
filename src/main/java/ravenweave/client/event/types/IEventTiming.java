@@ -1,7 +1,5 @@
 package ravenweave.client.event.types;
 
-import ravenweave.client.event.EventTiming;
-
 public interface IEventTiming {
 
     EventTiming getTiming();

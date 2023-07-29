@@ -1,9 +1,9 @@
 package me.pianopenguin471.mixins;
 
 import io.netty.channel.ChannelHandlerContext;
-import ravenweave.client.event.EventDirection;
+import net.weavemc.loader.api.event.EventBus;
+import ravenweave.client.event.types.EventDirection;
 import ravenweave.client.event.impl.PacketEvent;
-import ravenweave.client.main.Raven;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ public class MixinNetworkManager {
     public void sendPacket(Packet p_sendPacket_1_, CallbackInfo ci) {
         PacketEvent e = new PacketEvent(p_sendPacket_1_, EventDirection.OUTGOING);
 
-        Raven.eventBus.post(e);
+        EventBus.callEvent(e);
 
         p_sendPacket_1_ = e.getPacket();
         if (e.isCancelled())
@@ -29,7 +29,7 @@ public class MixinNetworkManager {
     public void receivePacket(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_, CallbackInfo ci) {
         PacketEvent e = new PacketEvent(p_channelRead0_2_, EventDirection.INCOMING);
 
-        Raven.eventBus.post(e);
+        EventBus.callEvent(e);
 
         p_channelRead0_2_ = e.getPacket();
         if (e.isCancelled()) ci.cancel();

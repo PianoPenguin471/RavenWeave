@@ -1,5 +1,5 @@
 package ravenweave.client.event.types;
 
-public class Event {
-
+public enum EventTiming {
+    PRE, POST
 }

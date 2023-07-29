@@ -1,12 +1,11 @@
 package ravenweave.client.module.modules.player;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.weavemc.loader.api.event.MouseEvent;
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Keyboard;
-import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -71,7 +70,7 @@ public class Freecam extends Module {
 
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onTick(TickEvent e) {
         if (!Utils.Player.isPlayerInGame() || en == null)
             return;

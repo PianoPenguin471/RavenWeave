@@ -1,14 +1,13 @@
 package ravenweave.client.module.modules.player;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Keyboard;
-import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -66,7 +65,7 @@ public class SafeWalk extends Module {
         blockShowModeDesc.setDesc(Utils.md + BlockAmountInfo.values()[(int) blockShowMode.getInput() - 1]);
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onTick(TickEvent e) {
         if (!Utils.Client.currentScreenMinecraft())
             return;

@@ -1,9 +1,9 @@
 package ravenweave.client.module.modules.combat;
 
-import com.google.common.eventbus.Subscribe;
 import me.pianopenguin471.mixins.S12PacketEntityVelocityAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
@@ -34,11 +34,10 @@ public class Velocity extends Module {
         this.registerSetting(distanceProjectiles = new SliderSetting("Distance projectiles", 3D, 0.0D, 20D, 0.1D));
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onPacket(PacketEvent packetEvent) {
         try {
             if (!packetEvent.isIncoming()) return;
-//         RANDOM DEBUGGING PLS IGNORE
             if (!(packetEvent.getPacket() instanceof S12PacketEntityVelocity)) return;
             if (chance.getInput() != 100.0D) {
                 double ch = Math.random() * 100;
@@ -55,24 +54,6 @@ public class Velocity extends Module {
                     ", Entity Name: " + entity.getName());
             else return;
             velo(packetEvent);
-/*
-        if (onlyWhileTargeting.isToggled() && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) {
-            return;
-        }
-
-        if (disableWhileHoldingS.isToggled() && Keyboard.isKeyDown(mc.gameSettings.keyBindBack.getKeyCode())) {
-            return;
-        }*/
-
-        /*if (mc.thePlayer.getLastAttacker() instanceof EntityPlayer) {
-            EntityPlayer attacker = (EntityPlayer) mc.thePlayer.getLastAttacker();
-            Item item = attacker.getCurrentEquippedItem() != null ? attacker.getCurrentEquippedItem().getItem() : null;
-            if ((item instanceof ItemEgg || item instanceof ItemBow || item instanceof ItemSnow
-                    || item instanceof ItemFishingRod) && mode == Mode.ItemHeld || attacker.getDistanceToEntity(mc.thePlayer) > distanceProjectiles.getInput()) {
-                velo(packetEvent);
-                return;
-            }
-        }*/
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +63,6 @@ public class Velocity extends Module {
     public void velo(PacketEvent packetEvent) {
         S12PacketEntityVelocity packet = packetEvent.getPacket();
         S12PacketEntityVelocityAccessor accessorPacket = (S12PacketEntityVelocityAccessor) packet;
-        //mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "You have been hit"));
 
         if (invertHorizontal.isToggled()) {
             accessorPacket.setMotionX((int) (packet.getMotionX() * -horizontal.getInput()/100));

@@ -1,11 +1,11 @@
 package ravenweave.client.module.modules.other;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Mouse;
-import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.AimAssist;
 import ravenweave.client.module.setting.impl.ComboSetting;
@@ -18,10 +18,9 @@ import java.awt.event.InputEvent;
 import static ravenweave.client.module.modules.other.MiddleClick.Action.*;
 
 public class MiddleClick extends Module {
-    public static ComboSetting actionSetting;
+    public static ComboSetting<Action> actionSetting;
     public static TickSetting showHelp;
     int prevSlot;
-    public static boolean a;
     private Robot bot;
     private boolean hasClicked;
     private int pearlEvent;
@@ -29,7 +28,7 @@ public class MiddleClick extends Module {
     public MiddleClick() {
         super("Middleclick", ModuleCategory.other);
         this.registerSetting(showHelp = new TickSetting("Show friend help in chat", true));
-        this.registerSetting(actionSetting = new ComboSetting("On click", ThrowPearl));
+        this.registerSetting(actionSetting = new ComboSetting<>("On click", ThrowPearl));
     }
 
     public void onEnable() {
@@ -42,7 +41,7 @@ public class MiddleClick extends Module {
         pearlEvent = 4;
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onTick(TickEvent e) {
         if (!Utils.Player.isPlayerInGame())
             return;

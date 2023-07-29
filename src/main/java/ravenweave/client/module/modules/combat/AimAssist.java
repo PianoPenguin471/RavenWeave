@@ -9,8 +9,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
+import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Mouse;
-import ravenweave.client.event.impl.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.Targets;
 import ravenweave.client.module.modules.world.AntiBot;
@@ -61,8 +62,8 @@ public class AimAssist extends Module {
         return true;
     }
 
-    @Subscribe
-    public void onRender(TickEvent fe) {
+    @SubscribeEvent
+    public void onRender(TickEvent e) {
         try {
             if (!Utils.Client.currentScreenMinecraft() || !Utils.Player.isPlayerInGame())
                 return;
@@ -113,8 +114,8 @@ public class AimAssist extends Module {
                 }
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
