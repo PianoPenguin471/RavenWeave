@@ -122,15 +122,11 @@ public class Module {
         this.enabled = true;
         this.onEnable();
         if (enabled && !registered) {
-            System.out.println(this.moduleName);
-            registered = true;
             EventBus.subscribe(this);
+            registered = true;
         }
 
-        // Skip categories
         if (this.moduleCategory == ModuleCategory.category) return;
-
-        // Only show if the user enables notifications
         if (!ClickGuiModule.notifications.isToggled()) return;
         Utils.Player.sendMessageToSelf(this.moduleName + " has been &aenabled");
     }
