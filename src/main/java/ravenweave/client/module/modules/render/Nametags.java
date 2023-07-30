@@ -18,22 +18,19 @@ import ravenweave.client.utils.Utils;
 
 public class Nametags extends Module {
     public static SliderSetting offset;
-    public static TickSetting rect;
-    public static TickSetting showHealth;
-    public static TickSetting showInvis;
-    public static TickSetting e;
+    public static TickSetting rect, shadow, showHealth, showInvis;
 
     public Nametags() {
         super("Nametags", ModuleCategory.render);
         this.registerSetting(offset = new SliderSetting("Offset", 0.0D, -40.0D, 40.0D, 1.0D));
         this.registerSetting(rect = new TickSetting("Rect", true));
+        this.registerSetting(shadow = new TickSetting("Shadow", false));
         this.registerSetting(showHealth = new TickSetting("Show health", true));
         this.registerSetting(showInvis = new TickSetting("Show invis", true));
     }
 
     @SubscribeEvent
     public void onRenderLivingEvent(RenderLivingEvent.Pre event) {
-        if (!this.enabled) return;
         if (event.getEntity() instanceof EntityPlayer && event.getEntity() != mc.thePlayer && event.getEntity().deathTime == 0) {
             EntityPlayer en = (EntityPlayer) event.getEntity();
             if (!showInvis.isToggled() && en.isInvisible()) {
@@ -81,7 +78,11 @@ public class Nametags extends Module {
             }
 
             GlStateManager.enableTexture2D();
-            mc.fontRendererObj.drawString(str, -mc.fontRendererObj.getStringWidth(str) / 2, i, -1);
+            if (shadow.isToggled()) {
+                mc.fontRendererObj.drawStringWithShadow(str, (float) -mc.fontRendererObj.getStringWidth(str) / 2, i, -1); // IntelliJ wanted me to cast it to Float for some reason ¯\_(ツ)_/¯
+            } else {
+                mc.fontRendererObj.drawString(str, -mc.fontRendererObj.getStringWidth(str) / 2, i, -1);
+            }
             GlStateManager.enableDepth();
             GlStateManager.depthMask(true);
             GlStateManager.enableLighting();
@@ -93,9 +94,8 @@ public class Nametags extends Module {
 
     @SubscribeEvent
     public void onRenderLabel(RenderLabelEvent e) {
-        if(this.enabled) {
+        if(e.getTarget() instanceof EntityPlayer) {
             e.setCancelled(true);
-            mc.thePlayer.addChatMessage(new ChatComponentText("Hello Raven User"));
         }
     }
 
