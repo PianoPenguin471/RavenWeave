@@ -6,9 +6,9 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(priority = 1005,value = EntityLivingBase.class)
-public abstract class MixinEntityLivingBase extends Entity {
+public abstract class EntityLivingBaseMixin extends Entity {
 
-    public MixinEntityLivingBase(World worldIn) {
+    public EntityLivingBaseMixin(World worldIn) {
         super(worldIn);
     }
 

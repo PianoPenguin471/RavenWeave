@@ -22,7 +22,7 @@ import ravenweave.client.module.modules.combat.Reach;
 import java.util.List;
 
 @Mixin(priority = 995, value = EntityRenderer.class)
-public class MixinEntityRenderer {
+public class EntityRendererMixin {
 
     @Shadow
     private Minecraft mc;
