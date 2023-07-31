@@ -89,7 +89,6 @@ public class ConfigManager {
 
     public void save() {
         JsonObject data = new JsonObject();
-        data.addProperty("version", Raven.versionManager.getClientVersion().getVersion());
         data.addProperty("author", "Unknown");
         data.addProperty("notes", "");
         data.addProperty("intendedServer", "");

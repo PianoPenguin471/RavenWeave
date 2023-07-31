@@ -80,7 +80,6 @@ public class ModuleManager {
         addModule(new Terminal());
         addModule(new ClickGuiModule());
         addModule(new BridgeAssist());
-        addModule(new UpdateCheck());
         addModule(new Blocks());
         addModule(new Ladders());
         addModule(new Weapon());

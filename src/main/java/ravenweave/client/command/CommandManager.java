@@ -15,10 +15,8 @@ public class CommandManager {
     public CommandManager() {
         this.commandList = new ArrayList<>();
         this.sortedCommandList = new ArrayList<>();
-        this.addCommand(new Update());
         this.addCommand(new Help());
         this.addCommand(new SetKey());
-        this.addCommand(new Discord());
         this.addCommand(new ConfigCommand());
         this.addCommand(new Clear());
         this.addCommand(new Debug());
@@ -27,7 +25,6 @@ public class CommandManager {
         this.addCommand(new Ping());
         this.addCommand(new Shoutout());
         this.addCommand(new Friends());
-        this.addCommand(new VersionCommand());
         this.addCommand(new CFakeHud());
         this.addCommand(new CHideModule());
 
@@ -54,7 +51,7 @@ public class CommandManager {
     }
 
     public void noSuchCommand(String name) {
-        Terminal.print("Command '" + name + "' not found! Report this on the discord if this is an error!");
+        Terminal.print("Command '" + name + "' not found!");
     }
 
     public void executeCommand(String commandName, String[] args) {
