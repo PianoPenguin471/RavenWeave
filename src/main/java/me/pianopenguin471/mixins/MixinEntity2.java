@@ -19,6 +19,12 @@ public abstract class MixinEntity2 {
     @Shadow
     public float rotationPitch;
 
+    @Shadow
+    public float prevRotationPitch;
+
+    @Shadow
+    public float prevRotationYaw;
+
    /**
     * @author mc code
     * @reason look event

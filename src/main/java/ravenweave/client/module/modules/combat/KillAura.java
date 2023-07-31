@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.combat;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.WorldSettings.GameType;
@@ -77,7 +76,7 @@ public class KillAura extends Module {
         }
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onUpdate(UpdateEvent e) {
         if(!Utils.Player.isPlayerInGame() || locked) {
             return;
@@ -139,6 +138,8 @@ public class KillAura extends Module {
     @SubscribeEvent
     public void lookEvent(LookEvent e) {
         if(locked) return;
+        e.setPrevYaw(prevYaw);
+        e.setPrevPitch(prevPitch);
         e.setYaw(yaw);
         e.setPitch(pitch);
     }

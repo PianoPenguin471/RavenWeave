@@ -1,6 +1,6 @@
 package ravenweave.client.module.modules.other;
 
-import com.google.common.eventbus.Subscribe;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
@@ -31,7 +31,7 @@ public class Spin extends Module {
         finalYaw = (float) (mc.thePlayer.rotationYaw + fov.getInput());
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onUpdate(UpdateEvent e) {
         if(cd.hasFinished()) {
             this.disable();
