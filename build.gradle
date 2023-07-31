@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'com.github.weave-mc.weave' version '8b70bcc707'
+    id 'com.github.weave-mc.weave-gradle' version '649dba7468'
 }
 
 group = 'me.pianopenguin471'

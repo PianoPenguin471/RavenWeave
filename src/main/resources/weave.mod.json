@@ -5,9 +5,6 @@
   "entrypoints": [
     "me.pianopenguin471.RavenWeave"
   ],
-  "hooks": [
-    "me.pianopenguin471.hook.MinecraftHook"
-  ],
   "about": {
     "name": "RavenWeave",
     "version": "1.1.2",
