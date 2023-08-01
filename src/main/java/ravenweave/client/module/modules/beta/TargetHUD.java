@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.beta;
 
-import ravenweave.client.event.impl.AttackEntityEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
@@ -12,6 +11,7 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
+import ravenweave.client.event.impl.AttackEntityEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.Targets;
 import ravenweave.client.module.setting.impl.RGBSetting;

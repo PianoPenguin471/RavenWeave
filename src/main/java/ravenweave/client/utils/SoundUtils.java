@@ -1,10 +1,9 @@
 package ravenweave.client.utils;
 
-import java.util.HashMap;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.util.HashMap;
 
 public class SoundUtils {
 

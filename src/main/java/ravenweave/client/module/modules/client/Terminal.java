@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.client;
 
-import com.google.common.eventbus.Subscribe;
 import com.google.gson.JsonObject;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.clickgui.raven.ClickGui;
@@ -13,14 +12,11 @@ import ravenweave.client.utils.Timer;
 import ravenweave.client.utils.Utils;
 
 public class Terminal extends Module {
-    public static boolean b;
     public static Timer animation;
     public static SliderSetting opacity;
 
     public Terminal() {
         super("Terminal", ModuleCategory.client);
-        withEnabled(true);
-
         this.registerSetting(opacity = new SliderSetting("Terminal background opacity", 100, 0, 255, 1));
     }
 

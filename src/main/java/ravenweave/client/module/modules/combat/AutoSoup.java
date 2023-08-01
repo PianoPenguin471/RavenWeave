@@ -1,10 +1,10 @@
 package ravenweave.client.module.modules.combat;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.ItemSoup;
 import net.minecraft.item.ItemStack;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
@@ -52,7 +52,7 @@ public class AutoSoup extends Module {
         }
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void update(UpdateEvent e) {
         if(!Utils.Player.isPlayerInGame())
             return;

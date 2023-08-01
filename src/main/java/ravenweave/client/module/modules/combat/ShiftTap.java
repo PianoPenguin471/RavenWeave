@@ -1,12 +1,12 @@
 package ravenweave.client.module.modules.combat;
 
-import ravenweave.client.event.impl.AttackEntityEvent;
-import ravenweave.client.event.impl.LivingUpdateEvent;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
+import ravenweave.client.event.impl.AttackEntityEvent;
+import ravenweave.client.event.impl.LivingUpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;

@@ -1,7 +1,6 @@
 package ravenweave.client.module.setting;
 
 import com.google.gson.JsonObject;
-
 import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.clickgui.raven.Component;
 import ravenweave.client.clickgui.raven.components.ModuleComponent;

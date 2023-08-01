@@ -3,10 +3,10 @@ package ravenweave.client.config;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.client.Minecraft;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.config.ConfigModuleManager;
-import net.minecraft.client.Minecraft;
 
 import java.io.File;
 import java.io.FileReader;
@@ -89,7 +89,6 @@ public class ConfigManager {
 
     public void save() {
         JsonObject data = new JsonObject();
-        data.addProperty("version", Raven.versionManager.getClientVersion().getVersion());
         data.addProperty("author", "Unknown");
         data.addProperty("notes", "");
         data.addProperty("intendedServer", "");
@@ -158,7 +157,7 @@ public class ConfigManager {
             discoverConfigs();
             if (this.configs.size() < 2) {
                 this.resetConfig();
-                File defaultFile = new File(configDirectory, "default.bplus");
+                File defaultFile = new File(configDirectory, "default.rwcfg");
                 this.config = new Config(defaultFile);
                 save();
             } else {

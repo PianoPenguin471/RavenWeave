@@ -1,9 +1,9 @@
 package ravenweave.client.command.commands;
 
-import ravenweave.client.command.Command;
-import ravenweave.client.module.modules.combat.AimAssist;
 import net.minecraft.entity.Entity;
 import ravenweave.client.clickgui.raven.Terminal;
+import ravenweave.client.command.Command;
+import ravenweave.client.module.modules.combat.AimAssist;
 
 public class Friends extends Command {
     public Friends() {

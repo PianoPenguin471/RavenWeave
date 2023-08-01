@@ -1,18 +1,5 @@
 package me.pianopenguin471.mixins;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
-import net.weavemc.loader.api.event.EventBus;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-
-import ravenweave.client.event.impl.MoveInputEvent;
-import ravenweave.client.main.Raven;
-import ravenweave.client.module.Module;
-import ravenweave.client.module.modules.player.SafeWalk;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -25,14 +12,36 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ReportedException;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import net.weavemc.loader.api.event.EventBus;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+import ravenweave.client.event.impl.LookEvent;
+import ravenweave.client.event.impl.MoveInputEvent;
+import ravenweave.client.main.Raven;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.modules.player.SafeWalk;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 @Mixin(priority = 995, value = Entity.class)
-public abstract class MixinEntity {
+public abstract class EntityMixin {
+
+    @Shadow
+    public float rotationYaw;
+
+    @Shadow
+    public float rotationPitch;
+
+    @Shadow
+    public float prevRotationPitch;
+
+    @Shadow
+    public float prevRotationYaw;
 
     @Shadow
     public boolean noClip;
@@ -128,9 +137,6 @@ public abstract class MixinEntity {
 
     @Shadow
     public int fireResistance;
-
-    @Shadow
-    public float rotationYaw;
 
     /**
      * @author mc code
@@ -508,6 +514,25 @@ public abstract class MixinEntity {
             this.motionZ += (forward * f2) + (strafe * f1);
         }
 
+    }
+
+    /**
+     * @author mc code
+     * @reason look event
+     */
+    @Overwrite
+    public final Vec3 getVectorForRotation(float pitch, float yaw) {
+        if((Object) this == Minecraft.getMinecraft().thePlayer) {
+            LookEvent e = new LookEvent(pitch, yaw);
+            EventBus.callEvent(e);
+            pitch = e.getPitch();
+            yaw = e.getYaw();
+        }
+        float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
+        float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
+        float f2 = -MathHelper.cos(-pitch * 0.017453292F);
+        float f3 = MathHelper.sin(-pitch * 0.017453292F);
+        return new Vec3(f1 * f2, f3, f * f2);
     }
 
 }

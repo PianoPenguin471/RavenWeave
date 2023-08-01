@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(Minecraft.class)
-public interface IMinecraft {
+public interface TimerAccessor {
 
     // i love accessors how tf do i use them
 

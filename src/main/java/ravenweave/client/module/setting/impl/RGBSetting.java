@@ -1,9 +1,6 @@
 package ravenweave.client.module.setting.impl;
 
-import java.awt.Color;
-
 import com.google.gson.JsonObject;
-
 import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.clickgui.kv.components.KvRgbComponent;
 import ravenweave.client.clickgui.raven.Component;
@@ -13,6 +10,8 @@ import ravenweave.client.clickgui.raven.components.SettingComponent;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.utils.ColorM;
 import ravenweave.client.utils.Utils;
+
+import java.awt.*;
 
 public class RGBSetting extends Setting {
 

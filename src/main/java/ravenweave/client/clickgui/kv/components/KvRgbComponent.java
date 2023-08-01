@@ -1,13 +1,12 @@
 package ravenweave.client.clickgui.kv.components;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.RGBSetting;
 import ravenweave.client.utils.RenderUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumChatFormatting;
 
 public class KvRgbComponent extends KvComponent {
 

@@ -1,13 +1,12 @@
 package ravenweave.client.clickgui.raven.components;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.RGBSetting;
 import ravenweave.client.utils.RenderUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumChatFormatting;
 
 public class RGBComponent extends SettingComponent {
 

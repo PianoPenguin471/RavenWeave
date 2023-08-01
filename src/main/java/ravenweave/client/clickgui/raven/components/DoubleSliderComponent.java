@@ -1,12 +1,11 @@
 package ravenweave.client.clickgui.raven.components;
 
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.utils.RenderUtils;
-import net.minecraft.client.Minecraft;
 
 public class DoubleSliderComponent extends SettingComponent {
 

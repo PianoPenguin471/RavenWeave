@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.combat;
 
-import ravenweave.client.event.impl.AttackEntityEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.Minecraft;
@@ -17,6 +16,7 @@ import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import ravenweave.client.event.impl.AttackEntityEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.*;
 import ravenweave.client.utils.ReflectionUtils;

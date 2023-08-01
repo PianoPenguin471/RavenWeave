@@ -1,11 +1,11 @@
 package ravenweave.client.utils;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.weavemc.loader.api.event.MouseEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.modules.world.AntiBot;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;

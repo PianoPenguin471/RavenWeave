@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.beta;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.init.Blocks;
@@ -26,7 +25,7 @@ import java.awt.*;
 
 public class Scaffold extends Module {
 
-    private final TickSetting disableSprint;
+    private final TickSetting disableSprint, noSwing;
     private SliderSetting pitch;
 
     private float yaw, prevYaw;
@@ -36,7 +35,8 @@ public class Scaffold extends Module {
 
     public Scaffold() {
         super("Scaffold", ModuleCategory.beta); // Category: World
-        this.registerSetting(pitch = new SliderSetting("Pitch", 83, 70, 90, 1));
+        this.registerSetting(pitch = new SliderSetting("Pitch", 81, 70, 90, 1));
+        this.registerSettings(noSwing = new TickSetting("No Swing", false));
         this.registerSetting(disableSprint = new TickSetting("Disable sprint", true));
     }
 
@@ -54,7 +54,7 @@ public class Scaffold extends Module {
         }
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onUpdate(UpdateEvent e) {
         if(!Utils.Player.isPlayerInGame()) {
             return;
@@ -65,16 +65,16 @@ public class Scaffold extends Module {
         e.setYaw(rots[0]);
         e.setPitch(rots[1]);
 
-        //Third Person Rots
         mc.thePlayer.renderYawOffset = rots[0];
         mc.thePlayer.rotationYawHead = rots[0];
 
-        //for GCD
         prevYaw = e.getYaw();
     }
 
     @SubscribeEvent
     public void lookEvent(LookEvent e) {
+        e.setPrevYaw(prevYaw);
+        e.setPrevPitch((float) pitch.getInput());
         e.setYaw(yaw);
         e.setPitch((float) pitch.getInput());
     }
@@ -83,31 +83,20 @@ public class Scaffold extends Module {
     public void onRender(RenderGameOverlayEvent.Pre event) {
         MovingObjectPosition mop = mc.objectMouseOver;
 
-        if (shouldClickBlock(mop, mop.getBlockPos()))
+        if (shouldClickBlock(mop, mop.getBlockPos())) {
             clickBlock(mop.getBlockPos(), mop.sideHit, mop.hitVec);
+        }
     }
 
     public boolean shouldClickBlock(MovingObjectPosition mop, BlockPos pos) {
         if (!Utils.Player.isPlayerInGame()) return false;
-        // Check that we're holding a block
         ItemStack heldItem = mc.thePlayer.getHeldItem();
-
-        // Null checks
         if (mc.currentScreen != null || heldItem == null || mop == null) return false;
         if (!(heldItem.getItem() instanceof ItemBlock)) return false;
-
-        // Make sure we're looking at a block
         if (mop.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return false;
-
-        // Make sure we're looking at the correct side of the block
         if (mop.sideHit == EnumFacing.UP && !Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode())) return false;
-
-        // Prevent sus downstacks and excessive packets
         if (mop.sideHit == EnumFacing.DOWN) return false;
-
         Block block = mc.theWorld.getBlockState(pos).getBlock();
-
-        // Make sure it's a valid block
         if (block == null || block == Blocks.air || block instanceof BlockLiquid) return false;
 
         return true;
@@ -117,7 +106,9 @@ public class Scaffold extends Module {
         new Thread(() -> {
             try {
                 boolean success = mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), pos, enumFacing, vec3);
-                mc.thePlayer.swingItem();
+                if (!noSwing.isToggled()) {
+                    mc.thePlayer.swingItem();
+                }
 
                 if (success) {
                     lastPos = pos;

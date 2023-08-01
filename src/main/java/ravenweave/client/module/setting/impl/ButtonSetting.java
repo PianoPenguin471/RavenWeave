@@ -1,7 +1,6 @@
 package ravenweave.client.module.setting.impl;
 
 import com.google.gson.JsonObject;
-
 import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.clickgui.kv.components.KvTickComponent;
 import ravenweave.client.clickgui.raven.Component;

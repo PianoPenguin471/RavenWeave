@@ -1,14 +1,14 @@
 package ravenweave.client.clickgui.kv.components;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import net.minecraft.client.gui.Gui;
 import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.utils.font.FontUtil;
-import net.minecraft.client.gui.Gui;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class KvCategoryComponent extends KvComponent {
 

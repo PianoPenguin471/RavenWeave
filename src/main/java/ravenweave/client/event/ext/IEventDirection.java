@@ -1,4 +1,4 @@
-package ravenweave.client.event.types;
+package ravenweave.client.event.ext;
 
 public interface IEventDirection {
 

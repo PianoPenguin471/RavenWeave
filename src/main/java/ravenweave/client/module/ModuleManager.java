@@ -1,25 +1,28 @@
 package ravenweave.client.module;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
+import net.minecraft.client.gui.FontRenderer;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.module.modules.HUD;
 import ravenweave.client.module.modules.beta.*;
 import ravenweave.client.module.modules.client.*;
 import ravenweave.client.module.modules.combat.*;
-import ravenweave.client.module.modules.config.*;
+import ravenweave.client.module.modules.config.ConfigSettings;
 import ravenweave.client.module.modules.hotkey.*;
 import ravenweave.client.module.modules.minigames.*;
 import ravenweave.client.module.modules.movement.*;
-import ravenweave.client.module.modules.other.*;
+import ravenweave.client.module.modules.other.FakeChat;
+import ravenweave.client.module.modules.other.MiddleClick;
+import ravenweave.client.module.modules.other.Spin;
+import ravenweave.client.module.modules.other.WaterBucket;
 import ravenweave.client.module.modules.player.*;
 import ravenweave.client.module.modules.render.*;
-import ravenweave.client.module.modules.world.*;
+import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.gui.FontRenderer;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class ModuleManager {
     private List<Module> modules = new ArrayList<>();
@@ -77,7 +80,6 @@ public class ModuleManager {
         addModule(new Terminal());
         addModule(new ClickGuiModule());
         addModule(new BridgeAssist());
-        addModule(new UpdateCheck());
         addModule(new Blocks());
         addModule(new Ladders());
         addModule(new Weapon());

@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.combat;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.WorldSettings.GameType;
@@ -21,7 +20,6 @@ import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
 
 import java.awt.*;
-import java.util.List;
 
 //todo change the clicking system
 public class KillAura extends Module {
@@ -78,7 +76,7 @@ public class KillAura extends Module {
         }
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onUpdate(UpdateEvent e) {
         if(!Utils.Player.isPlayerInGame() || locked) {
             return;
@@ -140,6 +138,8 @@ public class KillAura extends Module {
     @SubscribeEvent
     public void lookEvent(LookEvent e) {
         if(locked) return;
+        e.setPrevYaw(prevYaw);
+        e.setPrevPitch(prevPitch);
         e.setYaw(yaw);
         e.setPitch(pitch);
     }

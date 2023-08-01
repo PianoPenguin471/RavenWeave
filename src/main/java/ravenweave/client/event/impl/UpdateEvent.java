@@ -1,8 +1,8 @@
 package ravenweave.client.event.impl;
 
 import net.weavemc.loader.api.event.Event;
-import ravenweave.client.event.types.EventTiming;
-import ravenweave.client.event.types.IEventTiming;
+import ravenweave.client.event.ext.EventTiming;
+import ravenweave.client.event.ext.IEventTiming;
 
 public class UpdateEvent extends Event implements IEventTiming {
 

@@ -1,13 +1,12 @@
 package ravenweave.client.utils.font;
 
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FontRenderer extends CFont {
     CFont.CharData[] boldChars = new CFont.CharData[256], italicChars = new CFont.CharData[256],

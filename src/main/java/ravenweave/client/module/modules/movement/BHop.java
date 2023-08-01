@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.movement;
 
-import com.google.common.eventbus.Subscribe;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.MoveInputEvent;
 import ravenweave.client.main.Raven;

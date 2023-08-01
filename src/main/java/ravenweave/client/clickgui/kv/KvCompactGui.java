@@ -1,19 +1,18 @@
 package ravenweave.client.clickgui.kv;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-
 import ravenweave.client.clickgui.kv.components.KvModuleSection;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.Utils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class KvCompactGui extends GuiScreen {
 

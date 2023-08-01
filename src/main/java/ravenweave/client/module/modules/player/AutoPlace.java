@@ -21,10 +21,8 @@ import java.util.Random;
 
 public class AutoPlace extends Module {
     public Random random = new Random();
-    public static TickSetting holdRight, b, placeOnTops;
     public static SliderSetting delay;
-    private long lastPlace;
-    private BlockPos lastPos;
+    public static TickSetting holdRight, placeOnTops;
 
     public AutoPlace() {
         super("AutoPlace", ModuleCategory.player);
@@ -49,58 +47,36 @@ public class AutoPlace extends Module {
                 return;
             }
 
-            this.setRightClickDelay(mc.thePlayer.motionY > 0.0D ? 1 : 1000);
+            this.setRightClickDelay(0);
         }
 
     }
 
     @SubscribeEvent
-    public void onRender(RenderGameOverlayEvent.Pre event) {
-        MovingObjectPosition mop = mc.objectMouseOver;
-
-        if (shouldClickBlock(mop, mop.getBlockPos()))
-            clickBlock(mop.getBlockPos(), mop.sideHit, mop.hitVec);
-    }
-
-    public boolean shouldClickBlock(MovingObjectPosition mop, BlockPos pos) {
-        if (!Utils.Player.isPlayerInGame()) return false;
-        if (pos == null || lastPos == null) return false;
-        if (pos.equals(lastPos) || System.currentTimeMillis() - lastPlace < delay.getInput()) return false;
-        // Check that we're holding a block
+    public void onRender(RenderGameOverlayEvent.Pre e) {
+        if (!Utils.Player.isPlayerInGame()) return;
+        if (mc.currentScreen != null) return;
         ItemStack heldItem = mc.thePlayer.getHeldItem();
+        if (heldItem == null) return;
+        if (!(heldItem.getItem() instanceof ItemBlock)) return;
+        MovingObjectPosition movingObjectPosition = mc.objectMouseOver;
+        if (movingObjectPosition == null || movingObjectPosition.typeOfHit != MovingObjectType.BLOCK) return;
+        if (movingObjectPosition.sideHit == EnumFacing.UP && !placeOnTops.isToggled()) return;
 
-        // Null checks
-        if (mc.currentScreen != null || heldItem == null || mop == null) return false;
-        if (!(heldItem.getItem() instanceof ItemBlock)) return false;
-
-        // Make sure we're looking at a block
-        if (mop.typeOfHit != MovingObjectType.BLOCK) return false;
-
-        // Make sure we're looking at the correct side of the block
-        if (mop.sideHit == EnumFacing.UP && !placeOnTops.isToggled()) return false;
-
-        // Prevent sus downstacks and excessive packets
-        if (mop.sideHit == EnumFacing.DOWN) return false;
+        BlockPos pos = movingObjectPosition.getBlockPos();
 
         Block block = mc.theWorld.getBlockState(pos).getBlock();
+        if (block == null || block == Blocks.air || block instanceof BlockLiquid) return;
 
-        // Make sure it's a valid block
-        if (block == null || block == Blocks.air || block instanceof BlockLiquid) return false;
-
-        if (holdRight.isToggled() && Mouse.isButtonDown(1)) return false;
-        return true;
+        if (holdRight.isToggled() && !Mouse.isButtonDown(1)) return;
+        clickBlock(pos, movingObjectPosition.sideHit, movingObjectPosition.hitVec);
     }
 
     public void clickBlock(BlockPos pos, EnumFacing enumFacing, Vec3 vec3) {
         new Thread(() -> {
             try {
-                boolean success = mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), pos, enumFacing, vec3);
                 mc.thePlayer.swingItem();
-
-                if (success) {
-                    lastPlace = System.currentTimeMillis();
-                    lastPos = pos;
-                }
+                mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), pos, enumFacing, vec3);
             } catch (Exception ignored) {}
         }).start();
     }
