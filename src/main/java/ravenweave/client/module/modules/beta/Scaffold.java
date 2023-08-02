@@ -63,8 +63,11 @@ public class Scaffold extends Module {
         float[] rots = new float[]{yaw, (float) pitch.getInput()};
 
         e.setYaw(rots[0]);
-        e.setPitch(rots[1]);
-
+        if (mc.gameSettings.keyBindJump.isKeyDown()) {
+            e.setPitch(90);
+        } else {
+            e.setPitch(rots[1]);
+        }
         mc.thePlayer.renderYawOffset = rots[0];
         mc.thePlayer.rotationYawHead = rots[0];
 
@@ -74,9 +77,15 @@ public class Scaffold extends Module {
     @SubscribeEvent
     public void lookEvent(LookEvent e) {
         e.setPrevYaw(prevYaw);
-        e.setPrevPitch((float) pitch.getInput());
         e.setYaw(yaw);
-        e.setPitch((float) pitch.getInput());
+
+        if (mc.gameSettings.keyBindJump.isKeyDown()) {
+            e.setPitch(90);
+            e.setPrevPitch(90);
+        } else {
+            e.setPrevPitch((float) pitch.getInput());
+            e.setPitch((float) pitch.getInput());
+        }
     }
 
     @SubscribeEvent

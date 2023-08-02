@@ -105,13 +105,13 @@ public class ModuleManager {
         addModule(new AutoSoup());
         addModule(new Targets());
         addModule(new BHop());
+        addModule(new AutoTool());
 
         // BETA
         addModule(new Blink());
         addModule(new LongJump());
         addModule(new Radar());
         addModule(new Scaffold());
-        addModule(new SpeedTest());
         addModule(new TargetHUD());
 
         initialized = true;
