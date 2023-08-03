@@ -2,13 +2,11 @@ package ravenweave.client.module.modules.beta;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
@@ -22,6 +20,7 @@ import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
 import java.awt.*;
+import java.util.List;
 
 public class Scaffold extends Module {
 
@@ -103,7 +102,13 @@ public class Scaffold extends Module {
         if (mc.currentScreen != null || heldItem == null || mop == null) return false;
         if (!(heldItem.getItem() instanceof ItemBlock)) return false;
         if (mop.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return false;
-        if (mop.sideHit == EnumFacing.UP && !Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode())) return false;
+        if (mop.sideHit == EnumFacing.UP) {
+            if (!Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode())) return false;
+        }
+        // Remove excessive clicks
+        if (!((ItemBlock) mc.thePlayer.getHeldItem().getItem()).canPlaceBlockOnSide(mc.theWorld, pos, mop.sideHit, mc.thePlayer, mc.thePlayer.getHeldItem())) return false;
+
+
         if (mop.sideHit == EnumFacing.DOWN) return false;
         Block block = mc.theWorld.getBlockState(pos).getBlock();
         if (block == null || block == Blocks.air || block instanceof BlockLiquid) return false;
@@ -118,7 +123,6 @@ public class Scaffold extends Module {
                 if (!noSwing.isToggled()) {
                     mc.thePlayer.swingItem();
                 }
-
                 if (success) {
                     lastPos = pos;
                 }
