@@ -5,6 +5,7 @@
   "mixins": [
     "EntityLivingBaseMixin",
     "EntityMixin",
+    "EntityPlayerMixin",
     "EntityPlayerSPMixin",
     "EntityRendererMixin",
     "MinecraftMixin",
@@ -13,7 +14,6 @@
     "RendererLivingEntityMixin",
     "RenderGlobalMixin",
     "S12PacketEntityVelocityAccessor",
-    "TimerAccessor",
     "WorldMixin"
   ]
 }
