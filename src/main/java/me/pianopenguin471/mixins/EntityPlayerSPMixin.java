@@ -54,8 +54,8 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
 
     @Override
 	@Shadow
-    protected abstract boolean pushOutOfBlocks(double p_pushOutOfBlocks_1_, double p_pushOutOfBlocks_3_,
-            double p_pushOutOfBlocks_5_);
+    public abstract boolean pushOutOfBlocks(double p_pushOutOfBlocks_1_, double p_pushOutOfBlocks_3_,
+                                            double p_pushOutOfBlocks_5_);
 
     @Override
 	@Shadow

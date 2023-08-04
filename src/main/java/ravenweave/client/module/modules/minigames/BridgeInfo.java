@@ -246,7 +246,7 @@ public class BridgeInfo extends Module {
 
         }
 
-        protected void mouseClickMove(int mX, int mY, int b, long t) {
+        public void mouseClickMove(int mX, int mY, int b, long t) {
             super.mouseClickMove(mX, mY, b, t);
             if (b == 0) {
                 if (this.dragging) {
@@ -263,7 +263,7 @@ public class BridgeInfo extends Module {
             }
         }
 
-        protected void mouseReleased(int mX, int mY, int s) {
+        public void mouseReleased(int mX, int mY, int s) {
             super.mouseReleased(mX, mY, s);
             if (s == 0) {
                 this.dragging = false;
