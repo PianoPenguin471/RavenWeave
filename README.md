@@ -4,7 +4,7 @@ A Raven fork based off of [Raven B++](https://github.com/K-ov/Raven-bPLUS) for [
 ---
 
 ## Usage
-You can open the GUI of RavenWeave by pressing RShift, you can change this key using `/gui <key>`.
+- You can open the GUI of RavenWeave by pressing RShift, you can change this key using `/gui <key>`.
 
 ## Installation
 1. Download the [RavenWeave](https://github.com/PianoPenguin471/RavenWeave/releases) mod.
