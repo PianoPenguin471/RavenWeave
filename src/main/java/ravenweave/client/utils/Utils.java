@@ -5,6 +5,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import me.pianopenguin471.hooks.CPSHook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -534,6 +535,13 @@ public class Utils {
             buttons.put(mouseButton, (byte) (held ? 1 : 0));
             ReflectionUtils.setPrivateValue(Mouse.class, null, buttons, "buttons");
 
+            if (held) {
+                if (mouseButton == 0) {
+                    CPSHook.leftClick();
+                } else {
+                    CPSHook.rightClick();
+                }
+            }
         }
 
 
