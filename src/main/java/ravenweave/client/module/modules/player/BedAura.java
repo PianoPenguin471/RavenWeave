@@ -20,8 +20,9 @@ import java.util.TimerTask;
 public class BedAura extends Module {
     public static SliderSetting rangeInput;
     public static ComboSetting<BypassMode> bypassMode;
+    public static SliderSetting bypassDistance;
     public static TickSetting disableOnBreak;
-    public State state = State.LOOKING_FOR_BED;
+    public static State state = State.LOOKING_FOR_BED;
     private boolean notifiedSearching = false, notifiedBreaking = false, notifiedBypassing = false;
     private Timer timer;
     private BlockPos bedPos;
@@ -31,6 +32,7 @@ public class BedAura extends Module {
         this.registerSetting(new DescriptionSetting("Might silent flag on Hypixel."));
         this.registerSetting(rangeInput = new SliderSetting("Range", 5.0D, 2.0D, 10.0D, 1.0D));
         this.registerSetting(bypassMode = new ComboSetting<>("Bypass Mode", BypassMode.NONE));
+        this.registerSetting(bypassDistance = new SliderSetting("Bypass blocks", 1, 1, 5, 1));
         this.registerSetting(disableOnBreak = new TickSetting("Disable after break", true));
     }
 
@@ -54,6 +56,16 @@ public class BedAura extends Module {
             this.timer = null;
         }
         reset();
+    }
+
+    public BlockPos getTopDefenseBlock() {
+        for (int i = (int) bypassDistance.getInput(); i > 0; i--) {
+            BlockPos pos = BedAura.this.bedPos.up(i);
+            if (mc.theWorld.getBlockState(pos).getBlock() != Blocks.air) {
+                return pos;
+            }
+        }
+        return null;
     }
 
 
@@ -83,10 +95,10 @@ public class BedAura extends Module {
                     case BYPASS -> {
                         if (bypassMode.getMode() == BypassMode.BLOCK_ABOVE) {
                             // Get block above the bed
-                            BlockPos blockAbove = BedAura.this.bedPos.up();
+                            BlockPos blockAbove = getTopDefenseBlock();
 
                             // If the bed is exposed, move on
-                            if (mc.theWorld.getBlockState(blockAbove).getBlock() == Blocks.air) {
+                            if (blockAbove == null) {
                                 BedAura.this.state = State.BREAKING_BED;
                                 break;
                             }

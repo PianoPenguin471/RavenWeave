@@ -45,7 +45,7 @@ public class AutoTool extends Module {
             return;
 
         // quit if the player is not tryna mine
-        if(!Mouse.isButtonDown(0)){
+        if(!Mouse.isButtonDown(0) || BedAura.state != BedAura.State.LOOKING_FOR_BED){
             if(mining)
                 finishMining();
             if(isWaiting)
