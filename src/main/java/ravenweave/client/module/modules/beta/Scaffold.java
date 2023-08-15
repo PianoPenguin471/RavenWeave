@@ -2,6 +2,7 @@ package ravenweave.client.module.modules.beta;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -37,20 +38,6 @@ public class Scaffold extends Module {
         this.registerSetting(pitch = new SliderSetting("Pitch", 81, 70, 90, 1));
         this.registerSettings(noSwing = new TickSetting("No Swing", false));
         this.registerSetting(disableSprint = new TickSetting("Disable sprint", true));
-    }
-
-    @Override
-    public void onEnable() {
-        if (disableSprint.isToggled()) {
-            Raven.moduleManager.getModuleByClazz(Sprint.class).disable();
-            try {
-                Robot robot = new Robot();
-                robot.keyPress(mc.gameSettings.keyBindSprint.getKeyCode());
-                robot.keyRelease(mc.gameSettings.keyBindSprint.getKeyCode());
-            } catch (AWTException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     @SubscribeEvent
@@ -89,6 +76,11 @@ public class Scaffold extends Module {
 
     @SubscribeEvent
     public void onRender(RenderGameOverlayEvent.Pre event) {
+        if (disableSprint.isToggled()) {
+            mc.thePlayer.setSprinting(false);
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), false);
+            KeyBinding.onTick(mc.gameSettings.keyBindSprint.getKeyCode());
+        }
         MovingObjectPosition mop = mc.objectMouseOver;
 
         if (shouldClickBlock(mop, mop.getBlockPos())) {
