@@ -62,6 +62,8 @@ public class Fly extends Module {
         }
 
         public void update() {
+            if (Minecraft.getMinecraft().thePlayer == null)
+                return;
             if (Module.mc.thePlayer.movementInput.moveForward > 0.0F) {
                 if (!this.opf) {
                     this.opf = true;
@@ -102,6 +104,8 @@ public class Fly extends Module {
         }
 
         public void update() {
+            if (Minecraft.getMinecraft().thePlayer == null)
+                return;
             Module.mc.thePlayer.motionY = 0.0D;
             Module.mc.thePlayer.capabilities.setFlySpeed((float) (0.05000000074505806D * speed.getInput()));
             Module.mc.thePlayer.capabilities.isFlying = true;

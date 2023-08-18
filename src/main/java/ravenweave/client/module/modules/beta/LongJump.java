@@ -13,12 +13,12 @@ import ravenweave.client.module.setting.impl.TickSetting;
 public class LongJump extends Module {
     public boolean hasJumped = false, shouldJump = false;
     public static SliderSetting speed;
-    public static TickSetting autodisable;
+    public static TickSetting autoDisable;
 
     public LongJump() {
         super("LongJump", ModuleCategory.beta); // Category: Movement
         this.registerSetting(speed = new SliderSetting("Speed:", 5, 1, 10, 0.25));
-        this.registerSetting(autodisable = new TickSetting("Auto Disable", true));
+        this.registerSetting(autoDisable = new TickSetting("Auto Disable", true));
     }
 
     @SubscribeEvent
@@ -48,8 +48,8 @@ public class LongJump extends Module {
                 double r = Math.toRadians(Module.mc.thePlayer.rotationYaw + 90.0F);
                 Module.mc.thePlayer.motionX = s * Math.cos(r);
                 Module.mc.thePlayer.motionZ = s * Math.sin(r);
-                if (autodisable.isToggled()) {
-                    Raven.moduleManager.getModuleByName("LongJump").disable();
+                if (autoDisable.isToggled()) {
+                    this.disable();
                 }
             }
         }

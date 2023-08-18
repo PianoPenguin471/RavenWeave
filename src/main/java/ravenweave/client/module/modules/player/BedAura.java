@@ -42,7 +42,7 @@ public class BedAura extends Module {
     }
 
     public void reset() {
-        this.state = State.LOOKING_FOR_BED;
+        state = State.LOOKING_FOR_BED;
         this.notifiedBreaking = false;
         this.notifiedBypassing = false;
         this.notifiedSearching = false;
