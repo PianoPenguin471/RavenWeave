@@ -3,7 +3,6 @@ package ravenweave.client.module.modules.beta;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -13,23 +12,17 @@ import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 import ravenweave.client.event.impl.LookEvent;
 import ravenweave.client.event.impl.UpdateEvent;
-import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
-import ravenweave.client.module.modules.movement.Sprint;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
-import java.awt.*;
-import java.util.List;
-
 public class Scaffold extends Module {
 
     private final TickSetting disableSprint, noSwing;
-    private SliderSetting pitch;
+    private final SliderSetting pitch;
 
     private float yaw, prevYaw;
-    private int blockCount;
     private BlockPos lastPos;
 
 
@@ -49,7 +42,7 @@ public class Scaffold extends Module {
         float[] rots = new float[]{yaw, (float) pitch.getInput()};
 
         e.setYaw(rots[0]);
-        if (mc.gameSettings.keyBindJump.isKeyDown()) {
+        if (mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown()) {
             e.setPitch(90);
         } else {
             e.setPitch(rots[1]);
@@ -65,7 +58,7 @@ public class Scaffold extends Module {
         e.setPrevYaw(prevYaw);
         e.setYaw(yaw);
 
-        if (mc.gameSettings.keyBindJump.isKeyDown()) {
+        if (mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown()) {
             e.setPitch(90);
             e.setPrevPitch(90);
         } else {
