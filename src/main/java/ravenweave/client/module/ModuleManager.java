@@ -124,13 +124,6 @@ public class ModuleManager {
         modules.add(m);
     }
 
-    public void removeModuleByName(String s) {
-        Module m = getModuleByName(s);
-        modules.remove(m);
-    }
-
-    // prefer using getModuleByClazz();
-    // ok might add in 1.0.18
     public Module getModuleByName(String name) {
         if (!initialized)
             return null;
@@ -197,10 +190,6 @@ public class ModuleManager {
     public void sort() {
         modules.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())
                 - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
-    }
-
-    public int numberOfModules() {
-        return modules.size();
     }
 
     public void sortLongShort() {
