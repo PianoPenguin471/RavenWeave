@@ -8,7 +8,7 @@ import org.objectweb.asm.tree.*;
 public class CPSHook extends Hook {
     public static int leftCps = 0;
     public static int rightCps = 0;
-    public static String CPS_ClASS_NAME = "com/moonsworth/lunar/client/CHRICROORHCHIRRRICHOCRIHR/RIRIRCCOOIHIRHIIIRIOIOCIH",
+    public static String CPS_ClASS_NAME = "com/moonsworth/lunar/client/CHRICROORHCHIRRRICHOCRIHR/RIRIRCCOOIHIRHIIIRIOIOCIH", // this is outdated, I've removed it from the hooks list
             LEFT_CPS_METHOD_NAME = "ROOCIOHCOOCCIRHIOOCCOIHOH",
             RIGHT_CPS_METHOD_NAME = "HCRCHIIHCHOCRRRICORIROIOI", CURRENT_HOOK_CLASS_PATH = "me/pianopenguin471/hooks/CPSHook";
     public CPSHook() {
