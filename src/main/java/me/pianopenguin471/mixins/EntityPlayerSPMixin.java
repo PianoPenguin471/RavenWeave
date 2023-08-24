@@ -42,13 +42,13 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
     public abstract void setSprinting(boolean p_setSprinting_1_);
 
     @Shadow
-    protected int sprintToggleTimer;
+    public int sprintToggleTimer;
     @Shadow
     public float prevTimeInPortal;
     @Shadow
     public float timeInPortal;
     @Shadow
-    protected Minecraft mc;
+    public Minecraft mc;
     @Shadow
     public MovementInput movementInput;
 
@@ -62,21 +62,21 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
     public abstract void sendPlayerAbilities();
 
     @Shadow
-    protected abstract boolean isCurrentViewEntity();
+    public abstract boolean isCurrentViewEntity();
 
     @Shadow
     public abstract boolean isRidingHorse();
 
     @Shadow
-    private int horseJumpPowerCounter;
+    public int horseJumpPowerCounter;
     @Shadow
-    private float horseJumpPower;
+    public float horseJumpPower;
 
     @Shadow
-    protected abstract void sendHorseJump();
+    public abstract void sendHorseJump();
 
     @Shadow
-    private boolean serverSprintState;
+    public boolean serverSprintState;
     @Shadow
     @Final
     public NetHandlerPlayClient sendQueue;
@@ -86,22 +86,23 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
     public abstract boolean isSneaking();
 
     @Shadow
-    private boolean serverSneakState;
+    public boolean serverSneakState;
     @Shadow
-    private double lastReportedPosX;
+    public double lastReportedPosX;
     @Shadow
-    private double lastReportedPosY;
+    public double lastReportedPosY;
     @Shadow
-    private double lastReportedPosZ;
+    public double lastReportedPosZ;
     @Shadow
-    private float lastReportedYaw;
+    public float lastReportedYaw;
     @Shadow
-    private float lastReportedPitch;
+    public float lastReportedPitch;
     @Shadow
-    private int positionUpdateTicks;
+    public int positionUpdateTicks;
 
     /**
      * @author mc code
+     * @reason Update event
      */
     @Overwrite
     public void onUpdateWalkingPlayer() {
@@ -181,7 +182,7 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
 
     /**
      * @author mc code
-     * @reason i tried other ways of doing this, nothing else worked
+     * @reason no slow / sprint
      */
     @Override
 	@Overwrite
