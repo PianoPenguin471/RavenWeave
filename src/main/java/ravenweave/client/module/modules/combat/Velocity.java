@@ -1,7 +1,6 @@
 package ravenweave.client.module.modules.combat;
 
 import me.pianopenguin471.mixins.S12PacketEntityVelocityAccessor;
-import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.PacketEvent;
@@ -14,7 +13,7 @@ public class Velocity extends Module {
     public static SliderSetting horizontal, vertical, chance, horizontalProjectiles, verticalProjectiles, chanceProjectiles, distanceProjectiles;
     public static TickSetting invertHorizontal, invertVertical;
     public static TickSetting onlyWhileTargeting, disableWhileHoldingS, differentVeloForProjectiles;
-    public static ComboSetting projectilesMode;
+    public static ComboSetting<Mode> projectilesMode;
     public Mode mode = Mode.Distance;
 
     public Velocity() {
@@ -27,7 +26,7 @@ public class Velocity extends Module {
         this.registerSetting(onlyWhileTargeting = new TickSetting("Only while targeting", false));
         this.registerSetting(disableWhileHoldingS = new TickSetting("Disable while holding S", false));
         this.registerSetting(differentVeloForProjectiles = new TickSetting("Different velo for projectiles", false));
-        this.registerSetting(projectilesMode = new ComboSetting("Projectiles Mode", mode));
+        this.registerSetting(projectilesMode = new ComboSetting<>("Projectiles Mode", mode));
         this.registerSetting(horizontalProjectiles = new SliderSetting("Horizontal projectiles", 90.0D, -100.0D, 100.0D, 1.0D));
         this.registerSetting(verticalProjectiles = new SliderSetting("Vertical projectiles", 100.0D, -100.0D, 100.0D, 1.0D));
         this.registerSetting(chanceProjectiles = new SliderSetting("Chance projectiles", 100.0D, 0.0D, 100.0D, 1.0D));
@@ -45,14 +44,6 @@ public class Velocity extends Module {
                     return;
                 }
             }
-            S12PacketEntityVelocity packet = packetEvent.getPacket();
-            Entity entity = mc.theWorld.getEntityByID(((S12PacketEntityVelocity) packetEvent.getPacket()).getEntityID());
-            int packetX = packet.getMotionX(), packetY = packet.getMotionY(), packetZ = packet.getMotionZ();
-            if (entity == mc.thePlayer) System.out.println("MotionX: " + packetX +
-                    ", MotionY: " + packetY +
-                    ", MotionZ: " + packetZ +
-                    ", Entity Name: " + entity.getName());
-            else return;
             velo(packetEvent);
 
         } catch (Exception e) {
