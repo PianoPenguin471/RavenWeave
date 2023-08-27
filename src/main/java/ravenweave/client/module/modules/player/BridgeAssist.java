@@ -15,7 +15,7 @@ public class BridgeAssist extends Module {
     private final TickSetting onSneak;
     private final TickSetting workWithSafeWalk;
     private final SliderSetting waitFor;
-    private final ComboSetting<Utils.Modes.BridgeMode> assistMode;
+    private final ComboSetting<BridgeMode> assistMode;
     private final SliderSetting assistRange;
     private boolean waitingForAim;
     private boolean gliding;
@@ -36,13 +36,13 @@ public class BridgeAssist extends Module {
         this.registerSetting(onSneak = new TickSetting("Work only when sneaking", true));
         this.registerSetting(workWithSafeWalk= new TickSetting("Work with safewalk", false));
         this.registerSetting(assistRange = new SliderSetting("Assist range", 10.0D, 1.0D, 40.0D, 1.0D));
-        this.registerSetting(assistMode = new ComboSetting<>("Mode:", Utils.Modes.BridgeMode.GODBRIDGE));
+        this.registerSetting(assistMode = new ComboSetting<>("Mode:", BridgeMode.GODBRIDGE));
     }
 
     @Override
     public void onEnable() {
-        this.waitingForAim = false;
-        this.gliding = false;
+        waitingForAim = false;
+        gliding = false;
         super.onEnable();
     }
 
@@ -102,13 +102,13 @@ public class BridgeAssist extends Module {
                 mc.thePlayer.rotationPitch = this.waitingForPitch;
 
             if (mc.thePlayer.rotationYaw < this.waitingForYaw)
-                mc.thePlayer.rotationYaw += this.speedYaw;
+                mc.thePlayer.rotationYaw += (float) speedYaw;
 
             if (mc.thePlayer.rotationYaw > this.waitingForYaw)
-                mc.thePlayer.rotationYaw -= this.speedYaw;
+                mc.thePlayer.rotationYaw -= (float) speedYaw;
 
             if (mc.thePlayer.rotationPitch > this.waitingForPitch)
-                mc.thePlayer.rotationPitch -= this.speedPitch;
+                mc.thePlayer.rotationPitch -= (float) speedPitch;
 
             if (mc.thePlayer.rotationYaw == this.waitingForYaw && mc.thePlayer.rotationPitch == this.waitingForPitch) {
                 gliding = false;
@@ -129,8 +129,8 @@ public class BridgeAssist extends Module {
         float mcYaw = mc.thePlayer.rotationYaw;
         float mcPitch = mc.thePlayer.rotationPitch;
 
-        float yaw = mcYaw - ((int)mcYaw/360) * 360;
-        float pitch = mcPitch  - ((int)mcPitch /360) * 360;
+        float yaw = mcYaw - (mcYaw / 360) * 360;
+        float pitch = mcPitch  - (mcPitch / 360) * 360;
 
         float range = (float) assistRange.getInput();
 
@@ -188,5 +188,9 @@ public class BridgeAssist extends Module {
                mc.thePlayer.rotationPitch = pitch + ((int)fuckedPitch/360) * 360;
                mc.thePlayer.rotationYaw = yaw;
         }
+    }
+
+    public enum BridgeMode {
+        GODBRIDGE, MOONWALK, BREEZILY, NORMAL
     }
 }

@@ -1412,7 +1412,7 @@ public class Utils {
                     ++l;
                     leftOffset = bX;
                     topOffset += fontRenderer.FONT_HEIGHT + 5;
-                    // reseting text colour?
+                    // "reseting text colour?" - Some random Australian
                     colourControl = shift * (long) l;
                 } else {
                     fontRenderer.drawString(String.valueOf(c), (float) leftOffset, (float) topOffset,
@@ -1429,7 +1429,6 @@ public class Utils {
             int halfHeight = (int) (height / 4);
             int halfWidth = (int) width;
             PositionMode positionMode = null;
-            // up left
 
             if (marginY < halfHeight) {
                 if (marginX < halfWidth)
@@ -1526,24 +1525,6 @@ public class Utils {
 
         public enum PositionMode {
             UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT
-        }
-    }
-
-    public static class Modes {
-        public enum ClickEvents {
-            RENDER, TICK
-        }
-
-        public enum BridgeMode {
-            GODBRIDGE, MOONWALK, BREEZILY, NORMAL
-        }
-
-        public enum ClickTimings {
-            RAVEN, SKID
-        }
-
-        public enum SprintResetTimings {
-            PRE, POST
         }
     }
 }

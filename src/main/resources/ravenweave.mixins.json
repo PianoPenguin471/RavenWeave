@@ -3,7 +3,6 @@
   "package": "me.pianopenguin471.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "EntityLivingBaseMixin",
     "EntityMixin",
     "EntityPlayerMixin",
     "EntityPlayerSPMixin",

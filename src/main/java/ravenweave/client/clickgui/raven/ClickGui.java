@@ -11,8 +11,6 @@ import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.utils.Timer;
 import ravenweave.client.utils.Utils;
-import ravenweave.client.utils.font.FontUtil;
-import ravenweave.client.utils.version.Version;
 
 import java.util.ArrayList;
 import java.util.concurrent.ScheduledFuture;
