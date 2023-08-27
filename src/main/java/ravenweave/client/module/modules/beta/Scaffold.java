@@ -17,6 +17,7 @@ import org.lwjgl.input.Keyboard;
 import ravenweave.client.event.impl.LookEvent;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
@@ -32,6 +33,7 @@ public class Scaffold extends Module {
 
     public Scaffold() {
         super("Scaffold", ModuleCategory.beta); // Category: World
+        this.registerSetting(new DescriptionSetting("Shows near by opponents."));
         this.registerSetting(pitch = new SliderSetting("Pitch", 81, 70, 90, 1));
         this.registerSettings(noSwing = new TickSetting("No Swing", false));
         this.registerSetting(disableSprint = new TickSetting("Disable sprint", true));

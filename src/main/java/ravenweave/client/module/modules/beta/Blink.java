@@ -23,7 +23,7 @@ public class Blink extends Module {
 
     public Blink() {
         super("Blink", ModuleCategory.player);
-        this.registerSetting(new DescriptionSetting("Blocks sending packets."));
+        this.registerSetting(new DescriptionSetting("Chokes packets until disabled."));
         this.registerSetting(inbound = new TickSetting("Block Inbound", true));
         this.registerSetting(outbound = new TickSetting("Block Outbound", true));
         this.registerSetting(spawnFake = new TickSetting("Spawn fake player", true));
