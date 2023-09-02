@@ -112,6 +112,7 @@ public class ModuleManager {
 
         // BETA
         addModule(new Blink());
+        addModule(new Refill());
         addModule(new LongJump());
         addModule(new Radar());
         addModule(new Scaffold());

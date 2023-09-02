@@ -1,4 +1,4 @@
-package ravenweave.client.module.modules.beta;
+package ravenweave.client.module.modules.player;
 
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.network.Packet;
