@@ -1,12 +1,15 @@
 package ravenweave.client.module.modules.beta;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.*;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
@@ -20,7 +23,7 @@ import ravenweave.client.utils.Utils;
 
 public class Scaffold extends Module {
 
-    private final TickSetting disableSprint, noSwing;
+    private final TickSetting disableSprint, noSwing, doRots;
     private final SliderSetting pitch;
 
     private float yaw, prevYaw;
@@ -32,6 +35,15 @@ public class Scaffold extends Module {
         this.registerSetting(pitch = new SliderSetting("Pitch", 81, 70, 90, 1));
         this.registerSettings(noSwing = new TickSetting("No Swing", false));
         this.registerSetting(disableSprint = new TickSetting("Disable sprint", true));
+        this.registerSetting(doRots = new TickSetting("Do rotations", true));
+    }
+
+    public void onDisable() {
+        if (disableSprint.isToggled()) {
+            mc.thePlayer.setSprinting(true);
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), true);
+            KeyBinding.onTick(mc.gameSettings.keyBindSprint.getKeyCode());
+        }
     }
 
     @SubscribeEvent
@@ -39,23 +51,24 @@ public class Scaffold extends Module {
         if(!Utils.Player.isPlayerInGame()) {
             return;
         }
+        if (!doRots.isToggled()) return;
         yaw = mc.thePlayer.rotationYaw - 180;
-        float[] rots = new float[]{yaw, (float) pitch.getInput()};
 
-        e.setYaw(rots[0]);
-        if (mc.gameSettings.keyBindJump.isKeyDown()/* && !mc.gameSettings.keyBindForward.isKeyDown()*/) {
+        e.setYaw(yaw);
+        if (mc.gameSettings.keyBindJump.isKeyDown()) {
             e.setPitch(90);
         } else {
-            e.setPitch(rots[1]);
+            e.setPitch((float) pitch.getInput());
         }
-        mc.thePlayer.renderYawOffset = rots[0];
-        mc.thePlayer.rotationYawHead = rots[0];
+        mc.thePlayer.renderYawOffset = yaw;
+        mc.thePlayer.rotationYawHead = yaw;
 
         prevYaw = e.getYaw();
     }
 
     @SubscribeEvent
     public void lookEvent(LookEvent e) {
+        if (!doRots.isToggled()) return;
         e.setPrevYaw(prevYaw);
         e.setYaw(yaw);
 
@@ -69,23 +82,39 @@ public class Scaffold extends Module {
     }
 
     @SubscribeEvent
-    public void onRender(RenderGameOverlayEvent.Pre event) {
-        MovingObjectPosition mop = mc.objectMouseOver;
+    public void onRender(RenderGameOverlayEvent event) {
+        if (!Utils.Player.isPlayerInGame()) return;
+        if (mc.currentScreen != null || mc.thePlayer.getHeldItem() == null) return;
 
-        if (shouldClickBlock(mop)) {
-            clickBlock(mop.getBlockPos(), mop.sideHit, mop.hitVec);
-        }
-        if (disableSprint.isToggled()) {
-            mc.thePlayer.setSprinting(false);
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), false);
-            KeyBinding.onTick(mc.gameSettings.keyBindSprint.getKeyCode());
+        if (doRots.isToggled()) {
+            MovingObjectPosition mop = mc.objectMouseOver;
+            if (shouldClickBlock(mop)) {
+                clickBlock(mop.getBlockPos(), mop.sideHit, mop.hitVec);
+            }
+            if (disableSprint.isToggled()) {
+                mc.thePlayer.setSprinting(false);
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), false);
+                KeyBinding.onTick(mc.gameSettings.keyBindSprint.getKeyCode());
+            }
+        } else {
+            BlockPos posBelow = mc.thePlayer.getPosition().down();
+            Block blockBelow = mc.theWorld.getBlockState(posBelow).getBlock();
+            if (blockBelow instanceof BlockLiquid || blockBelow instanceof BlockAir) {
+                Item item = mc.thePlayer.getHeldItem().getItem();
+                if (!(item instanceof ItemBlock itemBlock)) return;
+                EnumFacing enumFacing = EnumFacing.fromAngle(180 - mc.thePlayer.rotationYaw);
+
+                mc.theWorld.setBlockState(posBelow, itemBlock.getBlock().getDefaultState());
+                mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(posBelow, 255, mc.thePlayer.getHeldItem(), 0, 0, 0));
+                //mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(posBelow.offset(enumFacing, -1), enumFacing.ordinal(), mc.thePlayer.getHeldItem(), enumFacing.getFrontOffsetX(), enumFacing.getFrontOffsetY(), enumFacing.getFrontOffsetZ()));
+                //mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), posBelow.offset(enumFacing, 0), EnumFacing.fromAngle(mc.thePlayer.rotationYaw), new Vec3(enumFacing.getDirectionVec()));
+            }
         }
     }
 
     public boolean shouldClickBlock(MovingObjectPosition mop) {
-        if (!Utils.Player.isPlayerInGame()) return false;
+        if (mop == null) return false;
         ItemStack heldItem = mc.thePlayer.getHeldItem();
-        if (mc.currentScreen != null || heldItem == null || mop == null) return false;
         if (!(heldItem.getItem() instanceof ItemBlock)) return false;
         if (mop.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return false;
         BlockPos pos = mop.getBlockPos();
