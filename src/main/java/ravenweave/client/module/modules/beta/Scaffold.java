@@ -75,7 +75,7 @@ public class Scaffold extends Module {
         if (!Utils.Player.isPlayerInGame()) return;
         if (mc.currentScreen != null || mc.thePlayer.getHeldItem() == null) return;
 
-        MovingObjectPosition mop = doRots.isToggled() ? mc.objectMouseOver : RayTraceUtils.customRayTrace(3.0, mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown() ? 90 : (float) pitch.getInput(), 180 - mc.thePlayer.rotationYaw);
+        MovingObjectPosition mop = doRots.isToggled() ? mc.objectMouseOver : RayTraceUtils.customRayTrace(3.0, mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown() ? 90 : (float) pitch.getInput(), yaw);
 
         if (shouldClickBlock(mop)) {
             clickBlock(mop.getBlockPos(), mop.sideHit, mop.hitVec);
