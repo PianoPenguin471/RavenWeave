@@ -1,15 +1,11 @@
 package ravenweave.client.module.modules.beta;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.*;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
@@ -19,6 +15,7 @@ import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
+import ravenweave.client.utils.RayTraceUtils;
 import ravenweave.client.utils.Utils;
 
 public class Scaffold extends Module {
@@ -55,11 +52,7 @@ public class Scaffold extends Module {
         yaw = mc.thePlayer.rotationYaw - 180;
 
         e.setYaw(yaw);
-        if (mc.gameSettings.keyBindJump.isKeyDown()) {
-            e.setPitch(90);
-        } else {
-            e.setPitch((float) pitch.getInput());
-        }
+        e.setPitch(mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown() ? 90 : (float) pitch.getInput());
         mc.thePlayer.renderYawOffset = yaw;
         mc.thePlayer.rotationYawHead = yaw;
 
@@ -72,45 +65,28 @@ public class Scaffold extends Module {
         e.setPrevYaw(prevYaw);
         e.setYaw(yaw);
 
-        if (mc.gameSettings.keyBindJump.isKeyDown()/* && !mc.gameSettings.keyBindForward.isKeyDown()*/) {
-            e.setPitch(90);
-            e.setPrevPitch(90);
-        } else {
-            e.setPrevPitch((float) pitch.getInput());
-            e.setPitch((float) pitch.getInput());
-        }
+        e.setPitch(mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown() ? 90 : (float) pitch.getInput());
+        e.setPrevPitch(mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown() ? 90 : (float) pitch.getInput());
     }
+
 
     @SubscribeEvent
     public void onRender(RenderGameOverlayEvent event) {
         if (!Utils.Player.isPlayerInGame()) return;
         if (mc.currentScreen != null || mc.thePlayer.getHeldItem() == null) return;
 
-        if (doRots.isToggled()) {
-            MovingObjectPosition mop = mc.objectMouseOver;
-            if (shouldClickBlock(mop)) {
-                clickBlock(mop.getBlockPos(), mop.sideHit, mop.hitVec);
-            }
-            if (disableSprint.isToggled()) {
-                mc.thePlayer.setSprinting(false);
-                KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), false);
-                KeyBinding.onTick(mc.gameSettings.keyBindSprint.getKeyCode());
-            }
-        } else {
-            BlockPos posBelow = mc.thePlayer.getPosition().down();
-            Block blockBelow = mc.theWorld.getBlockState(posBelow).getBlock();
-            if (blockBelow instanceof BlockLiquid || blockBelow instanceof BlockAir) {
-                Item item = mc.thePlayer.getHeldItem().getItem();
-                if (!(item instanceof ItemBlock itemBlock)) return;
-                EnumFacing enumFacing = EnumFacing.fromAngle(180 - mc.thePlayer.rotationYaw);
+        MovingObjectPosition mop = doRots.isToggled() ? mc.objectMouseOver : RayTraceUtils.customRayTrace(3.0, mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown() ? 90 : (float) pitch.getInput(), 180 - mc.thePlayer.rotationYaw);
 
-                mc.theWorld.setBlockState(posBelow, itemBlock.getBlock().getDefaultState());
-                mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(posBelow, 255, mc.thePlayer.getHeldItem(), 0, 0, 0));
-                //mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(posBelow.offset(enumFacing, -1), enumFacing.ordinal(), mc.thePlayer.getHeldItem(), enumFacing.getFrontOffsetX(), enumFacing.getFrontOffsetY(), enumFacing.getFrontOffsetZ()));
-                //mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), posBelow.offset(enumFacing, 0), EnumFacing.fromAngle(mc.thePlayer.rotationYaw), new Vec3(enumFacing.getDirectionVec()));
-            }
+        if (shouldClickBlock(mop)) {
+            clickBlock(mop.getBlockPos(), mop.sideHit, mop.hitVec);
+        }
+        if (disableSprint.isToggled()) {
+            mc.thePlayer.setSprinting(false);
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), false);
+            KeyBinding.onTick(mc.gameSettings.keyBindSprint.getKeyCode());
         }
     }
+
 
     public boolean shouldClickBlock(MovingObjectPosition mop) {
         if (mop == null) return false;
@@ -123,8 +99,6 @@ public class Scaffold extends Module {
             // Remove excessive clicks
             if (!((ItemBlock) mc.thePlayer.getHeldItem().getItem()).canPlaceBlockOnSide(mc.theWorld, pos, mop.sideHit, mc.thePlayer, mc.thePlayer.getHeldItem())) return false;
         }
-
-
 
         if (mop.sideHit == EnumFacing.DOWN) return false;
         Block block = mc.theWorld.getBlockState(pos).getBlock();
