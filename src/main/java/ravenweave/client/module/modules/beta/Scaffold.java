@@ -33,7 +33,7 @@ public class Scaffold extends Module {
 
     public Scaffold() {
         super("Scaffold", ModuleCategory.beta); // Category: World
-        this.registerSetting(new DescriptionSetting("Shows near by opponents."));
+        this.registerSetting(new DescriptionSetting("Helps you make bridges/scaffold walk.")); // bad description, but manthe wrote it
         this.registerSetting(pitch = new SliderSetting("Pitch", 81, 70, 90, 1));
         this.registerSettings(noSwing = new TickSetting("No Swing", false));
         this.registerSetting(disableSprint = new TickSetting("Disable sprint", true));
