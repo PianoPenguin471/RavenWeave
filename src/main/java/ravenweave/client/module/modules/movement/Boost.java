@@ -48,15 +48,16 @@ public class Boost extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent e) {
-        if (this.i == 0) {
-            this.i = mc.thePlayer.ticksExisted;
-        }
+        if (mc.thePlayer != null) {
+            if (this.i == 0) {
+                this.i = mc.thePlayer.ticksExisted;
+            }
 
-        Utils.Client.getTimer().timerSpeed = (float) a.getInput();
-        if ((double) this.i == (double) mc.thePlayer.ticksExisted - b.getInput()) {
-            Utils.Client.resetTimer();
-            this.disable();
+            Utils.Client.getTimer().timerSpeed = (float) a.getInput();
+            if ((double) this.i == (double) mc.thePlayer.ticksExisted - b.getInput()) {
+                Utils.Client.resetTimer();
+                this.disable();
+            }
         }
-
     }
 }
