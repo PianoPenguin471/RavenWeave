@@ -74,12 +74,13 @@ public class Scaffold extends Module {
     @SubscribeEvent
     public void onRender(RenderGameOverlayEvent event) {
         if (!Utils.Player.isPlayerInGame()) return;
+        if (mc.thePlayer.getHeldItem() == null && slotSwap.isToggled()) swapToBlock();
         if (mc.currentScreen != null || mc.thePlayer.getHeldItem() == null) return;
 
         MovingObjectPosition mop = mc.objectMouseOver;
         //MovingObjectPosition mop = doRots.isToggled() ? mc.objectMouseOver : RayTraceUtils.customRayTrace(3.0, mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown() ? 90 : (float) pitch.getInput(), yaw);
 
-        if (slotSwap.isToggled()) swapToBlock();
+
         if (shouldClickBlock(mop)) {
             clickBlock(mop.getBlockPos(), mop.sideHit, mop.hitVec);
         }
