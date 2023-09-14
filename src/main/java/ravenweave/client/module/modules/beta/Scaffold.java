@@ -20,7 +20,7 @@ import ravenweave.client.utils.Utils;
 
 public class Scaffold extends Module {
 
-    private final TickSetting disableSprint, noSwing, doRots;
+    private final TickSetting disableSprint, noSwing, slotSwap;
     private final SliderSetting pitch;
 
     private float yaw, prevYaw;
@@ -32,7 +32,8 @@ public class Scaffold extends Module {
         this.registerSetting(pitch = new SliderSetting("Pitch", 81, 70, 90, 1));
         this.registerSettings(noSwing = new TickSetting("No Swing", false));
         this.registerSetting(disableSprint = new TickSetting("Disable sprint", true));
-        this.registerSetting(doRots = new TickSetting("Do rotations", true));
+        //this.registerSetting(doRots = new TickSetting("Do rotations", true));
+        this.registerSetting(slotSwap = new TickSetting("Swap to blocks", true));
     }
 
     public void onDisable() {
@@ -48,7 +49,7 @@ public class Scaffold extends Module {
         if(!Utils.Player.isPlayerInGame()) {
             return;
         }
-        if (!doRots.isToggled()) return;
+        //if (!doRots.isToggled()) return;
         yaw = mc.thePlayer.rotationYaw - 180;
 
         e.setYaw(yaw);
@@ -61,7 +62,7 @@ public class Scaffold extends Module {
 
     @SubscribeEvent
     public void lookEvent(LookEvent e) {
-        if (!doRots.isToggled()) return;
+        //if (!doRots.isToggled()) return;
         e.setPrevYaw(prevYaw);
         e.setYaw(yaw);
 
@@ -75,8 +76,10 @@ public class Scaffold extends Module {
         if (!Utils.Player.isPlayerInGame()) return;
         if (mc.currentScreen != null || mc.thePlayer.getHeldItem() == null) return;
 
-        MovingObjectPosition mop = doRots.isToggled() ? mc.objectMouseOver : RayTraceUtils.customRayTrace(3.0, mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown() ? 90 : (float) pitch.getInput(), yaw);
+        MovingObjectPosition mop = mc.objectMouseOver;
+        //MovingObjectPosition mop = doRots.isToggled() ? mc.objectMouseOver : RayTraceUtils.customRayTrace(3.0, mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown() ? 90 : (float) pitch.getInput(), yaw);
 
+        if (slotSwap.isToggled()) swapToBlock();
         if (shouldClickBlock(mop)) {
             clickBlock(mop.getBlockPos(), mop.sideHit, mop.hitVec);
         }
@@ -105,6 +108,22 @@ public class Scaffold extends Module {
         if (block == null || block == Blocks.air || block instanceof BlockLiquid) return false;
 
         return true;
+    }
+
+    public void swapToBlock() {
+        for (int slot = 0; slot <= 8; slot++) {
+            ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
+            if (itemInSlot != null && itemInSlot.getItem() instanceof ItemBlock
+                    && (((ItemBlock) itemInSlot.getItem()).getBlock().isFullBlock()
+                    || ((ItemBlock) itemInSlot.getItem()).getBlock().isFullCube())) {
+                if (mc.thePlayer.inventory.currentItem != slot) {
+                    mc.thePlayer.inventory.currentItem = slot;
+                } else {
+                    return;
+                }
+                return;
+            }
+        }
     }
 
     public void clickBlock(BlockPos pos, EnumFacing enumFacing, Vec3 vec3) {

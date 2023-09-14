@@ -7,13 +7,17 @@ import net.minecraft.util.Vec3;
 import static ravenweave.client.main.Raven.mc;
 
 public class RayTraceUtils {
-    // This method was protected in the Entity class, so I pasted it
+    // This method was protected in the Entity class, so I pasted it and made it readable
+    static final float PI_OVER_180 = (float) Math.PI / 180F;
+    public static float degreesToRadians(float degrees) {
+        return degrees * PI_OVER_180;
+    }
     public static Vec3 getVectorForRotation(float pitch, float yaw) {
-        float var3 = MathHelper.cos(-yaw * 0.017453292F - 3.1415927F);
-        float var4 = MathHelper.sin(-yaw * 0.017453292F - 3.1415927F);
-        float var5 = -MathHelper.cos(-pitch * 0.017453292F);
-        float var6 = MathHelper.sin(-pitch * 0.017453292F);
-        return new Vec3((double)(var4 * var5), (double)var6, (double)(var3 * var5));
+        float var3 = MathHelper.cos(-degreesToRadians(yaw));
+        float var4 = MathHelper.sin(-degreesToRadians(yaw) );
+        float var5 = -MathHelper.cos(-degreesToRadians(pitch));
+        float var6 = MathHelper.sin(-degreesToRadians(pitch));
+        return new Vec3(var4 * var5, var6, var3 * var5);
     }
 
     // Modified from Entity#rayTrace to use custom angles
