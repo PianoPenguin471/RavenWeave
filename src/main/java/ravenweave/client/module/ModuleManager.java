@@ -5,7 +5,10 @@ import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.module.modules.HUD;
 import ravenweave.client.module.modules.beta.*;
-import ravenweave.client.module.modules.client.*;
+import ravenweave.client.module.modules.client.ClickGuiModule;
+import ravenweave.client.module.modules.client.FakeHud;
+import ravenweave.client.module.modules.client.Targets;
+import ravenweave.client.module.modules.client.Terminal;
 import ravenweave.client.module.modules.combat.*;
 import ravenweave.client.module.modules.config.ConfigSettings;
 import ravenweave.client.module.modules.hotkey.*;
@@ -110,6 +113,7 @@ public class ModuleManager {
 
         // BETA
         addModule(new Blink());
+        addModule(new Refill());
         addModule(new LongJump());
         addModule(new Radar());
         addModule(new Scaffold());
@@ -122,13 +126,6 @@ public class ModuleManager {
         modules.add(m);
     }
 
-    public void removeModuleByName(String s) {
-        Module m = getModuleByName(s);
-        modules.remove(m);
-    }
-
-    // prefer using getModuleByClazz();
-    // ok might add in 1.0.18
     public Module getModuleByName(String name) {
         if (!initialized)
             return null;
@@ -195,10 +192,6 @@ public class ModuleManager {
     public void sort() {
         modules.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())
                 - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
-    }
-
-    public int numberOfModules() {
-        return modules.size();
     }
 
     public void sortLongShort() {

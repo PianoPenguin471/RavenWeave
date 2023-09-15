@@ -2,7 +2,7 @@ package ravenweave.client.event.impl;
 
 import net.weavemc.loader.api.event.Event;
 
-public final class HitSlowDownEvent extends Event {
+public class HitSlowDownEvent extends Event {
     public double slowDown = 0.6D;
     public boolean sprinting = false;
 

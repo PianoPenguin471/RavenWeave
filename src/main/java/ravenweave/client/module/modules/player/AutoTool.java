@@ -1,18 +1,17 @@
 package ravenweave.client.module.modules.player;
 
-import me.pianopenguin471.RavenWeave;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
-import ravenweave.client.main.Raven;
-import ravenweave.client.module.Module;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.BlockPos;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Mouse;
+import ravenweave.client.main.Raven;
+import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.LeftClicker;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;

@@ -3,9 +3,10 @@ package ravenweave.client.module.modules.beta;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.TickEvent;
-import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.event.ext.EventDirection;
+import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 
@@ -16,6 +17,7 @@ public class LongJump extends Module {
 
     public LongJump() {
         super("LongJump", ModuleCategory.beta); // Category: Movement
+        this.registerSetting(new DescriptionSetting("Makes your jump longer."));
         this.registerSetting(speed = new SliderSetting("Speed:", 5, 1, 10, 0.25));
         this.registerSetting(autoDisable = new TickSetting("Auto Disable", true));
     }
