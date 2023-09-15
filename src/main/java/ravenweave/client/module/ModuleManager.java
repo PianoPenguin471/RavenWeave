@@ -106,6 +106,7 @@ public class ModuleManager {
         addModule(new Targets());
         addModule(new BHop());
         addModule(new AutoTool());
+        addModule(new NoJumpDelay());
 
         // BETA
         addModule(new Blink());
