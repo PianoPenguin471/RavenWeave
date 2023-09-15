@@ -46,6 +46,7 @@ public class Scaffold extends Module {
 
     @SubscribeEvent
     public void onUpdate(UpdateEvent e) {
+        if (!e.isPre()) return;
         if(!Utils.Player.isPlayerInGame()) {
             return;
         }
@@ -74,7 +75,8 @@ public class Scaffold extends Module {
     @SubscribeEvent
     public void onRender(RenderGameOverlayEvent event) {
         if (!Utils.Player.isPlayerInGame()) return;
-        if (mc.thePlayer.getHeldItem() == null && slotSwap.isToggled()) swapToBlock();
+        if ((mc.thePlayer.getHeldItem() == null || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemBlock)) && slotSwap.isToggled()) swapToBlock();
+
         if (mc.currentScreen != null || mc.thePlayer.getHeldItem() == null) return;
 
         MovingObjectPosition mop = mc.objectMouseOver;
