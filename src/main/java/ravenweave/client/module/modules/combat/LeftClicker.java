@@ -13,7 +13,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import ravenweave.client.event.impl.AttackEntityEvent;
@@ -28,13 +27,10 @@ import java.lang.reflect.Method;
 import java.util.Random;
 
 public class LeftClicker extends Module {
-    public static DescriptionSetting bestWithDelayRemover;
     public static SliderSetting jitterLeft, hitSelectTick;
-    public static TickSetting weaponOnly, sound, breakBlocks;
+    public static TickSetting weaponOnly, breakBlocks;
     public static DoubleSliderSetting leftCPS;
     public static TickSetting inventoryFill, hitSelect;
-
-    public static ComboSetting<ClickEvent> clickTimings;
     public static ComboSetting<SoundMode> soundMode;
 
     public static boolean autoClickerEnabled;
@@ -54,7 +50,7 @@ public class LeftClicker extends Module {
     public LeftClicker() {
         super("Left Clicker", ModuleCategory.combat);
 
-        this.registerSetting(bestWithDelayRemover = new DescriptionSetting("Best with delay remover."));
+        this.registerSetting(new DescriptionSetting("Best with delay remover."));
         this.registerSetting(leftCPS = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
         this.registerSetting(jitterLeft = new SliderSetting("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
         this.registerSetting(inventoryFill = new TickSetting("Inventory fill", false));
@@ -62,9 +58,7 @@ public class LeftClicker extends Module {
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", false));
         this.registerSetting(hitSelect = new TickSetting("Hit Select", false));
         this.registerSetting(hitSelectTick = new SliderSetting("HitSelect Hurttick", 7, 1, 10, 1));
-        this.registerSetting(sound = new TickSetting("Play sound", true));
-        this.registerSetting(clickTimings = new ComboSetting<>("Click event", ClickEvent.Render));
-        this.registerSetting(soundMode = new ComboSetting<>("Click sound", SoundMode.click));
+        this.registerSetting(soundMode = new ComboSetting<>("Click sound", SoundMode.NONE));
 
         try {
             this.playerMouseInput = ReflectionUtils.findMethod(GuiScreen.class, null,
@@ -83,7 +77,6 @@ public class LeftClicker extends Module {
         if (this.playerMouseInput == null)
 			this.disable();
 
-        boolean allowedClick = false;
         this.rand = new Random();
         autoClickerEnabled = true;
     }
@@ -97,23 +90,20 @@ public class LeftClicker extends Module {
 
     @SubscribeEvent
     public void onAttackEntity(AttackEntityEvent e) {
-        if (!this.enabled) return;
-        if (e.target instanceof EntityLivingBase) target = (EntityLivingBase) e.target;
+        if (e.target instanceof EntityLivingBase) {
+            target = (EntityLivingBase) e.target;
+        }
     }
 
     @SubscribeEvent
-    public void onRenderTick(RenderGameOverlayEvent ev) {
-        if (!this.enabled) return;
-        if ((clickTimings.getMode() != ClickEvent.Render))
-            return;
-
+    public void onRender(RenderGameOverlayEvent ev) {
         if ((!Utils.Client.currentScreenMinecraft()
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest)
         ) || shouldNotClick())
             return;
 
-        ravenClick();
+        click();
     }
 
     private boolean shouldNotClick() {
@@ -128,17 +118,7 @@ public class LeftClicker extends Module {
         return false;
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent e) {
-        if (!this.enabled) return;
-        if ((clickTimings.getMode() != ClickEvent.Tick) || (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest))) return;
-
-        if (shouldNotClick()) return;
-
-        ravenClick();
-    }
-
-    private void ravenClick() {
+    private void click() {
         if ((mc.currentScreen != null) || !mc.inGameHasFocus) {
             doInventoryClick();
             return;
@@ -186,7 +166,7 @@ public class LeftClicker extends Module {
 
         if ((this.leftUpTime > 0L) && (this.leftDownTime > 0L)) {
             if ((System.currentTimeMillis() > this.leftUpTime) && leftDown) {
-                if (sound.isToggled()) {
+                if (soundMode.getMode() != SoundMode.NONE) {
                     if (SoundUtils.clip != null) SoundUtils.clip.stop();
                     SoundUtils.playSound(soundMode.getMode().name());
                 }
@@ -282,17 +262,7 @@ public class LeftClicker extends Module {
 				this.genLeftTimings();
     }
 
-    public enum ClickEvent {
-        Tick, Render
-    }
-
     public enum SoundMode {
-    	click,
-    	g3032,
-    	g502,
-    	gpro,
-    	hp,
-    	microsoft,
-    	oldmouse,
+        NONE, BASIC, CLICK, DOUBLE, G303, G502, GPRO, HP, MICROSOFT, OLD
     }
 }
