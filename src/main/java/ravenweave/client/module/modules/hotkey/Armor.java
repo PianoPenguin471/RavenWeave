@@ -6,10 +6,10 @@ import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
-public class Armour extends Module {
+public class Armor extends Module {
     public static TickSetting ignoreIfAlreadyEquipped;
 
-    public Armour() {
+    public Armor() {
         super("Armour", ModuleCategory.hotkey);
 
         this.registerSetting(ignoreIfAlreadyEquipped = new TickSetting("Ignore if already equipped", true));

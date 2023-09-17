@@ -26,7 +26,6 @@ import ravenweave.client.utils.Utils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class LeftClicker extends Module {
     public static DescriptionSetting bestWithDelayRemover;
@@ -35,10 +34,9 @@ public class LeftClicker extends Module {
     public static DoubleSliderSetting leftCPS;
     public static TickSetting inventoryFill, hitSelect;
 
-    public static ComboSetting clickStyle, clickTimings, soundMode;
+    public static ComboSetting<ClickEvent> clickTimings;
+    public static ComboSetting<SoundMode> soundMode;
 
-    private long lastClick;
-    private long leftHold;
     public static boolean autoClickerEnabled;
     private boolean leftDown;
     private long leftDownTime;
@@ -64,11 +62,9 @@ public class LeftClicker extends Module {
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", false));
         this.registerSetting(hitSelect = new TickSetting("Hit Select", false));
         this.registerSetting(hitSelectTick = new SliderSetting("HitSelect Hurttick", 7, 1, 10, 1));
-
-        this.registerSetting(sound = new TickSetting("Play sound (may kill fps)", true));
-        this.registerSetting(clickTimings = new ComboSetting("Click event", ClickEvent.Render));
-        this.registerSetting(clickStyle = new ComboSetting("Click Style", ClickStyle.Raven));
-        this.registerSetting(soundMode = new ComboSetting("Click sound", SoundMode.click));
+        this.registerSetting(sound = new TickSetting("Play sound", true));
+        this.registerSetting(clickTimings = new ComboSetting<>("Click event", ClickEvent.Render));
+        this.registerSetting(soundMode = new ComboSetting<>("Click sound", SoundMode.click));
 
         try {
             this.playerMouseInput = ReflectionUtils.findMethod(GuiScreen.class, null,
@@ -112,16 +108,12 @@ public class LeftClicker extends Module {
             return;
 
         if ((!Utils.Client.currentScreenMinecraft()
-                && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) // to make it work in survival
-                // inventory
-                && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
+                && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
+                && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest)
         ) || shouldNotClick())
             return;
 
-        if (clickStyle.getMode() == ClickStyle.Raven)
-            ravenClick();
-        else if (clickStyle.getMode() == ClickStyle.SKid)
-            skidClick();
+        ravenClick();
     }
 
     private boolean shouldNotClick() {
@@ -139,87 +131,14 @@ public class LeftClicker extends Module {
     @SubscribeEvent
     public void onTick(TickEvent e) {
         if (!this.enabled) return;
-        if ((clickTimings.getMode() != ClickEvent.Tick) || (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
-                && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest) // to make it work in chests
-)
-        )
-            return;
+        if ((clickTimings.getMode() != ClickEvent.Tick) || (!Utils.Client.currentScreenMinecraft() && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory) && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest))) return;
 
-        if (shouldNotClick())
-			return;
+        if (shouldNotClick()) return;
 
-        if (clickStyle.getMode() == ClickStyle.Raven)
-			ravenClick();
-		else if (clickStyle.getMode() == ClickStyle.SKid)
-			skidClick();
-    }
-
-    private void skidClick() {
-        if (!Utils.Player.isPlayerInGame())
-            return;
-
-        double speedLeft1 = 1.0 / io.netty.util.internal.ThreadLocalRandom.current()
-                .nextDouble(leftCPS.getInputMin() - 0.2D, leftCPS.getInputMax());
-        double leftHoldLength = speedLeft1 / io.netty.util.internal.ThreadLocalRandom.current()
-                .nextDouble(leftCPS.getInputMin() - 0.02D, leftCPS.getInputMax());
-        // If none of the buttons are allowed to click, what is the point in generating
-        // clicktimes anyway?
-        // if (!leftActive && !rightActive) {
-        // return;
-        // }
-        Mouse.poll();
-        if ((mc.currentScreen != null) || !mc.inGameHasFocus) {
-            doInventoryClick();
-            return;
-        }
-
-        // Uhh left click only, mate
-        if (Mouse.isButtonDown(0)) {
-            if (breakBlock() || (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()))
-				return;
-            if (jitterLeft.getInput() > 0.0D) {
-                double a = jitterLeft.getInput() * 0.45D;
-                EntityPlayerSP entityPlayer;
-                if (this.rand.nextBoolean()) {
-                    entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw
-                            + ((double) this.rand.nextFloat() * a));
-                } else {
-                    entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationYaw = (float) ((double) entityPlayer.rotationYaw
-                            - ((double) this.rand.nextFloat() * a));
-                }
-
-                if (this.rand.nextBoolean()) {
-                    entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch
-                            + ((double) this.rand.nextFloat() * a * 0.45D));
-                } else {
-                    entityPlayer = mc.thePlayer;
-                    entityPlayer.rotationPitch = (float) ((double) entityPlayer.rotationPitch
-                            - ((double) this.rand.nextFloat() * a * 0.45D));
-                }
-            }
-
-            double speedLeft = 1.0
-                    / ThreadLocalRandom.current().nextDouble(leftCPS.getInputMin() - 0.2, leftCPS.getInputMax());
-            if ((System.currentTimeMillis() - lastClick) > (speedLeft * 1000)) {
-                lastClick = System.currentTimeMillis();
-                if (leftHold < lastClick)
-					leftHold = lastClick;
-                int key = mc.gameSettings.keyBindAttack.getKeyCode();
-                KeyBinding.setKeyBindState(key, true);
-                KeyBinding.onTick(key);
-                Utils.Client.setMouseButtonState(0, true);
-            } else if ((System.currentTimeMillis() - leftHold) > (leftHoldLength * 1000)) {
-                KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
-                Utils.Client.setMouseButtonState(0, false);
-            }
-        }
+        ravenClick();
     }
 
     private void ravenClick() {
-
         if ((mc.currentScreen != null) || !mc.inGameHasFocus) {
             doInventoryClick();
             return;
@@ -238,7 +157,6 @@ public class LeftClicker extends Module {
     }
 
     public void leftClickExecute(int key) {
-
         if (breakBlock())
             return;
 
@@ -282,8 +200,9 @@ public class LeftClicker extends Module {
                 leftDown = true;
                 Utils.Client.setMouseButtonState(0, false);
             }
-        } else
-			this.genLeftTimings();
+        } else {
+            this.genLeftTimings();
+        }
 
     }
 
@@ -321,6 +240,7 @@ public class LeftClicker extends Module {
         try {
             this.playerMouseInput.invoke(guiScreen, mouseInGUIPosX, mouseInGUIPosY, 0);
         } catch (IllegalAccessException | InvocationTargetException ignored) {
+
         }
 
     }
@@ -360,10 +280,6 @@ public class LeftClicker extends Module {
                 }
             } else
 				this.genLeftTimings();
-    }
-
-    public enum ClickStyle {
-        Raven, SKid
     }
 
     public enum ClickEvent {

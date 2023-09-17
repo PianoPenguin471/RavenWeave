@@ -43,14 +43,16 @@ public class AutoPlace extends Module {
     @SubscribeEvent
     public void onTick(TickEvent e) {
         Module fastPlace = Raven.moduleManager.getModuleByClazz(FastPlace.class);
-        if (holdRight.isToggled() && Mouse.isButtonDown(1) && !mc.thePlayer.capabilities.isFlying && fastPlace != null
-                && !fastPlace.isEnabled()) {
-            ItemStack item = mc.thePlayer.getHeldItem();
-            if (item == null || !(item.getItem() instanceof ItemBlock)) {
-                return;
-            }
+        if (mc.thePlayer != null && mc.theWorld != null) {
+            if (holdRight.isToggled() && Mouse.isButtonDown(1) && !mc.thePlayer.capabilities.isFlying && fastPlace != null
+                    && !fastPlace.isEnabled()) {
+                ItemStack item = mc.thePlayer.getHeldItem();
+                if (item == null || !(item.getItem() instanceof ItemBlock)) {
+                    return;
+                }
 
-            this.setRightClickDelay(0);
+                this.setRightClickDelay(0);
+            }
         }
 
     }

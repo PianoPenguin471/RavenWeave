@@ -1,6 +1,5 @@
 package ravenweave.client.module.modules.render;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.weavemc.loader.api.event.RenderLivingEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;

@@ -9,10 +9,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Mouse;
+import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.Targets;
@@ -29,9 +28,6 @@ public class AimAssist extends Module {
     public static DoubleSliderSetting speed;
     public static TickSetting clickAim, weaponOnly, breakBlocks;
     public static ArrayList<Entity> friends = new ArrayList<>();
-    public static TickSetting aimWhileTargeting;
-    private final long timer = 10;
-    private long instant = 0;
 
     public AimAssist() {
         super("AimAssist", ModuleCategory.combat);
@@ -40,7 +36,6 @@ public class AimAssist extends Module {
         this.registerSetting(clickAim = new TickSetting("Click aim", true));
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", true));
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
-        this.registerSetting(aimWhileTargeting = new TickSetting("Aim while targeting", true));
     }
 
     public boolean isLookingAtPlayer() {
@@ -52,41 +47,38 @@ public class AimAssist extends Module {
     }
 
     @SubscribeEvent
-    public void onTick(RenderGameOverlayEvent e) {
-        long now;
-        if ((now = System.currentTimeMillis()) - instant >= timer) {
-            instant = now;
-            return;
-        }
-        if (Minecraft.getMinecraft().currentScreen != null) return;
-        if(!Utils.Player.isPlayerInGame()) return;
+    public void onLivingUpdate(UpdateEvent e) {
+        if (e.isPre()) {
+            if (Minecraft.getMinecraft().currentScreen != null) return;
+            if (!Utils.Player.isPlayerInGame()) return;
 
-        if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
-            BlockPos p = mc.objectMouseOver.getBlockPos();
-            if (p != null) {
-                Block bl = mc.theWorld.getBlockState(p).getBlock();
-                if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
-                    return;
+            if (breakBlocks.isToggled() && mc.objectMouseOver != null) {
+                BlockPos p = mc.objectMouseOver.getBlockPos();
+                if (p != null) {
+                    Block bl = mc.theWorld.getBlockState(p).getBlock();
+                    if (bl != Blocks.air && !(bl instanceof BlockLiquid)) {
+                        return;
+                    }
                 }
             }
-        }
 
 
-        if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
+            if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
 
-            Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
-            if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled()) || !clickAim.isToggled()) {
-                Entity en = this.getEnemy();
-                if (en != null) {
-                    if (Raven.debugger) {
-                        Utils.Player.sendMessageToSelf(this.getName() + " &e" + en.getName());
-                    }
+                Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
+                if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled()) || !clickAim.isToggled()) {
+                    Entity en = this.getEnemy();
+                    if (en != null) {
+                        if (Raven.debugger) {
+                            Utils.Player.sendMessageToSelf(this.getName() + " &e" + en.getName());
+                        }
 
-                    double n = Utils.Player.fovFromEntity(en);
-                    if (n > 1.0D || n < -1.0D) {
-                        double complimentSpeed = n*(ThreadLocalRandom.current().nextDouble(speed.getInputMin() - 1.47328, speed.getInputMin() + 2.48293)/100);
-                        float val = (float)(-(complimentSpeed + n / (101.0D - (float)ThreadLocalRandom.current().nextDouble(speed.getInputMax() - 4.723847, speed.getInputMax()))));
-                        mc.thePlayer.rotationYaw += val;
+                        double n = Utils.Player.fovFromEntity(en);
+                        if (n > 1.0D || n < -1.0D) {
+                            double complimentSpeed = n * (ThreadLocalRandom.current().nextDouble(speed.getInputMin() - 1.47328, speed.getInputMin() + 2.48293) / 100);
+                            float val = (float) (-(complimentSpeed + n / (101.0D - (float) ThreadLocalRandom.current().nextDouble(speed.getInputMax() - 4.723847, speed.getInputMax()))));
+                            mc.thePlayer.rotationYaw += val / 2;
+                        }
                     }
                 }
             }

@@ -12,12 +12,12 @@ import ravenweave.client.module.setting.impl.SliderSetting;
 
 public class JumpReset extends Module {
 
-    public static SliderSetting chance;
+    public static SliderSetting delay, chance;
 
     public JumpReset() {
         super("JumpReset", ModuleCategory.combat);
-
         this.registerSetting(new DescriptionSetting("Auto Jump Reset. That's it."));
+        this.registerSetting(delay = new SliderSetting("Jump Delay", 20.0D, 0.0D, 40.0D, 1.0D));
         this.registerSetting(chance = new SliderSetting("Chance", 100.0D, 0.0D, 100.0D, 1.0D));
     }
 
@@ -31,12 +31,13 @@ public class JumpReset extends Module {
                 return;
             }
         }
+
         Entity entity = mc.theWorld.getEntityByID(((S12PacketEntityVelocity) e.getPacket()).getEntityID());
-        if (entity == mc.thePlayer) {
+        if (entity == mc.thePlayer && mc.thePlayer.onGround) {
             int key = Minecraft.getMinecraft().gameSettings.keyBindJump.getKeyCode();
             KeyBinding.setKeyBindState(key, true);
             KeyBinding.onTick(key);
-            javax.swing.Timer timer = new javax.swing.Timer(20, actionevent -> KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false));
+            javax.swing.Timer timer = new javax.swing.Timer((int) delay.getInput(), actionevent -> KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false));
             timer.setRepeats(false);
             timer.start();
         }
