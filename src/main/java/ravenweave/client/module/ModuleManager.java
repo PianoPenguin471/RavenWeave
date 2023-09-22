@@ -2,10 +2,12 @@ package ravenweave.client.module;
 
 import net.minecraft.client.gui.FontRenderer;
 import ravenweave.client.main.Raven;
-import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.module.modules.HUD;
 import ravenweave.client.module.modules.beta.*;
-import ravenweave.client.module.modules.client.*;
+import ravenweave.client.module.modules.client.ClickGuiModule;
+import ravenweave.client.module.modules.client.FakeHud;
+import ravenweave.client.module.modules.client.Targets;
+import ravenweave.client.module.modules.client.Terminal;
 import ravenweave.client.module.modules.combat.*;
 import ravenweave.client.module.modules.config.ConfigSettings;
 import ravenweave.client.module.modules.hotkey.*;
@@ -31,12 +33,11 @@ public class ModuleManager {
     public GuiModuleManager guiModuleManager;
 
     public ModuleManager() {
-        System.out.println(ModuleCategory.values());
         if(initialized)
             return;
         this.guiModuleManager = new GuiModuleManager();
         addModule(new ChestStealer());
-        addModule(new AutoArmour());
+        addModule(new AutoArmor());
         addModule(new LeftClicker());
         addModule(new ClickAssist());
         addModule(new RightClicker());
@@ -84,7 +85,7 @@ public class ModuleManager {
         addModule(new Ladders());
         addModule(new Weapon());
         addModule(new Pearl());
-        addModule(new Armour());
+        addModule(new Armor());
         addModule(new Healing());
         addModule(new Trajectories());
         addModule(new WTap());
@@ -106,9 +107,12 @@ public class ModuleManager {
         addModule(new Targets());
         addModule(new BHop());
         addModule(new AutoTool());
+        addModule(new Blink());
+        addModule(new NoJumpDelay());
+        addModule(new Parkour());
 
         // BETA
-        addModule(new Blink());
+        addModule(new Refill());
         addModule(new LongJump());
         addModule(new Radar());
         addModule(new Scaffold());
@@ -121,13 +125,6 @@ public class ModuleManager {
         modules.add(m);
     }
 
-    public void removeModuleByName(String s) {
-        Module m = getModuleByName(s);
-        modules.remove(m);
-    }
-
-    // prefer using getModuleByClazz();
-    // ok might add in 1.0.18
     public Module getModuleByName(String name) {
         if (!initialized)
             return null;
@@ -194,10 +191,6 @@ public class ModuleManager {
     public void sort() {
         modules.sort((o1, o2) -> Utils.mc.fontRendererObj.getStringWidth(o2.getName())
                 - Utils.mc.fontRendererObj.getStringWidth(o1.getName()));
-    }
-
-    public int numberOfModules() {
-        return modules.size();
     }
 
     public void sortLongShort() {

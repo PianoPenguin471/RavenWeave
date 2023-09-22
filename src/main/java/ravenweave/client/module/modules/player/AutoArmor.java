@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class AutoArmour extends Module {
+public class AutoArmor extends Module {
 
     private final DoubleSliderSetting firstDelay;
     private final DoubleSliderSetting delay;
@@ -24,8 +24,8 @@ public class AutoArmour extends Module {
     private boolean inInv;
     private final CoolDown delayTimer = new CoolDown(0);
 
-    public AutoArmour() {
-        super("AutoArmour", ModuleCategory.player);
+    public AutoArmor() {
+        super("AutoArmor", ModuleCategory.player);
         this.registerSetting(firstDelay = new DoubleSliderSetting("Open delay", 250, 450, 0, 1000, 1));
         this.registerSetting(delay = new DoubleSliderSetting("Delay", 150, 250, 0, 1000, 1));
     }

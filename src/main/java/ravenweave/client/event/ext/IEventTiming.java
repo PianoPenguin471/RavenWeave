@@ -1,7 +1,6 @@
 package ravenweave.client.event.ext;
 
 public interface IEventTiming {
-
     EventTiming getTiming();
 
     default boolean isPre() {

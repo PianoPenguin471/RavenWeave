@@ -28,26 +28,23 @@ public class KillAura extends Module {
 
     public static SliderSetting reach;
     private DoubleSliderSetting cps;
-    private TickSetting disableOnTp, disableWhenFlying, mouseDown, onlySurvival, fixMovement, highlightTarget;
+    private TickSetting disableWhenFlying, mouseDown, onlySurvival, fixMovement;
     private ComboSetting<BlockMode> blockMode;
     private CoolDown coolDown = new CoolDown(1);
     private boolean leftDown, leftn, locked;
     private long leftDownTime, leftUpTime, leftk, leftl;
     public static float yaw, pitch, prevYaw, prevPitch;
     private double leftm;
-    private float lrtt;
 
     public KillAura() {
         super("KillAura", ModuleCategory.combat);
         this.registerSetting(reach = new SliderSetting("Reach (Blocks)", 3.3, 3, 6, 0.05));
         this.registerSetting(cps = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
         this.registerSetting(onlySurvival = new TickSetting("Only Survival", false));
-        this.registerSetting(disableOnTp = new TickSetting("Disable after tp", false));
         this.registerSetting(disableWhenFlying = new TickSetting("Disable when flying", true));
         this.registerSetting(mouseDown = new TickSetting("Mouse Down", false));
         this.registerSetting(fixMovement = new TickSetting("Movement Fix", true));
-        this.registerSetting(highlightTarget = new TickSetting("Highlight target", true));
-        this.registerSetting(blockMode = new ComboSetting<BlockMode>("Block mode", BlockMode.NONE));
+        this.registerSetting(blockMode = new ComboSetting<>("Block mode", BlockMode.NONE));
     }
 
     @SubscribeEvent
@@ -78,24 +75,24 @@ public class KillAura extends Module {
 
     @SubscribeEvent
     public void onUpdate(UpdateEvent e) {
-        if(!Utils.Player.isPlayerInGame() || locked) {
-            return;
+        if(e.isPre()) {
+            if(!Utils.Player.isPlayerInGame() || locked) {
+                return;
+            }
+
+            float[] currentRots = new float[]{yaw,pitch};
+            float[] prevRots = new float[]{prevYaw,prevPitch};
+            float[] gcdPatch = getPatchedRots(currentRots,prevRots);
+
+            e.setYaw(gcdPatch[0]);
+            e.setPitch(gcdPatch[1]);
+
+            mc.thePlayer.renderYawOffset = gcdPatch[0];
+            mc.thePlayer.rotationYawHead = gcdPatch[0];
+
+            prevYaw = e.getYaw();
+            prevPitch = e.getPitch();
         }
-
-        float[] currentRots = new float[]{yaw,pitch};
-        float[] prevRots = new float[]{prevYaw,prevPitch};
-        float[] gcdPatch = getPatchedRots(currentRots,prevRots);
-
-        e.setYaw(gcdPatch[0]);
-        e.setPitch(gcdPatch[1]);
-        
-        //Third Person Rots
-        mc.thePlayer.renderYawOffset = gcdPatch[0];
-        mc.thePlayer.rotationYawHead = gcdPatch[0];
-        
-        //for GCD
-        prevYaw = e.getYaw();
-        prevPitch = e.getPitch();
     }
 
     @SubscribeEvent
@@ -201,8 +198,6 @@ public class KillAura extends Module {
     }
 
     public enum BlockMode {
-        NONE,
-        Vanilla,
-        Damage;
+        NONE, Vanilla, Damage
     }
 }

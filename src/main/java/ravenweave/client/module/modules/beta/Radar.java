@@ -6,6 +6,7 @@ import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.RGBSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.RenderUtils;
@@ -19,6 +20,7 @@ public class Radar extends Module {
 
     public Radar() {
         super("Radar", ModuleCategory.beta); // Category: Render
+        this.registerSetting(new DescriptionSetting("Shows near by opponents."));
         this.registerSetting(distance = new SliderSetting("distance", 25, 5, 100, 1));
         this.registerSetting(boxColor = new RGBSetting("box color", 0, 200, 0));
         this.registerSetting(boarderColor = new RGBSetting("boarder color", 255, 200, 255));
