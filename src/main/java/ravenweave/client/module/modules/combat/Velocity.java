@@ -2,6 +2,7 @@ package ravenweave.client.module.modules.combat;
 
 import me.pianopenguin471.mixins.S12PacketEntityVelocityAccessor;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.entity.Entity;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;
