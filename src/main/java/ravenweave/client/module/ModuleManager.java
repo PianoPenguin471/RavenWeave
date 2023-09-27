@@ -117,6 +117,7 @@ public class ModuleManager {
         addModule(new Radar());
         addModule(new Scaffold());
         addModule(new TargetHUD());
+        addModule(new AutoClutch());
 
         initialized = true;
     }
