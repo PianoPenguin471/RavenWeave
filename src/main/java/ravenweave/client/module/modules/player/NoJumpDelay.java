@@ -15,7 +15,12 @@ public class NoJumpDelay extends Module {
     @SubscribeEvent
     public void onTick(TickEvent e) {
         if (Utils.Player.isPlayerInGame() && mc.inGameHasFocus) {
-            mc.thePlayer.jumpTicks = 0;
+            // jumpTicks is private for some reason
+            try {
+                mc.thePlayer.getClass().getField("jumpTicks").set(mc.thePlayer, 0);
+            } catch (IllegalAccessException | NoSuchFieldException ex) {
+                System.out.println("jumpTicks set failed");
+            }
         }
     }
 }
