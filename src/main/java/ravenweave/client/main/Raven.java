@@ -15,7 +15,6 @@ import ravenweave.client.utils.PingChecker;
 import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.font.FontUtil;
-import ravenweave.client.utils.version.VersionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,6 @@ import java.util.concurrent.ScheduledExecutorService;
 public class Raven {
 
 	public static boolean debugger;
-    public static final VersionManager versionManager = new VersionManager();
     public static CommandManager commandManager;
     public static ConfigManager configManager;
     public static ClientConfig clientConfig;
@@ -49,7 +47,6 @@ public class Raven {
     }
 
     public static void init() {
-        register(new Raven());
         register(new MouseManager());
         register(new PingChecker());
 
@@ -65,19 +62,6 @@ public class Raven {
         configManager = new ConfigManager();
         clientConfig = new ClientConfig();
         clientConfig.applyConfig();
-    }
-
-    @SubscribeEvent
-    public void onChatMessageReceived(ChatReceivedEvent event) {
-        if (Utils.Player.isPlayerInGame()) {
-            String msg = event.getMessage().getUnformattedText();
-
-            if (msg.startsWith("Your new API key is")) {
-                Utils.URLS.hypixelApiKey = msg.replace("Your new API key is ", "");
-                Utils.Player.sendMessageToSelf("&aSet api key to " + Utils.URLS.hypixelApiKey + "!");
-                clientConfig.saveConfig();
-            }
-        }
     }
 
     public static void register(Object obj) {

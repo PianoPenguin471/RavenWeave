@@ -19,17 +19,17 @@ public abstract class RendererLivingEntityMixin<T extends EntityLivingBase> exte
         super(renderManager);
     }
 
-    @ModifyVariable(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"), ordinal = 4)
-    public float changeYaw(float input) {
-        System.out.println(input);
-        return input + 90;
-    }
-
     @Inject(method = "renderName(Lnet/minecraft/entity/EntityLivingBase;DDD)V", at = @At("HEAD"), cancellable = true)
     private void onRenderLabel(EntityLivingBase entity, double x, double y, double z, CallbackInfo ci) {
         RenderLabelEvent e = new RenderLabelEvent(entity, x, y, z);
         EventBus.callEvent(e);
         if (e.isCancelled())
             ci.cancel();
+    }
+
+    @ModifyVariable(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"), ordinal = 4)
+    public float changeYaw(float input) {
+        System.out.println(input);
+        return input + 90;
     }
 }

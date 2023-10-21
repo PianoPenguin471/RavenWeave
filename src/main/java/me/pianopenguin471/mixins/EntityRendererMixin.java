@@ -27,20 +27,6 @@ public class EntityRendererMixin {
     public Minecraft mc;
     @Shadow
     public Entity pointedEntity;
-    @Shadow
-    public boolean lightmapUpdateNeeded;
-    @Shadow
-    public float torchFlickerX;
-    @Shadow
-    public float bossColorModifier;
-    @Shadow
-    public float bossColorModifierPrev;
-    @Final
-    @Shadow
-    public int[] lightmapColors;
-    @Final
-    @Shadow
-    public DynamicTexture lightmapTexture;
 
     /**
      * @author mc code

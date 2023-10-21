@@ -55,6 +55,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Utils {
     private static final Random rand = new Random();
@@ -62,7 +63,80 @@ public class Utils {
     public static final float DEGREES_TO_RADIANS = 0.017453292f;
     public static final String md = "Mode: ";
 
+    private static final HashMap<Integer, Integer> GOOD_POTIONS = new HashMap<>() {{
+        put(6, 1); // Instant Health
+        put(10, 2); // Regeneration
+        put(11, 3); // Resistance
+        put(21, 4); // Health Boost
+        put(22, 5); // Absorption
+        put(23, 6); // Saturation
+        put(5, 7); // Strength
+        put(1, 8); // Speed
+        put(12, 9); // Fire Resistance
+        put(14, 10); // Invisibility
+        put(3, 11); // Haste
+        put(13, 12); // Water Breathing
+    }};
+
     public static class Player {
+        public static List<String> getScoreboard() {
+            List<String> lines = new ArrayList<>();
+            if (mc.theWorld != null) {
+                Scoreboard scoreboard = mc.theWorld.getScoreboard();
+                if (scoreboard != null) {
+                    ScoreObjective objective = scoreboard.getObjectiveInDisplaySlot(1);
+                    if (objective != null) {
+                        Collection<Score> scores = scoreboard.getSortedScores(objective);
+                        List<Score> list = new ArrayList<>();
+                        Iterator<Score> var5 = scores.iterator();
+
+                        Score score;
+                        while (var5.hasNext()) {
+                            score = var5.next();
+                            if (score != null && score.getPlayerName() != null && !score.getPlayerName().startsWith("#")) {
+                                list.add(score);
+                            }
+                        }
+
+                        if (list.size() > 15) {
+                            scores = Lists.newArrayList(Iterables.skip(list, scores.size() - 15));
+                        } else {
+                            scores = list;
+                        }
+
+                        var5 = scores.iterator();
+
+                        while (var5.hasNext()) {
+                            score = var5.next();
+                            ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
+                            lines.add(ScorePlayerTeam.formatPlayerName(team, score.getPlayerName()));
+                        }
+
+                    }
+                }
+            }
+            return lines;
+        }
+
+        public static boolean isBedwars() {
+            if (mc.thePlayer.getWorldScoreboard() == null || mc.thePlayer.getWorldScoreboard().getObjectiveInDisplaySlot(1) == null || mc.thePlayer.capabilities.allowFlying) {
+                return false;
+            }
+
+            String d = mc.thePlayer.getWorldScoreboard().getObjectiveInDisplaySlot(1).getDisplayName();
+            if (!d.contains("BED") && !d.contains("WARS")) {
+                return false;
+            }
+
+            for (String l : getScoreboard()) {
+                String s = MouseManager.str(l);
+                if (s.contains("Diamond") || s.contains("gone") || s.contains("Emerald")) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         public static boolean isPlayerInChest() {
             return (mc.currentScreen != null) && (mc.thePlayer.inventoryContainer instanceof ContainerPlayer) && (mc.currentScreen instanceof GuiChest);
@@ -70,6 +144,14 @@ public class Utils {
 
         public static boolean isPlayerInInventory() {
             return (mc.currentScreen != null) && (mc.thePlayer.inventoryContainer instanceof ContainerPlayer) && (mc.currentScreen instanceof GuiInventory);
+        }
+
+        public static boolean goodPotion(final int id) {
+            return GOOD_POTIONS.containsKey(id);
+        }
+
+        public static int potionRanking(final int id) {
+            return GOOD_POTIONS.getOrDefault(id, -1);
         }
 
         public static MovingObjectPosition rayTrace(double reach, float partialTicks) {
@@ -485,6 +567,15 @@ public class Utils {
 
     public static class Client {
 
+        public static Color drawFade(Color color, int yLocation) {
+            final double percent = Math.sin(System.currentTimeMillis() / 600.0D - yLocation * 0.06D) * 0.5D + 0.5D;
+            final double inverse_percent = 1.0 - percent;
+            final int redPart = (int) (color.getRed() * percent + 255 * inverse_percent);
+            final int greenPart = (int) (color.getGreen() * percent + 255 * inverse_percent);
+            final int bluePart = (int) (color.getBlue() * percent + 255 * inverse_percent);
+            return new Color(redPart, greenPart, bluePart);
+        }
+
         public static float smoothPercent(float percent) {
             return percent = (float) ((0.5f * (Math.sin(Math.toRadians(180f * (percent - 0.5f)))))+ 0.5f);
         }
@@ -854,6 +945,20 @@ public class Utils {
 
         public static int randomInt(double inputMin, double v) {
             return (int) ((Math.random() * (v - inputMin)) + inputMin);
+        }
+
+        public static double simpleRandom(final int min, final int max) {
+            int x = min;
+            int y = max;
+
+            if (min == max) {
+                return min;
+            } else if (min > max) {
+                x = max;
+                y = min;
+            }
+
+            return ThreadLocalRandom.current().nextDouble(x, y);
         }
     }
 

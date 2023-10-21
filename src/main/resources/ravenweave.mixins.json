@@ -12,7 +12,7 @@
     "PlayerControllerMPMixin",
     "RendererLivingEntityMixin",
     "RenderGlobalMixin",
-    "S12PacketEntityVelocityAccessor",
+    "IS12PacketEntityVelocity",
     "WorldMixin"
   ]
 }

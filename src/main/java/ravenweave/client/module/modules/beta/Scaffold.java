@@ -19,7 +19,6 @@ import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
-import ravenweave.client.utils.RayTraceUtils;
 import ravenweave.client.utils.Utils;
 
 public class Scaffold extends Module {
@@ -37,7 +36,6 @@ public class Scaffold extends Module {
         this.registerSetting(pitch = new SliderSetting("Pitch", 81, 70, 90, 1));
         this.registerSettings(noSwing = new TickSetting("No Swing", false));
         this.registerSetting(disableSprint = new TickSetting("Disable sprint", true));
-        //this.registerSetting(doRots = new TickSetting("Do rotations", true));
         this.registerSetting(slotSwap = new TickSetting("Swap to blocks", true));
     }
 
@@ -55,7 +53,7 @@ public class Scaffold extends Module {
         if(!Utils.Player.isPlayerInGame()) {
             return;
         }
-        //if (!doRots.isToggled()) return;
+
         yaw = mc.thePlayer.rotationYaw - 180;
 
         e.setYaw(yaw);
@@ -68,7 +66,6 @@ public class Scaffold extends Module {
 
     @SubscribeEvent
     public void lookEvent(LookEvent e) {
-        //if (!doRots.isToggled()) return;
         e.setPrevYaw(prevYaw);
         e.setYaw(yaw);
 
@@ -85,7 +82,6 @@ public class Scaffold extends Module {
         if (mc.currentScreen != null || mc.thePlayer.getHeldItem() == null) return;
 
         MovingObjectPosition mop = mc.objectMouseOver;
-        //MovingObjectPosition mop = doRots.isToggled() ? mc.objectMouseOver : RayTraceUtils.customRayTrace(3.0, mc.gameSettings.keyBindJump.isKeyDown() && !mc.gameSettings.keyBindForward.isKeyDown() ? 90 : (float) pitch.getInput(), yaw);
 
 
         if (shouldClickBlock(mop)) {
@@ -107,7 +103,6 @@ public class Scaffold extends Module {
         BlockPos pos = mop.getBlockPos();
         if (mop.sideHit == EnumFacing.UP) {
             if (!Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode())) return false;
-            // Remove excessive clicks
             if (!((ItemBlock) mc.thePlayer.getHeldItem().getItem()).canPlaceBlockOnSide(mc.theWorld, pos, mop.sideHit, mc.thePlayer, mc.thePlayer.getHeldItem())) return false;
         }
 

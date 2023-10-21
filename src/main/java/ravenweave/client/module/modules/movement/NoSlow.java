@@ -8,6 +8,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.PacketEvent;
+import ravenweave.client.event.impl.SlowdownEvent;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
@@ -25,6 +26,14 @@ public class NoSlow extends Module {
         this.registerSetting(new DescriptionSetting("Default is 80% motion reduction."));
         this.registerSetting(mode = new ComboSetting<>("Mode", modes.VANILLA));
         this.registerSetting(speed = new SliderSetting("Slow %", 80.0D, 0.0D, 80.0D, 1.0D));
+    }
+
+    @SubscribeEvent
+    public void onSlowdown(SlowdownEvent event) {
+        event.setCancelled(true);
+        float val = (100.0F - (float) speed.getInput()) / 100.0F;
+        mc.thePlayer.movementInput.moveStrafe *= val;
+        mc.thePlayer.movementInput.moveForward *= val;
     }
 
     @SubscribeEvent

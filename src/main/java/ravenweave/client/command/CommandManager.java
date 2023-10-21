@@ -17,7 +17,7 @@ public class CommandManager {
         this.sortedCommandList = new ArrayList<>();
         this.addCommand(new Help());
         this.addCommand(new SetKey());
-        this.addCommand(new ConfigCommand());
+        this.addCommand(new CConfig());
         this.addCommand(new Clear());
         this.addCommand(new Debug());
         this.addCommand(new Duels());
@@ -25,8 +25,8 @@ public class CommandManager {
         this.addCommand(new Ping());
         this.addCommand(new Shoutout());
         this.addCommand(new Friends());
-        this.addCommand(new CFakeHud());
-        this.addCommand(new CHideModule());
+        this.addCommand(new CFake());
+        this.addCommand(new CHide());
 
     }
 

@@ -4,9 +4,9 @@ import ravenweave.client.clickgui.raven.Terminal;
 import ravenweave.client.command.Command;
 import ravenweave.client.main.Raven;
 
-public class CHideModule extends Command {
+public class CHide extends Command {
 
-    public CHideModule() {
+    public CHide() {
         super("hidemodule", "hides modules in hud", 3, 100, new String[] { "show/hide" },
                 new String[] { "hm", "hidemodules" });
     }

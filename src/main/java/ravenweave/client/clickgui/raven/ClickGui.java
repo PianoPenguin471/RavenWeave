@@ -84,7 +84,7 @@ public class ClickGui extends GuiScreen {
                     Utils.Client.rainbowDraw(2L, 300L));
             this.drawCenteredString(this.fontRendererObj, "b", halfScreenWidth + 1 + w_c, quarterScreenHeight + 25,
                     Utils.Client.rainbowDraw(2L, 0L));
-            this.drawCenteredString(this.fontRendererObj, "+ +", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30,
+            this.drawCenteredString(this.fontRendererObj, "++", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30,
                     Utils.Client.rainbowDraw(2L, 0L));
 
             this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 38,

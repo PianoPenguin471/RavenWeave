@@ -1,10 +1,10 @@
 package ravenweave.client.event.impl;
 
-import net.weavemc.loader.api.event.Event;
+import net.weavemc.loader.api.event.CancellableEvent;
 import ravenweave.client.event.ext.EventTiming;
 import ravenweave.client.event.ext.IEventTiming;
 
-public class UpdateEvent extends Event implements IEventTiming {
+public class UpdateEvent extends CancellableEvent implements IEventTiming {
 
     private final EventTiming timing;
     private double x, y, z;
