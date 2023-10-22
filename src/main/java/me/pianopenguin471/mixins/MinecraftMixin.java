@@ -10,10 +10,8 @@ import ravenweave.client.event.impl.GameLoopEvent;
 
 @Mixin(priority = 1005, value = Minecraft.class)
 public class MinecraftMixin {
-
     @Inject(method = "runTick", at = @At("HEAD"))
     public void onTick(CallbackInfo ci) {
         EventBus.callEvent(new GameLoopEvent());
     }
-
 }

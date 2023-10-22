@@ -5,8 +5,8 @@ import ravenweave.client.command.Command;
 import ravenweave.client.config.Config;
 import ravenweave.client.main.Raven;
 
-public class ConfigCommand extends Command {
-    public ConfigCommand() {
+public class CConfig extends Command {
+    public CConfig() {
         super("config", "Manages configs", 0, 3, new String[] { "load,save,list,remove,clear", "config's name" },
                 new String[] { "cfg", "profiles" });
     }

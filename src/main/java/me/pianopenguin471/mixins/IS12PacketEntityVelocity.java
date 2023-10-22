@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(S12PacketEntityVelocity.class)
-public interface S12PacketEntityVelocityAccessor extends Packet {
+public interface IS12PacketEntityVelocity extends Packet {
     @Accessor("motionX")
     void setMotionX(int motionX);
 

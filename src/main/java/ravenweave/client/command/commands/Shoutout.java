@@ -6,19 +6,19 @@ import static ravenweave.client.clickgui.raven.Terminal.print;
 
 public class Shoutout extends Command {
     public Shoutout() {
-        super("shoutout", "Everyone who helped make b+", 0, 0, new String[] {}, new String[] { "love", "thanks" });
+        super("shoutout", "Everyone who helped make RavenWeave", 0, 0, new String[] {}, new String[] { "love", "thanks" });
     }
 
     @Override
     public void onCall(String[] args) {
-        print("Everyone who made b++ possible:");
-        print("- kv! aka KingVoid (current dev)");
-        print("- kopamed (raven b+ dev)");
-        print("- hevex/blowsy (weeaboo, b3 dev) (disapproves to b+ as he earned less money because less ppl clicked on his adfly link)");
-        print("- blowsy (hevex's alt)");
-        print("- jmraichdev (client dev)");
-        print("- nighttab (website dev)");
-        print("- mood (java help)");
-        print("- jc (b3 b2 betta tester, very good moaner (moans very loudly in discord vcs, giving everyone emotional motivation))");
+        print("Everyone who made RavenWeave possible:");
+        print("- PianoPenguin471 (main dev)");
+        print("- Syz (side dev)");
+        print("- KV (b++ dev)");
+        print("- Kopamed (b+ dev)");
+        print("- Blowsy (b3 dev)");
+        print("- Jmraich (client dev)");
+        print("- Mood (java help)");
+        print("- JC (b3 b2 beta tester)");
     }
 }

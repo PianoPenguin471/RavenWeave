@@ -1,18 +1,14 @@
 package ravenweave.client.module.modules.hotkey;
 
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
-import java.util.ArrayList;
-
 public class Pearl extends Module {
     private final TickSetting preferSlot;
     private final SliderSetting hotbarSlotPreference;
-    public static ArrayList<KeyBinding> changedKeybinds = new ArrayList<>();
 
     public Pearl() {
         super("Pearl", ModuleCategory.hotkey);

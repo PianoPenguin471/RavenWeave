@@ -21,20 +21,20 @@ import ravenweave.client.utils.Utils;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AutoTool extends Module {
-    private final TickSetting hotkeyBack;
+    private final TickSetting hotkeyBack, onlyShift;
     private Block previousBlock;
     private boolean isWaiting;
     public static DoubleSliderSetting mineDelay;
     public static int previousSlot;
     public static boolean justFinishedMining, mining;
     public static CoolDown delay;
-    //public static List<Block> pickaxe = Arrays.asList(ItemBlock.class, BlockIce.class);
 
     public AutoTool() {
         super("Auto Tool", ModuleCategory.player);
 
         this.registerSetting(hotkeyBack = new TickSetting("Hotkey back", true));
-        this.registerSetting(mineDelay = new DoubleSliderSetting("Max delay", 10, 50, 0, 2000, 1));
+        this.registerSetting(mineDelay = new DoubleSliderSetting("Delay", 10, 50, 0, 2000, 1));
+        this.registerSetting(onlyShift = new TickSetting("Only while sneaking", true));
         delay = new CoolDown(0);
     }
 
@@ -42,6 +42,12 @@ public class AutoTool extends Module {
     public void onRenderTick(RenderGameOverlayEvent e) {
         if (!Utils.Player.isPlayerInGame() || mc.currentScreen != null)
             return;
+
+        if (onlyShift.isToggled()) {
+            if (!mc.thePlayer.isSneaking()) {
+                return;
+            }
+        }
 
         // quit if the player is not tryna mine
         if(!Mouse.isButtonDown(0) || BedAura.state != BedAura.State.LOOKING_FOR_BED){
@@ -52,9 +58,6 @@ public class AutoTool extends Module {
             return;
         }
 
-
-
-        //make sure that we are allowed to break blocks if ac is enabled
         LeftClicker autoClicker = (LeftClicker) Raven.moduleManager.getModuleByClazz(LeftClicker.class);
         if(autoClicker.isEnabled()) {
             if(!LeftClicker.breakBlocks.isToggled()) {

@@ -11,10 +11,7 @@ import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.FakeHud;
 import ravenweave.client.module.setting.Setting;
-import ravenweave.client.module.setting.impl.ComboSetting;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.module.setting.impl.TickSetting;
+import ravenweave.client.module.setting.impl.*;
 import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.font.FontUtil;
 
@@ -29,6 +26,7 @@ public class HUD extends Module {
     public static ComboSetting<lmv> logoMode;
     public static ComboSetting<ColourModes> colorMode;
     public static SliderSetting logoScaleh, logoScalew;
+    public static RGBSetting rgb;
     public static DescriptionSetting description, logoDesc1;
     private static int hudX = 5;
     private static int hudY = 70;
@@ -52,13 +50,8 @@ public class HUD extends Module {
         this.registerSetting(description = new DescriptionSetting(("Show a list of modules.")));
         this.registerSetting(editPosition = new TickSetting("Edit position", false));
         this.registerSetting(dropShadow = new TickSetting("Drop shadow", true));
-        //this.registerSetting(logo = new TickSetting("Logo", true));
         this.registerSetting(colorMode = new ComboSetting("Value: ", ColourModes.RAVEN));
-        //this.registerSetting(logoScaleh = new SliderSetting("Logo Scale height ", 1, 0, 10, 0.01));
-        //this.registerSetting(logoScalew = new SliderSetting("Logo Scale width ", 2, 0, 10, 0.01));
-        //this.registerSetting(logoMode = new ComboSetting("Logo Mode:", lmv.l7));
-        //this.registerSetting(logoDesc1 = new DescriptionSetting("cd logomode put an image logo.png"));
-        //this.registerSetting(logoDesc1 = new DescriptionSetting("in the keystrokes folder"));
+        this.registerSetting(rgb = new RGBSetting("RGB", 255, 100, 255));
         showedError = false;
         showInHud = false;
     }
@@ -156,6 +149,13 @@ public class HUD extends Module {
                                 y += mc.fontRendererObj.FONT_HEIGHT + margin;
                                 del -= 10;
                                 break;
+                            case RAVENB4:
+                                mc.fontRendererObj.drawString(m.getName(),
+                                        (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())),
+                                        (float) y, Utils.Client.drawFade(new Color(rgb.getRed(), rgb.getGreen(), rgb.getBlue(), 255), y).getRGB(), dropShadow.isToggled());
+                                y += mc.fontRendererObj.FONT_HEIGHT + margin;
+                                del -= 10;
+                                break;
                             case ASTOLFO:
                                 mc.fontRendererObj.drawString(m.getName(),
                                         (float) hudX + (textBoxWidth - mc.fontRendererObj.getStringWidth(m.getName())),
@@ -193,6 +193,11 @@ public class HUD extends Module {
                     } else if (colorMode.getMode() == ColourModes.RAVEN2) {
                         mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y,
                                 Utils.Client.rainbowDraw(2L, del), dropShadow.isToggled());
+                        y += mc.fontRendererObj.FONT_HEIGHT + margin;
+                        del -= 10;
+                    } else if (colorMode.getMode() == ColourModes.RAVENB4) {
+                        mc.fontRendererObj.drawString(m.getName(), (float) hudX, (float) y,
+                                Utils.Client.drawFade(new Color(rgb.getRed(), rgb.getGreen(), rgb.getBlue(), 255), y).getRGB(), dropShadow.isToggled());
                         y += mc.fontRendererObj.FONT_HEIGHT + margin;
                         del -= 10;
                     } else if (colorMode.getMode() == ColourModes.ASTOLFO) {
@@ -369,7 +374,7 @@ public class HUD extends Module {
     }
 
     public enum ColourModes {
-        RAVEN, RAVEN2, ASTOLFO, ASTOLFO2, ASTOLFO3, KV
+        RAVEN, RAVEN2, RAVENB4, ASTOLFO, ASTOLFO2, ASTOLFO3, KV
     }
 
     public static int getHudX() {

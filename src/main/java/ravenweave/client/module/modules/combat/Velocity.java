@@ -1,6 +1,6 @@
 package ravenweave.client.module.modules.combat;
 
-import me.pianopenguin471.mixins.S12PacketEntityVelocityAccessor;
+import me.pianopenguin471.mixins.IS12PacketEntityVelocity;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.entity.Entity;
 import net.weavemc.loader.api.event.SubscribeEvent;
@@ -44,7 +44,7 @@ public class Velocity extends Module {
 
     public void velo(PacketEvent e) {
         S12PacketEntityVelocity packet = e.getPacket();
-        S12PacketEntityVelocityAccessor accessorPacket = (S12PacketEntityVelocityAccessor) packet;
+        IS12PacketEntityVelocity accessorPacket = (IS12PacketEntityVelocity) packet;
 
         if (invertHorizontal.isToggled()) {
             accessorPacket.setMotionX((int) (packet.getMotionX() * -horizontal.getInput()/100));

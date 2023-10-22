@@ -1,10 +1,10 @@
 package ravenweave.client.event.impl;
 
-import net.weavemc.loader.api.event.Event;
+import net.weavemc.loader.api.event.CancellableEvent;
 import ravenweave.client.event.ext.EventTiming;
 import ravenweave.client.event.ext.IEventTiming;
 
-public class UpdateEvent extends Event implements IEventTiming {
+public class UpdateEvent extends CancellableEvent implements IEventTiming {
 
     private final EventTiming timing;
     private double x, y, z;
@@ -19,11 +19,6 @@ public class UpdateEvent extends Event implements IEventTiming {
         this.yaw = yaw;
         this.pitch = pitch;
         this.onGround = onGround;
-    }
-
-    public static UpdateEvent convertPost(UpdateEvent e) {
-        return new UpdateEvent(EventTiming.POST, e.getX(), e.getY(), e.getZ(), e.getYaw(), e.getPitch(),
-                e.isOnGround());
     }
 
     @Override

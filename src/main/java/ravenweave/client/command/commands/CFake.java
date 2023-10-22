@@ -4,9 +4,9 @@ import ravenweave.client.clickgui.raven.Terminal;
 import ravenweave.client.command.Command;
 import ravenweave.client.module.modules.client.FakeHud;
 
-public class CFakeHud extends Command {
+public class CFake extends Command {
 
-    public CFakeHud() {
+    public CFake() {
         super("fakehud", "fakehud add <Name>, fakehud remove <Name>", 3, 100, new String[] { "add/remove" },
                 new String[] { "fh" });
     }

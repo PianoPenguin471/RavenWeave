@@ -47,19 +47,19 @@ public class KvCategoryComponent extends KvComponent {
 
     @Override
 	public void clicked(int button, int x, int y) {
-    	switch(button) {
-    		case 0:
-    			KvModuleSection.moduleSec.setOpenmodule(null);
-    			KvModuleSection.moduleSec.setCurrentCategory(this);
-    			KvModuleSection.moduleSec.setCurrentCategory(this);
-    			break;
-    		case 1:
-				if (!childCategories.isEmpty()) {
-					open = !open;
-					Raven.kvCompactGui.initGui();
-				}
-				break;
-    	}
+        switch (button) {
+            case 0 -> {
+                KvModuleSection.moduleSec.setOpenmodule(null);
+                KvModuleSection.moduleSec.setCurrentCategory(this);
+                KvModuleSection.moduleSec.setCurrentCategory(this);
+            }
+            case 1 -> {
+                if (!childCategories.isEmpty()) {
+                    open = !open;
+                    Raven.kvCompactGui.initGui();
+                }
+            }
+        }
     }
 
     @Override

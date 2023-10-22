@@ -2,6 +2,7 @@ package ravenweave.client.utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.StringUtils;
 import net.weavemc.loader.api.event.MouseEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.main.Raven;
@@ -73,5 +74,18 @@ public class MouseManager {
             }
         }
         return rightClicks.size();
+    }
+
+    public static String str(String s) {
+        char[] n = StringUtils.stripControlCodes(s).toCharArray();
+        StringBuilder v = new StringBuilder();
+
+        for (char c : n) {
+            if (c < 127 && c > 20) {
+                v.append(c);
+            }
+        }
+
+        return v.toString();
     }
 }

@@ -27,8 +27,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ModuleManager {
-    private List<Module> modules = new ArrayList<>();
-
+    private final List<Module> modules = new ArrayList<>();
     public static boolean initialized;
     public GuiModuleManager guiModuleManager;
 
@@ -36,8 +35,9 @@ public class ModuleManager {
         if(initialized)
             return;
         this.guiModuleManager = new GuiModuleManager();
-        addModule(new ChestStealer());
-        addModule(new AutoArmor());
+        addModule(new Rod());
+        addModule(new Stealer());
+        addModule(new Manager());
         addModule(new LeftClicker());
         addModule(new ClickAssist());
         addModule(new RightClicker());
@@ -51,7 +51,6 @@ public class ModuleManager {
         addModule(new InvMove());
         addModule(new KeepSprint());
         addModule(new NoSlow());
-        addModule(new Sprint());
         addModule(new StopMotion());
         addModule(new LegitSpeed());
         addModule(new Timer());
@@ -110,6 +109,7 @@ public class ModuleManager {
         addModule(new Blink());
         addModule(new NoJumpDelay());
         addModule(new Parkour());
+        addModule(new BedPlates());
 
         // BETA
         addModule(new Refill());
@@ -124,6 +124,7 @@ public class ModuleManager {
 
     public void addModule(Module m) {
         modules.add(m);
+        modules.sort(Comparator.comparing(Module::getName));
     }
 
     public Module getModuleByName(String name) {

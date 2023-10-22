@@ -13,7 +13,6 @@ import ravenweave.client.event.impl.PacketEvent;
 
 @Mixin(priority = 995, value = NetworkManager.class)
 public class NetworkManagerMixin {
-
     @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
     public void sendPacket(Packet p_sendPacket_1_, CallbackInfo ci) {
         PacketEvent e = new PacketEvent(p_sendPacket_1_, EventDirection.OUTGOING);
@@ -34,5 +33,4 @@ public class NetworkManagerMixin {
         p_channelRead0_2_ = e.getPacket();
         if (e.isCancelled()) ci.cancel();
     }
-
 }
