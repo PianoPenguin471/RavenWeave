@@ -25,6 +25,11 @@ public class Rod extends Module {
     public void onEnable() {
         if (!Utils.Player.isPlayerInGame()) return;
 
+        if (mc.thePlayer.getHeldItem().getItem() instanceof ItemFishingRod) {
+            this.disable();
+            return;
+        }
+
         if (preferSlot.isToggled()) {
             int preferedSlot = (int) hotbarSlotPreference.getInput() - 1;
 
