@@ -10,22 +10,23 @@ import org.lwjgl.opengl.GL11;
 import ravenweave.client.event.impl.RenderLabelEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
+import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
 public class Nametags extends Module {
     public static SliderSetting rect;
-    public static TickSetting shadow, showHealth;
+    public static TickSetting scale, showHealth, shadow;
 
     public Nametags() {
         super("Nametags", ModuleCategory.render);
+        this.registerSetting(new DescriptionSetting("Looks weird sometimes, sorry"));
         this.registerSetting(rect = new SliderSetting("Rect Opacity", 25.0D, 0.0D, 100.0D, 1.0D));
-        this.registerSetting(shadow = new TickSetting("Shadow", false));
+        this.registerSetting(scale = new TickSetting("Scale (wacky)", true));
         this.registerSetting(showHealth = new TickSetting("Show health", true));
+        this.registerSetting(shadow = new TickSetting("Shadow", false));
     }
-
-    public float scale = 0.02666667F;
 
     @SubscribeEvent
     public void onRenderLabel(RenderLabelEvent event) {
@@ -39,18 +40,26 @@ public class Nametags extends Module {
                 double r = en.getHealth() / en.getMaxHealth();
                 String health = (r < 0.3D ? "\u00A7c" : (r < 0.5D ? "\u00A76" : (r < 0.7D ? "\u00A7e" : "\u00A7a")))
                         + Utils.Java.round(en.getHealth(), 1);
-                str = str + " - " + health;
+                str = str + " " + health;
             }
 
             GlStateManager.pushMatrix();
 
-            GlStateManager.translate((float) event.getX() + 0.0F, (float) event.getY() + en.height + 0.5F, (float) event.getZ());
+            GlStateManager.translate((float) event.getX(), (float) event.getY() + en.height + 0.5F, (float) event.getZ());
+
             GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+
             GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
             GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
-            GlStateManager.scale(-scale, -scale, scale);
 
-            //GlStateManager.disableDepth();
+            float disScale = (mc.thePlayer.getDistanceToEntity(en) / 4F / 150F) * 2F;
+
+            if (scale.isToggled() && mc.thePlayer.getDistanceToEntity(en) > 6F) {
+                GL11.glScalef((float) (-disScale * 1.077), (float) (-disScale * 1.077), (float) (disScale * 1.077));
+            } else {
+                GlStateManager.scale(-0.02666667F, -0.02666667F, 0.02666667F);
+            }
+
             GlStateManager.depthMask(false);
             GlStateManager.disableLighting();
             GlStateManager.enableBlend();
@@ -59,7 +68,6 @@ public class Nametags extends Module {
 
             mc.fontRendererObj.drawString(str, (float) -mc.fontRendererObj.getStringWidth(str) / 2, 0, -1, shadow.isToggled());
 
-            //GlStateManager.enableDepth();
             GlStateManager.depthMask(true);
             GlStateManager.enableLighting();
             GlStateManager.disableBlend();

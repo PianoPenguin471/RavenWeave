@@ -164,14 +164,11 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
         this.movementInput.updatePlayerMoveState();
 
         if (this.isUsingItem() && !this.isRiding()) {
-            MovementInput var10000 = this.movementInput;
             SlowdownEvent event = new SlowdownEvent();
             EventBus.callEvent(event);
-            if (!event.isCancelled()) {
-                var10000.moveStrafe *= 0.2F;
-                var10000.moveForward *= 0.2F;
-                this.sprintToggleTimer = 0;
-            }
+            this.movementInput.moveStrafe *= event.getStrafeSpeedMultiplier();
+            this.movementInput.moveForward *= event.getForwardSpeedMultiplier();
+            this.sprintToggleTimer = 0;
         }
 
         this.pushOutOfBlocks(this.posX - (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ + (double) this.width * 0.35D);

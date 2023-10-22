@@ -12,6 +12,7 @@ import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.utils.Timer;
 import ravenweave.client.utils.Utils;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -23,8 +24,6 @@ public class ClickGui extends GuiScreen {
     private CategoryComponent lastCategory;
     public static int mouseX, mouseY;
     public final Terminal terminal;
-
-    public static int binding;
 
     public ClickGui() {
         this.terminal = new Terminal();
@@ -72,34 +71,54 @@ public class ClickGui extends GuiScreen {
             int quarterScreenHeight = this.height / 4;
             int halfScreenWidth = this.width / 2;
             int w_c = 30 - this.aT.getValueInt(0, 30, 3);
-            this.drawCenteredString(this.fontRendererObj, "r", (halfScreenWidth + 1) - w_c, quarterScreenHeight - 25,
-                    Utils.Client.rainbowDraw(2L, 1500L));
-            this.drawCenteredString(this.fontRendererObj, "a", halfScreenWidth - w_c, quarterScreenHeight - 15,
-                    Utils.Client.rainbowDraw(2L, 1200L));
-            this.drawCenteredString(this.fontRendererObj, "v", halfScreenWidth - w_c, quarterScreenHeight - 5,
-                    Utils.Client.rainbowDraw(2L, 900L));
-            this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5,
-                    Utils.Client.rainbowDraw(2L, 600L));
-            this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15,
-                    Utils.Client.rainbowDraw(2L, 300L));
-            this.drawCenteredString(this.fontRendererObj, "b", halfScreenWidth + 1 + w_c, quarterScreenHeight + 25,
-                    Utils.Client.rainbowDraw(2L, 0L));
-            this.drawCenteredString(this.fontRendererObj, "++", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30,
-                    Utils.Client.rainbowDraw(2L, 0L));
+            if (ClickGuiModule.preset.getMode() == ClickGuiModule.Preset.B4) {
+                this.drawCenteredString(this.fontRendererObj, "r", halfScreenWidth + 1 - w_c, quarterScreenHeight - 25, Utils.Client.rainbowDraw(2L, 1500L));
+                this.drawCenteredString(this.fontRendererObj, "a", halfScreenWidth - w_c, quarterScreenHeight - 15, Utils.Client.rainbowDraw(2L, 1200L));
+                this.drawCenteredString(this.fontRendererObj, "v", halfScreenWidth - w_c, quarterScreenHeight - 5, Utils.Client.rainbowDraw(2L, 900L));
+                this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5, Utils.Client.rainbowDraw(2L, 600L));
+                this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15, Utils.Client.rainbowDraw(2L, 300L));
+                this.drawCenteredString(this.fontRendererObj, "b4", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30, Utils.Client.rainbowDraw(2L, 0L));
+                this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, -1);
+                this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 43, -1);
+                this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 38, -1);
+                this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 38, -1);
+            } else {
+                this.drawCenteredString(this.fontRendererObj, "r", (halfScreenWidth + 1) - w_c, quarterScreenHeight - 25,
+                        Utils.Client.rainbowDraw(2L, 1500L));
+                this.drawCenteredString(this.fontRendererObj, "a", halfScreenWidth - w_c, quarterScreenHeight - 15,
+                        Utils.Client.rainbowDraw(2L, 1200L));
+                this.drawCenteredString(this.fontRendererObj, "v", halfScreenWidth - w_c, quarterScreenHeight - 5,
+                        Utils.Client.rainbowDraw(2L, 900L));
+                this.drawCenteredString(this.fontRendererObj, "e", halfScreenWidth - w_c, quarterScreenHeight + 5,
+                        Utils.Client.rainbowDraw(2L, 600L));
+                this.drawCenteredString(this.fontRendererObj, "n", halfScreenWidth - w_c, quarterScreenHeight + 15,
+                        Utils.Client.rainbowDraw(2L, 300L));
+                this.drawCenteredString(this.fontRendererObj, "b", halfScreenWidth + 1 + w_c, quarterScreenHeight + 25,
+                        Utils.Client.rainbowDraw(2L, 0L));
+                this.drawCenteredString(this.fontRendererObj, "+ +", halfScreenWidth + 1 + w_c, quarterScreenHeight + 30,
+                        Utils.Client.rainbowDraw(2L, 0L));
 
-            this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 38,
-                    Utils.Client.customDraw(0));
+                this.drawVerticalLine(halfScreenWidth - 10 - w_c, quarterScreenHeight - 30, quarterScreenHeight + 38,
+                        Utils.Client.customDraw(0));
 
-            this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 38,
-                    Utils.Client.customDraw(0));
+                this.drawVerticalLine(halfScreenWidth + 10 + w_c, quarterScreenHeight - 30, quarterScreenHeight + 38,
+                        Utils.Client.customDraw(0));
+            }
+
+
 
             int animationProggress;
             if (this.aL != null) {
                 animationProggress = this.aL.getValueInt(0, 20, 2);
-                this.drawHorizontalLine(halfScreenWidth - 10, (halfScreenWidth - 10) + animationProggress,
-                        quarterScreenHeight - 29, Utils.Client.customDraw(0));
-                this.drawHorizontalLine(halfScreenWidth + 10, (halfScreenWidth + 10) - animationProggress,
-                        quarterScreenHeight + 38, Utils.Client.customDraw(0));
+                if (ClickGuiModule.preset.getMode() == ClickGuiModule.Preset.B4) {
+                    this.drawHorizontalLine(halfScreenWidth - 10, halfScreenWidth - 10 + animationProggress, quarterScreenHeight - 29, -1);
+                    this.drawHorizontalLine(halfScreenWidth + 10, halfScreenWidth + 10 - animationProggress, quarterScreenHeight + 42, -1);
+                } else {
+                    this.drawHorizontalLine(halfScreenWidth - 10, (halfScreenWidth - 10) + animationProggress,
+                            quarterScreenHeight - 29, Utils.Client.customDraw(0));
+                    this.drawHorizontalLine(halfScreenWidth + 10, (halfScreenWidth + 10) - animationProggress,
+                            quarterScreenHeight + 38, Utils.Client.customDraw(0));
+                }
             }
 
             GL11.glColor4f(1f, 1f, 1f, 1f);

@@ -2,7 +2,6 @@ package ravenweave.client.module.modules.movement;
 
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
-import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.server.S30PacketWindowItems;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -15,9 +14,8 @@ import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 
-import java.util.Objects;
-
 public class NoSlow extends Module {
+    private int disable;
     public static SliderSetting speed;
     public static ComboSetting<modes> mode;
 
@@ -30,10 +28,9 @@ public class NoSlow extends Module {
 
     @SubscribeEvent
     public void onSlowdown(SlowdownEvent event) {
-        event.setCancelled(true);
         float val = (100.0F - (float) speed.getInput()) / 100.0F;
-        mc.thePlayer.movementInput.moveStrafe *= val;
-        mc.thePlayer.movementInput.moveForward *= val;
+        event.setStrafeSpeedMultiplier(val);
+        event.setForwardSpeedMultiplier(val);
     }
 
     @SubscribeEvent
@@ -51,7 +48,7 @@ public class NoSlow extends Module {
 
     @SubscribeEvent
     public void onUpdate(UpdateEvent e) {
-        if (mode.getMode() == modes.NCP) {
+        if (mode.getMode() == modes.OLDNCP) {
             if (mc.thePlayer.isUsingItem()) {
                 if (e.isPre()) {
                     if (mc.thePlayer.isBlocking()) {
@@ -65,7 +62,7 @@ public class NoSlow extends Module {
     }
 
     public enum modes {
-        VANILLA, NCP, NOS30
+        VANILLA, OLDNCP, NOS30
     }
 
 }

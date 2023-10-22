@@ -8,6 +8,7 @@ import ravenweave.client.clickgui.raven.Component;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.ClickGuiModule;
+import ravenweave.client.utils.ColorM;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.Utils;
@@ -141,17 +142,30 @@ public class CategoryComponent extends Component {
 
         // boarder
         if (ClickGuiModule.isBoarderToggled()) {
-            if(isMouseOver(mouseX, mouseY)) {
-                if (!ClickGuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, ClickGuiModule.getCategoryOutlineColor2());
-                else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, ClickGuiModule.getCategoryOutlineColor2());
-            } else if (!ClickGuiModule.isRoundedToggled()) Gui.drawRect(x, y, x2, y2, ClickGuiModule.getCategoryOutlineColor1());
-            else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, ClickGuiModule.getCategoryOutlineColor1());
-            GlStateManager.resetColor();
+            if (ClickGuiModule.preset.getMode() == ClickGuiModule.Preset.B4) {
+                if (isMouseOver(mouseX, mouseY)) {
+                    if (!ClickGuiModule.isRoundedToggled())
+                        Gui.drawRect(x, y, x2, y2, ClickGuiModule.getCategoryOutlineColor2());
+                    else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 2, ClickGuiModule.getCategoryOutlineColor2());
+                } else if (!ClickGuiModule.isRoundedToggled())
+                    Gui.drawRect(x, y, x2, y2, ClickGuiModule.getCategoryOutlineColor1());
+                else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 2, ClickGuiModule.getCategoryOutlineColor1());
+                GlStateManager.resetColor();
+            } else {
+                if (isMouseOver(mouseX, mouseY)) {
+                    if (!ClickGuiModule.isRoundedToggled())
+                        Gui.drawRect(x, y, x2, y2, ClickGuiModule.getCategoryOutlineColor2());
+                    else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, ClickGuiModule.getCategoryOutlineColor2());
+                } else if (!ClickGuiModule.isRoundedToggled())
+                    Gui.drawRect(x, y, x2, y2, ClickGuiModule.getCategoryOutlineColor1());
+                else RenderUtils.drawRoundedOutline(x, y, x2, y2, 12, 3, ClickGuiModule.getCategoryOutlineColor1());
+                GlStateManager.resetColor();
+            }
         }
 
         // category name
         if (ClickGuiModule.useCustomFont()) FontUtil.two.drawSmoothString(categoryName.getName(), (float) (x + 2), (float) (y + 4), ClickGuiModule.getCategoryNameRGB());
-        else mc.fontRendererObj.drawString(categoryName.getName(), (float) (x + 2), (float) (y + 4), ClickGuiModule.getCategoryBackgroundRGB(), false);
+        else mc.fontRendererObj.drawString(categoryName.getName(), (float) (x + 2), (float) (y + 4), new Color(255, 255, 255).getRGB(), true);
 
         // +/- bit
         int red = (int) (tPercent * 255);

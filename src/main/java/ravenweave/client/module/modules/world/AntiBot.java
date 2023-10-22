@@ -14,14 +14,11 @@ import java.util.HashMap;
 
 public class AntiBot extends Module {
     private static final HashMap<EntityPlayer, Long> newEnt = new HashMap<>();
-    private final long ms = 4000L;
-    public static TickSetting a, dead;
+    public static TickSetting wait, dead;
 
     public AntiBot() {
         super("AntiBot", ModuleCategory.world);
-        withEnabled(true);
-
-        this.registerSetting(a = new TickSetting("Wait 80 ticks", false));
+        this.registerSetting(wait = new TickSetting("Wait 80 ticks", false));
         this.registerSetting(dead = new TickSetting("Remove dead", true));
     }
 
@@ -33,7 +30,7 @@ public class AntiBot extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent ev) {
-        if (a.isToggled() && !newEnt.isEmpty()) {
+        if (wait.isToggled() && !newEnt.isEmpty()) {
             long now = System.currentTimeMillis();
             newEnt.values().removeIf(e -> e < now - 4000L);
         }
@@ -48,7 +45,7 @@ public class AntiBot extends Module {
         }
         Module antiBot = Raven.moduleManager.getModuleByClazz(AntiBot.class);
         if ((antiBot != null && !antiBot.isEnabled()) || !Utils.Client.isHyp()) {
-        } else if ((a.isToggled() && !newEnt.isEmpty() && newEnt.containsKey(en)) || en.getName().startsWith("§c")) {
+        } else if ((wait.isToggled() && !newEnt.isEmpty() && newEnt.containsKey(en)) || en.getName().startsWith("§c")) {
             return true;
         } else if(en.isDead && dead.isToggled()) {
             return true;

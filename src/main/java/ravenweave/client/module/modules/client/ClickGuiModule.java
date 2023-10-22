@@ -12,7 +12,7 @@ import ravenweave.client.utils.Utils;
 public class ClickGuiModule extends Module {
 
     public DescriptionSetting description;
-    private static ComboSetting<Preset> preset;
+    public static ComboSetting<Preset> preset;
     public static TickSetting clean, reset, notifications;
     public static int guiScale;
 
@@ -48,7 +48,7 @@ public class ClickGuiModule extends Module {
 
 
     private static Preset getPresetMode() {
-        return (Preset) preset.getMode();
+        return preset.getMode();
     }
     public static boolean showGradientEnabled() {
         return getPresetMode().showGradientEnabled;
@@ -131,7 +131,29 @@ public class ClickGuiModule extends Module {
 
     public enum Preset {
         Vape(true, false, true, true, in -> 0xFFFFFFFE, in -> 0x99808080, in -> 0x99808080, in -> -12876693, in -> -12876693, in -> 0xFFFFFFFE, in -> 0xFF000000, in -> 0xFF000000, in -> 0xFFFFFFFE, in -> 0x99808080, true, true, false, in -> -12876693, in -> -12876693, in -> Utils.Client.otherAstolfoColorsDraw(in, 10)),
+        B4(false,
+                false,
+                false,
+                true,
+                in -> 0xFFFFFFFE, // categoryNameRGB
+                in -> 0x32000000, // settingBackgroundRGB
+                in -> 0x32000000, // categoryBackgroundRGB
+                in -> 0xFF189AFF, // enabledTopRGB
+                in -> 0xFF189AFF, // enabledBottomRGB
+                in -> 0xFF189AFF, // enabledTextRGB
+                in -> 0xFFFFFFFE, // disabledTopRGB
+                in -> 0xFFFFFFFE, // disabledBottomRGB
+                in -> 0xFFFFFFFE, // disabledTextRGB
+                in -> 0x32000000, // backgroundRGB
+                true,
+                true,
+                true,
+                in -> 0xFFFFFFFE, // categoryNameRGB
+                in -> Utils.Client.rainbowDraw(2L, 10L), // categoryOutlineColor
+                in -> Utils.Client.rainbowDraw(2L, 10L) // categoryOutlineColor2
+        ),
         PlusPlus(true, false, true, true, in -> 0xFFFFFFFE, in -> -15001318, in -> -15001318, in -> Utils.Client.rainbowDraw(2, in), in -> Utils.Client.rainbowDraw(2, in), in -> 0xFF000000, in -> 0xFF000000,in -> 0xFF000000, in -> 0xFFFFFFFE, in -> 0xFF808080, true, true, true, in -> 0xFFFFFFFE, in -> Utils.Client.astolfoColorsDraw(in, 10), in -> Utils.Client.otherAstolfoColorsDraw(in, 10));
+
 
         public boolean showGradientEnabled, showGradientDisabled, useCustomFont, categoryBackground, roundedCorners, swing, boarder;
         public ColorM categoryNameRGB, settingBackgroundRGB, categoryBackgroundRGB, enabledTopRGB, enabledBottomRGB,
