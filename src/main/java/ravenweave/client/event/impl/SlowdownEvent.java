@@ -3,8 +3,12 @@ package ravenweave.client.event.impl;
 import net.weavemc.loader.api.event.Event;
 
 public class SlowdownEvent extends Event {
-    float strafeSpeedMultiplier;
-    float forwardSpeedMultiplier;
+    float strafeSpeedMultiplier, forwardSpeedMultiplier;
+
+    public SlowdownEvent(float strafeSpeedMultiplier, float forwardSpeedMultiplier) {
+        this.strafeSpeedMultiplier = strafeSpeedMultiplier;
+        this.forwardSpeedMultiplier = forwardSpeedMultiplier;
+    }
 
     public float getStrafeSpeedMultiplier() {
         return strafeSpeedMultiplier;

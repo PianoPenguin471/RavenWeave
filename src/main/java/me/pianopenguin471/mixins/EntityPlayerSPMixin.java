@@ -164,7 +164,7 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
         this.movementInput.updatePlayerMoveState();
 
         if (this.isUsingItem() && !this.isRiding()) {
-            SlowdownEvent event = new SlowdownEvent();
+            SlowdownEvent event = new SlowdownEvent(0.2f, 0.2f);
             EventBus.callEvent(event);
             this.movementInput.moveStrafe *= event.getStrafeSpeedMultiplier();
             this.movementInput.moveForward *= event.getForwardSpeedMultiplier();
