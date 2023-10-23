@@ -1,7 +1,6 @@
 
 package ravenweave.client.module.modules.render;
 
-
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.utils.Utils;
