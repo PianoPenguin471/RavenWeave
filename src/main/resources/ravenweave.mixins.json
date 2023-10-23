@@ -13,6 +13,7 @@
     "RendererLivingEntityMixin",
     "RenderGlobalMixin",
     "IS12PacketEntityVelocity",
-    "WorldMixin"
+    "WorldMixin",
+    "FontRendererMixin"
   ]
 }

@@ -17,7 +17,7 @@ import ravenweave.client.utils.Utils;
 
 public class Nametags extends Module {
     public static SliderSetting rect;
-    public static TickSetting scale, showHealth, shadow;
+    public static TickSetting scale, showHealth, showInvis, shadow;
 
     public Nametags() {
         super("Nametags", ModuleCategory.render);
@@ -25,6 +25,7 @@ public class Nametags extends Module {
         this.registerSetting(rect = new SliderSetting("Rect Opacity", 25.0D, 0.0D, 100.0D, 1.0D));
         this.registerSetting(scale = new TickSetting("Scale (wacky)", true));
         this.registerSetting(showHealth = new TickSetting("Show health", true));
+        this.registerSetting(showInvis = new TickSetting("Show invis", true));
         this.registerSetting(shadow = new TickSetting("Shadow", false));
     }
 
@@ -32,6 +33,8 @@ public class Nametags extends Module {
     public void onRenderLabel(RenderLabelEvent event) {
         if(event.getTarget() instanceof EntityPlayer en) {
             event.setCancelled(true);
+
+            if (!showInvis.isToggled() && en.isInvisible()) return;
 
             if (AntiBot.bot(en) || en.getDisplayName().getUnformattedText().isEmpty()) return;
 
