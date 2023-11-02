@@ -14,6 +14,11 @@
     "RenderGlobalMixin",
     "IS12PacketEntityVelocity",
     "WorldMixin",
-    "FontRendererMixin"
+    "FontRendererMixin",
+    "BlockMixin",
+    "BlockModelRendererMixin",
+    "WorldRendererMixin",
+    "BlockGrassMixin"
+
   ]
 }

@@ -67,6 +67,7 @@ public class ModuleManager {
         addModule(new Chams());
         addModule(new ChestESP());
         addModule(new Nametags());
+        addModule(new Xray());
         addModule(new AntiShuffle());
         addModule(new PlayerESP());
         addModule(new Tracers());
