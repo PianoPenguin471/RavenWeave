@@ -12,15 +12,14 @@ import ravenweave.client.utils.Utils;
 public class Healing extends Module {
     private final TickSetting preferSlot;
     private final SliderSetting hotbarSlotPreference;
-    private final ComboSetting itemMode;
-    private final HealingItems mode = HealingItems.HEAL_POT;
+    private final ComboSetting<HealingItems> itemMode;
 
     public Healing() {
         super("Healing", ModuleCategory.hotkey);
 
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 8, 1, 9, 1));
-        this.registerSetting(itemMode = new ComboSetting("Mode:", mode));
+        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer which slot", 8, 1, 9, 1));
+        this.registerSetting(itemMode = new ComboSetting<>("Mode:", HealingItems.HEAL_POT));
     }
 
     @Override
@@ -83,17 +82,8 @@ public class Healing extends Module {
         this.disable();
     }
 
-    public static boolean checkSlot(int slot) {
-        ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-
-        return itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ladder");
-    }
-
     public enum HealingItems {
-        SOUP, GAPPLE,
-        // NOTCH_APPLE,
-        // HEAD,
-        FOOD, HEAL_POT, ALL
+        SOUP, GAPPLE, FOOD, HEAL_POT, ALL
     }
 
     public boolean isSoup(int slot) {
@@ -116,8 +106,7 @@ public class Healing extends Module {
         if (itemInSlot == null)
             return false;
 
-        if (itemInSlot.getItem() instanceof ItemPotion) {
-            ItemPotion ip = (ItemPotion) itemInSlot.getItem();
+        if (itemInSlot.getItem() instanceof ItemPotion ip) {
             Utils.Player.sendMessageToSelf("" + slot);
             for (PotionEffect pe : ip.getEffects(itemInSlot)) {
                 if (pe.getPotionID() == Potion.heal.id) {
@@ -128,14 +117,6 @@ public class Healing extends Module {
         }
 
         return false;
-    }
-
-    public boolean isHead(int slot) {
-        ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
-        if (itemInSlot == null)
-            return false;
-
-        return itemInSlot.getItem() instanceof Item;
     }
 
     public boolean isFood(int slot) {

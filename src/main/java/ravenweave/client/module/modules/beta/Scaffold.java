@@ -27,14 +27,13 @@ public class Scaffold extends Module {
     private final SliderSetting pitch;
 
     private float yaw, prevYaw;
-    private BlockPos lastPos;
 
 
     public Scaffold() {
         super("Scaffold", ModuleCategory.beta); // Category: World
         this.registerSetting(new DescriptionSetting("Helps you make bridges/scaffold walk.")); // bad description, but manthe wrote it
         this.registerSetting(pitch = new SliderSetting("Pitch", 81, 70, 90, 1));
-        this.registerSettings(noSwing = new TickSetting("No Swing", false));
+        this.registerSetting(noSwing = new TickSetting("No Swing", false));
         this.registerSetting(disableSprint = new TickSetting("Disable sprint", true));
         this.registerSetting(slotSwap = new TickSetting("Swap to blocks", true));
     }
@@ -108,9 +107,7 @@ public class Scaffold extends Module {
 
         if (mop.sideHit == EnumFacing.DOWN) return false;
         Block block = mc.theWorld.getBlockState(pos).getBlock();
-        if (block == null || block == Blocks.air || block instanceof BlockLiquid) return false;
-
-        return true;
+        return block != null && block != Blocks.air && !(block instanceof BlockLiquid);
     }
 
     public void swapToBlock() {
@@ -132,13 +129,10 @@ public class Scaffold extends Module {
     public void clickBlock(BlockPos pos, EnumFacing enumFacing, Vec3 vec3) {
         new Thread(() -> {
             try {
-                boolean success = mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), pos, enumFacing, vec3);
                 if (!noSwing.isToggled()) {
                     mc.thePlayer.swingItem();
                 }
-                if (success) {
-                    lastPos = pos;
-                }
+                mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), pos, enumFacing, vec3);
             } catch (Exception ignored) {}
         }).start();
     }

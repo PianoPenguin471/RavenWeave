@@ -11,8 +11,7 @@ public class Armor extends Module {
 
     public Armor() {
         super("Armour", ModuleCategory.hotkey);
-
-        this.registerSetting(ignoreIfAlreadyEquipped = new TickSetting("Ignore if already equipped", true));
+        this.registerSetting(ignoreIfAlreadyEquipped = new TickSetting("Ignore if equipped", true));
     }
 
     @Override
@@ -25,12 +24,9 @@ public class Armor extends Module {
         double strength = -1;
 
         for (int armorType = 0; armorType < 4; armorType++) {
-            index = -1;
-            strength = -1;
             for (int slot = 0; slot <= 8; slot++) {
                 ItemStack itemStack = mc.thePlayer.inventory.getStackInSlot(slot);
-                if (itemStack != null && itemStack.getItem() instanceof ItemArmor) {
-                    ItemArmor armorPiece = (ItemArmor) itemStack.getItem();
+                if (itemStack != null && itemStack.getItem() instanceof ItemArmor armorPiece) {
                     if (!Utils.Player.playerWearingArmor().contains(armorPiece.armorType)
                             && armorPiece.armorType == armorType && ignoreIfAlreadyEquipped.isToggled()) {
                         if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength) {
@@ -47,10 +43,8 @@ public class Armor extends Module {
                             playerArmor = (ItemArmor) mc.thePlayer.getCurrentArmor(2).getItem();
                         } else if (armorType == 2) {
                             playerArmor = (ItemArmor) mc.thePlayer.getCurrentArmor(1).getItem();
-                        } else if (armorType == 3) {
-                            playerArmor = (ItemArmor) mc.thePlayer.getCurrentArmor(0).getItem();
                         } else {
-                            continue;
+                            playerArmor = (ItemArmor) mc.thePlayer.getCurrentArmor(0).getItem();
                         }
 
                         if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength
@@ -70,7 +64,7 @@ public class Armor extends Module {
 
                 }
             }
-            if (index > -1 || strength > -1) {
+            if (index > -1) {
                 mc.thePlayer.inventory.currentItem = index;
                 this.disable();
                 this.onDisable();

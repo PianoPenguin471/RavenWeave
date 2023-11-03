@@ -4,8 +4,8 @@ import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.weavemc.loader.api.event.MouseEvent;
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Keyboard;
+import ravenweave.client.event.impl.LivingUpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -14,17 +14,16 @@ import ravenweave.client.utils.Utils;
 import java.awt.*;
 
 public class Freecam extends Module {
-    public static SliderSetting a;
-    public static TickSetting b;
-    private final double toRad = 0.017453292519943295D;
+    public static SliderSetting speed;
+    public static TickSetting onDamage;
     public static EntityOtherPlayerMP en;
     private int[] lcc = { Integer.MAX_VALUE, 0 };
     private final float[] sAng = { 0.0F, 0.0F };
 
     public Freecam() {
         super("Freecam", ModuleCategory.player);
-        this.registerSetting(a = new SliderSetting("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
-        this.registerSetting(b = new TickSetting("Disable on damage", true));
+        this.registerSetting(speed = new SliderSetting("Speed", 2.5D, 0.5D, 10.0D, 0.5D));
+        this.registerSetting(onDamage = new TickSetting("Disable on damage", true));
     }
 
     @Override
@@ -46,6 +45,7 @@ public class Freecam extends Module {
         }
     }
 
+    @Override
     public void onDisable() {
         if (en != null) {
             mc.setRenderViewEntity(mc.thePlayer);
@@ -56,7 +56,6 @@ public class Freecam extends Module {
         }
 
         this.lcc = new int[] { Integer.MAX_VALUE, 0 };
-        int rg = 1;
         int x = mc.thePlayer.chunkCoordX;
         int z = mc.thePlayer.chunkCoordZ;
 
@@ -71,10 +70,10 @@ public class Freecam extends Module {
     }
 
     @SubscribeEvent
-    public void onTick(TickEvent e) {
+    public void onUpdate(LivingUpdateEvent e) {
         if (!Utils.Player.isPlayerInGame() || en == null)
             return;
-        if (b.isToggled() && mc.thePlayer.hurtTime != 0) {
+        if (onDamage.isToggled() && mc.thePlayer.hurtTime != 0) {
             this.disable();
         } else {
             mc.thePlayer.setSprinting(false);
@@ -82,7 +81,7 @@ public class Freecam extends Module {
             mc.thePlayer.moveStrafing = 0.0F;
             en.rotationYaw = en.rotationYawHead = mc.thePlayer.rotationYaw;
             en.rotationPitch = mc.thePlayer.rotationPitch;
-            double s = 0.215D * a.getInput();
+            double s = 0.215D * speed.getInput();
             EntityOtherPlayerMP var10000;
             double rad;
             double dx;
@@ -93,7 +92,6 @@ public class Freecam extends Module {
                 dz = Math.cos(rad) * s;
                 var10000 = en;
                 var10000.posX += dx;
-                var10000 = en;
                 var10000.posZ += dz;
             }
 
@@ -103,8 +101,7 @@ public class Freecam extends Module {
                 dz = Math.cos(rad) * s;
                 var10000 = en;
                 var10000.posX -= dx;
-                var10000 = en;
-                var10000.posZ -= dz;
+                var10000.posZ += dz;
             }
 
             if (Keyboard.isKeyDown(mc.gameSettings.keyBindLeft.getKeyCode())) {
@@ -113,7 +110,6 @@ public class Freecam extends Module {
                 dz = Math.cos(rad) * s;
                 var10000 = en;
                 var10000.posX += dx;
-                var10000 = en;
                 var10000.posZ += dz;
             }
 
@@ -123,7 +119,6 @@ public class Freecam extends Module {
                 dz = Math.cos(rad) * s;
                 var10000 = en;
                 var10000.posX += dx;
-                var10000 = en;
                 var10000.posZ += dz;
             }
 

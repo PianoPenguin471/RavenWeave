@@ -12,7 +12,6 @@ import ravenweave.client.event.impl.MoveInputEvent;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.Targets;
-import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -27,10 +26,9 @@ public class KillAura extends Module {
     private EntityPlayer target;
 
     public static SliderSetting reach;
-    private DoubleSliderSetting cps;
-    private TickSetting disableWhenFlying, mouseDown, onlySurvival, fixMovement;
-    private ComboSetting<BlockMode> blockMode;
-    private CoolDown coolDown = new CoolDown(1);
+    private final DoubleSliderSetting cps;
+    private final TickSetting disableWhenFlying, mouseDown, onlySurvival, fixMovement;
+    private final CoolDown coolDown = new CoolDown(1);
     private boolean leftDown, leftn, locked;
     private long leftDownTime, leftUpTime, leftk, leftl;
     public static float yaw, pitch, prevYaw, prevPitch;
@@ -44,7 +42,6 @@ public class KillAura extends Module {
         this.registerSetting(disableWhenFlying = new TickSetting("Disable when flying", true));
         this.registerSetting(mouseDown = new TickSetting("Mouse Down", false));
         this.registerSetting(fixMovement = new TickSetting("Movement Fix", true));
-        this.registerSetting(blockMode = new ComboSetting<>("Block mode", BlockMode.NONE));
     }
 
     @SubscribeEvent
@@ -60,16 +57,16 @@ public class KillAura extends Module {
                             || !(!mouseDown.isToggled() || Mouse.isButtonDown(0))
                             || !(!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying)) {
                 target = null;
-                rotate(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch, true);
+                rotate(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
                 return;
             }
             target = pTarget;
-            ravenClick();
+            this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
             float[] i = Utils.Player.getTargetRotations(target, 0);
             locked = false;
-            rotate(i[0], i[1], false);
-        } catch (Exception exception) {
-            exception.printStackTrace();
+            rotate(i[0], i[1]);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -105,7 +102,7 @@ public class KillAura extends Module {
         Utils.HUD.drawBoxAroundEntity(target, 2, 0, 0, rgb, false);
     }
 
-    public void rotate(float yaw, float pitch, boolean e) {
+    public void rotate(float yaw, float pitch) {
        KillAura.yaw = yaw;
        KillAura.pitch = pitch;
     }
@@ -121,8 +118,8 @@ public class KillAura extends Module {
         final float pitchDif = currentRots[1] - prevRots[1];
         final double gcd = MouseSens();
 
-        currentRots[0] -= yawDif % gcd;
-        currentRots[1] -= pitchDif % gcd;
+        currentRots[0] -= (float) (yawDif % gcd);
+        currentRots[1] -= (float) (pitchDif % gcd);
         return currentRots;
     }
 
@@ -145,10 +142,6 @@ public class KillAura extends Module {
      * TODO: Recode whatever is below this and finish autoblock
      * will do it in the near future when i get time to open my intellij
      */
-
-    private void ravenClick() {
-        this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
-    }
 
     public void leftClickExecute(int key) {
         if ((this.leftUpTime > 0L) && (this.leftDownTime > 0L)) {
@@ -195,9 +188,5 @@ public class KillAura extends Module {
 
         this.leftUpTime = System.currentTimeMillis() + delay;
         this.leftDownTime = (System.currentTimeMillis() + (delay / 2L)) - Utils.Java.rand().nextInt(10);
-    }
-
-    public enum BlockMode {
-        NONE, Vanilla, Damage
     }
 }

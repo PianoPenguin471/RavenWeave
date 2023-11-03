@@ -21,8 +21,8 @@ import ravenweave.client.module.setting.impl.TickSetting;
 public class AutoClutch extends Module {
     public static SliderSetting range;
     public static TickSetting cpsCap;
-    private float startYaw;
-    private float startPitch;
+    private float startYaw, startPitch;
+
     public AutoClutch() {
         super("AutoClutch", ModuleCategory.player);
         this.registerSetting(new DescriptionSetting("Block clutches for you"));
@@ -32,6 +32,18 @@ public class AutoClutch extends Module {
         this.registerSetting(cpsCap = new TickSetting("Cps cap", false));
     }
 
+    @Override
+    public void onEnable() {
+        this.startYaw = mc.thePlayer.rotationYaw;
+        this.startPitch = mc.thePlayer.rotationPitch;
+    }
+
+    @Override
+    public void onDisable() {
+        mc.thePlayer.rotationYaw = startYaw;
+        mc.thePlayer.rotationPitch = startPitch;
+    }
+
     @SubscribeEvent
     public void onTick(TickEvent e) {
         if (cpsCap.isToggled()) {
@@ -39,61 +51,46 @@ public class AutoClutch extends Module {
         }
     }
     
-    public void onEnable() {
-        this.startYaw = mc.thePlayer.rotationYaw;
-        this.startPitch = mc.thePlayer.rotationPitch;
-    }
-
-    public void onDisable() {
-        mc.thePlayer.rotationYaw = startYaw;
-        mc.thePlayer.rotationPitch = startPitch;
-    }
-    
     @SubscribeEvent
     public void onRender(RenderGameOverlayEvent.Post event) {
-        if (!cpsCap.isToggled()) {
-            this.placeBlock(range.getInput(), true, event.getPartialTicks());
-        } else {
-            this.placeBlock(range.getInput(), false, event.getPartialTicks());
-        }
+        this.placeBlock(range.getInput(), !cpsCap.isToggled(), event.getPartialTicks());
     }
 
-    public boolean placeBlock(double range, boolean place, float partialTicks) {
-        if (!this.isAirBlock(getBlock(new BlockPos(mc.thePlayer).down()))) {
-            return true;
+    public void placeBlock(double range, boolean place, float partialTicks) {
+        if (this.isAirBlock(getBlock(new BlockPos(mc.thePlayer).down()))) {
+            return;
         }
         if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(), place, partialTicks)) {
-            return true;
+            return;
         }
-        Object target = null;
+
         for (int dist = 0; dist <= range; ++dist) {
             for (int blockDist = 0; dist != blockDist; ++blockDist) {
                 for (int x = blockDist; x >= 0; --x) {
                     int z = blockDist - x;
                     int y = dist - blockDist;
                     if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(x).west(z), place, partialTicks)) {
-                        return true;
+                        return;
                     }
                     if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(x).west(-z), place, partialTicks)) {
-                        return true;
+                        return;
                     }
                     if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(-x).west(z), place, partialTicks)) {
-                        return true;
+                        return;
                     }
                     if (!this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(-x).west(-z), place, partialTicks)) continue;
-                    return true;
+                    return;
                 }
             }
         }
-        return false;
     }
 
-    public boolean placeBlock(double range, boolean place) {
-        if (!this.isAirBlock(getBlock(new BlockPos(mc.thePlayer).down()))) {
-            return true;
+    public void placeBlock(double range, boolean place) {
+        if (this.isAirBlock(getBlock(new BlockPos(mc.thePlayer).down()))) {
+            return;
         }
         if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(), place)) {
-            return true;
+            return;
         }
         for (int dist = 0; dist <= range; ++dist) {
             for (int blockDist = 0; dist != blockDist; ++blockDist) {
@@ -101,28 +98,27 @@ public class AutoClutch extends Module {
                     int z = blockDist - x;
                     int y = dist - blockDist;
                     if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(x).west(z), place)) {
-                        return true;
+                        return;
                     }
                     if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(x).west(-z), place)) {
-                        return true;
+                        return;
                     }
                     if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(-x).west(z), place)) {
-                        return true;
+                        return;
                     }
                     if (!this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(-x).west(-z), place)) continue;
-                    return true;
+                    return;
                 }
             }
         }
-        return false;
     }
 
 
     public boolean isAirBlock(Block block) {
         if (block.getMaterial().isReplaceable()) {
-            return !(block instanceof BlockSnow) || !(block.getBlockBoundsMaxY() > 0.125);
+            return block instanceof BlockSnow && block.getBlockBoundsMaxY() > 0.125;
         }
-        return false;
+        return true;
     }
 
     public int getFirstHotBarSlotWithBlocks() {
@@ -164,20 +160,7 @@ public class AutoClutch extends Module {
     }
 
     public boolean doesSlotHaveBlocks(int slotToCheck) {
-        return mc.thePlayer.inventory.getStackInSlot(slotToCheck) != null && mc.thePlayer.inventory.getStackInSlot(slotToCheck).getItem() instanceof ItemBlock && mc.thePlayer.inventory.getStackInSlot((int)slotToCheck).stackSize > 0;
-    }
-
-    public boolean canPlace(BlockPos pos) {
-        Minecraft mc = Minecraft.getMinecraft();
-        Vec3 eyesPos = new Vec3(mc.thePlayer.posX, mc.thePlayer.posY + (double)mc.thePlayer.getEyeHeight(), mc.thePlayer.posZ);
-        for (EnumFacing side : EnumFacing.values()) {
-            BlockPos neighbor = pos.offset(side);
-            EnumFacing side2 = side.getOpposite();
-            Vec3 hitVec = new Vec3(neighbor).addVector(0.5, 0.5, 0.5).add(new Vec3(side2.getDirectionVec()));
-            if (eyesPos.squareDistanceTo(hitVec) > 36.0) continue;
-            return true;
-        }
-        return false;
+        return mc.thePlayer.inventory.getStackInSlot(slotToCheck) != null && mc.thePlayer.inventory.getStackInSlot(slotToCheck).getItem() instanceof ItemBlock && mc.thePlayer.inventory.getStackInSlot(slotToCheck).stackSize > 0;
     }
 
     public boolean placeBlockSimple(BlockPos pos, boolean place) {

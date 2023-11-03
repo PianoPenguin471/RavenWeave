@@ -14,7 +14,7 @@ public class Ladders extends Module {
         super("Ladders", ModuleCategory.hotkey);
 
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 8, 1, 9, 1));
+        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer which slot", 8, 1, 9, 1));
     }
 
     @Override
@@ -51,6 +51,6 @@ public class Ladders extends Module {
         if (itemInSlot == null)
             return false;
 
-        return itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ladder");
+        return itemInSlot.getDisplayName().equalsIgnoreCase("ladder");
     }
 }

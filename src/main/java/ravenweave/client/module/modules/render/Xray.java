@@ -8,7 +8,6 @@ import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockRedstoneOre;
 
 public class Xray extends Module {
-
     public static Xray instance;
 
     public static TickSetting hypixel;
@@ -16,14 +15,9 @@ public class Xray extends Module {
 
     public Xray() {
         super("Xray", ModuleCategory.render);
-
-        this.registerSettings(
-                opacity = new SliderSetting("Opacity", 120, 0, 255, 1),
-                hypixel = new TickSetting("Hypixel", true)
-        );
-
+        this.registerSetting(opacity = new SliderSetting("Opacity", 120, 0, 255, 1));
+        this.registerSetting(hypixel = new TickSetting("Hypixel", true));
         instance = this;
-
     }
 
     @Override

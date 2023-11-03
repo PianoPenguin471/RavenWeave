@@ -16,8 +16,7 @@ import ravenweave.client.main.Raven;
 public class BlockMixin {
 
     @Inject(method = "shouldSideBeRendered", at = @At("HEAD"), cancellable = true)
-    public void shouldSideBeRendered(IBlockAccess p_shouldSideBeRendered_1_, BlockPos p_shouldSideBeRendered_2_,
-                                     EnumFacing p_shouldSideBeRendered_3_, CallbackInfoReturnable<Boolean> cir) {
+    public void shouldSideBeRendered(IBlockAccess p_shouldSideBeRendered_1_, BlockPos p_shouldSideBeRendered_2_, EnumFacing p_shouldSideBeRendered_3_, CallbackInfoReturnable<Boolean> cir) {
         if(Raven.moduleManager.getModuleByClazz(Xray.class).isEnabled() && Xray.hypixel.isToggled()) {
             cir.setReturnValue(Xray.isOreBlock((Block) (Object) this));
         }

@@ -27,10 +27,10 @@ import java.lang.reflect.Method;
 import java.util.Random;
 
 public class LeftClicker extends Module {
-    public static SliderSetting jitterLeft, hitSelectTick;
+    public static SliderSetting jitterLeft;
     public static TickSetting weaponOnly, breakBlocks;
     public static DoubleSliderSetting leftCPS;
-    public static TickSetting inventoryFill, hitSelect;
+    public static TickSetting inventoryFill;
     public static ComboSetting<SoundMode> soundMode;
 
     public static boolean autoClickerEnabled;
@@ -42,29 +42,26 @@ public class LeftClicker extends Module {
     private double leftm;
     private boolean leftn;
     private boolean breakHeld;
-    private boolean hitSelected;
     private Random rand;
-    private Method playerMouseInput;
+    private final Method playerMouseInput;
     public EntityLivingBase target;
 
     public LeftClicker() {
         super("Left Clicker", ModuleCategory.combat);
 
         this.registerSetting(new DescriptionSetting("Best with delay remover."));
-        this.registerSetting(leftCPS = new DoubleSliderSetting("Left CPS", 9, 13, 1, 60, 0.5));
+        this.registerSetting(leftCPS = new DoubleSliderSetting("CPS", 9, 13, 1, 24, 0.5));
         this.registerSetting(jitterLeft = new SliderSetting("Jitter left", 0.0D, 0.0D, 3.0D, 0.1D));
         this.registerSetting(inventoryFill = new TickSetting("Inventory fill", false));
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", false));
-        this.registerSetting(hitSelect = new TickSetting("Hit Select", false));
-        this.registerSetting(hitSelectTick = new SliderSetting("HitSelect Hurttick", 7, 1, 10, 1));
         this.registerSetting(soundMode = new ComboSetting<>("Click sound", SoundMode.NONE));
 
         try {
             this.playerMouseInput = ReflectionUtils.findMethod(GuiScreen.class, null,
                     "mouseClicked", Integer.TYPE, Integer.TYPE, Integer.TYPE);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
 
         if (this.playerMouseInput != null)
@@ -100,22 +97,10 @@ public class LeftClicker extends Module {
         if ((!Utils.Client.currentScreenMinecraft()
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)
                 && !(Minecraft.getMinecraft().currentScreen instanceof GuiChest)
-        ) || shouldNotClick())
+        ))
             return;
 
         click();
-    }
-
-    private boolean shouldNotClick() {
-        if (!Mouse.isButtonDown(0))
-			hitSelected = false;
-
-        if (hitSelect.isToggled())
-			if (hitSelected || ((mc.thePlayer.hurtTime != 0) && (mc.thePlayer.hurtTime > hitSelectTick.getInput())))
-				hitSelected = true;
-			else
-				return true;
-        return false;
     }
 
     private void click() {
@@ -170,6 +155,7 @@ public class LeftClicker extends Module {
                     if (SoundUtils.clip != null) SoundUtils.clip.stop();
                     SoundUtils.playSound(soundMode.getMode().name());
                 }
+
                 KeyBinding.setKeyBindState(key, true);
                 KeyBinding.onTick(key);
                 this.genLeftTimings();

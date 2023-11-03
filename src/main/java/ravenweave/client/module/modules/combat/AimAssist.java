@@ -7,10 +7,8 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.weavemc.loader.api.event.RenderLivingEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Mouse;
-import ravenweave.client.event.impl.LivingUpdateEvent;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
@@ -83,7 +81,7 @@ public class AimAssist extends Module {
         boolean found = false;
         for (Entity entity : mc.theWorld.getLoadedEntityList())
             if (entity.getName().equalsIgnoreCase(name) || entity.getCustomNameTag().equalsIgnoreCase(name))
-                if (!Targets.isAFriend(entity)) {
+                if (Targets.isAFriend(entity)) {
                     addFriend(entity);
                     found = true;
                 }
@@ -109,8 +107,7 @@ public class AimAssist extends Module {
         try {
             friends.remove(entityPlayer);
         } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
+            throw new RuntimeException(ex);
         }
         return true;
     }

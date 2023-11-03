@@ -15,9 +15,9 @@ public class KeepSprint extends Module {
 
     public KeepSprint() {
         super("KeepSprint", ModuleCategory.movement);
-        this.registerSetting(new DescriptionSetting("Default is 40% motion reduction"));
+        this.registerSetting(new DescriptionSetting("Default is 60% retained speed"));
         this.registerSetting(new DescriptionSetting("and stopping sprint."));
-        this.registerSetting(speed = new SliderSetting("Slow %", 40.0D, 0.0D, 100.0D, 1.0D));
+        this.registerSetting(speed = new SliderSetting("Retained speed", 60.0D, 0.0D, 100.0D, 1.0D));
         this.registerSetting(reduce = new TickSetting("Only reduce reach hits", false));
         this.registerSetting(sprint = new TickSetting("Stop Sprint", true));
     }
@@ -30,7 +30,7 @@ public class KeepSprint extends Module {
             dist = mc.objectMouseOver.hitVec.distanceTo(mc.getRenderViewEntity().getPositionEyes(1.0F));
             double val;
             if (dist > 3.0D) {
-                val = (100.0D - (double) ((float) speed.getInput())) / 100.0D;
+                val = (double) ((float) speed.getInput()) / 100.0D;
             } else {
                 val = 0.6D;
             }
@@ -38,7 +38,7 @@ public class KeepSprint extends Module {
             e.setSlowDown(val);
         } else {
             double val;
-            val = (100.0D - (double) ((float) speed.getInput())) / 100.0D;
+            val = (double) ((float) speed.getInput()) / 100.0D;
             e.setSlowDown(val);
         }
         if (sprint.isToggled()) {

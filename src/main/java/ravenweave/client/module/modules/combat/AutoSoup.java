@@ -1,55 +1,31 @@
 package ravenweave.client.module.modules.combat;
 
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.ItemSoup;
 import net.minecraft.item.ItemStack;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AutoSoup extends Module {
-
-    private final DoubleSliderSetting delay, coolDown, invCoolDown, invWait;
+    private final DoubleSliderSetting delay, coolDown;
     private final SliderSetting health;
-    private final CoolDown cd = new CoolDown(1), invCd = new CoolDown(1);
-    private final TickSetting invConsume, autoRefill;
+    private final CoolDown cd = new CoolDown(1);
+    private final TickSetting invConsume;
     private State state = State.WAITINGTOSWITCH;
     private int originalSlot;
-    private boolean inInv;
-    private List<Integer> sortedSlots = new ArrayList<>();
 
     public AutoSoup() {
         super("AutoSoup", ModuleCategory.combat);
-        this.registerSetting(delay = new DoubleSliderSetting("delay(ms)", 50, 100, 0, 200, 1));
-        this.registerSetting(coolDown = new DoubleSliderSetting("cooldown(ms)", 1000, 1200, 0, 5000, 1));
-        this.registerSetting(health = new SliderSetting("health", 7, 0, 20, 0.1));
-        this.registerSetting(invConsume = new TickSetting("consume in inv", false));
-        this.registerSetting(autoRefill = new TickSetting("auto refil", true));
-        this.registerSetting(invWait = new DoubleSliderSetting("invWait(ms)", 50, 100, 0, 200, 1));
-        this.registerSetting(invCoolDown = new DoubleSliderSetting("refill delay(ms)", 50, 100, 0, 200, 1));
-    }
-
-    @Override
-    public void postApplyConfig() {
-        guiButtonToggled(autoRefill);
-    }
-
-    @Override
-    public void guiButtonToggled(Setting b) {
-        if(b == autoRefill) {
-            invWait.hideComponent(autoRefill.isToggled());
-            invCoolDown.hideComponent(autoRefill.isToggled());
-        }
+        this.registerSetting(health = new SliderSetting("Health", 7, 0, 20, 0.1));
+        this.registerSetting(delay = new DoubleSliderSetting("Delay", 50, 100, 0, 200, 1));
+        this.registerSetting(coolDown = new DoubleSliderSetting("Cooldown", 1000, 1200, 0, 5000, 1));
+        this.registerSetting(invConsume = new TickSetting("Consume in inventory", false));
     }
 
     @SubscribeEvent
@@ -92,36 +68,7 @@ public class AutoSoup extends Module {
             state = state.next();
             cd.start();
         }
-        if (autoRefill.isToggled() && Utils.Player.isPlayerInInventory()) {
-            if (!inInv) {
-            	invCd.setCooldown((long) Utils.Client.ranModuleVal(invWait, Utils.Java.rand()));
-            	invCd.start();
-                generatePath((ContainerPlayer) mc.thePlayer.openContainer);
-                inInv = true;
-            }
-            if (!sortedSlots.isEmpty())
-				if (invCd.hasFinished()) {
-                    mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, sortedSlots.get(0), 0, 1, mc.thePlayer);
-                    invCd.setCooldown((long) Utils.Client.ranModuleVal(invCoolDown, Utils.Java.rand()));
-                    invCd.start();
-                    sortedSlots.remove(0);
-                }
-        } else
-			inInv = false;
-    }
 
-    public void generatePath(ContainerPlayer inv) {
-        ArrayList<Integer> slots = new ArrayList<>();
-        int slotsNeeded = 0;
-        for (int i = 0; i <= 8; i++)
-        	slotsNeeded = mc.thePlayer.inventory.getStackInSlot(i) == null ? slotsNeeded + 1 : slotsNeeded ;
-        for (int i = 0; i < inv.getInventory().size(); i++) {
-        	if(!slots.isEmpty() && (slots.size() >= slotsNeeded)) break;
-			if ((inv.getInventory().get(i) != null) && (inv.getInventory().get(i).getItem() instanceof ItemSoup) && !((i >= 36) && (i <= 44)))
-				slots.add(i);
-        }
-
-        this.sortedSlots = slots;
     }
 
     public int getSoupSlot() {
@@ -134,13 +81,9 @@ public class AutoSoup extends Module {
     }
 
     public enum State {
-    	WAITINGTOSWITCH,
-        NONE,
-        SWITCHED,
-        SWITCHEDANDCLICKED,
-        SWITCHEDANDDROPPED;
+    	WAITINGTOSWITCH, NONE, SWITCHED, SWITCHEDANDCLICKED, SWITCHEDANDDROPPED;
 
-        private static State[] vals = values();
+        private static final State[] vals = values();
         public State next() {
             return vals[(this.ordinal()+1) % vals.length];
         }

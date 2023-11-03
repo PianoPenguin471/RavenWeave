@@ -9,17 +9,16 @@ import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.Utils;
 
 public class Boost extends Module {
-    public static DescriptionSetting c;
-    public static SliderSetting a;
-    public static SliderSetting b;
+    public static SliderSetting multiplier;
+    public static SliderSetting time;
     private int i;
     private boolean t;
 
     public Boost() {
         super("Boost", ModuleCategory.movement);
-        this.registerSetting(c = new DescriptionSetting("20 ticks are in 1 second"));
-        this.registerSetting(a = new SliderSetting("Multiplier", 2.0D, 1.0D, 3.0D, 0.05D));
-        this.registerSetting(b = new SliderSetting("Time (ticks)", 15.0D, 1.0D, 80.0D, 1.0D));
+        this.registerSetting(new DescriptionSetting("20 ticks are in 1 second"));
+        this.registerSetting(multiplier = new SliderSetting("Multiplier", 2.0D, 1.0D, 3.0D, 0.05D));
+        this.registerSetting(time = new SliderSetting("Time (ticks)", 15.0D, 1.0D, 80.0D, 1.0D));
     }
 
     public void onEnable() {
@@ -53,8 +52,8 @@ public class Boost extends Module {
                 this.i = mc.thePlayer.ticksExisted;
             }
 
-            Utils.Client.getTimer().timerSpeed = (float) a.getInput();
-            if ((double) this.i == (double) mc.thePlayer.ticksExisted - b.getInput()) {
+            Utils.Client.getTimer().timerSpeed = (float) multiplier.getInput();
+            if ((double) this.i == (double) mc.thePlayer.ticksExisted - time.getInput()) {
                 Utils.Client.resetTimer();
                 this.disable();
             }

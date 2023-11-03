@@ -1,5 +1,6 @@
 package ravenweave.client.module.modules.hotkey;
 
+import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
@@ -14,13 +15,13 @@ public class Pearl extends Module {
         super("Pearl", ModuleCategory.hotkey);
 
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 6, 1, 9, 1));
+        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer which slot", 6, 1, 9, 1));
     }
 
     public static boolean checkSlot(int slot) {
         ItemStack itemInSlot = mc.thePlayer.inventory.getStackInSlot(slot);
 
-        return itemInSlot != null && itemInSlot.getDisplayName().equalsIgnoreCase("ender pearl");
+        return itemInSlot != null && itemInSlot.getItem() instanceof ItemEnderPearl;
     }
 
     @Override

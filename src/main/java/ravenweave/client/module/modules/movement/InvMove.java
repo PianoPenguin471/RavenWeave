@@ -17,7 +17,7 @@ public class InvMove extends Module {
     public InvMove() {
         super("InvMove", ModuleCategory.movement);
         registerSetting(new DescriptionSetting("This does not bypass"));
-        registerSetting(rotate = new TickSetting("Rotate", false));
+        registerSetting(rotate = new TickSetting("Rotate (arrow keys)", false));
         registerSetting(clickgui = new TickSetting("Only ClickGui", true));
     }
 

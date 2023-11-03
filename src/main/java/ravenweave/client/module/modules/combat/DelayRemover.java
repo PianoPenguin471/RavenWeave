@@ -17,8 +17,7 @@ public class DelayRemover extends Module {
 
     public DelayRemover() {
         super("Delay Remover", ModuleCategory.combat);
-        withEnabled(true);
-
+        withEnabled();
         this.registerSetting(desc = new DescriptionSetting("Gives you 1.7 hitreg."));
         this.leftClickCounterField = ReflectionUtils.findField(Minecraft.class, "leftClickCounter");
         if (this.leftClickCounterField != null)
@@ -40,8 +39,7 @@ public class DelayRemover extends Module {
             try {
                 this.leftClickCounterField.set(mc, 0);
             } catch (IllegalAccessException | IndexOutOfBoundsException ex) {
-                ex.printStackTrace();
-                this.disable();
+                throw new RuntimeException(ex);
             }
         }
     }

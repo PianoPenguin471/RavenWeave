@@ -10,7 +10,6 @@ import ravenweave.client.module.setting.Setting;
 import ravenweave.client.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Module {
@@ -29,10 +28,6 @@ public class Module {
 
     protected boolean registered;
 
-    public void guiUpdate() {
-
-    }
-
     public Module(String name, ModuleCategory moduleCategory) {
         this.moduleName = name;
         this.moduleCategory = moduleCategory;
@@ -40,24 +35,13 @@ public class Module {
         mc = Minecraft.getMinecraft();
     }
 
-    protected <E extends Module> E withKeycode(int i) {
+    protected void withKeycode(int i) {
         this.keycode = i;
         this.defualtKeyCode = i;
-        return (E) this;
     }
 
-    protected <E extends Module> E withEnabled(boolean i) {
-        this.enabled = i;
-        this.defaultEnabled = i;
-        try {
-            setToggled(i);
-        } catch (Exception ignore) {
-        }
-        return (E) this;
-    }
-
-    public <E extends Module> E withDescription(String i) {
-        return (E) this;
+    protected void withEnabled() {
+        setToggled(true);
     }
 
     public JsonObject getConfigAsJson() {
@@ -173,19 +157,8 @@ public class Module {
         return this.settings;
     }
 
-    public Setting getSettingByName(String name) {
-        for (Setting setting : this.settings)
-            if (setting.getName().equalsIgnoreCase(name))
-                return setting;
-        return null;
-    }
-
     public void registerSetting(Setting Setting) {
         this.settings.add(Setting);
-    }
-
-    public void registerSettings(Setting... settings) {
-        Collections.addAll(this.settings, settings);
     }
 
     public void setVisibleInHud(boolean vis) {
@@ -217,10 +190,6 @@ public class Module {
 
     }
 
-    public int getKeycode() {
-        return this.keycode;
-    }
-
     public void setBind(int keybind) {
         this.keycode = keybind;
     }
@@ -237,32 +206,12 @@ public class Module {
         this.component = component;
     }
 
-    public void onGuiClose() {
-
-    }
-
     public String getBindAsString() {
         return keycode == 0 ? "None" : Keyboard.getKeyName(keycode);
     }
 
-    public void clearBinds() {
-        this.keycode = 0;
-    }
-
     public boolean isClientConfig() {
         return clientConfig;
-    }
-
-    public boolean isRegistered() {
-        return registered;
-    }
-
-    public void unRegister() {
-        if(registered) {
-            registered = false;
-            EventBus.unsubscribe(this);
-            onDisable();
-        }
     }
 
     public enum ModuleCategory {
@@ -282,7 +231,7 @@ public class Module {
         private final boolean defaultShown;
         private final ModuleCategory topCategory;
         private final String name;
-        private List<ModuleCategory> childCategories = new ArrayList<ModuleCategory>();
+        private final List<ModuleCategory> childCategories = new ArrayList<>();
 
         ModuleCategory(boolean defaultShown, ModuleCategory topCategory, String name) {
             if(topCategory != null)

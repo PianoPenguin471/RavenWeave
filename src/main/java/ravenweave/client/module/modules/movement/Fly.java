@@ -9,8 +9,6 @@ import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.Utils;
 
 public class Fly extends Module {
-    private final Fly.VanFly vanFly = new VanFly();
-    private final Fly.GliFly gliFly = new Fly.GliFly();
     public static SliderSetting speed;
     public static ComboSetting<FlyMode> mode;
 
@@ -19,6 +17,9 @@ public class Fly extends Module {
         this.registerSetting(mode = new ComboSetting<>(Utils.md, FlyMode.VANILLA));
         this.registerSetting(speed = new SliderSetting("Speed", 2.0D, 1.0D, 5.0D, 0.1D));
     }
+
+    private final Fly.VanFly vanFly = new VanFly();
+    private final Fly.GliFly gliFly = new GliFly();
 
     public void onEnable() {
         switch (mode.getMode()) {
@@ -87,7 +88,6 @@ public class Fly extends Module {
     }
 
     static class VanFly {
-        private final float dfs = 0.05F;
 
         public void onEnable() {
         }
