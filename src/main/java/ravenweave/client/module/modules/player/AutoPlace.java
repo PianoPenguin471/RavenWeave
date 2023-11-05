@@ -31,7 +31,7 @@ public class AutoPlace extends Module {
         super("AutoPlace", ModuleCategory.player);
         this.registerSetting(delay = new SliderSetting("Delay", 35.0D, 0.0D, 200.0D, 1.0D));
         this.registerSetting(holdRight = new TickSetting("Hold right", true));
-        this.registerSetting(placeOnTops = new TickSetting("Place on top", false));
+        this.registerSetting(placeOnTops = new TickSetting("Place on top & bottom", false));
     }
 
     public void onDisable() {
@@ -66,7 +66,7 @@ public class AutoPlace extends Module {
         if (!(heldItem.getItem() instanceof ItemBlock)) return;
         MovingObjectPosition movingObjectPosition = mc.objectMouseOver;
         if (movingObjectPosition == null || movingObjectPosition.typeOfHit != MovingObjectType.BLOCK) return;
-        if (movingObjectPosition.sideHit == EnumFacing.UP && !placeOnTops.isToggled()) return;
+        if ((movingObjectPosition.sideHit == EnumFacing.UP || movingObjectPosition.sideHit == EnumFacing.DOWN) && !placeOnTops.isToggled()) return;
 
         BlockPos pos = movingObjectPosition.getBlockPos();
 
