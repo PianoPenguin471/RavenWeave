@@ -1,6 +1,9 @@
 name: Build & Pre-Release
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
