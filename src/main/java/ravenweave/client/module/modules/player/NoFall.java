@@ -5,6 +5,7 @@ import net.weavemc.loader.api.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
+import ravenweave.client.utils.Utils;
 
 public class NoFall extends Module {
     public static DescriptionSetting warning;
@@ -23,6 +24,7 @@ public class NoFall extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent e) {
+        if (!Utils.Player.isPlayerInGame()) return;
         switch ((Mode) mode.getMode()) {
             case Spoof -> {
                 if ((double) mc.thePlayer.fallDistance > 2.5D) {
