@@ -3,7 +3,7 @@ package me.pianopenguin471.command;
 import net.minecraft.util.EnumChatFormatting;
 import net.weavemc.loader.api.command.Command;
 import org.lwjgl.input.Keyboard;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.utils.Utils;
 

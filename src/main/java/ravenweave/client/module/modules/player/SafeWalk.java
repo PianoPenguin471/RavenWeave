@@ -8,7 +8,7 @@ import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Keyboard;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;

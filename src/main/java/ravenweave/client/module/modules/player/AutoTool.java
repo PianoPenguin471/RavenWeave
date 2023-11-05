@@ -10,7 +10,7 @@ import net.minecraft.util.BlockPos;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Mouse;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.LeftClicker;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;

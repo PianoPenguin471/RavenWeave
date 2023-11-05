@@ -11,7 +11,7 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
-import ravenweave.client.event.impl.AttackEntityEvent;
+import ravenweave.client.event.AttackEntityEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.Targets;
 import ravenweave.client.module.setting.impl.DescriptionSetting;

@@ -1,4 +1,4 @@
-package ravenweave.client.event.impl;
+package ravenweave.client.event;
 
 import net.weavemc.loader.api.event.Event;
 

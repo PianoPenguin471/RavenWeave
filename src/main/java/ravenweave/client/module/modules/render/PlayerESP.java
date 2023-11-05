@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.module.setting.impl.DescriptionSetting;

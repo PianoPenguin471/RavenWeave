@@ -2,7 +2,7 @@ package ravenweave.client.clickgui.kv.components;
 
 import net.minecraft.client.gui.Gui;
 import ravenweave.client.clickgui.kv.KvComponent;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.utils.font.FontUtil;

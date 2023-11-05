@@ -1,8 +1,8 @@
 package ravenweave.client.module.modules.movement;
 
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.event.impl.HitSlowDownEvent;
-import ravenweave.client.main.Raven;
+import ravenweave.client.event.HitSlowDownEvent;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.Reach;
 import ravenweave.client.module.setting.impl.DescriptionSetting;

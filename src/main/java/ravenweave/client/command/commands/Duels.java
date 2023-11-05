@@ -2,7 +2,7 @@ package ravenweave.client.command.commands;
 
 import ravenweave.client.clickgui.raven.Terminal;
 import ravenweave.client.command.Command;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.profile.PlayerProfile;
 

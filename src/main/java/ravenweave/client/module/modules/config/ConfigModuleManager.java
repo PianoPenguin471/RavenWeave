@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.config;
 
 import ravenweave.client.config.Config;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module.ModuleCategory;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package ravenweave.client.module;
 
 import net.minecraft.client.gui.FontRenderer;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.modules.HUD;
 import ravenweave.client.module.modules.beta.*;
 import ravenweave.client.module.modules.client.ClickGuiModule;

@@ -7,8 +7,7 @@ import net.weavemc.loader.api.event.ShutdownEvent;
 import net.weavemc.loader.api.event.StartGameEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.WorldEvent;
-import ravenweave.client.event.ext.EventDirection;
-import ravenweave.client.event.impl.PacketEvent;
+import ravenweave.client.event.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -34,9 +33,9 @@ public class Blink extends Module {
     
     @SubscribeEvent
     public void onPacket(PacketEvent e) {
-        if (e.getDirection() == EventDirection.INCOMING && (mode.getMode() == modes.BOTH || mode.getMode() == modes.INBOUND)) {
+        if (!e.isOutgoing() && (mode.getMode() == modes.BOTH || mode.getMode() == modes.INBOUND)) {
             inboundPackets.add(e.getPacket());
-        } else if (e.getDirection() == EventDirection.OUTGOING && (mode.getMode() == modes.BOTH || mode.getMode() == modes.OUTBOUND)) {
+        } else if (e.isOutgoing() && (mode.getMode() == modes.BOTH || mode.getMode() == modes.OUTBOUND)) {
             outboundPackets.add(e.getPacket());
         }
 

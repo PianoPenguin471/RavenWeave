@@ -18,9 +18,7 @@ import net.weavemc.loader.api.event.EventBus;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import ravenweave.client.event.impl.HitSlowDownEvent;
-import ravenweave.client.main.Raven;
-import ravenweave.client.module.modules.movement.KeepSprint;
+import ravenweave.client.event.HitSlowDownEvent;
 
 @Mixin(priority = 995, value = EntityPlayer.class)
 public abstract class EntityPlayerMixin extends EntityLivingBase {

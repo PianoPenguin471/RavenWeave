@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
-import ravenweave.client.event.impl.PacketEvent;
+import ravenweave.client.event.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;

@@ -15,7 +15,7 @@ import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import ravenweave.client.event.impl.AttackEntityEvent;
+import ravenweave.client.event.AttackEntityEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.*;
 import ravenweave.client.utils.ReflectionUtils;

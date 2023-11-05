@@ -1,6 +1,5 @@
 package me.pianopenguin471.mixins;
 
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
@@ -11,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ravenweave.client.event.impl.RenderLabelEvent;
+import ravenweave.client.event.RenderLabelEvent;
 
 @Mixin(RendererLivingEntity.class)
 public abstract class RendererLivingEntityMixin<T extends EntityLivingBase> extends Render<T> {

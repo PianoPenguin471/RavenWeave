@@ -33,7 +33,7 @@ import net.weavemc.loader.api.event.MouseEvent;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.LeftClicker;
 import ravenweave.client.module.modules.combat.Reach;

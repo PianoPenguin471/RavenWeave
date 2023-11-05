@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ravenweave.client.event.impl.GameLoopEvent;
+import ravenweave.client.event.GameLoopEvent;
 
 @Mixin(priority = 1005, value = Minecraft.class)
 public class MinecraftMixin {

@@ -5,7 +5,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.opengl.GL11;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.utils.CoolDown;
 
 import java.awt.*;

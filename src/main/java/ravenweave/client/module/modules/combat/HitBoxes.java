@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.combat;
 
 import net.minecraft.entity.Entity;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.module.setting.impl.DescriptionSetting;

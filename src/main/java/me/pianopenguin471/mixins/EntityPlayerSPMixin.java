@@ -17,10 +17,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ravenweave.client.event.ext.EventTiming;
-import ravenweave.client.event.impl.LivingUpdateEvent;
-import ravenweave.client.event.impl.SlowdownEvent;
-import ravenweave.client.event.impl.UpdateEvent;
+import ravenweave.client.event.LivingUpdateEvent;
+import ravenweave.client.event.SlowdownEvent;
+import ravenweave.client.event.UpdateEvent;
 
 @Mixin(priority = 995, value = EntityPlayerSP.class)
 public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
@@ -74,7 +73,7 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
         cachedRotationYaw = rotationYaw;
         cachedRotationPitch = rotationPitch;
 
-        UpdateEvent event = new UpdateEvent(EventTiming.PRE, posX, posY, posZ, rotationYaw, rotationPitch, onGround);
+        UpdateEvent event = new UpdateEvent.Pre(posX, posY, posZ, rotationYaw, rotationPitch, onGround);
         EventBus.callEvent(event);
         if(event.isCancelled()) {
             ci.cancel();
@@ -102,7 +101,7 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
         rotationYaw = cachedRotationYaw;
         rotationPitch = cachedRotationPitch;
 
-        EventBus.callEvent(new UpdateEvent(EventTiming.POST, posX, posY, posZ, rotationYaw, rotationPitch, onGround));
+        EventBus.callEvent(new UpdateEvent.Post(posX, posY, posZ, rotationYaw, rotationPitch, onGround));
     }
 
     @Inject(method = "onLivingUpdate", at = @At("HEAD"), cancellable = true)

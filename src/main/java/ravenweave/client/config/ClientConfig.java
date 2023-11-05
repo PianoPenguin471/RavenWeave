@@ -1,10 +1,11 @@
-package ravenweave.client.main;
+package ravenweave.client.config;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.client.Minecraft;
 import ravenweave.client.clickgui.raven.components.CategoryComponent;
+import ravenweave.client.Raven;
 import ravenweave.client.module.GuiModule;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.Module.ModuleCategory;

@@ -6,22 +6,14 @@ import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.event.impl.UpdateEvent;
+import ravenweave.client.event.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
-import ravenweave.client.utils.CoolDown;
 import ravenweave.client.utils.ItemUtils;
 import ravenweave.client.utils.TimerUtil;
 import ravenweave.client.utils.Utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Stealer extends Module {
     public static DoubleSliderSetting delay;

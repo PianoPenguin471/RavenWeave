@@ -4,7 +4,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 
-import static ravenweave.client.main.Raven.mc;
+import static ravenweave.client.Raven.mc;
 
 public class RayTraceUtils {
     // This method was protected in the Entity class, so I pasted it and made it readable

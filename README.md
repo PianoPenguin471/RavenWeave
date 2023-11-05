@@ -16,6 +16,9 @@ A Raven fork based off of [Raven B++](https://github.com/K-ov/Raven-bPLUS) for [
 ---
 
 ## Build
+> NOTE: If you plan to work with the source code, make sure to properly setting up Lombok with your IDE. (to avoid random issues)
+> 
+> [IntelliJ](https://projectlombok.org/setup/intellij), [Eclipse](https://projectlombok.org/setup/eclipse), [VS Code](https://projectlombok.org/setup/vscode), and [Others](https://projectlombok.org).
 1. Clone the repository.
 2. Run `gradlew build` in the root directory.
 3. The built jar file will be in `build/libs`.

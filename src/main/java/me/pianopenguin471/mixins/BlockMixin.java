@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 
 @Mixin(value = Block.class, priority = 1005)
 public class BlockMixin {

@@ -15,7 +15,7 @@ import net.weavemc.loader.api.event.ChatReceivedEvent;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.TickEvent;
-import ravenweave.client.event.impl.EntityJoinWorldEvent;
+import ravenweave.client.event.EntityJoinWorldEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;

@@ -5,7 +5,7 @@ import net.weavemc.loader.api.event.MouseEvent;
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
-import ravenweave.client.event.impl.LivingUpdateEvent;
+import ravenweave.client.event.LivingUpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;

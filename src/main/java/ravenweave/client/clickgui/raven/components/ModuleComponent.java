@@ -3,7 +3,7 @@ package ravenweave.client.clickgui.raven.components;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 import ravenweave.client.clickgui.raven.Component;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.module.setting.Setting;
