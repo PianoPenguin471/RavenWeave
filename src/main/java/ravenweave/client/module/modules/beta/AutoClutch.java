@@ -110,12 +110,12 @@ public class AutoClutch extends Module {
         return false;
     }
 
-    public boolean placeBlock(double range, boolean place) {
+    public void placeBlock(double range, boolean place) {
         if (!this.isAirBlock(getBlock(new BlockPos(mc.thePlayer).down()))) {
-            return true;
+            return;
         }
         if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(), place)) {
-            return true;
+            return;
         }
         for (int dist = 0; dist <= range; ++dist) {
             for (int blockDist = 0; dist != blockDist; ++blockDist) {
@@ -123,20 +123,19 @@ public class AutoClutch extends Module {
                     int z = blockDist - x;
                     int y = dist - blockDist;
                     if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(x).west(z), place)) {
-                        return true;
+                        return;
                     }
                     if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(x).west(-z), place)) {
-                        return true;
+                        return;
                     }
                     if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(-x).west(z), place)) {
-                        return true;
+                        return;
                     }
                     if (!this.placeBlockSimple(new BlockPos(mc.thePlayer).down(y).north(-x).west(-z), place)) continue;
-                    return true;
+                    return;
                 }
             }
         }
-        return false;
     }
 
 
