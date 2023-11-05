@@ -15,7 +15,6 @@ import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 
 public class NoSlow extends Module {
-    private int disable;
     public static SliderSetting speed;
     public static ComboSetting<modes> mode;
 

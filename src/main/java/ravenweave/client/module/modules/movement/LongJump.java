@@ -1,4 +1,4 @@
-package ravenweave.client.module.modules.beta;
+package ravenweave.client.module.modules.movement;
 
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.weavemc.loader.api.event.SubscribeEvent;
@@ -16,18 +16,24 @@ public class LongJump extends Module {
     public static TickSetting autoDisable;
 
     public LongJump() {
-        super("LongJump", ModuleCategory.beta); // Category: Movement
+        super("LongJump", ModuleCategory.movement);
         this.registerSetting(new DescriptionSetting("Makes your jump longer."));
-        this.registerSetting(speed = new SliderSetting("Speed:", 5, 1, 10, 0.25));
+        this.registerSetting(speed = new SliderSetting("Speed:", 5, 1, 8, 0.25));
         this.registerSetting(autoDisable = new TickSetting("Auto Disable", true));
+    }
+
+    @Override
+    public void onDisable() {
+        this.shouldJump = false;
+        this.hasJumped = false;
+        super.onDisable();
     }
 
     @SubscribeEvent
     public void onPacket(PacketEvent event) {
         if (event.getDirection() == EventDirection.OUTGOING) return;
         if (!(event.getPacket() instanceof S12PacketEntityVelocity)) return;
-        if (((S12PacketEntityVelocity) event.getPacket()).getEntityID() == mc.thePlayer.getEntityId())
-            this.shouldJump = true;
+        if (((S12PacketEntityVelocity) event.getPacket()).getEntityID() == mc.thePlayer.getEntityId()) this.shouldJump = true;
     }
 
     @SubscribeEvent
@@ -54,12 +60,5 @@ public class LongJump extends Module {
                 }
             }
         }
-    }
-
-    @Override
-    public void onDisable() {
-        this.shouldJump = false;
-        this.hasJumped = false;
-        super.onDisable();
     }
 }

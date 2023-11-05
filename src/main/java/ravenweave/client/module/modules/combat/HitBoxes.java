@@ -1,7 +1,6 @@
 package ravenweave.client.module.modules.combat;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MovingObjectPosition;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
@@ -12,7 +11,6 @@ import ravenweave.client.module.setting.impl.TickSetting;
 public class HitBoxes extends Module {
     public static SliderSetting blocks;
     public static TickSetting vertical;
-    private static MovingObjectPosition mv;
 
     public HitBoxes() {
         super("HitBoxes", ModuleCategory.combat);

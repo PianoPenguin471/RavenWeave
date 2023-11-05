@@ -10,7 +10,6 @@ import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Keyboard;
 import ravenweave.client.main.Raven;
 import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -29,12 +28,10 @@ public class SafeWalk extends Module {
     public static TickSetting shawtyMoment;
     public static DoubleSliderSetting pitchRange;
     public static SliderSetting blockShowMode;
-    public static DescriptionSetting blockShowModeDesc;
     public static DoubleSliderSetting shiftTime;
 
     private static boolean shouldBridge;
     private static boolean isShifting;
-    private boolean allowedShift;
     private final CoolDown shiftTimer = new CoolDown(0);
 
     public SafeWalk() {
@@ -46,7 +43,6 @@ public class SafeWalk extends Module {
         this.registerSetting(blocksOnly = new TickSetting("Blocks only", true));
         this.registerSetting(showBlockAmount = new TickSetting("Show amount of blocks", true));
         this.registerSetting(blockShowMode = new SliderSetting("Block display info:", 2D, 1D, 2D, 1D));
-        this.registerSetting(blockShowModeDesc = new DescriptionSetting("Mode: "));
         this.registerSetting(lookDown = new TickSetting("Only when looking down", true));
         this.registerSetting(pitchRange = new DoubleSliderSetting("Pitch min range:", 70D, 85, 0D, 90D, 1D));
         this.registerSetting(shawtyMoment = new TickSetting("Shawty Moment", true));
@@ -59,10 +55,6 @@ public class SafeWalk extends Module {
 
         shouldBridge = false;
         isShifting = false;
-    }
-
-    public void guiUpdate() {
-        blockShowModeDesc.setDesc(Utils.md + BlockAmountInfo.values()[(int) blockShowMode.getInput() - 1]);
     }
 
     @SubscribeEvent

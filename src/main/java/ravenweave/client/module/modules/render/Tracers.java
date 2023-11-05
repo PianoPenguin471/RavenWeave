@@ -54,9 +54,7 @@ public class Tracers extends Module {
     public void onRender(RenderWorldEvent event) {
         if (!this.enabled) return;
         if (Utils.Player.isPlayerInGame()) {
-            int rgb = rainbow.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : this.color.getRGB();
-            Iterator<EntityPlayer> players = mc.theWorld.playerEntities.iterator();
-
+            int rgb = rainbow.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : color.getRGB();
             for (EntityPlayer player: mc.theWorld.playerEntities) {
                 // Hide invisibles
                 if (player.isInvisible() && !showInvis.isToggled()) continue;
@@ -68,11 +66,11 @@ public class Tracers extends Module {
                 if (player == mc.thePlayer) continue;
 
                 // Hide invalid targets
-                if (!Targets.isValidTarget(player) && !showInvalidTargets.isToggled()) continue;
+                if (Targets.isValidTarget(player) && !showInvalidTargets.isToggled()) continue;
                 if (redshift.isToggled() && (mc.thePlayer.getDistanceToEntity(player) < 25)) {
                     int red = (int) (Math.abs(mc.thePlayer.getDistanceToEntity(player) - 25) * 10);
                     int green = Math.abs(red - 255);
-                    rgb = new Color(red, green, this.color.getBlue()).getRGB();
+                    rgb = new Color(red, green, color.getBlue()).getRGB();
                 }
                 Utils.HUD.dtl(player, rgb, (float) lineWidth.getInput());
             }

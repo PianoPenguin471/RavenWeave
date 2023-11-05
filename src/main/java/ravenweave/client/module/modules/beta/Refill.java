@@ -17,13 +17,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-// Coded by poltergeist / localdrive
-// https://femboy.thighs.wtf/h99k2q74ia7ywubdri.png
-// I SWEAR I DIDNT SKID, I WAS GIVEN THE CODE RIGHTFULLY :SOB:
-
 public class Refill extends Module {
-    private DoubleSliderSetting delay;
-    private TickSetting pots, soup;
+    private final DoubleSliderSetting delay;
+    private final TickSetting pots, soup;
     private int lastShiftedPotIndex = -1;
     private long lastUsageTime = 0;
     private long longranddel = 800;
@@ -128,9 +124,7 @@ public class Refill extends Module {
 
             Set<Integer> validMeta = new HashSet<>(Arrays.asList(16385, 16389, 16417, 16421, 16449, 16481));
 
-            if (validMeta.contains(metadata)) {
-                return true;
-            }
+            return validMeta.contains(metadata);
         }
         return false;
     }

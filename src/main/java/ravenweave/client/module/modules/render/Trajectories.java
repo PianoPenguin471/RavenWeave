@@ -2,7 +2,6 @@ package ravenweave.client.module.modules.render;
 
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.util.Timer;
 import net.minecraft.util.Vec3;
@@ -13,34 +12,24 @@ import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.utils.Utils;
 
-public class Projectiles extends Module {
+public class Trajectories extends Module {
 
-    public static SliderSetting w;
+    public static SliderSetting width;
 
-    public Projectiles() {
-        super("Projectiles", ModuleCategory.render);
-        this.registerSetting(w = new SliderSetting("Thickness", 2.0D, 1.0D, 10.0D, 1.0D));
+    public Trajectories() {
+        super("Trajectories", ModuleCategory.render);
+        this.registerSetting(width = new SliderSetting("Thickness", 2.0D, 1.0D, 10.0D, 1.0D));
     }
 
     @SubscribeEvent
-    public void onForgeEvent(RenderWorldEvent fe) {
-        if (!this.enabled) return;
+    public void onRenderWorld(RenderWorldEvent fe) {
         if (!Utils.Player.isPlayerInGame())
             return;
         EntityPlayerSP player = mc.thePlayer;
 
-        if (mc.thePlayer.getCurrentEquippedItem() == null)
-            return;
-        Item stack = mc.thePlayer.getCurrentEquippedItem().getItem();
-        if (stack == null)
-            return;
-
-        // check if item is throwable
-        if (!(stack instanceof ItemBow))
-            return;
+        if (!(mc.thePlayer.isUsingItem() && mc.thePlayer.getHeldItem().getItem() instanceof ItemBow)) return;
 
         Timer timer = new Timer(3F);
-        // calculate starting position
         double arrowPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * timer.renderPartialTicks
                 - Math.cos((float) Math.toRadians(player.rotationYaw)) * 0.16F;
         double arrowPosY = player.lastTickPosY + (player.posY - player.lastTickPosY) * timer.renderPartialTicks
@@ -48,7 +37,6 @@ public class Projectiles extends Module {
         double arrowPosZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * timer.renderPartialTicks
                 - Math.sin((float) Math.toRadians(player.rotationYaw)) * 0.16F;
 
-        // calculate starting motion
         float arrowMotionFactor = 1F;
         float yaw = (float) Math.toRadians(player.rotationYaw);
         float pitch = (float) Math.toRadians(player.rotationPitch);
@@ -57,9 +45,9 @@ public class Projectiles extends Module {
         float arrowMotionZ = (float) (Math.cos(yaw) * Math.cos(pitch) * arrowMotionFactor);
         double arrowMotion = Math
                 .sqrt(arrowMotionX * arrowMotionX + arrowMotionY * arrowMotionY + arrowMotionZ * arrowMotionZ);
-        arrowMotionX /= arrowMotion;
-        arrowMotionY /= arrowMotion;
-        arrowMotionZ /= arrowMotion;
+        arrowMotionX /= (float) arrowMotion;
+        arrowMotionY /= (float) arrowMotion;
+        arrowMotionZ /= (float) arrowMotion;
         float bowPower = (72000 - player.getItemInUseCount()) / 20F;
         bowPower = (bowPower * bowPower + bowPower * 2F) / 3F;
 
@@ -79,11 +67,10 @@ public class Projectiles extends Module {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(false);
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
-        GL11.glLineWidth((int) w.getInput());
+        GL11.glLineWidth((int) width.getInput());
 
         RenderManager renderManager = mc.getRenderManager();
 
-        // draw trajectory line
         double gravity = 0.05D;
         Vec3 playerVector = new Vec3(player.posX, player.posY + player.getEyeHeight(), player.posZ);
         GL11.glColor4f(0, 1, 0, 0.75F);
@@ -95,17 +82,16 @@ public class Projectiles extends Module {
             arrowPosX += arrowMotionX * 0.1;
             arrowPosY += arrowMotionY * 0.1;
             arrowPosZ += arrowMotionZ * 0.1;
-            arrowMotionX *= 0.999D;
-            arrowMotionY *= 0.999D;
-            arrowMotionZ *= 0.999D;
-            arrowMotionY -= gravity * 0.1;
+            arrowMotionX *= 0.999F;
+            arrowMotionY *= 0.999F;
+            arrowMotionZ *= 0.999F;
+            arrowMotionY -= (float) (gravity * 0.1);
 
             if (mc.theWorld.rayTraceBlocks(playerVector, new Vec3(arrowPosX, arrowPosY, arrowPosZ)) != null)
                 break;
         }
         GL11.glEnd();
 
-        // draw end of trajectory line
         double renderX = arrowPosX - renderManager.viewerPosX;
         double renderY = arrowPosY - renderManager.viewerPosY;
         double renderZ = arrowPosZ - renderManager.viewerPosZ;

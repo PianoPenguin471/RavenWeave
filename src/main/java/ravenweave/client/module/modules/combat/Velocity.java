@@ -1,8 +1,8 @@
 package ravenweave.client.module.modules.combat;
 
 import me.pianopenguin471.mixins.IS12PacketEntityVelocity;
-import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.entity.Entity;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.event.impl.PacketEvent;
 import ravenweave.client.module.Module;

@@ -1,10 +1,10 @@
 plugins {
     id 'java'
-    id 'com.github.weave-mc.weave-gradle' version '649dba7468'
+    id 'com.github.weave-mc.weave-gradle' version 'fac948d'
 }
 
 group = 'me.pianopenguin471'
-version = '1.1.4'
+version = '1.1.5-Beta'
 
 minecraft.version '1.8.9'
 

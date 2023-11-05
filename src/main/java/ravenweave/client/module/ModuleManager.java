@@ -19,6 +19,7 @@ import ravenweave.client.module.modules.other.Spin;
 import ravenweave.client.module.modules.other.WaterBucket;
 import ravenweave.client.module.modules.player.*;
 import ravenweave.client.module.modules.render.*;
+import ravenweave.client.module.modules.render.Trajectories;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.utils.Utils;
 
@@ -67,6 +68,7 @@ public class ModuleManager {
         addModule(new Chams());
         addModule(new ChestESP());
         addModule(new Nametags());
+        addModule(new Xray());
         addModule(new AntiShuffle());
         addModule(new PlayerESP());
         addModule(new Tracers());
@@ -87,16 +89,15 @@ public class ModuleManager {
         addModule(new Pearl());
         addModule(new Armor());
         addModule(new Healing());
-        addModule(new Trajectories());
+        addModule(new ravenweave.client.module.modules.hotkey.Trajectories());
         addModule(new WTap());
         addModule(new BlockHit());
         addModule(new STap());
-        addModule(new AutoWeapon());
         addModule(new BedwarsOverlay());
         addModule(new ShiftTap());
         addModule(new AutoBlock());
         addModule(new MiddleClick());
-        addModule(new Projectiles());
+        addModule(new Trajectories());
         addModule(new FakeHud());
         addModule(new ConfigSettings());
         addModule(new JumpReset());
@@ -111,10 +112,10 @@ public class ModuleManager {
         addModule(new NoJumpDelay());
         addModule(new Parkour());
         addModule(new BedPlates());
+        addModule(new LongJump());
 
         // BETA
         addModule(new Refill());
-        addModule(new LongJump());
         addModule(new Radar());
         addModule(new Scaffold());
         addModule(new TargetHUD());

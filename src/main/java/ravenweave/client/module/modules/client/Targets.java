@@ -31,20 +31,17 @@ public class Targets extends Module {
     public Targets() {
         super("Targets", ModuleCategory.client);
         this.registerSetting(description = new DescriptionSetting("Sets targets for Killaura, Aimassist, ETC."));
-        this.registerSettings(
-                        friends = new TickSetting("Target friends", false),
-                        teams = new TickSetting("Target teammates", false),
-                        invis = new TickSetting("Target invis", false),
-                        bots = new TickSetting("Target bots", false),
-                        naked = new TickSetting("Target naked", false),
-                        fov = new SliderSetting("General Fov", 120, 0, 360, 1),
-                        auraFov = new SliderSetting("Aura Fov", 360, 0, 360, 1),
-                        distance = new SliderSetting("Distance", 3.5, 0, 10, 0.1),
-                        sortMode = new ComboSetting("Sort mode", SortMode.Distance),
-                        lockDist = new SliderSetting("Lock distance", 4, 0, 10, 0.1),
-                        debug = new TickSetting("debug", false)
-                        );
-        onEnable();
+        this.registerSetting(friends = new TickSetting("Target friends", false));
+        this.registerSetting(teams = new TickSetting("Target teammates", false));
+        this.registerSetting(invis = new TickSetting("Target invis", false));
+        this.registerSetting(bots = new TickSetting("Target bots", false));
+        this.registerSetting(naked = new TickSetting("Target naked", false));
+        this.registerSetting(fov = new SliderSetting("General Fov", 120, 0, 360, 1));
+        this.registerSetting(auraFov = new SliderSetting("Aura Fov", 360, 0, 360, 1));
+        this.registerSetting(distance = new SliderSetting("Distance", 3.5, 0, 10, 0.1));
+        this.registerSetting(sortMode = new ComboSetting<>("Sort mode", SortMode.Distance));
+        this.registerSetting(lockDist = new SliderSetting("Lock distance", 4, 0, 10, 0.1));
+        this.registerSetting(debug = new TickSetting("debug", false));
     }
 
     @Override
@@ -52,10 +49,6 @@ public class Targets extends Module {
         return false;
     }
 
-    private static double getFOV() {
-        return Raven.moduleManager.getModuleByClazz(KillAura.class).isEnabled() ? auraFov.getInput() : fov.getInput();
-    }
-    
     @Override
     public void postApplyConfig() {
         guiButtonToggled(sortMode);
@@ -68,6 +61,10 @@ public class Targets extends Module {
         }
     }
 
+    private static double getFOV() {
+        return Raven.moduleManager.getModuleByClazz(KillAura.class).isEnabled() ? auraFov.getInput() : fov.getInput();
+    }
+
     @SubscribeEvent
     public void onAttackEntity(AttackEntityEvent e) {
         lockedTarget = e.target instanceof EntityPlayer ? (EntityPlayer) e.target : lockedTarget;
@@ -76,44 +73,39 @@ public class Targets extends Module {
     public static EntityPlayer getTarget() {
         List<EntityPlayer> en = Utils.Player.getClosePlayers(distance.getInput());
         if (en == null) return null;
-        en.removeIf(player -> !isValidTarget(player));
+        en.removeIf(Targets::isValidTarget);
         if(debug.isToggled()) en.forEach(target -> Utils.Player.sendMessageToSelf(sortMode.getMode().sv.value(target) + " " ));
         return en.isEmpty() ? null : en.stream().min(Comparator.comparingDouble(target -> sortMode.getMode().sv.value(target))).get();
     }
 
     public static boolean isValidTarget(EntityPlayer ep) {
-        return (
-                (ep != mc.thePlayer)
-                && (bots.isToggled() || !AntiBot.bot(ep))
-                && (friends.isToggled() || !isAFriend(ep))
-                && (teams.isToggled() || !isATeamMate(ep))
-                && (invis.isToggled() || !ep.isInvisible())
-                && (naked.isToggled() || !Utils.Player.isPlayerNaked(ep))
-                && Utils.Player.fov(ep, (float) getFOV())
-                );
+        return ((ep == mc.thePlayer)
+                || (!bots.isToggled() && AntiBot.bot(ep))
+                || (!friends.isToggled() && !isAFriend(ep))
+                || (!teams.isToggled() && isATeamMate(ep))
+                || (!invis.isToggled() && ep.isInvisible())
+                || (!naked.isToggled() && Utils.Player.isPlayerNaked(ep))
+                || !Utils.Player.fov(ep, (float) getFOV()));
     }
 
     public static boolean isAFriend(Entity entity) {
         if (entity == mc.thePlayer)
-            return true;
+            return false;
 
         for (Entity wut : AimAssist.friends)
             if (wut.equals(entity))
-                return true;
-        return false;
+                return false;
+        return true;
     }
 
     public static boolean isATeamMate(Entity entity) {
         try {
             EntityPlayer bruhentity = (EntityPlayer) entity;
             if (Raven.debugger) {
-                Utils.Player.sendMessageToSelf(
-                        "unformatted / " + bruhentity.getDisplayName().getUnformattedText().replace("§", "%"));
+                Utils.Player.sendMessageToSelf("unformatted / " + bruhentity.getDisplayName().getUnformattedText().replace("§", "%"));
 
-                Utils.Player.sendMessageToSelf(
-                        "susbstring entity / " + bruhentity.getDisplayName().getUnformattedText().substring(0, 2));
-                Utils.Player.sendMessageToSelf(
-                        "substring player / " + mc.thePlayer.getDisplayName().getUnformattedText().substring(0, 2));
+                Utils.Player.sendMessageToSelf("susbstring entity / " + bruhentity.getDisplayName().getUnformattedText().substring(0, 2));
+                Utils.Player.sendMessageToSelf("substring player / " + mc.thePlayer.getDisplayName().getUnformattedText().substring(0, 2));
             }
             if (mc.thePlayer.isOnSameTeam((EntityLivingBase) entity) || mc.thePlayer.getDisplayName()
                     .getUnformattedText().startsWith(bruhentity.getDisplayName().getUnformattedText().substring(0, 2)))
@@ -134,12 +126,8 @@ public class Targets extends Module {
 
         private final SortValue sv;
 
-        private SortMode(SortValue sv) {
+        SortMode(SortValue sv) {
             this.sv = sv;
-        }
-
-        public SortValue getSortValue() {
-            return sv;
         }
     }
 
@@ -147,9 +135,5 @@ public class Targets extends Module {
     private interface SortValue {
         Float value(EntityPlayer player);
     }
-
-
-
-
 
 }

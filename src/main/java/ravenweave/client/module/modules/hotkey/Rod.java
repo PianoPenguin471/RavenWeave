@@ -18,7 +18,7 @@ public class Rod extends Module {
         super("Rod", ModuleCategory.hotkey);
         this.registerSetting(delay = new DoubleSliderSetting("Delay", 50, 75, 0, 150, 1));
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
-        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer wich slot", 9, 1, 9, 1));
+        this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer which slot", 9, 1, 9, 1));
     }
 
     @Override
@@ -49,8 +49,8 @@ public class Rod extends Module {
                     KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
                     try {
                         Thread.sleep((long) Utils.Java.simpleRandom((int)delay.getInputMin(), (int)delay.getInputMax()));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
                     }
                     KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
                 } else {
