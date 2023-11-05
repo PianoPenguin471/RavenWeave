@@ -13,16 +13,18 @@ import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.TickEvent;
 import org.lwjgl.input.Keyboard;
+import ravenweave.client.event.impl.LookEvent;
+import ravenweave.client.event.impl.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
+import ravenweave.client.utils.Utils;
 
 public class AutoClutch extends Module {
     public static SliderSetting range;
-    public static TickSetting cpsCap;
-    private float startYaw;
-    private float startPitch;
+    public static TickSetting cpsCap, clientRots;
+    private float startYaw, startPitch, serverYaw, serverPitch;
     public AutoClutch() {
         super("AutoClutch", ModuleCategory.player);
         this.registerSetting(new DescriptionSetting("Block clutches for you"));
@@ -30,6 +32,7 @@ public class AutoClutch extends Module {
         this.registerSetting(new DescriptionSetting("Skidded from catterpillow"));
         this.registerSetting(range = new SliderSetting("Range", 4, 1, 20, 1));
         this.registerSetting(cpsCap = new TickSetting("Cps cap", false));
+        this.registerSetting(clientRots = new TickSetting("Rotate client-side", true));
     }
 
     @SubscribeEvent
@@ -38,10 +41,29 @@ public class AutoClutch extends Module {
             this.placeBlock(range.getInput(), true);
         }
     }
-    
+
+    @SubscribeEvent
+    public void onUpdate(UpdateEvent e) {
+        if (!e.isPre()) return;
+        if (clientRots.isToggled()) return;
+        if(!Utils.Player.isPlayerInGame()) return;
+
+        e.setYaw(serverYaw);
+        e.setPitch(serverYaw);
+    }
+
+    @SubscribeEvent
+    public void lookEvent(LookEvent e) {
+        if (clientRots.isToggled()) return;
+        e.setYaw(serverYaw);
+        e.setPitch(serverPitch);
+    }
+
     public void onEnable() {
         this.startYaw = mc.thePlayer.rotationYaw;
         this.startPitch = mc.thePlayer.rotationPitch;
+        this.serverYaw = mc.thePlayer.rotationYaw;
+        this.serverPitch = mc.thePlayer.rotationPitch;
     }
 
     public void onDisable() {
@@ -133,6 +155,17 @@ public class AutoClutch extends Module {
         return 0;
     }
 
+    public void setRots(float yaw, float pitch) {
+        if (clientRots.isToggled()) {
+            mc.thePlayer.rotationYaw = yaw;
+            mc.thePlayer.rotationPitch = pitch;
+            mc.getRenderViewEntity().rotationYaw = yaw;
+            mc.getRenderViewEntity().rotationPitch = pitch;
+        }
+        serverYaw = yaw;
+        serverPitch = pitch;
+    }
+
     public boolean placeBlockSimple(BlockPos pos, boolean place, float partialTicks) {
         if (!this.doesSlotHaveBlocks(mc.thePlayer.inventory.currentItem)) {
             mc.thePlayer.inventory.currentItem = this.getFirstHotBarSlotWithBlocks();
@@ -150,11 +183,8 @@ public class AutoClutch extends Module {
             EnumFacing side2 = side.getOpposite();
             if (!getBlock(neighbor).canCollideCheck(mc.theWorld.getBlockState(neighbor), false) || eyesPos.squareDistanceTo(hitVec = new Vec3(neighbor).addVector(0.5, 0.5, 0.5).add(new Vec3(side2.getDirectionVec()))) > 36.0) continue;
             float[] angles = this.getRotations(neighbor, side2, partialTicks);
-            mc.getRenderViewEntity().rotationYaw = angles[0];
-            mc.getRenderViewEntity().rotationPitch = angles[1];
             if (place) {
-                mc.thePlayer.rotationYaw = angles[0];
-                mc.thePlayer.rotationPitch = angles[1];
+                setRots(angles[0], angles[1]);
                 mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), neighbor, side2, hitVec);
                 mc.thePlayer.swingItem();
             }
@@ -194,11 +224,8 @@ public class AutoClutch extends Module {
             EnumFacing side2 = side.getOpposite();
             if (!getBlock(neighbor).canCollideCheck(mc.theWorld.getBlockState(neighbor), false) || eyesPos.squareDistanceTo(hitVec = new Vec3(neighbor).addVector(0.5, 0.5, 0.5).add(new Vec3(side2.getDirectionVec()))) > 36.0) continue;
             float[] angles = this.getRotations(neighbor, side2);
-            mc.getRenderViewEntity().rotationYaw = angles[0];
-            mc.getRenderViewEntity().rotationPitch = angles[1];
             if (place) {
-                mc.thePlayer.rotationYaw = angles[0];
-                mc.thePlayer.rotationPitch = angles[1];
+                setRots(angles[0], angles[1]);
                 mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), neighbor, side2, hitVec);
                 mc.thePlayer.swingItem();
             }
