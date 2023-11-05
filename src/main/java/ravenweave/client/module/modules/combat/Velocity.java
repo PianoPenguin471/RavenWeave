@@ -4,7 +4,7 @@ import me.pianopenguin471.mixins.IS12PacketEntityVelocity;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.event.impl.PacketEvent;
+import ravenweave.client.event.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -24,7 +24,7 @@ public class Velocity extends Module {
 
     @SubscribeEvent
     public void onPacket(PacketEvent e) {
-        if (e.isIncoming()) {
+        if (!e.isOutgoing()) {
             if (e.getPacket() instanceof S12PacketEntityVelocity) {
                 if (chance.getInput() != 100.0D) {
                     double ch = Math.random() * 100;
@@ -43,7 +43,7 @@ public class Velocity extends Module {
     }
 
     public void velo(PacketEvent e) {
-        S12PacketEntityVelocity packet = e.getPacket();
+        S12PacketEntityVelocity packet = (S12PacketEntityVelocity) e.getPacket();
         IS12PacketEntityVelocity accessorPacket = (IS12PacketEntityVelocity) packet;
 
         if (invertHorizontal.isToggled()) {

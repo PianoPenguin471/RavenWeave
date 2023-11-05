@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 
 @Mixin(value = WorldRenderer.class, priority = 999)
 public abstract class WorldRendererMixin {

@@ -2,7 +2,7 @@ package ravenweave.client.module.modules.movement;
 
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.TickEvent;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;

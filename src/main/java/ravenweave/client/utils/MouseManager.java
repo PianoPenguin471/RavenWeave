@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.StringUtils;
 import net.weavemc.loader.api.event.MouseEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.modules.world.AntiBot;
 
 import java.util.ArrayList;

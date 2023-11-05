@@ -1,6 +1,6 @@
 package ravenweave.client.module.modules.config;
 
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.TickSetting;
 

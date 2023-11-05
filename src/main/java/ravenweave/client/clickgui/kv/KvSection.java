@@ -1,6 +1,6 @@
 package ravenweave.client.clickgui.kv;
 
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.font.FontUtil;

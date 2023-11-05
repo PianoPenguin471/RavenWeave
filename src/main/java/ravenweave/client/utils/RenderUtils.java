@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.modules.HUD;
 
 import javax.imageio.ImageIO;

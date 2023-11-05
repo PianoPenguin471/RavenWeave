@@ -9,7 +9,7 @@ import net.weavemc.loader.api.event.TickEvent;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.TickSetting;

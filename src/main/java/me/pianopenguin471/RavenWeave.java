@@ -4,7 +4,7 @@ import me.pianopenguin471.command.GUICommand;
 import net.weavemc.loader.api.ModInitializer;
 import net.weavemc.loader.api.command.CommandBus;
 import net.weavemc.loader.api.event.*;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 
 public class RavenWeave implements ModInitializer {

@@ -1,7 +1,7 @@
 package ravenweave.client.module;
 
 import ravenweave.client.clickgui.raven.components.CategoryComponent;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 
 public class GuiModule extends Module {
 

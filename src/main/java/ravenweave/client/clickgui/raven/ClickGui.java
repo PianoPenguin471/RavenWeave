@@ -5,14 +5,13 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import ravenweave.client.clickgui.raven.components.CategoryComponent;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.utils.Timer;
 import ravenweave.client.utils.Utils;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;

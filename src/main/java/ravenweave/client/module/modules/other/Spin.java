@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.other;
 
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.event.impl.UpdateEvent;
+import ravenweave.client.event.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;

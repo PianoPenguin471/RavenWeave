@@ -1,10 +1,9 @@
-package ravenweave.client.main;
+package ravenweave.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
-import net.weavemc.loader.api.event.ChatReceivedEvent;
 import net.weavemc.loader.api.event.EventBus;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import ravenweave.client.config.ClientConfig;
 import ravenweave.client.clickgui.kv.KvCompactGui;
 import ravenweave.client.clickgui.raven.ClickGui;
 import ravenweave.client.command.CommandManager;
@@ -13,7 +12,6 @@ import ravenweave.client.module.ModuleManager;
 import ravenweave.client.utils.MouseManager;
 import ravenweave.client.utils.PingChecker;
 import ravenweave.client.utils.RenderUtils;
-import ravenweave.client.utils.Utils;
 import ravenweave.client.utils.font.FontUtil;
 
 import java.util.ArrayList;

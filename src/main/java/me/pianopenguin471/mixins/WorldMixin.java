@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ravenweave.client.event.impl.EntityJoinWorldEvent;
+import ravenweave.client.event.EntityJoinWorldEvent;
 
 @Mixin(World.class)
 public class WorldMixin {

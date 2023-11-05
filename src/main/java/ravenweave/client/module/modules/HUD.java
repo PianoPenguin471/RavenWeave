@@ -7,7 +7,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.FakeHud;
 import ravenweave.client.module.setting.Setting;

@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.client;
 
 import com.google.gson.JsonObject;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.HUD;
 import ravenweave.client.module.setting.Setting;

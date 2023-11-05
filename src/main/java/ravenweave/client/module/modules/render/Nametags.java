@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
-import ravenweave.client.event.impl.RenderLabelEvent;
+import ravenweave.client.event.RenderLabelEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.module.setting.impl.DescriptionSetting;

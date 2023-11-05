@@ -1,6 +1,6 @@
 package ravenweave.client.module.modules.client;
 
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.ComboSetting;

@@ -4,7 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import net.weavemc.loader.api.event.TickEvent;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.player.Freecam;
 import ravenweave.client.module.setting.impl.TickSetting;

@@ -6,7 +6,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import ravenweave.client.clickgui.kv.KvComponent;
-import ravenweave.client.main.Raven;
+import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.utils.RenderUtils;

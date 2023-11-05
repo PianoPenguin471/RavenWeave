@@ -6,9 +6,9 @@ import net.minecraft.network.play.server.S30PacketWindowItems;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.weavemc.loader.api.event.SubscribeEvent;
-import ravenweave.client.event.impl.PacketEvent;
-import ravenweave.client.event.impl.SlowdownEvent;
-import ravenweave.client.event.impl.UpdateEvent;
+import ravenweave.client.event.PacketEvent;
+import ravenweave.client.event.SlowdownEvent;
+import ravenweave.client.event.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -53,7 +53,7 @@ public class NoSlow extends Module {
                     if (mc.thePlayer.isBlocking()) {
                         mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
                     }
-                } else if (e.isPost()) {
+                } else {
                     mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(mc.thePlayer.getCurrentEquippedItem()));
                 }
             }
