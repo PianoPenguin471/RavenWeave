@@ -46,6 +46,7 @@ public class KillAura extends Module {
 
     @SubscribeEvent
     public void onGameLoop(GameLoopEvent e) {
+        if (!Utils.Player.isPlayerInGame()) return;
         try {
             Mouse.poll();
             EntityPlayer pTarget = Targets.getTarget();
@@ -94,7 +95,7 @@ public class KillAura extends Module {
 
     @SubscribeEvent
     public void renderWorldLast(RenderWorldEvent renderWorldEvent) {
-        if (target == null)
+        if (target == null || !Utils.Player.isPlayerInGame())
             return;
         int red = (int) (((20 - target.getHealth()) * 13) > 255 ? 255 : (20 - target.getHealth()) * 13);
         int green = 255 - red;
@@ -125,13 +126,13 @@ public class KillAura extends Module {
 
     @SubscribeEvent
     public void onMoveInput(MoveInputEvent e) {
-        if(!fixMovement.isToggled() || locked) return;
+        if(!fixMovement.isToggled() || locked || !Utils.Player.isPlayerInGame()) return;
         e.setYaw(yaw);
     }
 
     @SubscribeEvent
     public void lookEvent(LookEvent e) {
-        if(locked) return;
+        if(locked || !Utils.Player.isPlayerInGame()) return;
         e.setPrevYaw(prevYaw);
         e.setPrevPitch(prevPitch);
         e.setYaw(yaw);
@@ -144,6 +145,7 @@ public class KillAura extends Module {
      */
 
     public void leftClickExecute(int key) {
+        if (!Utils.Player.isPlayerInGame()) return;
         if ((this.leftUpTime > 0L) && (this.leftDownTime > 0L)) {
             if ((System.currentTimeMillis() > this.leftUpTime) && leftDown) {
                 if(mc.thePlayer.isUsingItem())
