@@ -20,6 +20,7 @@ public class Timer extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent e) {
+        if (!Utils.Player.isPlayerInGame()) return;
         if (!(mc.currentScreen instanceof ClickGui)) {
             if (strafe.isToggled() && mc.thePlayer.moveStrafing == 0.0F) {
                 Utils.Client.resetTimer();
