@@ -120,6 +120,7 @@ public class ModuleManager {
         addModule(new Scaffold());
         addModule(new TargetHUD());
         addModule(new AutoClutch());
+        addModule(new TellyBridge());
 
         initialized = true;
     }
