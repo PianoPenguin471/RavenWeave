@@ -140,17 +140,18 @@ public class ModuleComponent extends Component {
                     setDimensions(category.getWidth(), aHeight);
                 return;
             }
+        }
 
-            if (category.getOpenModule() == this) {
-                for (SettingComponent setting : settings) {
-                    if (setting.visable) {
-                        setting.mouseDown(x, y, b);
-                    }
+        if (category.getOpenModule() == this) {
+            for (SettingComponent setting : settings) {
+                if (setting.visable) {
+                    setting.mouseDown(x, y, b);
                 }
             }
-
-            bind.mouseDown(x, y, b);
         }
+
+        bind.mouseDown(x, y, b);
+
     }
 
     @Override
