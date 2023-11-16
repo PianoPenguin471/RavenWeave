@@ -7,7 +7,6 @@ import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.module.setting.Setting;
-import ravenweave.client.utils.RenderUtils;
 import ravenweave.client.utils.font.FontUtil;
 
 import java.awt.*;
@@ -30,7 +29,7 @@ public class ModuleComponent extends Component {
                 settings.add(clazz.getDeclaredConstructor(Setting.class, this.getClass()).newInstance(setting, this));
             } catch (Exception e) {
                 System.out.println(clazz);
-            };
+            }
         });
         bind = new BindComponent(this);
         setDimensions(p.getWidth(), aHeight);
@@ -82,10 +81,6 @@ public class ModuleComponent extends Component {
         f();
     }
 
-    public static void vr(float x, float y, float x1, float y1, int t, int b) {
-        RenderUtils.drawRoundedRect(x, y, x1, y1, 12, t, new boolean[] {false,true,true,false} );
-    }
-
     @Override
     public void draw(int mouseX, int mouseY) {
 
@@ -100,8 +95,8 @@ public class ModuleComponent extends Component {
         //name
         int button_rgb = mod.isEnabled() ? ClickGuiModule.getEnabledTextRGB() : this.mod.canBeEnabled() ? ClickGuiModule.getDisabledTextRGB() : 0xFF999999;
         GL11.glPushMatrix();
-        if (ClickGuiModule.useCustomFont()) FontUtil.normal.drawCenteredSmoothString(mod.getName(), x + (width/2), y + (aHeight/2), button_rgb);
-        else Raven.mc.fontRendererObj.drawString(mod.getName(), (x + (width/2)) - (Raven.mc.fontRendererObj.getStringWidth(mod.getName())/2), y + (aHeight/2), button_rgb, true);
+        if (ClickGuiModule.useCustomFont()) FontUtil.normal.drawCenteredSmoothString(mod.getName(), x + ((double) width /2), y + ((float) aHeight /2), button_rgb);
+        else Raven.mc.fontRendererObj.drawString(mod.getName(), (x + ((float) width /2)) - ((float) Raven.mc.fontRendererObj.getStringWidth(mod.getName()) /2), y + ((float) aHeight /2), button_rgb, true);
         GL11.glPopMatrix();
 
         //settings
@@ -124,20 +119,19 @@ public class ModuleComponent extends Component {
 
     @Override
     public void clicked(int x, int y, int b) {
-        if(insideNameArea(x, y))
-            if(b == 0) {
+        if(insideNameArea(x, y)) {
+            if (b == 0) {
                 mod.toggle();
                 return;
-            }
-            else if ((b == 1) && !mod.getSettings().isEmpty()) {
+            } else if (b == 1 && (!mod.getSettings().isEmpty() || mod.isBindable())) {
                 category.setOpenModule(category.getOpenModule() == this ? null : this);
                 int yOffset = 0;
-                if(category.getOpenModule() == this) {
-                    for(SettingComponent setting : settings) {
+                if (category.getOpenModule() == this) {
+                    for (SettingComponent setting : settings) {
                         setting.setCoords(x, y + aHeight + yOffset);
                         yOffset += setting.getHeight() + 2;
                     }
-                    if(mod.isBindable()) {
+                    if (mod.isBindable()) {
                         bind.setCoords(x, y + aHeight + yOffset);
                         yOffset += bind.getHeight();
                     }
@@ -147,8 +141,16 @@ public class ModuleComponent extends Component {
                 return;
             }
 
-        if(category.getOpenModule() == this) settings.forEach(setting -> {if(setting.visable);setting.mouseDown(x, y, b);});
-        bind.mouseDown(x, y, b);
+            if (category.getOpenModule() == this) {
+                for (SettingComponent setting : settings) {
+                    if (setting.visable) {
+                        setting.mouseDown(x, y, b);
+                    }
+                }
+            }
+
+            bind.mouseDown(x, y, b);
+        }
     }
 
     @Override
