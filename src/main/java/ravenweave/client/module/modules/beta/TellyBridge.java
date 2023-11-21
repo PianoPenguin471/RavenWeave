@@ -11,6 +11,7 @@ import net.weavemc.loader.api.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
+import ravenweave.client.utils.CaterpillowUtils;
 
 public class TellyBridge extends Module {
     public static SliderSetting bufferDistance;
@@ -30,7 +31,7 @@ public class TellyBridge extends Module {
             this.startPitch = mc.thePlayer.rotationPitch;
             this.phase = Phase.PreJump;
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), true);
-            this.lastBlock = this.isAirBlock(getBlock(new BlockPos(mc.thePlayer).down())) ? null : new BlockPos(mc.thePlayer).down();
+            this.lastBlock = CaterpillowUtils.isAirBlock(new BlockPos(mc.thePlayer).down()) ? null : new BlockPos(mc.thePlayer).down();
         } else {
             this.disable();
         }
@@ -44,7 +45,7 @@ public class TellyBridge extends Module {
 
     @SubscribeEvent
     public void onRender(RenderGameOverlayEvent.Post event) {
-        if (this.phase.equals((Object)Phase.Placing)) {
+        if (this.phase.equals(Phase.Placing)) {
             this.placeBlock((int)mc.playerController.getBlockReachDistance(), false, event.getPartialTicks());
         }
     }
@@ -59,7 +60,7 @@ public class TellyBridge extends Module {
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), true);
         if (Math.sqrt(mc.thePlayer.getDistanceSq(this.lastBlock)) > bufferDistance.getInput()) {
             this.phase = Phase.Placing;
-        } else if (!this.isAirBlock(getBlock(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.2, mc.thePlayer.posZ))) && this.phase.equals(Phase.Placing)) {
+        } else if (!CaterpillowUtils.isAirBlock(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.2, mc.thePlayer.posZ)) && this.phase.equals(Phase.Placing)) {
             this.phase = Phase.Turn;
         } else if (mc.thePlayer.isCollidedVertically && this.phase.equals(Phase.Turn)) {
             this.phase = Phase.Jump;
@@ -93,7 +94,6 @@ public class TellyBridge extends Module {
             case Jumping: {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), true);
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), true);
-                KeyBinding.setKeyBindState(mc.gameSettings.keyBindForward.getKeyCode(), true);
                 break;
             }
             case Placing: {
@@ -105,7 +105,7 @@ public class TellyBridge extends Module {
     }
 
     public void placeBlock(int range, boolean place, float partialTicks) {
-        if (!this.isAirBlock(getBlock(new BlockPos(mc.thePlayer).down()))) {
+        if (!CaterpillowUtils.isAirBlock(new BlockPos(mc.thePlayer).down())) {
             return;
         }
         if (this.placeBlockSimple(new BlockPos(mc.thePlayer).down(), place, partialTicks)) {
@@ -135,12 +135,7 @@ public class TellyBridge extends Module {
         }
     }
 
-    public boolean isAirBlock(Block block) {
-        if (block.getMaterial().isReplaceable()) {
-            return !(block instanceof BlockSnow) || !(block.getBlockBoundsMaxY() > 0.125);
-        }
-        return false;
-    }
+
 
     public boolean placeBlockSimple(BlockPos pos, boolean place, float partialTicks) {
         Entity entity = mc.getRenderViewEntity();
@@ -153,8 +148,8 @@ public class TellyBridge extends Module {
             if (side.equals(EnumFacing.UP) || side.equals(EnumFacing.DOWN)) continue;
             BlockPos neighbor = pos.offset(side);
             EnumFacing side2 = side.getOpposite();
-            if (!getBlock(neighbor).canCollideCheck(mc.theWorld.getBlockState(neighbor), false) || eyesPos.squareDistanceTo(hitVec = new Vec3(neighbor).addVector(0.5, 0.5, 0.5).add(new Vec3(side2.getDirectionVec()))) > 36.0) continue;
-            float[] angles = this.getRotations(neighbor, side2, partialTicks);
+            if (!CaterpillowUtils.getBlock(neighbor).canCollideCheck(mc.theWorld.getBlockState(neighbor), false) || eyesPos.squareDistanceTo(hitVec = new Vec3(neighbor).addVector(0.5, 0.5, 0.5).add(new Vec3(side2.getDirectionVec()))) > 36.0) continue;
+            float[] angles = CaterpillowUtils.getRotations(neighbor, side2, partialTicks);
             mc.getRenderViewEntity().rotationYaw = angles[0];
             mc.getRenderViewEntity().rotationPitch = angles[1];
             if (place) {
@@ -167,28 +162,6 @@ public class TellyBridge extends Module {
             return true;
         }
         return false;
-    }
-
-    public static Block getBlock(BlockPos pos) {
-        return mc.theWorld.getBlockState(pos).getBlock();
-    }
-
-    public float[] getRotations(BlockPos block, EnumFacing face, float partialTicks) {
-        Entity entity = mc.getRenderViewEntity();
-        double posX = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double)partialTicks;
-        double posY = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)partialTicks;
-        double posZ = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)partialTicks;
-        double x = (double)block.getX() + 0.5 - posX + (double)face.getFrontOffsetX() / 2.0;
-        double z = (double)block.getZ() + 0.5 - posZ + (double)face.getFrontOffsetZ() / 2.0;
-        double y = (double)block.getY() + 0.5;
-        double d1 = posY + (double)mc.thePlayer.getEyeHeight() - y;
-        double d3 = MathHelper.sqrt_double(x * x + z * z);
-        float yaw = (float)(Math.atan2(z, x) * 180.0 / Math.PI) - 90.0f;
-        float pitch = (float)(Math.atan2(d1, d3) * 180.0 / Math.PI);
-        if (yaw < 0.0f) {
-            yaw += 360.0f;
-        }
-        return new float[]{yaw, pitch};
     }
 
     enum Phase {
