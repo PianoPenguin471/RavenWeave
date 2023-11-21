@@ -35,11 +35,11 @@ public class Blink extends Module {
     public void onPacket(PacketEvent e) {
         if (!e.isOutgoing() && (mode.getMode() == modes.BOTH || mode.getMode() == modes.INBOUND)) {
             inboundPackets.add(e.getPacket());
+            e.setCancelled(true);
         } else if (e.isOutgoing() && (mode.getMode() == modes.BOTH || mode.getMode() == modes.OUTBOUND)) {
             outboundPackets.add(e.getPacket());
+            e.setCancelled(true);
         }
-
-        e.setCancelled(true);
     }
     
     @Override
