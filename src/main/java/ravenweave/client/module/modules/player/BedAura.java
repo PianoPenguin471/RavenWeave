@@ -5,13 +5,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.weavemc.loader.api.event.RenderWorldEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.ComboSetting;
-import ravenweave.client.module.setting.impl.DescriptionSetting;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.module.setting.impl.TickSetting;
+import ravenweave.client.module.setting.impl.*;
 import ravenweave.client.utils.Utils;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -21,7 +21,8 @@ public class BedAura extends Module {
     public static SliderSetting rangeInput;
     public static ComboSetting<BypassMode> bypassMode;
     public static SliderSetting bypassDistance;
-    public static TickSetting disableOnBreak;
+    public static TickSetting disableOnBreak, rainbow;
+    public static RGBSetting rgb;
     public static State state = State.LOOKING_FOR_BED;
     private boolean notifiedSearching = false, notifiedBreaking = false, notifiedBypassing = false;
     private Timer timer;
@@ -34,6 +35,8 @@ public class BedAura extends Module {
         this.registerSetting(bypassMode = new ComboSetting<>("Bypass Mode", BypassMode.NONE));
         this.registerSetting(bypassDistance = new SliderSetting("Bypass blocks", 1, 1, 5, 1));
         this.registerSetting(disableOnBreak = new TickSetting("Disable after break", true));
+        this.registerSetting(rgb = new RGBSetting("Color", 255, 255, 255));
+        this.registerSetting(rainbow = new TickSetting("Rainbow", false));
     }
 
     public void onEnable() {
@@ -58,6 +61,18 @@ public class BedAura extends Module {
         reset();
     }
 
+    @SubscribeEvent
+    public void onRenderWorld(RenderWorldEvent event) {
+        if (bedPos == null) return;
+        int color = rainbow.isToggled() ? Utils.Client.rainbowDraw(2L, 0L) : (new Color(rgb.getRed(), rgb.getGreen(), rgb.getBlue())).getRGB();
+        if (state == State.BYPASS) {
+
+            Utils.HUD.renderBlock(bedPos.up(), color, false);
+        } else if (state == State.BREAKING_BED) {
+            Utils.HUD.renderBlock(bedPos, color, false);
+        }
+    }
+
     public BlockPos getTopDefenseBlock() {
         for (int i = (int) bypassDistance.getInput(); i > 0; i--) {
             BlockPos pos = BedAura.this.bedPos.up(i);
@@ -72,10 +87,9 @@ public class BedAura extends Module {
     public TimerTask timerTask() {
         return new TimerTask() {
             public void run() {
-
                 // Don't bother breaking a bed if we're not even in a game
                 if (!Utils.Player.isPlayerInGame()) return;
-                switch (BedAura.this.state) {
+                switch (state) {
                     case LOOKING_FOR_BED -> {
                         if (!notifiedSearching) {
                             Utils.Player.sendMessageToSelf("Looking for valid bed block");
@@ -86,9 +100,9 @@ public class BedAura extends Module {
                         if (BedAura.this.bedPos != null) {
                             Utils.Player.sendMessageToSelf("Found bed block at " + bedPos);
                             if (bypassMode.getMode() == BypassMode.NONE) {
-                                BedAura.this.state = State.BREAKING_BED;
+                                state = State.BREAKING_BED;
                             } else {
-                                BedAura.this.state = State.BYPASS;
+                                state = State.BYPASS;
                             }
                         }
                     }
@@ -99,7 +113,7 @@ public class BedAura extends Module {
 
                             // If the bed is exposed, move on
                             if (blockAbove == null) {
-                                BedAura.this.state = State.BREAKING_BED;
+                                state = State.BREAKING_BED;
                                 break;
                             }
 
@@ -119,21 +133,17 @@ public class BedAura extends Module {
                         }
                     }
                 }
-
-
-
-
                 updateState();
             }
         };
     }
 
     public void updateState() {
-        if (this.bedPos == null) this.state = State.LOOKING_FOR_BED;
+        if (this.bedPos == null) state = State.LOOKING_FOR_BED;
         else if (mc.theWorld.getBlockState(bedPos).getBlock() != Blocks.bed) {
             Utils.Player.sendMessageToSelf("Broke bed");
             if (disableOnBreak.isToggled()) this.disable();
-            this.state = State.LOOKING_FOR_BED;
+            state = State.LOOKING_FOR_BED;
         }
     }
 
@@ -152,8 +162,6 @@ public class BedAura extends Module {
 
                     // Only break the foot of the bed (to simplify calculations and bypasses later)
                     if (blockState.getValue(BlockBed.PART) == BlockBed.EnumPartType.HEAD) continue;
-                    // TODO: allow the module to focus on only one bed block at a time
-                    // TODO: break block above the foot of the bed as a method of bypassing
 
                     bedPositions.add(pos);
                 }
