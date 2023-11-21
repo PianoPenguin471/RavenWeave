@@ -69,7 +69,7 @@ public class PlayerESP extends Module {
                 while (var3.hasNext()) {
                     Entity en = (Entity) var3.next();
                     if (en instanceof EntityLivingBase && en != mc.thePlayer) {
-                        this.r(en, rgb);
+                        this.renderEntity(en, rgb);
                     }
                 }
 
@@ -93,9 +93,9 @@ public class PlayerESP extends Module {
                     if (!AntiBot.bot(en)) {
                         if (matchChestplate.isToggled() && getColor(en.getCurrentArmor(2)) > 0) {
                             int E = new Color(getColor(en.getCurrentArmor(2))).getRGB();
-                            this.r(en, E);
+                            this.renderEntity(en, E);
                         } else {
-                            this.r(en, rgb);
+                            this.renderEntity(en, rgb);
                         }
                     }
                 }
@@ -117,7 +117,7 @@ public class PlayerESP extends Module {
         return -2; // chestplate has no colour
     }
 
-    private void r(Entity en, int rgb) {
+    private void renderEntity(Entity en, int rgb) {
         if (enabledBox.isToggled()) {
             Utils.HUD.drawBoxAroundEntity(en, 1, expand.getInput(), xShift.getInput(), rgb, redOnDamage.isToggled());
         }

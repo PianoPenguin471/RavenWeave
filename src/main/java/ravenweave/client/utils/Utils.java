@@ -8,6 +8,7 @@ import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -1209,7 +1210,7 @@ public class Utils {
         private static final Minecraft mc = Minecraft.getMinecraft();
         public static boolean ring_c;
 
-        public static void re(BlockPos bp, int color, boolean shade) {
+        public static void renderBlock(BlockPos bp, int color, boolean shade) {
             if (bp != null) {
                 double x = (double) bp.getX() - mc.getRenderManager().viewerPosX;
                 double y = (double) bp.getY() - mc.getRenderManager().viewerPosY;
@@ -1225,9 +1226,10 @@ public class Utils {
                 float g = (float) ((color >> 8) & 255) / 255.0F;
                 float b = (float) (color & 255) / 255.0F;
                 GL11.glColor4d(r, g, b, a);
-                RenderGlobal.drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D));
+
+                RenderGlobal.drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x + 1.0D, y + mc.theWorld.getBlockState(bp).getBlock().getBlockBoundsMaxY(), z + 1.0D));
                 if (shade)
-                    dbb(new AxisAlignedBB(x, y, z, x + 1.0D, y + 1.0D, z + 1.0D), r, g, b);
+                    dbb(new AxisAlignedBB(x, y, z, x + 1.0D, y + mc.theWorld.getBlockState(bp).getBlock().getBlockBoundsMaxY(), z + 1.0D), r, g, b);
 
                 GL11.glEnable(3553);
                 GL11.glEnable(2929);
@@ -1236,8 +1238,7 @@ public class Utils {
             }
         }
 
-        public static void drawBoxAroundEntity(Entity e, int type, double expand, double shift, int color,
-                boolean damage) {
+        public static void drawBoxAroundEntity(Entity e, int type, double expand, double shift, int color, boolean damage) {
             if (e instanceof EntityLivingBase) {
                 double x = (e.lastTickPosX + ((e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks))
                         - mc.getRenderManager().viewerPosX;
@@ -1256,22 +1257,23 @@ public class Utils {
                     GlStateManager.disableDepth();
                     GL11.glScalef(0.03F + d, 0.03F + d, 0.03F + d);
                     int outline = Color.black.getRGB();
-                    net.minecraft.client.gui.Gui.drawRect(-20, -1, -26, 75, outline);
-                    net.minecraft.client.gui.Gui.drawRect(20, -1, 26, 75, outline);
-                    net.minecraft.client.gui.Gui.drawRect(-20, -1, 21, 5, outline);
-                    net.minecraft.client.gui.Gui.drawRect(-20, 70, 21, 75, outline);
+
+                    Gui.drawRect(-20, -1, -26, 75, outline);
+                    Gui.drawRect(20, -1, 26, 75, outline);
+                    Gui.drawRect(-20, -1, 21, 5, outline);
+                    Gui.drawRect(-20, 70, 21, 75, outline);
                     if (color != 0) {
-                        net.minecraft.client.gui.Gui.drawRect(-21, 0, -25, 74, color);
-                        net.minecraft.client.gui.Gui.drawRect(21, 0, 25, 74, color);
-                        net.minecraft.client.gui.Gui.drawRect(-21, 0, 24, 4, color);
-                        net.minecraft.client.gui.Gui.drawRect(-21, 71, 25, 74, color);
+                        Gui.drawRect(-21, 0, -25, 74, color);
+                        Gui.drawRect(21, 0, 25, 74, color);
+                        Gui.drawRect(-21, 0, 24, 4, color);
+                        Gui.drawRect(-21, 71, 25, 74, color);
                     } else {
                         int st = Client.rainbowDraw(2L, 0L);
                         int en = Client.rainbowDraw(2L, 1000L);
                         dGR(-21, 0, -25, 74, st, en);
                         dGR(21, 0, 25, 74, st, en);
-                        net.minecraft.client.gui.Gui.drawRect(-21, 0, 21, 4, en);
-                        net.minecraft.client.gui.Gui.drawRect(-21, 71, 21, 74, st);
+                        Gui.drawRect(-21, 0, 21, 4, en);
+                        Gui.drawRect(-21, 71, 21, 74, st);
                     }
 
                     GlStateManager.enableDepth();
