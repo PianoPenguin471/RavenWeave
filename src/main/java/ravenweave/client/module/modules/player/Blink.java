@@ -29,7 +29,7 @@ public class Blink extends Module {
     }
 
     private final ArrayList<Packet<?>> outboundPackets = new ArrayList<>(), inboundPackets = new ArrayList<>();
-    private static EntityOtherPlayerMP fakePlayer;
+    public static EntityOtherPlayerMP fakePlayer;
     
     @SubscribeEvent
     public void onPacket(PacketEvent e) {

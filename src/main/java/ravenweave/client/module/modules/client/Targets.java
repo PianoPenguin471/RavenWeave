@@ -9,6 +9,7 @@ import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.AimAssist;
 import ravenweave.client.module.modules.combat.KillAura;
+import ravenweave.client.module.modules.player.Blink;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.ComboSetting;
@@ -85,6 +86,7 @@ public class Targets extends Module {
                 || (!teams.isToggled() && isATeamMate(ep))
                 || (!invis.isToggled() && ep.isInvisible())
                 || (!naked.isToggled() && Utils.Player.isPlayerNaked(ep))
+                || (Blink.fakePlayer != null && ep.getEntityId() == Blink.fakePlayer.getEntityId())
                 || !Utils.Player.fov(ep, (float) getFOV()));
     }
 
