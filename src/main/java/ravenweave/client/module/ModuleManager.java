@@ -121,6 +121,7 @@ public class ModuleManager {
         addModule(new TargetHUD());
         addModule(new AutoClutch());
         addModule(new TellyBridge());
+        addModule(new FakeLag());
 
         initialized = true;
     }
