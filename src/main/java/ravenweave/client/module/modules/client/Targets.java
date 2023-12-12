@@ -24,9 +24,9 @@ import java.util.List;
 public class Targets extends Module {
 
     public DescriptionSetting description;
-    private static TickSetting friends, teams, invis, bots, naked, debug;
-    private static SliderSetting fov, distance, lockDist,auraFov;
-    private static ComboSetting<SortMode> sortMode;
+    public static TickSetting friends, teams, invis, bots, naked, debug;
+    public static SliderSetting fov, distance, lockDist,auraFov;
+    public static ComboSetting<SortMode> sortMode;
     public static EntityPlayer lockedTarget;
 
     public Targets() {

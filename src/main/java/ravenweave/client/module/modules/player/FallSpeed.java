@@ -8,6 +8,7 @@ import ravenweave.client.module.modules.movement.Fly;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
+import ravenweave.client.utils.Utils;
 
 public class FallSpeed extends Module {
     public static DescriptionSetting dc;
@@ -23,6 +24,7 @@ public class FallSpeed extends Module {
 
     @SubscribeEvent
     public void onTick(TickEvent e) {
+        if (!Utils.Player.isPlayerInGame()) return;
         if ((double) mc.thePlayer.fallDistance >= 2.5D) {
             Module fly = Raven.moduleManager.getModuleByClazz(Fly.class);
             Module noFall = Raven.moduleManager.getModuleByClazz(NoFall.class);

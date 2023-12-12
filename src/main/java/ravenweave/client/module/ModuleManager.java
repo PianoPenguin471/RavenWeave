@@ -3,6 +3,7 @@ package ravenweave.client.module;
 import net.minecraft.client.gui.FontRenderer;
 import ravenweave.client.Raven;
 import ravenweave.client.module.modules.HUD;
+import ravenweave.client.module.modules.aycy.optimalaim.OptimalAim;
 import ravenweave.client.module.modules.beta.*;
 import ravenweave.client.module.modules.client.ClickGuiModule;
 import ravenweave.client.module.modules.client.FakeHud;
@@ -122,6 +123,7 @@ public class ModuleManager {
         addModule(new AutoClutch());
         addModule(new TellyBridge());
         addModule(new FakeLag());
+        addModule(new OptimalAim());
 
         initialized = true;
     }

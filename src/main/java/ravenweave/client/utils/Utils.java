@@ -393,13 +393,11 @@ public class Utils {
             return Mouse.isButtonDown(0) && Mouse.isButtonDown(1);
         }
 
-        public static float[] getBlockPosRotations(BlockPos pos) {
-            if (pos == null)
-                return null;
-            double diffX = pos.getX() - mc.thePlayer.posX;
-            double diffY = pos.getY() - mc.thePlayer.posY;
+        public static float[] getRotations(double x, double y, double z) {
+            double diffX = x - mc.thePlayer.posX;
+            double diffY = y - mc.thePlayer.posY;
 
-            double diffZ = pos.getZ() - mc.thePlayer.posZ;
+            double diffZ = z - mc.thePlayer.posZ;
 
             double dist = MathHelper.sqrt_double((diffX * diffX) + (diffZ * diffZ));
             float yaw = (float) ((Math.atan2(diffZ, diffX) * 180.0D) / 3.141592653589793D) - 90.0F;
@@ -408,6 +406,12 @@ public class Utils {
                     mc.thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - mc.thePlayer.rotationYaw),
                     mc.thePlayer.rotationPitch
                             + MathHelper.wrapAngleTo180_float(pitch - mc.thePlayer.rotationPitch) };
+        }
+
+        public static float[] getBlockPosRotations(BlockPos pos) {
+            if (pos == null)
+                return null;
+            return getRotations(pos.getX(), pos.getY(), pos.getZ());
         }
 
         public static float[] getTargetRotations(Entity entityIn, float ps) {

@@ -1,10 +1,12 @@
 package ravenweave.client.module.modules.combat;
 
+import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.weavemc.loader.api.event.SubscribeEvent;
@@ -23,7 +25,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AimAssist extends Module {
     public static DoubleSliderSetting speed;
-    public static TickSetting clickAim, weaponOnly, breakBlocks;
+    public static TickSetting clickAim, weaponOnly, breakBlocks, blatantMode;
+    @Getter
     public static ArrayList<Entity> friends = new ArrayList<>();
 
     public AimAssist() {
@@ -33,6 +36,7 @@ public class AimAssist extends Module {
         this.registerSetting(clickAim = new TickSetting("Click aim", true));
         this.registerSetting(breakBlocks = new TickSetting("Break blocks", true));
         this.registerSetting(weaponOnly = new TickSetting("Weapon only", false));
+        this.registerSetting(blatantMode = new TickSetting("Blatant Mode", false));
     }
 
     @SubscribeEvent
@@ -48,29 +52,27 @@ public class AimAssist extends Module {
             }
         }
 
+        if (weaponOnly.isToggled() && !Utils.Player.isPlayerHoldingWeapon()) return;
+        Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
+        if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled()) || !clickAim.isToggled()) {
+            EntityPlayer en = Targets.getTarget();
+            if (en == null) return;
+            if (Raven.debugger) {
+                Utils.Player.sendMessageToSelf(this.getName() + " &e" + en.getName());
+            }
 
-        if (!weaponOnly.isToggled() || Utils.Player.isPlayerHoldingWeapon()) {
-            Module autoClicker = Raven.moduleManager.getModuleByClazz(LeftClicker.class);
-            if ((clickAim.isToggled() && Utils.Client.autoClickerClicking()) || (Mouse.isButtonDown(0) && autoClicker != null && !autoClicker.isEnabled()) || !clickAim.isToggled()) {
-                Entity en = this.getEnemy();
-                if (en != null) {
-                    if (Raven.debugger) {
-                        Utils.Player.sendMessageToSelf(this.getName() + " &e" + en.getName());
-                    }
-
-                    double n = Utils.Player.fovFromEntity(en);
-                    if (n > 1.0D || n < -1.0D) {
-                        double complimentSpeed = n * (ThreadLocalRandom.current().nextDouble(speed.getInputMin() - 1.47328, speed.getInputMin() + 2.48293) / 100);
-                        float val = (float) (-(complimentSpeed + n / (101.0D - (float) ThreadLocalRandom.current().nextDouble(speed.getInputMax() - 4.723847, speed.getInputMax()))));
-                        mc.thePlayer.rotationYaw += val / 2;
-                    }
+            if (blatantMode.isToggled()) {
+                //TODO:
+                // Use OptimalAim to get rots
+            } else {
+                double n = Utils.Player.fovFromEntity(en);
+                if (n > 1.0D || n < -1.0D) {
+                    double complimentSpeed = n * (ThreadLocalRandom.current().nextDouble(speed.getInputMin() - 1.47328, speed.getInputMin() + 2.48293) / 100);
+                    float val = (float) (-(complimentSpeed + n / (101.0D - (float) ThreadLocalRandom.current().nextDouble(speed.getInputMax() - 4.723847, speed.getInputMax()))));
+                    mc.thePlayer.rotationYaw += val / 2;
                 }
             }
         }
-    }
-
-    public Entity getEnemy() {
-        return Targets.getTarget();
     }
 
     public static void addFriend(Entity entityPlayer) {
@@ -110,9 +112,5 @@ public class AimAssist extends Module {
             throw new RuntimeException(ex);
         }
         return true;
-    }
-
-    public static ArrayList<Entity> getFriends() {
-        return friends;
     }
 }

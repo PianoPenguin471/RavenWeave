@@ -2,6 +2,7 @@ package ravenweave.client.module.modules.combat;
 
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldSettings.GameType;
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
@@ -11,7 +12,9 @@ import ravenweave.client.event.LookEvent;
 import ravenweave.client.event.MoveInputEvent;
 import ravenweave.client.event.UpdateEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.modules.aycy.optimalaim.OptimalAim;
 import ravenweave.client.module.modules.client.Targets;
+import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
@@ -28,6 +31,7 @@ public class KillAura extends Module {
     public static SliderSetting reach;
     private final DoubleSliderSetting cps;
     private final TickSetting disableWhenFlying, mouseDown, onlySurvival, fixMovement;
+    public static ComboSetting<RotationMode> rotationMode;
     private final CoolDown coolDown = new CoolDown(1);
     private boolean leftDown, leftn, locked;
     private long leftDownTime, leftUpTime, leftk, leftl;
@@ -42,6 +46,7 @@ public class KillAura extends Module {
         this.registerSetting(disableWhenFlying = new TickSetting("Disable when flying", true));
         this.registerSetting(mouseDown = new TickSetting("Mouse Down", false));
         this.registerSetting(fixMovement = new TickSetting("Movement Fix", true));
+        this.registerSetting(rotationMode = new ComboSetting<>("RotationMode", RotationMode.DEFAULT));
     }
 
     @SubscribeEvent
@@ -50,22 +55,30 @@ public class KillAura extends Module {
         try {
             Mouse.poll();
             EntityPlayer pTarget = Targets.getTarget();
-            if (
-                    (pTarget == null)
-                            || (mc.currentScreen != null)
-                            || !(!onlySurvival.isToggled() || (mc.playerController.getCurrentGameType() == GameType.SURVIVAL))
-                            || !coolDown.hasFinished()
-                            || !(!mouseDown.isToggled() || Mouse.isButtonDown(0))
-                            || !(!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying)) {
+            if (    pTarget == null
+                    || mc.currentScreen != null
+                    || !(!onlySurvival.isToggled() || (mc.playerController.getCurrentGameType() == GameType.SURVIVAL))
+                    || !coolDown.hasFinished()
+                    || !(!mouseDown.isToggled() || Mouse.isButtonDown(0))
+                    || !(!disableWhenFlying.isToggled() || !mc.thePlayer.capabilities.isFlying)) {
                 target = null;
                 rotate(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
                 return;
             }
             target = pTarget;
             this.leftClickExecute(mc.gameSettings.keyBindAttack.getKeyCode());
-            float[] i = Utils.Player.getTargetRotations(target, 0);
+            float[] rotations;
+            if (rotationMode.getMode() == RotationMode.DEFAULT)
+                rotations = Utils.Player.getTargetRotations(target, 0);
+            else if (rotationMode.getMode() == RotationMode.OPTIMAL_REACH) {
+                Vec3 pos = OptimalAim.getOptimalAim();
+                if (pos == null) return;
+                rotations = Utils.Player.getRotations(pos.xCoord, pos.yCoord, pos.zCoord);
+            } else {
+                rotations = new float[] {mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch};
+            }
             locked = false;
-            rotate(i[0], i[1]);
+            rotate(rotations[0], rotations[1]);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -104,8 +117,8 @@ public class KillAura extends Module {
     }
 
     public void rotate(float yaw, float pitch) {
-       KillAura.yaw = yaw;
-       KillAura.pitch = pitch;
+        KillAura.yaw = yaw;
+        KillAura.pitch = pitch;
     }
 
     private double MouseSens() {
@@ -190,5 +203,10 @@ public class KillAura extends Module {
 
         this.leftUpTime = System.currentTimeMillis() + delay;
         this.leftDownTime = (System.currentTimeMillis() + (delay / 2L)) - Utils.Java.rand().nextInt(10);
+    }
+    public enum RotationMode{
+        NONE,
+        DEFAULT,
+        OPTIMAL_REACH
     }
 }
