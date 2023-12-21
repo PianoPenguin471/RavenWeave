@@ -28,6 +28,7 @@ import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.scoreboard.Team;
 import net.minecraft.util.*;
 import net.weavemc.loader.api.event.EventBus;
 import net.weavemc.loader.api.event.MouseEvent;
@@ -1241,7 +1242,42 @@ public class Utils {
                 GL11.glDisable(3042);
             }
         }
+        public static int getTeamColor(EntityPlayer player) {
+            Scoreboard scoreboard = player.getWorldScoreboard();
+            // Assuming you have a method to get the player's team
+            ScorePlayerTeam playerTeam = scoreboard.getPlayersTeam(player.getName());
 
+            if (playerTeam != null) {
+                String color = playerTeam.getColorPrefix();
+                System.out.println(player.getName() + " has color: " + color);
+                char colorChar = color.charAt(1); // Assuming the color code is like "§x" where x is the color code
+                if (colorChar == '4' || colorChar == 'c') {
+                    return Color.RED.getRGB();
+                }
+                if (colorChar == '6' || colorChar == 'e') {
+                    return Color.YELLOW.getRGB();
+                }
+                if (colorChar == '2' || colorChar == 'a') {
+                    return Color.GREEN.getRGB();
+                }
+                if (colorChar == 'b' || colorChar == '3') {
+                    return Color.CYAN.getRGB();
+                }
+                if (colorChar == '9' || colorChar == '1') {
+                    return Color.BLUE.getRGB();
+                }
+                if (colorChar == 'd' || colorChar == '5') {
+                    return Color.MAGENTA.getRGB();
+                }
+                if (colorChar == 'f' || colorChar == '7') {
+                    return Color.WHITE.getRGB();
+                }
+                if (colorChar == '8' || colorChar == '0') {
+                    return Color.BLACK.getRGB();
+                } 
+            }
+            return Color.WHITE.getRGB();
+        }
         public static void drawBoxAroundEntity(Entity e, int type, double expand, double shift, int color, boolean damage) {
             if (e instanceof EntityLivingBase) {
                 double x = (e.lastTickPosX + ((e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks))
@@ -1255,6 +1291,7 @@ public class Utils {
                     color = Color.RED.getRGB();
 
                 GlStateManager.pushMatrix();
+                int teamColor = getTeamColor((EntityPlayer) e);
                 if (type == 3) {
                     GL11.glTranslated(x, y - 0.2D, z);
                     GL11.glRotated(-mc.getRenderManager().playerViewY, 0.0D, 1.0D, 0.0D);
@@ -1301,6 +1338,34 @@ public class Utils {
                         GlStateManager.enableDepth();
                     } else if (type == 6)
                         d3p(x, y, z, 0.699999988079071D, 45, 1.5F, color, color == 0);
+                    else if (type == 7) {
+                        // Rendering based on team color
+                        GL11.glTranslated(x, y - 0.2D, z);
+                        GL11.glRotated(-mc.getRenderManager().playerViewY, 0.0D, 1.0D, 0.0D);
+                        GlStateManager.disableDepth();
+                        GL11.glScalef(0.03F + d, 0.03F + d, 0.03F + d);
+
+                        int outline = Color.black.getRGB();
+                        net.minecraft.client.gui.Gui.drawRect(-20, -1, -26, 75, outline);
+                        net.minecraft.client.gui.Gui.drawRect(20, -1, 26, 75, outline);
+                        net.minecraft.client.gui.Gui.drawRect(-20, -1, 21, 5, outline);
+                        net.minecraft.client.gui.Gui.drawRect(-20, 70, 21, 75, outline);
+
+                        if (teamColor != 0) {
+                            net.minecraft.client.gui.Gui.drawRect(-21, 0, -25, 74, teamColor);
+                            net.minecraft.client.gui.Gui.drawRect(21, 0, 25, 74, teamColor);
+                            net.minecraft.client.gui.Gui.drawRect(-21, 0, 24, 4, teamColor);
+                            net.minecraft.client.gui.Gui.drawRect(-21, 71, 25, 74, teamColor);
+                        } else {
+                            int st = Client.rainbowDraw(2L, 0L);
+                            int en = Client.rainbowDraw(2L, 1000L);
+                            dGR(-21, 0, -25, 74, st, en);
+                            dGR(21, 0, 25, 74, st, en);
+                            net.minecraft.client.gui.Gui.drawRect(-21, 0, 21, 4, en);
+                            net.minecraft.client.gui.Gui.drawRect(-21, 71, 21, 74, st);
+                        }
+                        GlStateManager.enableDepth();
+                    }
                     else {
                         if (color == 0)
                             color = Client.rainbowDraw(2L, 0L);
