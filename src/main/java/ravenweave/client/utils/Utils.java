@@ -1244,12 +1244,13 @@ public class Utils {
         }
         public static int getTeamColor(EntityPlayer player) {
             Scoreboard scoreboard = player.getWorldScoreboard();
-            // Assuming you have a method to get the player's team
             ScorePlayerTeam playerTeam = scoreboard.getPlayersTeam(player.getName());
 
             if (playerTeam != null) {
                 String color = playerTeam.getColorPrefix();
-                System.out.println(player.getName() + " has color: " + color);
+                if (color.length() < 2) {
+                    return Color.WHITE.getRGB();
+                }
                 char colorChar = color.charAt(1); // Assuming the color code is like "§x" where x is the color code
                 if (colorChar == '4' || colorChar == 'c') {
                     return Color.RED.getRGB();
@@ -1338,34 +1339,6 @@ public class Utils {
                         GlStateManager.enableDepth();
                     } else if (type == 6)
                         d3p(x, y, z, 0.699999988079071D, 45, 1.5F, color, color == 0);
-                    else if (type == 7) {
-                        // Rendering based on team color
-                        GL11.glTranslated(x, y - 0.2D, z);
-                        GL11.glRotated(-mc.getRenderManager().playerViewY, 0.0D, 1.0D, 0.0D);
-                        GlStateManager.disableDepth();
-                        GL11.glScalef(0.03F + d, 0.03F + d, 0.03F + d);
-
-                        int outline = Color.black.getRGB();
-                        net.minecraft.client.gui.Gui.drawRect(-20, -1, -26, 75, outline);
-                        net.minecraft.client.gui.Gui.drawRect(20, -1, 26, 75, outline);
-                        net.minecraft.client.gui.Gui.drawRect(-20, -1, 21, 5, outline);
-                        net.minecraft.client.gui.Gui.drawRect(-20, 70, 21, 75, outline);
-
-                        if (teamColor != 0) {
-                            net.minecraft.client.gui.Gui.drawRect(-21, 0, -25, 74, teamColor);
-                            net.minecraft.client.gui.Gui.drawRect(21, 0, 25, 74, teamColor);
-                            net.minecraft.client.gui.Gui.drawRect(-21, 0, 24, 4, teamColor);
-                            net.minecraft.client.gui.Gui.drawRect(-21, 71, 25, 74, teamColor);
-                        } else {
-                            int st = Client.rainbowDraw(2L, 0L);
-                            int en = Client.rainbowDraw(2L, 1000L);
-                            dGR(-21, 0, -25, 74, st, en);
-                            dGR(21, 0, 25, 74, st, en);
-                            net.minecraft.client.gui.Gui.drawRect(-21, 0, 21, 4, en);
-                            net.minecraft.client.gui.Gui.drawRect(-21, 71, 21, 74, st);
-                        }
-                        GlStateManager.enableDepth();
-                    }
                     else {
                         if (color == 0)
                             color = Client.rainbowDraw(2L, 0L);
@@ -1407,6 +1380,8 @@ public class Utils {
                                 RenderGlobal.drawSelectionBoundingBox(axis);
                             else if (type == 2)
                                 dbb(axis, r, g, b);
+                            else if (type == 7)
+                                dsbbt(axis, teamColor);
 
                             GL11.glEnable(3553);
                             GL11.glEnable(2929);
@@ -1418,6 +1393,51 @@ public class Utils {
 
                 GlStateManager.popMatrix();
             }
+        }
+        
+        public static void dsbbt(AxisAlignedBB var0, int teamColor) {
+            Tessellator var1 = Tessellator.getInstance();
+            WorldRenderer var2 = var1.getWorldRenderer();
+            
+            // Set color based on teamColor
+            float red = ((teamColor >> 16) & 0xFF) / 255.0f;
+            float green = ((teamColor >> 8) & 0xFF) / 255.0f;
+            float blue = (teamColor & 0xFF) / 255.0f;
+            
+            GlStateManager.color(red, green, blue, 1.0F); // Set the color
+            
+            // Draw bottom face
+            var2.begin(3, DefaultVertexFormats.POSITION);
+            var2.pos(var0.minX, var0.minY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.minY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.minY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.minY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.minY, var0.minZ).endVertex();
+            var1.draw();
+            
+            // Draw top face
+            var2.begin(3, DefaultVertexFormats.POSITION);
+            var2.pos(var0.minX, var0.maxY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.maxY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.maxY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.maxY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.maxY, var0.minZ).endVertex();
+            var1.draw();
+            
+            // Draw vertical edges
+            var2.begin(1, DefaultVertexFormats.POSITION);
+            var2.pos(var0.minX, var0.minY, var0.minZ).endVertex();
+            var2.pos(var0.minX, var0.maxY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.minY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.maxY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.minY, var0.maxZ).endVertex();
+            var2.pos(var0.maxX, var0.maxY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.minY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.maxY, var0.maxZ).endVertex();
+            var1.draw();
+            
+            // Reset color to default
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         }
 
         public static void dbb(AxisAlignedBB abb, float r, float g, float b) {
