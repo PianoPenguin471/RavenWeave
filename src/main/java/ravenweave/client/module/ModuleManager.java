@@ -71,6 +71,7 @@ public class ModuleManager {
         addModule(new Nametags());
         addModule(new Xray());
         addModule(new AntiShuffle());
+        addModule(new AntiDebuff());
         addModule(new PlayerESP());
         addModule(new Tracers());
         addModule(new HUD());
