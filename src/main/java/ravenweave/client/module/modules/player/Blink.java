@@ -3,10 +3,9 @@ package ravenweave.client.module.modules.player;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.Packet;
-import net.weavemc.loader.api.event.ShutdownEvent;
-import net.weavemc.loader.api.event.StartGameEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.WorldEvent;
+import net.minecraft.network.play.INetHandlerPlayClient;
+import net.minecraft.network.play.INetHandlerPlayServer;
+import net.weavemc.loader.api.event.*;
 import ravenweave.client.event.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
@@ -21,24 +20,33 @@ public class Blink extends Module {
     public static ComboSetting<modes> mode;
     public static TickSetting spawnFake;
 
+    private final ArrayList<Packet<INetHandlerPlayServer>> outboundPackets = new ArrayList<>();
+    private final ArrayList<Packet<INetHandlerPlayClient>> inboundPackets = new ArrayList<>();
+    public static EntityOtherPlayerMP fakePlayer;
+
     public Blink() {
         super("Blink", ModuleCategory.player);
         this.registerSetting(new DescriptionSetting("Chokes packets until disabled."));
         this.registerSetting(mode = new ComboSetting<>("Mode", modes.BOTH));
         this.registerSetting(spawnFake = new TickSetting("Spawn fake player", true));
     }
-
-    private final ArrayList<Packet<?>> outboundPackets = new ArrayList<>(), inboundPackets = new ArrayList<>();
-    public static EntityOtherPlayerMP fakePlayer;
     
     @SubscribeEvent
     public void onPacket(PacketEvent e) {
         if (!e.isOutgoing() && (mode.getMode() == modes.BOTH || mode.getMode() == modes.INBOUND)) {
-            inboundPackets.add(e.getPacket());
-            e.setCancelled(true);
-        } else if (e.isOutgoing() && (mode.getMode() == modes.BOTH || mode.getMode() == modes.OUTBOUND)) {
-            outboundPackets.add(e.getPacket());
-            e.setCancelled(true);
+            // The below is a bad approach but instanceof returns errors. (Sorry niki & other good devs)
+            if (e.getPacket().getClass().getCanonicalName().startsWith("net.minecraft.network.play.server")) {
+                inboundPackets.add((Packet<INetHandlerPlayClient>) e.getPacket());
+                e.setCancelled(true);
+            }
+        }
+
+        if (e.isOutgoing() && (mode.getMode() == modes.BOTH || mode.getMode() == modes.OUTBOUND)) {
+            // The below is a bad approach but instanceof returns errors. (Sorry niki & other good devs)
+            if (e.getPacket().getClass().getCanonicalName().startsWith("net.minecraft.network.play.server")) {
+                outboundPackets.add((Packet<INetHandlerPlayServer>) e.getPacket());
+                e.setCancelled(true);
+            }
         }
     }
     
@@ -49,6 +57,7 @@ public class Blink extends Module {
         if (spawnFake.isToggled()) {
             if (mc.thePlayer != null) {
                 fakePlayer = new EntityOtherPlayerMP(mc.theWorld, mc.thePlayer.getGameProfile());
+                fakePlayer.setRotationYawHead(mc.thePlayer.rotationYawHead);
                 fakePlayer.copyLocationAndAnglesFrom(mc.thePlayer);
                 mc.theWorld.addEntityToWorld(fakePlayer.getEntityId(), fakePlayer);
             }
@@ -63,7 +72,7 @@ public class Blink extends Module {
         }
 
         if (!outboundPackets.isEmpty()) {
-            for (Packet<?> packet : outboundPackets) {
+            for (Packet<INetHandlerPlayServer> packet : outboundPackets) {
                 mc.getNetHandler().addToSendQueue(packet);
             }
 
@@ -71,31 +80,11 @@ public class Blink extends Module {
         }
 
         if (!inboundPackets.isEmpty()) {
-            for (Packet<?> packet : inboundPackets) {
-                handleInbound(packet);
+            for (Packet<INetHandlerPlayClient> packet : inboundPackets) {
+                packet.processPacket(mc.getNetHandler());
             }
 
             inboundPackets.clear();
-        }
-    }
-
-
-    /*
-     * I have a better way to do this, however we gatekeep good code around here (works the same in-game though)
-     */
-    public void handleInbound(Packet<?> packet) {
-        Class<?> packetClass = packet.getClass();
-        Method[] methods = NetHandlerPlayClient.class.getDeclaredMethods();
-        for (Method method : methods) {
-            if (method.getReturnType().equals(void.class) && method.getParameterCount() == 1) {
-                if (method.getParameterTypes()[0].equals(packetClass)) {
-                    try {
-                        method.invoke(mc.getNetHandler(), packet);
-                    } catch (InvocationTargetException | IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
         }
     }
 
