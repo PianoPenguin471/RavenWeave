@@ -7,11 +7,13 @@ import net.minecraft.world.WorldSettings.GameType;
 import net.weavemc.loader.api.event.RenderWorldEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;
 import org.lwjgl.input.Mouse;
+import ravenweave.client.Raven;
 import ravenweave.client.event.GameLoopEvent;
 import ravenweave.client.event.LookEvent;
 import ravenweave.client.event.MoveInputEvent;
 import ravenweave.client.event.UpdateEvent;
 import ravenweave.client.module.Module;
+import ravenweave.client.module.ModuleManager;
 import ravenweave.client.module.modules.aycy.optimalaim.OptimalAim;
 import ravenweave.client.module.modules.client.Targets;
 import ravenweave.client.module.setting.impl.ComboSetting;
@@ -71,6 +73,7 @@ public class KillAura extends Module {
             if (rotationMode.getMode() == RotationMode.DEFAULT)
                 rotations = Utils.Player.getTargetRotations(target, 0);
             else if (rotationMode.getMode() == RotationMode.OPTIMAL_REACH) {
+                if (!Raven.moduleManager.getModuleByClazz(OptimalAim.class).isEnabled()) return;
                 Vec3 pos = OptimalAim.getOptimalAim();
                 if (pos == null) return;
                 rotations = Utils.Player.getRotations(pos.xCoord, pos.yCoord, pos.zCoord);

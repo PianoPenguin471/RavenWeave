@@ -116,6 +116,7 @@ public class ModuleManager {
         addModule(new LongJump());
 
         // BETA
+        addModule(new Spider());
         addModule(new Refill());
         addModule(new Radar());
         addModule(new Scaffold());

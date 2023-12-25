@@ -41,6 +41,7 @@ public class OptimalAim extends Module {
     }
 
     public static Vec3 getOptimalAim() {
+        if (ourPlayerWrapper == null || targetPlayerWrapper == null) return null;
         BoundingBoxWrapper box = ourPlayerWrapper.getBoundingBox(targetPlayerWrapper);
         return box.getCenter();
     }
