@@ -9,12 +9,12 @@ import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
-public class Trajectories extends Module {
+public class Projectiles extends Module {
     private final TickSetting preferSlot;
     private final SliderSetting hotbarSlotPreference;
 
-    public Trajectories() {
-        super("Trajectories", ModuleCategory.hotkey);
+    public Projectiles() {
+        super("Projectiles", ModuleCategory.hotkey);
 
         this.registerSetting(preferSlot = new TickSetting("Prefer a slot", false));
         this.registerSetting(hotbarSlotPreference = new SliderSetting("Prefer which slot", 5, 1, 9, 1));

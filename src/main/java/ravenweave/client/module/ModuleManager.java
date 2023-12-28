@@ -90,7 +90,7 @@ public class ModuleManager {
         addModule(new Pearl());
         addModule(new Armor());
         addModule(new Healing());
-        addModule(new ravenweave.client.module.modules.hotkey.Trajectories());
+        addModule(new Projectiles());
         addModule(new WTap());
         addModule(new BlockHit());
         addModule(new STap());
