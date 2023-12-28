@@ -23,7 +23,7 @@ import ravenweave.client.utils.Utils;
 
 public class Scaffold extends Module {
 
-    private final TickSetting disableSprint, noSwing, slotSwap;
+    private final TickSetting disableSprint, noSwing, slotSwap, sameY;
     private final SliderSetting pitch;
 
     private float yaw, prevYaw;
@@ -34,6 +34,7 @@ public class Scaffold extends Module {
         this.registerSetting(new DescriptionSetting("Helps you make bridges/scaffold walk.")); // bad description, but manthe wrote it
         this.registerSetting(pitch = new SliderSetting("Pitch", 81, 70, 90, 1));
         this.registerSetting(noSwing = new TickSetting("No Swing", false));
+        this.registerSetting(sameY = new TickSetting("Same Y", true));
         this.registerSetting(disableSprint = new TickSetting("Disable sprint", true));
         this.registerSetting(slotSwap = new TickSetting("Swap to blocks", true));
     }
@@ -101,6 +102,7 @@ public class Scaffold extends Module {
         if (mop.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return false;
         BlockPos pos = mop.getBlockPos();
         if (mop.sideHit == EnumFacing.UP) {
+            if (sameY.isToggled()) return false;
             if (!Keyboard.isKeyDown(mc.gameSettings.keyBindJump.getKeyCode())) return false;
             if (!((ItemBlock) mc.thePlayer.getHeldItem().getItem()).canPlaceBlockOnSide(mc.theWorld, pos, mop.sideHit, mc.thePlayer, mc.thePlayer.getHeldItem())) return false;
         }
