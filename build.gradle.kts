@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "me.pianopenguin471"
-version = "1.1.5-Beta"
+version = "2.0.0"
 
 weave {
     configure {
