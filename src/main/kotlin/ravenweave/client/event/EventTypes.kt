@@ -14,20 +14,6 @@ import net.weavemc.api.event.CancellableEvent
 import net.weavemc.api.event.Event
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
-import ravenweave.client.event.EntityListEvent.Add
-import ravenweave.client.event.EntityListEvent.Remove
-import ravenweave.client.event.PacketEvent.Receive
-import ravenweave.client.event.PacketEvent.Send
-import ravenweave.client.event.PlayerListEvent.Add
-import ravenweave.client.event.PlayerListEvent.Remove
-import ravenweave.client.event.RenderGameOverlayEvent.Post
-import ravenweave.client.event.RenderGameOverlayEvent.Pre
-import ravenweave.client.event.RenderLivingEvent.Post
-import ravenweave.client.event.RenderLivingEvent.Pre
-import ravenweave.client.event.StartGameEvent.Post
-import ravenweave.client.event.StartGameEvent.Pre
-import ravenweave.client.event.WorldEvent.Load
-import ravenweave.client.event.WorldEvent.Unload
 
 /**
  * This is the base class for a Tick Event. Tick Events can be Pre and Post, but you will never
@@ -155,7 +141,7 @@ class GuiOpenEvent(val screen: GuiScreen?) : CancellableEvent()
 /**
  * This event is called when the HUD (game overlay) is being rendered.
  *
- * It is split into [Pre] and [Post].
+ * It is split into [RenderGameOverlayEvent.Pre] and [RenderGameOverlayEvent.Post].
  */
 sealed class RenderGameOverlayEvent(val partialTicks: Float) : Event() {
 
@@ -176,7 +162,7 @@ sealed class RenderGameOverlayEvent(val partialTicks: Float) : Event() {
 /**
  * This event is called when an entity is added to or removed from the world.
  *
- * It is split into [Add] and [Remove].
+ * It is split into [EntityListEvent.Add] and [EntityListEvent.Remove].
  *
  * @property entity The entity being added/removed.
  */
@@ -197,7 +183,7 @@ sealed class EntityListEvent(val entity: Entity) : Event() {
 /**
  * This event is called when a player is added or removed from the player list.
  *
- * This event is split into [Add] and [Remove].
+ * This event is split into [PlayerListEvent.Add] and [PlayerListEvent.Remove].
  *
  * @property playerData The Player Data of the player being added/removed.
  */
@@ -218,7 +204,7 @@ sealed class PlayerListEvent(val playerData: AddPlayerData) : Event() {
 /**
  * This event is called when an entity is rendered.
  *
- * It is split into [Pre] and [Post]. The [Pre] version of this event is cancellable.
+ * It is split into [RenderLivingEvent.Pre] and [RenderLivingEvent.Post]. The [RenderLivingEvent.Pre] version of this event is cancellable.
  *
  * @property entity The entity being rendered.
  * @property x The `x` coordinate where the entity is being rendered this frame.
@@ -294,19 +280,19 @@ class ServerConnectEvent(
 }
 
 /**
- * Non-cancellable event, split into [Pre] and [Post].
+ * Non-cancellable event, split into [StartGameEvent.Pre] and [StartGameEvent.Post].
  */
 sealed class StartGameEvent : Event() {
 
     /**
      * Called in correspondence with [net.minecraft.client.Minecraft.startGame] at the head of the method.
-     * Therefore, [Pre] is called early in the game startup process.
+     * Therefore, [StartGameEvent.Pre] is called early in the game startup process.
      */
     object Pre : StartGameEvent()
 
     /**
      * Called in correspondence with [net.minecraft.client.Minecraft.startGame] at the tail of the method.
-     * Therefore, [Post] is called late in the game startup process.
+     * Therefore, [StartGameEvent.Post] is called late in the game startup process.
      */
     object Post : StartGameEvent()
 
@@ -321,7 +307,7 @@ sealed class StartGameEvent : Event() {
 object ShutdownEvent : Event()
 
 /**
- * Non-cancellable event, split into [Load] and [Unload].
+ * Non-cancellable event, split into [WorldEvent.Load] and [WorldEvent.Unload].
  *
  * Event call in the event of loading, or unloading a world.
  */
@@ -330,7 +316,7 @@ sealed class WorldEvent(val world: World) : Event() {
     /**
      * Called in correspondence with [net.minecraft.client.Minecraft.loadWorld]
      * if [net.minecraft.client.multiplayer.WorldClient] is not null.
-     * Therefore, [Load] is called by the [EventBus] only in the event
+     * Therefore, [WorldEvent.Load] is called by the [EventBus] only in the event
      * that a client loads a new world. Whether that be a server connection,
      * or a singleplayer world.
      */
@@ -339,7 +325,7 @@ sealed class WorldEvent(val world: World) : Event() {
     /**
      * Called in correspondence with [net.minecraft.client.Minecraft.loadWorld]
      * if [net.minecraft.client.Minecraft.theWorld] is not null.
-     * Therefore, [Unload] is called by the [EventBus] only in the event
+     * Therefore, [WorldEvent.Unload] is called by the [EventBus] only in the event
      * that a client unloads a world. Whether that be a server disconnection,
      * or a singleplayer world.
      */
@@ -347,7 +333,7 @@ sealed class WorldEvent(val world: World) : Event() {
 }
 
 /**
- * Cancellable event, split into [Send] and [Receive].
+ * Cancellable event, split into [PacketEvent.Send] and [PacketEvent.Receive].
  *
  * Called in the event of a packet being sent or received to the client via [Minecraft.myNetworkManager]
  *

@@ -1,6 +1,5 @@
 package ravenweave.client.utils;
 
-import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -50,7 +49,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -1631,45 +1629,5 @@ public class Utils {
         public enum PositionMode {
             UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT
         }
-    }
-
-    public static Predicate<Entity> getNotSpectatingEntitySelector() {
-        Class<?> clazz = EntitySelectors.class;
-        List<Field> fields = Arrays.asList(clazz.getDeclaredFields());
-        System.out.println("EntitySelectors fields: " + fields.size());
-        for (Field field : fields) {
-            System.out.println(" - " + field.getName());
-        }
-
-        /*return fields.stream().filter(field -> field.getType().equals(Predicate.class) && field.getName().equals("NOT_SPECTATING")).map(field -> {
-            try {
-                return (Predicate<Entity>) field.get(null);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }).findFirst().orElse(null);*/
-
-        // get NOT_SPECTATING
-        Field field = null;
-        try {
-            field = clazz.getDeclaredField("NOT_SPECTATING");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Found NOT_SPECTATING? " + (field != null));
-
-        Predicate<Entity> predicate = null;
-        if (field != null) {
-            try {
-                predicate = (Predicate<Entity>) field.get(null);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-
-        System.out.println("Predicate: " + predicate);
-
-        return predicate;
     }
 }

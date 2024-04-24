@@ -1,6 +1,5 @@
 package me.pianopenguin471.mixins;
 
-import com.google.common.base.Predicates;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -95,7 +94,6 @@ public abstract class EntityRendererMixin {
             this.pointedEntity = null;
             Vec3 vec33 = null;
             float f = 1.0F;
-            System.out.println("Predicates: " + Predicates.class.getName());
             List<Entity> list = EntityRendererMixinHelper.getAroundGoogleRelocation1(entity, vec31, reach, f);
             double d2 = distanceToVec;
 
