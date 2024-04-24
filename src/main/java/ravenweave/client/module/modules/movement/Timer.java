@@ -1,8 +1,8 @@
 package ravenweave.client.module.modules.movement;
 
-import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.clickgui.raven.ClickGui;
+import ravenweave.client.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;

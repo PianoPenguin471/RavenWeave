@@ -1,5 +1,6 @@
 package ravenweave.client.utils;
 
+import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -29,12 +30,12 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.*;
-import net.weavemc.loader.api.event.EventBus;
-import net.weavemc.loader.api.event.MouseEvent;
+import net.weavemc.api.event.EventBus;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import ravenweave.client.Raven;
+import ravenweave.client.event.MouseEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.LeftClicker;
 import ravenweave.client.module.modules.combat.Reach;
@@ -49,6 +50,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -64,7 +66,7 @@ public class Utils {
     public static final float DEGREES_TO_RADIANS = 0.017453292f;
     public static final String md = "Mode: ";
 
-    private static final HashMap<Integer, Integer> GOOD_POTIONS = new HashMap<>() {{
+    private static final HashMap<Integer, Integer> GOOD_POTIONS = new HashMap<Integer, Integer>() {{
         put(6, 1); // Instant Health
         put(10, 2); // Regeneration
         put(11, 3); // Resistance
@@ -419,7 +421,8 @@ public class Utils {
                 return null;
             double diffX = entityIn.posX - mc.thePlayer.posX;
             double diffY;
-            if (entityIn instanceof EntityLivingBase en) {
+            if (entityIn instanceof EntityLivingBase) {
+                final EntityLivingBase en = (EntityLivingBase) entityIn;
                 diffY = (en.posY + ((double) en.getEyeHeight() * 0.9D))
                         - (mc.thePlayer.posY + (double) mc.thePlayer.getEyeHeight());
             } else
@@ -620,7 +623,7 @@ public class Utils {
             MouseEvent m = new MouseEvent();
             ReflectionUtils.setPrivateValue(MouseEvent.class, m, mouseButton, "button");
             ReflectionUtils.setPrivateValue(MouseEvent.class, m, held, "buttonState");
-            EventBus.callEvent(m);
+            EventBus.postEvent(m);
 
             ByteBuffer buttons = (ByteBuffer) ReflectionUtils.getPrivateValue(Mouse.class, null, "buttons");
             if (buttons == null) {
@@ -853,7 +856,7 @@ public class Utils {
         }
 
         public static String reformat(String txt) {
-            return txt.replace("&", Character.toString(0x00A7));
+            return txt.replace("&", "§");
         }
     }
 
@@ -1628,5 +1631,45 @@ public class Utils {
         public enum PositionMode {
             UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT
         }
+    }
+
+    public static Predicate<Entity> getNotSpectatingEntitySelector() {
+        Class<?> clazz = EntitySelectors.class;
+        List<Field> fields = Arrays.asList(clazz.getDeclaredFields());
+        System.out.println("EntitySelectors fields: " + fields.size());
+        for (Field field : fields) {
+            System.out.println(" - " + field.getName());
+        }
+
+        /*return fields.stream().filter(field -> field.getType().equals(Predicate.class) && field.getName().equals("NOT_SPECTATING")).map(field -> {
+            try {
+                return (Predicate<Entity>) field.get(null);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).findFirst().orElse(null);*/
+
+        // get NOT_SPECTATING
+        Field field = null;
+        try {
+            field = clazz.getDeclaredField("NOT_SPECTATING");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Found NOT_SPECTATING? " + (field != null));
+
+        Predicate<Entity> predicate = null;
+        if (field != null) {
+            try {
+                predicate = (Predicate<Entity>) field.get(null);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("Predicate: " + predicate);
+
+        return predicate;
     }
 }

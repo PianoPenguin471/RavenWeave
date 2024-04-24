@@ -1,9 +1,9 @@
 package ravenweave.client.command.commands;
 
+import ravenweave.client.Raven;
 import ravenweave.client.clickgui.raven.Terminal;
 import ravenweave.client.command.Command;
 import ravenweave.client.config.Config;
-import ravenweave.client.Raven;
 
 public class CConfig extends Command {
     public CConfig() {

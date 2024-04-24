@@ -1,7 +1,7 @@
-package me.pianopenguin471.command;
+package me.pianopenguin471.command.impl;
 
+import me.pianopenguin471.command.Command;
 import net.minecraft.util.EnumChatFormatting;
-import net.weavemc.loader.api.command.Command;
 import org.lwjgl.input.Keyboard;
 import ravenweave.client.Raven;
 import ravenweave.client.module.Module;

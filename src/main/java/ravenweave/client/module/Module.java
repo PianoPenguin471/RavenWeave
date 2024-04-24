@@ -2,7 +2,7 @@ package ravenweave.client.module;
 
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
-import net.weavemc.loader.api.event.EventBus;
+import net.weavemc.api.event.EventBus;
 import org.lwjgl.input.Keyboard;
 import ravenweave.client.clickgui.raven.components.ModuleComponent;
 import ravenweave.client.module.modules.client.ClickGuiModule;

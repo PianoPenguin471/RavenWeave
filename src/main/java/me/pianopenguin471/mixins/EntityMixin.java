@@ -14,20 +14,24 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.weavemc.loader.api.event.EventBus;
+import net.weavemc.api.event.EventBus;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import ravenweave.client.Raven;
 import ravenweave.client.event.LookEvent;
 import ravenweave.client.event.MoveInputEvent;
-import ravenweave.client.Raven;
+import ravenweave.client.hook.finder.Finder$Entity$callResetPositionToBB;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.player.SafeWalk;
+import ravenweave.client.util.MappingsWorkAround;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+// TODO: Refactor after Weave fixes mappings issues
 @Mixin(priority = 995, value = Entity.class)
 public abstract class EntityMixin {
 
@@ -52,8 +56,10 @@ public abstract class EntityMixin {
     @Shadow
     public abstract AxisAlignedBB getEntityBoundingBox();
 
-    @Shadow
-    protected abstract void resetPositionToBB();
+//    @Shadow
+//    protected abstract void resetPositionToBB();
+//    @Unique
+//    private Method ravenWeave$resetPositionToBBMethod;
 
     @Shadow
     public World worldObj;
@@ -103,7 +109,11 @@ public abstract class EntityMixin {
     private int nextStepDistance;
 
     @Shadow
-    public abstract boolean isInWater();
+    protected boolean inWater;
+
+    public boolean isWet_() {
+        return this.inWater || this.worldObj.isRainingAt(new BlockPos(this.posX, this.posY, this.posZ)) || this.worldObj.isRainingAt(new BlockPos(this.posX, this.posY + (double)this.height, this.posZ));
+    }
 
     @Shadow
     public abstract void playSound(String p_playSound_1_, float p_playSound_2_, float p_playSound_3_);
@@ -124,9 +134,6 @@ public abstract class EntityMixin {
     public abstract void addEntityCrashInfo(CrashReportCategory p_addEntityCrashInfo_1_);
 
     @Shadow
-    public abstract boolean isWet();
-
-    @Shadow
     protected abstract void dealFireDamage(int p_dealFireDamage_1_);
 
     @Shadow
@@ -138,6 +145,9 @@ public abstract class EntityMixin {
     @Shadow
     public int fireResistance;
 
+    @Shadow
+    public float height;
+
     /**
      * @author mc code
      * @reason too complicated to inject without mod compatibility issues
@@ -147,7 +157,13 @@ public abstract class EntityMixin {
         if (this.noClip) {
             this.setEntityBoundingBox(
                     this.getEntityBoundingBox().offset(p_moveEntity_1_, p_moveEntity_3_, p_moveEntity_5_));
-            this.resetPositionToBB();
+//            this.resetPositionToBB();
+//            this.ravenWeave$callResetPositionToBB();
+            try {
+                MappingsWorkAround.findMethod(Entity.class, Finder$Entity$callResetPositionToBB.ID).invoke(this);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             this.worldObj.theProfiler.startSection("move");
             double d0 = this.posX;
@@ -383,7 +399,13 @@ public abstract class EntityMixin {
 
             this.worldObj.theProfiler.endSection();
             this.worldObj.theProfiler.startSection("rest");
-            this.resetPositionToBB();
+//            this.resetPositionToBB();
+//            this.ravenWeave$callResetPositionToBB();
+            try {
+                MappingsWorkAround.findMethod(Entity.class, Finder$Entity$callResetPositionToBB.ID).invoke(this);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
             this.isCollidedHorizontally = (d3 != p_moveEntity_1_) || (d5 != p_moveEntity_5_);
             this.isCollidedVertically = d4 != p_moveEntity_3_;
             this.onGround = this.isCollidedVertically && (d4 < 0.0D);
@@ -433,7 +455,7 @@ public abstract class EntityMixin {
                 if ((this.distanceWalkedOnStepModified > (float) this.nextStepDistance)
                         && (block1.getMaterial() != Material.air)) {
                     this.nextStepDistance = (int) this.distanceWalkedOnStepModified + 1;
-                    if (this.isInWater()) {
+                    if (this.inWater) {
                         float f = MathHelper.sqrt_double((this.motionX * this.motionX * 0.20000000298023224D)
                                 + (this.motionY * this.motionY) + (this.motionZ * this.motionZ * 0.20000000298023224D))
                                 * 0.35F;
@@ -459,7 +481,7 @@ public abstract class EntityMixin {
                 throw new ReportedException(crashreport);
             }
 
-            boolean flag2 = this.isWet();
+            boolean flag2 = this.isWet_();
             if (this.worldObj.isFlammableWithin(this.getEntityBoundingBox().contract(0.001D, 0.001D, 0.001D))) {
                 this.dealFireDamage(1);
                 if (!flag2) {
@@ -490,7 +512,7 @@ public abstract class EntityMixin {
     public void moveFlying(float strafe, float forward, float fric) {
         MoveInputEvent e = new MoveInputEvent(strafe, forward, fric, this.rotationYaw);
         if((Object) this == Minecraft.getMinecraft().thePlayer)
-            EventBus.callEvent(e);
+            EventBus.postEvent(e);
 
         strafe = e.getStrafe();
         forward = e.getForward();
@@ -524,7 +546,7 @@ public abstract class EntityMixin {
     public final Vec3 getVectorForRotation(float pitch, float yaw) {
         if((Object) this == Minecraft.getMinecraft().thePlayer) {
             LookEvent e = new LookEvent(pitch, yaw);
-            EventBus.callEvent(e);
+            EventBus.postEvent(e);
             pitch = e.getPitch();
             yaw = e.getYaw();
         }
@@ -535,4 +557,36 @@ public abstract class EntityMixin {
         return new Vec3(f1 * f2, f3, f * f2);
     }
 
+    /*@Unique
+    private void ravenWeave$callResetPositionToBB() {
+        if (ravenWeave$resetPositionToBBMethod == null) {
+            try {
+                Method[] declaredMethods = Entity.class.getDeclaredMethods();
+                boolean found = false;
+                for (Method declaredMethod : declaredMethods) {
+                    if (found) {
+                        ravenWeave$resetPositionToBBMethod = declaredMethod;
+                        break;
+                    }
+
+                    System.out.println("Method: " + declaredMethod.getName());
+                    for (Annotation declaredAnnotation : declaredMethod.getDeclaredAnnotations()) {
+                        System.out.println(" Annotation: " + declaredAnnotation.annotationType().getName());
+                    }
+
+                    if (declaredMethod.isAnnotationPresent(EntityHook.MarkerEntityHook.class)) {
+                        found = true;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            ravenWeave$resetPositionToBBMethod.invoke(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 }

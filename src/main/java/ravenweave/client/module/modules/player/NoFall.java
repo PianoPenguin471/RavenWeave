@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.player;
 
-import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
+import net.weavemc.api.event.SubscribeEvent;
+import ravenweave.client.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -19,19 +19,19 @@ public class NoFall extends Module {
         super("NoFall", ModuleCategory.player);
 
         this.registerSetting(warning = new DescriptionSetting("HypixelSpoof silent flags."));
-        this.registerSetting(mode = new ComboSetting("Mode", Mode.Spoof));
+        this.registerSetting(mode = new ComboSetting("Mode", NoFallMode.Spoof));
     }
 
     @SubscribeEvent
     public void onTick(TickEvent e) {
         if (!Utils.Player.isPlayerInGame()) return;
-        switch ((Mode) mode.getMode()) {
-            case Spoof -> {
-                if ((double) mc.thePlayer.fallDistance > 2.5D) {
+        switch ((NoFallMode) mode.getMode()) {
+            case Spoof:
+                if (mc.thePlayer.fallDistance > 2.5D) {
                     mc.thePlayer.onGround = true;
                 }
-            }
-            case HypixelSpoof -> {
+                break;
+            case HypixelSpoof:
                 if (mc.thePlayer.onGround) {
                     ticks = 0;
                     dist = 0;
@@ -54,8 +54,8 @@ public class NoFall extends Module {
                         }
                     }
                 }
-            }
-            case Verus -> {
+                break;
+            case Verus:
                 if (mc.thePlayer.onGround) {
                     dist = 0;
                     spoofing = false;
@@ -73,11 +73,8 @@ public class NoFall extends Module {
                         }
                     }
                 }
-            }
+                break;
         }
     }
 
-    public enum Mode {
-        Spoof, HypixelSpoof, Verus
-    }
 }

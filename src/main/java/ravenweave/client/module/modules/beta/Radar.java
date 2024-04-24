@@ -2,8 +2,8 @@ package ravenweave.client.module.modules.beta;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.Entity;
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
+import ravenweave.client.event.RenderGameOverlayEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.module.setting.impl.DescriptionSetting;

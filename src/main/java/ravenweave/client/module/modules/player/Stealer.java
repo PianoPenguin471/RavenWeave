@@ -6,7 +6,7 @@ import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.event.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;

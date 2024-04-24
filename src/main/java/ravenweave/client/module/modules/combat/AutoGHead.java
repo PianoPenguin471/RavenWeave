@@ -3,7 +3,7 @@ package ravenweave.client.module.modules.combat;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.event.UpdateEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DoubleSliderSetting;

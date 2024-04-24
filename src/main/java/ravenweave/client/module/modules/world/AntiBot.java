@@ -2,9 +2,9 @@ package ravenweave.client.module.modules.world;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.Raven;
+import ravenweave.client.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.player.Freecam;
 import ravenweave.client.module.setting.impl.TickSetting;

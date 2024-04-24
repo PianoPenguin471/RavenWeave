@@ -1,8 +1,8 @@
 package ravenweave.client.clickgui.kv.components;
 
 import net.minecraft.client.gui.Gui;
-import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.Raven;
+import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.Module.ModuleCategory;
 import ravenweave.client.utils.font.FontUtil;
@@ -48,17 +48,18 @@ public class KvCategoryComponent extends KvComponent {
     @Override
 	public void clicked(int button, int x, int y) {
         switch (button) {
-            case 0 -> {
-                KvModuleSection.moduleSec.setOpenmodule(null);
-                KvModuleSection.moduleSec.setCurrentCategory(this);
-                KvModuleSection.moduleSec.setCurrentCategory(this);
-            }
-            case 1 -> {
-                if (!childCategories.isEmpty()) {
+            case 0:
+                if (isMouseOver(x, y)) {
+                    KvModuleSection.moduleSec.setOpenmodule(null);
+                    KvModuleSection.moduleSec.setCurrentCategory(this);
+                }
+                break;
+            case 1:
+                if (isMouseOver(x, y) && !childCategories.isEmpty()) {
                     open = !open;
                     Raven.kvCompactGui.initGui();
                 }
-            }
+                break;
         }
     }
 

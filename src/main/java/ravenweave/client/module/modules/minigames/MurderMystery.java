@@ -2,9 +2,9 @@ package ravenweave.client.module.modules.minigames;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
-import net.weavemc.loader.api.event.RenderWorldEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.Raven;
+import ravenweave.client.event.RenderWorldEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.render.PlayerESP;
 import ravenweave.client.module.modules.world.AntiBot;

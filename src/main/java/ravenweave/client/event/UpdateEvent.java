@@ -3,7 +3,7 @@ package ravenweave.client.event;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import net.weavemc.loader.api.event.CancellableEvent;
+import net.weavemc.api.event.CancellableEvent;
 
 @Getter
 @Setter

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
-import net.weavemc.loader.api.event.Event;
+import net.weavemc.api.event.Event;
 
 @Getter
 @AllArgsConstructor

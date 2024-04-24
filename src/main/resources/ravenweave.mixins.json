@@ -3,21 +3,19 @@
   "package": "me.pianopenguin471.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "BlockGrassMixin",
+    "BlockMixin",
+    "BlockModelRendererMixin",
     "EntityMixin",
     "EntityPlayerMixin",
     "EntityPlayerSPMixin",
+    "EntityRendererAccessor",
     "EntityRendererMixin",
-    "MinecraftMixin",
-    "NetworkManagerMixin",
-    "PlayerControllerMPMixin",
-    "RendererLivingEntityMixin",
-    "IS12PacketEntityVelocity",
-    "WorldMixin",
     "FontRendererMixin",
-    "BlockMixin",
-    "BlockModelRendererMixin",
-    "WorldRendererMixin",
-    "BlockGrassMixin"
-
+    "IS12PacketEntityVelocity",
+    "MinecraftMixin",
+    "PlayerControllerMPMixin",
+    "WorldMixin",
+    "WorldRendererMixin"
   ]
 }

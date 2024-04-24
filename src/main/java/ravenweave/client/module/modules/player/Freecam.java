@@ -1,11 +1,11 @@
 package ravenweave.client.module.modules.player;
 
 import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.weavemc.loader.api.event.MouseEvent;
-import net.weavemc.loader.api.event.RenderWorldEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 import ravenweave.client.event.LivingUpdateEvent;
+import ravenweave.client.event.MouseEvent;
+import ravenweave.client.event.RenderWorldEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;

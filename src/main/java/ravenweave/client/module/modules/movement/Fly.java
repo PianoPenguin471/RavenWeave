@@ -1,8 +1,8 @@
 package ravenweave.client.module.modules.movement;
 
 import net.minecraft.client.Minecraft;
-import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
+import net.weavemc.api.event.SubscribeEvent;
+import ravenweave.client.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
@@ -46,10 +46,12 @@ public class Fly extends Module {
     @SubscribeEvent
     public void onTick(TickEvent e) {
         switch (mode.getMode()) {
-            case VANILLA -> this.vanFly.update();
-            case GLIDE -> this.gliFly.update();
+            case VANILLA:
+                this.vanFly.update();
+                break;
+            case GLIDE:
+                this.gliFly.update();
         }
-
     }
 
     class GliFly {

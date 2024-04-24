@@ -2,8 +2,8 @@ package ravenweave.client.clickgui.kv.components;
 
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
-import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.Raven;
+import ravenweave.client.clickgui.kv.KvComponent;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.CoolDown;

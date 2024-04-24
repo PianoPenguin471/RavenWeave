@@ -1,28 +1,32 @@
 package me.pianopenguin471;
 
-import me.pianopenguin471.command.GUICommand;
-import net.weavemc.loader.api.ModInitializer;
-import net.weavemc.loader.api.command.CommandBus;
-import net.weavemc.loader.api.event.*;
+import me.pianopenguin471.command.CommandBus;
+import me.pianopenguin471.command.impl.GUICommand;
+import net.weavemc.api.ModInitializer;
+import net.weavemc.api.event.EventBus;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.Raven;
+import ravenweave.client.event.ShutdownEvent;
 import ravenweave.client.module.Module;
+
+import java.lang.instrument.Instrumentation;
 
 public class RavenWeave implements ModInitializer {
     @Override
-    public void preInit() {
+    public void preInit(Instrumentation instrumentation) {
         CommandBus.register(new GUICommand());
         EventBus.subscribe(this);
     }
 
     @SubscribeEvent
-    public void onKeyPress(KeyboardEvent e) {
+    public void onKeyPress(ravenweave.client.event.KeyboardEvent e) {
         for (Module module: Raven.moduleManager.getModules()) {
             module.keybind();
         }
     }
 
     @SubscribeEvent
-    public void onGameStart(StartGameEvent.Post e) {
+    public void onGameStart(ravenweave.client.event.StartGameEvent.Post e) {
         Raven.init();
     }
 

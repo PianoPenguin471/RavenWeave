@@ -1,8 +1,8 @@
 package ravenweave.client.module.modules.movement;
 
 import net.minecraft.client.settings.KeyBinding;
-import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
+import net.weavemc.api.event.SubscribeEvent;
+import ravenweave.client.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.utils.Utils;

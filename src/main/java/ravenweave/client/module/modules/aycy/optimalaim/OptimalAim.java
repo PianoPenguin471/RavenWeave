@@ -3,11 +3,10 @@ package ravenweave.client.module.modules.aycy.optimalaim;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.Timer;
 import net.minecraft.util.Vec3;
-import net.weavemc.loader.api.event.RenderLivingEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
+import ravenweave.client.event.RenderLivingEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.aycy.optimalaim.e.BoundingBoxWrapper;
 import ravenweave.client.module.modules.aycy.optimalaim.f.PlayerPosWrapper;
@@ -30,7 +29,8 @@ public class OptimalAim extends Module {
 
     @SubscribeEvent()
     public void onRenderLiving(RenderLivingEvent a) {
-        if (a.getEntity() instanceof EntityPlayer b) {
+        if (a.getEntity() instanceof EntityPlayer) {
+            final EntityPlayer b = (EntityPlayer) a.getEntity();
             this.target = Targets.getTarget();
             if (this.target != null && this.target == b) {
                 ourPlayerWrapper = new PlayerPosWrapper(a, mc.thePlayer);

@@ -10,7 +10,7 @@ import net.minecraft.network.play.client.C0DPacketCloseWindow;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.event.PacketEvent;
 import ravenweave.client.event.UpdateEvent;
 import ravenweave.client.module.Module;
@@ -93,30 +93,31 @@ public class Manager extends Module {
                 this.throwItem(i);
             }
 
-            if (item instanceof ItemArmor armor) {
+            if (item instanceof ItemArmor) {
+                final ItemArmor armor = (ItemArmor) item;
                 final int reduction = this.armorReduction(stack);
 
                 switch (armor.armorType) {
-                    case 0 -> {
+                    case 0:
                         if (helmet == -1 || reduction > armorReduction(mc.thePlayer.inventory.getStackInSlot(helmet))) {
                             helmet = i;
                         }
-                    }
-                    case 1 -> {
+                        break;
+                    case 1:
                         if (chestplate == -1 || reduction > armorReduction(mc.thePlayer.inventory.getStackInSlot(chestplate))) {
                             chestplate = i;
                         }
-                    }
-                    case 2 -> {
+                        break;
+                    case 2:
                         if (leggings == -1 || reduction > armorReduction(mc.thePlayer.inventory.getStackInSlot(leggings))) {
                             leggings = i;
                         }
-                    }
-                    case 3 -> {
+                        break;
+                    case 3:
                         if (boots == -1 || reduction > armorReduction(mc.thePlayer.inventory.getStackInSlot(boots))) {
                             boots = i;
                         }
-                    }
+                        break;
                 }
             }
 
@@ -240,29 +241,30 @@ public class Manager extends Module {
 
             final Item item = stack.getItem();
 
-            if (item instanceof ItemArmor armor) {
+            if (item instanceof ItemArmor) {
+                final ItemArmor armor = (ItemArmor) item;
 
                 switch (armor.armorType) {
-                    case 0 -> {
+                    case 0:
                         if (i != helmet) {
                             this.throwItem(i);
                         }
-                    }
-                    case 1 -> {
+                        break;
+                    case 1:
                         if (i != chestplate) {
                             this.throwItem(i);
                         }
-                    }
-                    case 2 -> {
+                        break;
+                    case 2:
                         if (i != leggings) {
                             this.throwItem(i);
                         }
-                    }
-                    case 3 -> {
+                        break;
+                    case 3:
                         if (i != boots) {
                             this.throwItem(i);
                         }
-                    }
+                        break;
                 }
             }
         }
@@ -410,21 +412,33 @@ public class Manager extends Module {
         final Item item = stack.getItem();
         int level = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, stack);
 
-        level = switch (level) {
-            case 1 -> 30;
-            case 2 -> 69;
-            case 3 -> 120;
-            case 4 -> 186;
-            case 5 -> 271;
-            default -> 0;
-        };
+        switch (level) {
+            case 1:
+                level = 30;
+                break;
+            case 2:
+                level = 69;
+                break;
+            case 3:
+                level = 120;
+                break;
+            case 4:
+                level = 186;
+                break;
+            case 5:
+                level = 271;
+                break;
+            default:
+                level = 0;
+                break;
+        }
 
-        if (item instanceof ItemPickaxe pickaxe) {
-            return pickaxe.getToolMaterial().getEfficiencyOnProperMaterial() + level;
-        } else if (item instanceof ItemSpade shovel) {
-            return shovel.getToolMaterial().getEfficiencyOnProperMaterial() + level;
-        } else if (item instanceof ItemAxe axe) {
-            return axe.getToolMaterial().getEfficiencyOnProperMaterial() + level;
+        if (item instanceof ItemPickaxe) {
+            return ((ItemPickaxe) item).getToolMaterial().getEfficiencyOnProperMaterial() + level;
+        } else if (item instanceof ItemSpade) {
+            return ((ItemSpade) item).getToolMaterial().getEfficiencyOnProperMaterial() + level;
+        } else if (item instanceof ItemAxe) {
+            return ((ItemAxe) item).getToolMaterial().getEfficiencyOnProperMaterial() + level;
         }
 
         return 0;
@@ -468,11 +482,9 @@ public class Manager extends Module {
     }
 
     @SubscribeEvent
-    public void onPacket(PacketEvent event) {
-        if (event.isOutgoing()) {
-            if (event.getPacket() instanceof C08PacketPlayerBlockPlacement) {
-                this.placeTicks = 0;
-            }
+    public void onPacket(PacketEvent.Send event) {
+        if (event.getPacket() instanceof C08PacketPlayerBlockPlacement) {
+            this.placeTicks = 0;
         }
     }
 }

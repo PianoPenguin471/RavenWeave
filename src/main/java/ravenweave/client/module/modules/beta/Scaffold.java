@@ -10,23 +10,20 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.lwjgl.input.Keyboard;
 import ravenweave.client.event.LookEvent;
+import ravenweave.client.event.RenderGameOverlayEvent;
 import ravenweave.client.event.UpdateEvent;
 import ravenweave.client.module.Module;
-import ravenweave.client.module.modules.player.BedAura;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.CaterpillowUtils;
 import ravenweave.client.utils.Utils;
 
-import java.security.KeyPair;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Scaffold extends Module {

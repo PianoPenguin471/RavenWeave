@@ -3,15 +3,14 @@ package ravenweave.client.module.modules.render;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityEnderChest;
-import net.weavemc.loader.api.event.RenderWorldEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
+import ravenweave.client.event.RenderWorldEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.RGBSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 import ravenweave.client.utils.Utils;
 
 import java.awt.*;
-import java.util.Iterator;
 
 public class ChestESP extends Module {
     public static RGBSetting rgb;

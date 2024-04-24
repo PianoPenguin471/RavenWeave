@@ -20,7 +20,6 @@ import ravenweave.client.module.modules.other.Spin;
 import ravenweave.client.module.modules.other.WaterBucket;
 import ravenweave.client.module.modules.player.*;
 import ravenweave.client.module.modules.render.*;
-import ravenweave.client.module.modules.render.Trajectories;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.utils.Utils;
 

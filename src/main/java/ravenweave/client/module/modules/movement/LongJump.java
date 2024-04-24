@@ -1,9 +1,9 @@
 package ravenweave.client.module.modules.movement;
 
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
-import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.event.PacketEvent;
+import ravenweave.client.event.TickEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;
@@ -29,8 +29,7 @@ public class LongJump extends Module {
     }
 
     @SubscribeEvent
-    public void onPacket(PacketEvent event) {
-        if (event.isOutgoing()) return;
+    public void onPacket(PacketEvent.Receive event) {
         if (!(event.getPacket() instanceof S12PacketEntityVelocity)) return;
         if (((S12PacketEntityVelocity) event.getPacket()).getEntityID() == mc.thePlayer.getEntityId()) this.shouldJump = true;
     }
