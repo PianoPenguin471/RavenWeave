@@ -28,6 +28,7 @@ import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.scoreboard.Team;
 import net.minecraft.util.*;
 import net.weavemc.api.event.EventBus;
 import org.lwjgl.Sys;
@@ -1242,7 +1243,43 @@ public class Utils {
                 GL11.glDisable(3042);
             }
         }
+        public static int getTeamColor(EntityPlayer player) {
+            Scoreboard scoreboard = player.getWorldScoreboard();
+            ScorePlayerTeam playerTeam = scoreboard.getPlayersTeam(player.getName());
 
+            if (playerTeam != null) {
+                String color = playerTeam.getColorPrefix();
+                if (color.length() < 2) {
+                    return Color.WHITE.getRGB();
+                }
+                char colorChar = color.charAt(1); // Assuming the color code is like "§x" where x is the color code
+                if (colorChar == '4' || colorChar == 'c') {
+                    return Color.RED.getRGB();
+                }
+                if (colorChar == '6' || colorChar == 'e') {
+                    return Color.YELLOW.getRGB();
+                }
+                if (colorChar == '2' || colorChar == 'a') {
+                    return Color.GREEN.getRGB();
+                }
+                if (colorChar == 'b' || colorChar == '3') {
+                    return Color.CYAN.getRGB();
+                }
+                if (colorChar == '9' || colorChar == '1') {
+                    return Color.BLUE.getRGB();
+                }
+                if (colorChar == 'd' || colorChar == '5') {
+                    return Color.MAGENTA.getRGB();
+                }
+                if (colorChar == 'f' || colorChar == '7') {
+                    return Color.WHITE.getRGB();
+                }
+                if (colorChar == '8' || colorChar == '0') {
+                    return Color.BLACK.getRGB();
+                } 
+            }
+            return Color.WHITE.getRGB();
+        }
         public static void drawBoxAroundEntity(Entity e, int type, double expand, double shift, int color, boolean damage) {
             if (e instanceof EntityLivingBase) {
                 double x = (e.lastTickPosX + ((e.posX - e.lastTickPosX) * (double) Client.getTimer().renderPartialTicks))
@@ -1256,6 +1293,7 @@ public class Utils {
                     color = Color.RED.getRGB();
 
                 GlStateManager.pushMatrix();
+                int teamColor = getTeamColor((EntityPlayer) e);
                 if (type == 3) {
                     GL11.glTranslated(x, y - 0.2D, z);
                     GL11.glRotated(-mc.getRenderManager().playerViewY, 0.0D, 1.0D, 0.0D);
@@ -1343,6 +1381,8 @@ public class Utils {
                                 RenderGlobal.drawSelectionBoundingBox(axis);
                             else if (type == 2)
                                 dbb(axis, r, g, b);
+                            else if (type == 7)
+                                dsbbt(axis, teamColor);
 
                             GL11.glEnable(3553);
                             GL11.glEnable(2929);
@@ -1354,6 +1394,51 @@ public class Utils {
 
                 GlStateManager.popMatrix();
             }
+        }
+        
+        public static void dsbbt(AxisAlignedBB var0, int teamColor) {
+            Tessellator var1 = Tessellator.getInstance();
+            WorldRenderer var2 = var1.getWorldRenderer();
+            
+            // Set color based on teamColor
+            float red = ((teamColor >> 16) & 0xFF) / 255.0f;
+            float green = ((teamColor >> 8) & 0xFF) / 255.0f;
+            float blue = (teamColor & 0xFF) / 255.0f;
+            
+            GlStateManager.color(red, green, blue, 1.0F); // Set the color
+            
+            // Draw bottom face
+            var2.begin(3, DefaultVertexFormats.POSITION);
+            var2.pos(var0.minX, var0.minY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.minY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.minY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.minY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.minY, var0.minZ).endVertex();
+            var1.draw();
+            
+            // Draw top face
+            var2.begin(3, DefaultVertexFormats.POSITION);
+            var2.pos(var0.minX, var0.maxY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.maxY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.maxY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.maxY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.maxY, var0.minZ).endVertex();
+            var1.draw();
+            
+            // Draw vertical edges
+            var2.begin(1, DefaultVertexFormats.POSITION);
+            var2.pos(var0.minX, var0.minY, var0.minZ).endVertex();
+            var2.pos(var0.minX, var0.maxY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.minY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.maxY, var0.minZ).endVertex();
+            var2.pos(var0.maxX, var0.minY, var0.maxZ).endVertex();
+            var2.pos(var0.maxX, var0.maxY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.minY, var0.maxZ).endVertex();
+            var2.pos(var0.minX, var0.maxY, var0.maxZ).endVertex();
+            var1.draw();
+            
+            // Reset color to default
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         }
 
         public static void dbb(AxisAlignedBB abb, float r, float g, float b) {

@@ -27,6 +27,7 @@ public class PlayerESP extends Module {
     public static TickSetting showInvis;
     public static TickSetting redOnDamage;
     public static TickSetting enabledBox;
+    public static TickSetting enabledTeamBox;
     public static TickSetting enabledShaded;
     public static TickSetting enabled2D;
     public static TickSetting enabledHealth;
@@ -43,6 +44,7 @@ public class PlayerESP extends Module {
         this.registerSetting(enabled2D = new TickSetting("2D", false));
         this.registerSetting(enabledArrow = new TickSetting("Arrow", false));
         this.registerSetting(enabledBox = new TickSetting("Box", false));
+        this.registerSetting(enabledTeamBox = new TickSetting("Team Box", false));
         this.registerSetting(enabledHealth = new TickSetting("Health", true));
         this.registerSetting(enabledRing = new TickSetting("Ring", false));
         this.registerSetting(enabledShaded = new TickSetting("Shaded", false));
@@ -140,6 +142,9 @@ public class PlayerESP extends Module {
 
         if (enabledRing.isToggled()) {
             Utils.HUD.drawBoxAroundEntity(en, 6, expand.getInput(), xShift.getInput(), rgb, redOnDamage.isToggled());
+        }
+        if (enabledTeamBox.isToggled()) {
+            Utils.HUD.drawBoxAroundEntity(en, 7, expand.getInput(), xShift.getInput(), rgb, redOnDamage.isToggled());
         }
 
     }
