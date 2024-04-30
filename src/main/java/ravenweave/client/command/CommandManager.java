@@ -1,8 +1,8 @@
 package ravenweave.client.command;
 
+import ravenweave.client.Raven;
 import ravenweave.client.clickgui.raven.Terminal;
 import ravenweave.client.command.commands.*;
-import ravenweave.client.Raven;
 import ravenweave.client.utils.Utils;
 
 import java.util.ArrayList;

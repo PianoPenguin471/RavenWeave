@@ -1,28 +1,31 @@
 package me.pianopenguin471.mixins;
 
-import com.google.common.base.Predicates;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItemFrame;
-import net.minecraft.world.World;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.*;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.*;
 import ravenweave.client.Raven;
+import ravenweave.client.hook.finder.Finder$EntityRenderer$getNightVisionBrightness;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.combat.HitBoxes;
 import ravenweave.client.module.modules.combat.KillAura;
 import ravenweave.client.module.modules.combat.Reach;
 import ravenweave.client.module.modules.render.Xray;
+import ravenweave.client.util.MappingsWorkAround;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+// TODO: Refactor after Weave fixes mappings issues
 @Mixin(priority = 995, value = EntityRenderer.class)
 public abstract class EntityRendererMixin {
 
@@ -31,15 +34,23 @@ public abstract class EntityRendererMixin {
     @Shadow
     private Entity pointedEntity;
 
-    @Shadow private boolean lightmapUpdateNeeded;
-    @Shadow private float torchFlickerX;
-    @Shadow private float bossColorModifier;
-    @Shadow private float bossColorModifierPrev;
+    @Shadow
+    private boolean lightmapUpdateNeeded;
+    @Shadow
+    private float torchFlickerX;
+    @Shadow
+    private float bossColorModifier;
+    @Shadow
+    private float bossColorModifierPrev;
 
-    @Shadow protected abstract float getNightVisionBrightness(EntityLivingBase p_getNightVisionBrightness_1_, float p_getNightVisionBrightness_2_);
+//    @Shadow protected abstract float getNightVisionBrightness(EntityLivingBase p_getNightVisionBrightness_1_, float p_getNightVisionBrightness_2_);
 
-    @Shadow @Final private int[] lightmapColors;
-    @Shadow @Final private DynamicTexture lightmapTexture;
+    @Shadow
+    @Final
+    private int[] lightmapColors;
+    @Shadow
+    @Final
+    private DynamicTexture lightmapTexture;
 
     /**
      * @author mc code
@@ -83,16 +94,13 @@ public abstract class EntityRendererMixin {
             this.pointedEntity = null;
             Vec3 vec33 = null;
             float f = 1.0F;
-            List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity,
-                    entity.getEntityBoundingBox()
-                            .addCoord(vec31.xCoord * reach, vec31.yCoord * reach, vec31.zCoord * reach).expand(f, f, f),
-                    Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
+            List<Entity> list = EntityRendererMixinHelper.getAroundGoogleRelocation1(entity, vec31, reach, f);
             double d2 = distanceToVec;
 
             for (Entity entity1 : list) {
                 float f1 = entity1.getCollisionBorderSize();
                 double kms = HitBoxes.expandHitbox(entity1);
-                AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1).expand(kms, HitBoxes.vertical.isToggled()? kms : 0, kms);
+                AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1).expand(kms, HitBoxes.vertical.isToggled() ? kms : 0, kms);
                 MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
                 if (axisalignedbb.isVecInside(vec3)) {
                     if (d2 >= 0.0D) {
@@ -116,7 +124,7 @@ public abstract class EntityRendererMixin {
                 }
             }
 
-            if ((this.pointedEntity != null) && flag && (vec3.distanceTo(vec33) > (reachMod.isEnabled()? Reach.getReach() : 3.0D))) {
+            if ((this.pointedEntity != null) && flag && (vec3.distanceTo(vec33) > (reachMod.isEnabled() ? Reach.getReach() : 3.0D))) {
                 this.pointedEntity = null;
                 assert vec33 != null;
                 this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33,
@@ -132,8 +140,10 @@ public abstract class EntityRendererMixin {
             this.mc.mcProfiler.endSection();
         }
     }
-    @Overwrite
-    public void updateLightmap(float p_updateLightmap_1_) {
+
+//    @Overwrite
+    @Unique
+    public void old$updateLightmap(float p_updateLightmap_1_) throws InvocationTargetException, IllegalAccessException {
         if (this.lightmapUpdateNeeded) {
             this.mc.mcProfiler.startSection("lightTex");
             World world = this.mc.theWorld;
@@ -188,7 +198,8 @@ public abstract class EntityRendererMixin {
 
                     float f17;
                     if (this.mc.thePlayer.isPotionActive(Potion.nightVision)) {
-                        f16 = this.getNightVisionBrightness(this.mc.thePlayer, p_updateLightmap_1_);
+//                        f16 = this.getNightVisionBrightness(this.mc.thePlayer, p_updateLightmap_1_);
+                        f16 = (float) MappingsWorkAround.findMethod(this.getClass(), Finder$EntityRenderer$getNightVisionBrightness.ID).invoke(this, this.mc.thePlayer, p_updateLightmap_1_);
                         f17 = 1.0F / f8;
                         if (f17 > 1.0F / f9) {
                             f17 = 1.0F / f9;
@@ -265,4 +276,6 @@ public abstract class EntityRendererMixin {
             }
         }
     }
+
+
 }

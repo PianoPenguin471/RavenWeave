@@ -1,8 +1,8 @@
 package ravenweave.client.utils;
 
-import net.weavemc.loader.api.event.ChatReceivedEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.clickgui.raven.Terminal;
+import ravenweave.client.event.ChatReceivedEvent;
 
 public class PingChecker {
     private static boolean e;

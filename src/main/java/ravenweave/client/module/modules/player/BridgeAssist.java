@@ -1,8 +1,8 @@
 package ravenweave.client.module.modules.player;
 
-import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.Raven;
+import ravenweave.client.event.RenderGameOverlayEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;

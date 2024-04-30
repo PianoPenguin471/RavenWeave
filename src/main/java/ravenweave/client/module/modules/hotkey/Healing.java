@@ -106,7 +106,8 @@ public class Healing extends Module {
         if (itemInSlot == null)
             return false;
 
-        if (itemInSlot.getItem() instanceof ItemPotion ip) {
+        if (itemInSlot.getItem() instanceof ItemPotion) {
+            final ItemPotion ip = (ItemPotion) itemInSlot.getItem();
             Utils.Player.sendMessageToSelf("" + slot);
             for (PotionEffect pe : ip.getEffects(itemInSlot)) {
                 if (pe.getPotionID() == Potion.heal.id) {

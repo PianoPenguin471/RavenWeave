@@ -1,6 +1,5 @@
 package me.pianopenguin471.mixins;
 
-import ravenweave.client.module.modules.render.Xray;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -16,6 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import ravenweave.client.Raven;
+import ravenweave.client.module.modules.render.Xray;
 @Mixin(value = BlockModelRenderer.class, priority = 999)
 public abstract class BlockModelRendererMixin {
 

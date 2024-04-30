@@ -2,8 +2,8 @@ package ravenweave.client.module.modules.beta;
 
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.Packet;
-import net.weavemc.loader.api.event.PacketEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
+import ravenweave.client.event.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.SliderSetting;

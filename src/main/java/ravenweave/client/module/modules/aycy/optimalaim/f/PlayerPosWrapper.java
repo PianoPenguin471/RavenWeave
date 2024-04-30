@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.aycy.optimalaim.f;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.weavemc.loader.api.event.RenderLivingEvent;
+import ravenweave.client.event.RenderLivingEvent;
 import ravenweave.client.module.modules.aycy.optimalaim.OptimalAim;
 import ravenweave.client.module.modules.aycy.optimalaim.e.BoundingBoxWrapper;
 

@@ -26,7 +26,8 @@ public class Armor extends Module {
         for (int armorType = 0; armorType < 4; armorType++) {
             for (int slot = 0; slot <= 8; slot++) {
                 ItemStack itemStack = mc.thePlayer.inventory.getStackInSlot(slot);
-                if (itemStack != null && itemStack.getItem() instanceof ItemArmor armorPiece) {
+                if (itemStack != null && itemStack.getItem() instanceof ItemArmor) {
+                    final ItemArmor armorPiece = (ItemArmor) itemStack.getItem();
                     if (!Utils.Player.playerWearingArmor().contains(armorPiece.armorType)
                             && armorPiece.armorType == armorType && ignoreIfAlreadyEquipped.isToggled()) {
                         if (armorPiece.getArmorMaterial().getDamageReductionAmount(armorType) > strength) {

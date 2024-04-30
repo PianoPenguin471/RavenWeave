@@ -1,8 +1,8 @@
 package ravenweave.client.module.modules.render;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.weavemc.loader.api.event.RenderLivingEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
+import ravenweave.client.event.RenderLivingEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.module.setting.impl.DescriptionSetting;

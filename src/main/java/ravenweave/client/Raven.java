@@ -2,11 +2,11 @@ package ravenweave.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
-import net.weavemc.loader.api.event.EventBus;
-import ravenweave.client.config.ClientConfig;
+import net.weavemc.api.event.EventBus;
 import ravenweave.client.clickgui.kv.KvCompactGui;
 import ravenweave.client.clickgui.raven.ClickGui;
 import ravenweave.client.command.CommandManager;
+import ravenweave.client.config.ClientConfig;
 import ravenweave.client.config.ConfigManager;
 import ravenweave.client.module.ModuleManager;
 import ravenweave.client.utils.MouseManager;

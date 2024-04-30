@@ -1,11 +1,11 @@
 package ravenweave.client.module.modules.render;
 
-import ravenweave.client.module.Module;
-import ravenweave.client.module.setting.impl.SliderSetting;
-import ravenweave.client.module.setting.impl.TickSetting;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockRedstoneOre;
+import ravenweave.client.module.Module;
+import ravenweave.client.module.setting.impl.SliderSetting;
+import ravenweave.client.module.setting.impl.TickSetting;
 
 public class Xray extends Module {
     public static Xray instance;

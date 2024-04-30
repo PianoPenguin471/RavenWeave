@@ -9,7 +9,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.weavemc.loader.api.event.EventBus;
+import net.weavemc.api.event.EventBus;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -21,6 +21,7 @@ import ravenweave.client.event.LivingUpdateEvent;
 import ravenweave.client.event.SlowdownEvent;
 import ravenweave.client.event.UpdateEvent;
 
+// TODO: Refactor after Weave fixes mappings issues
 @Mixin(priority = 995, value = EntityPlayerSP.class)
 public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
 
@@ -34,12 +35,10 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
     public EntityPlayerSPMixin(World p_i45074_1_, GameProfile p_i45074_2_) {
         super(p_i45074_1_, p_i45074_2_);
     }
-	@Shadow public abstract void setSprinting(boolean p_setSprinting_1_);
-
-    @Shadow public Minecraft mc;
-	@Shadow public abstract boolean pushOutOfBlocks(double p_pushOutOfBlocks_1_, double p_pushOutOfBlocks_3_, double p_pushOutOfBlocks_5_);
-	@Shadow public abstract void sendPlayerAbilities();
-    @Shadow public abstract boolean isSneaking();
+//    @Shadow public Minecraft mc;
+	@Shadow public abstract boolean forwarder$pushOutOfBlocks(double p_pushOutOfBlocks_1_, double p_pushOutOfBlocks_3_, double p_pushOutOfBlocks_5_);
+	@Shadow public abstract void forwarder$sendPlayerAbilities();
+    @Shadow public abstract boolean forwarder$isSneaking();
 
     @Shadow public int sprintingTicksLeft;
     @Shadow public float prevTimeInPortal;
@@ -53,10 +52,11 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
     @Shadow public abstract void sendHorseJump();
 
 
-    @Redirect(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;setSprinting(Z)V", ordinal = 2))
+//    @Redirect(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;setSprinting(Z)V", ordinal = 2))
+    @Redirect(method = "resetPositionToBB", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;setSprinting(Z)V"))
     public void onLivingUpdate(EntityPlayerSP entityPlayerSP, boolean sprinting) {
         LivingUpdateEvent event = new LivingUpdateEvent(entityPlayerSP, sprinting);
-        EventBus.callEvent(event);
+        EventBus.postEvent(event);
 
         if (event.isCancelled()) event.getEntity().setSprinting(true);
         else entityPlayerSP.setSprinting(sprinting);
@@ -74,7 +74,7 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
         cachedRotationPitch = rotationPitch;
 
         UpdateEvent event = new UpdateEvent.Pre(posX, posY, posZ, rotationYaw, rotationPitch, onGround);
-        EventBus.callEvent(event);
+        EventBus.postEvent(event);
         if(event.isCancelled()) {
             ci.cancel();
             return;
@@ -101,11 +101,14 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
         rotationYaw = cachedRotationYaw;
         rotationPitch = cachedRotationPitch;
 
-        EventBus.callEvent(new UpdateEvent.Post(posX, posY, posZ, rotationYaw, rotationPitch, onGround));
+        EventBus.postEvent(new UpdateEvent.Post(posX, posY, posZ, rotationYaw, rotationPitch, onGround));
     }
 
-    @Inject(method = "onLivingUpdate", at = @At("HEAD"), cancellable = true)
+//    @Inject(method = "onLivingUpdate", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "resetPositionToBB", at = @At("HEAD"), cancellable = true)
     public void injectSlowdownEvent(final CallbackInfo ci) {
+        Minecraft mc = Minecraft.getMinecraft();
+        
         if (this.sprintingTicksLeft > 0) {
             --this.sprintingTicksLeft;
 
@@ -121,12 +124,12 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
         this.prevTimeInPortal = this.timeInPortal;
 
         if (this.inPortal) {
-            if (this.mc.currentScreen != null && !this.mc.currentScreen.doesGuiPauseGame()) {
-                this.mc.displayGuiScreen(null);
+            if (mc.currentScreen != null && !mc.currentScreen.doesGuiPauseGame()) {
+                mc.displayGuiScreen(null);
             }
 
             if (this.timeInPortal == 0.0F) {
-                this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("portal.trigger"), this.rand.nextFloat() * 0.4F + 0.8F));
+                mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("portal.trigger"), this.rand.nextFloat() * 0.4F + 0.8F));
             }
 
             this.timeInPortal += 0.0125F;
@@ -164,7 +167,7 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
 
         if (this.isUsingItem() && !this.isRiding()) {
             SlowdownEvent event = new SlowdownEvent(0.2f, 0.2f);
-            EventBus.callEvent(event);
+            EventBus.postEvent(event);
             this.movementInput.moveStrafe *= event.getStrafeSpeedMultiplier();
             this.movementInput.moveForward *= event.getForwardSpeedMultiplier();
             this.sprintToggleTimer = 0;
@@ -177,14 +180,14 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
         boolean flag3 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
 
         if (this.onGround && !flag1 && !flag2 && this.movementInput.moveForward >= f && !this.isSprinting() && flag3 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness)) {
-            if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.isKeyDown()) {
+            if (this.sprintToggleTimer <= 0 && !mc.gameSettings.keyBindSprint.isKeyDown()) {
                 this.sprintToggleTimer = 7;
             } else {
                 this.setSprinting(true);
             }
         }
 
-        if (!this.isSprinting() && this.movementInput.moveForward >= f && flag3 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness) && this.mc.gameSettings.keyBindSprint.isKeyDown()) {
+        if (!this.isSprinting() && this.movementInput.moveForward >= f && flag3 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness) && mc.gameSettings.keyBindSprint.isKeyDown()) {
             this.setSprinting(true);
         }
 
@@ -193,7 +196,7 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
         }
 
         if (this.capabilities.allowFlying) {
-            if (this.mc.playerController.isSpectatorMode()) {
+            if (mc.playerController.isSpectatorMode()) {
                 if (!this.capabilities.isFlying) {
                     this.capabilities.isFlying = true;
                     this.sendPlayerAbilities();
@@ -247,9 +250,11 @@ public abstract class EntityPlayerSPMixin extends AbstractClientPlayer {
             this.horseJumpPower = 0.0F;
         }
 
-        super.onLivingUpdate();
+        // TODO: Fix mappings
+//        super.onLivingUpdate();
+        super.resetPositionToBB();
 
-        if (this.onGround && this.capabilities.isFlying && !this.mc.playerController.isSpectatorMode()) {
+        if (this.onGround && this.capabilities.isFlying && !mc.playerController.isSpectatorMode()) {
             this.capabilities.isFlying = false;
             this.sendPlayerAbilities();
         }

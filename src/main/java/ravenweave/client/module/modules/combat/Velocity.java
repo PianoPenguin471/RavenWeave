@@ -3,7 +3,7 @@ package ravenweave.client.module.modules.combat;
 import me.pianopenguin471.mixins.IS12PacketEntityVelocity;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.event.PacketEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.SliderSetting;
@@ -23,21 +23,19 @@ public class Velocity extends Module {
     }
 
     @SubscribeEvent
-    public void onPacket(PacketEvent e) {
-        if (!e.isOutgoing()) {
-            if (e.getPacket() instanceof S12PacketEntityVelocity) {
-                if (chance.getInput() != 100.0D) {
-                    double ch = Math.random() * 100;
-                    if (ch >= chance.getInput()) {
-                        return;
-                    }
+    public void onPacket(PacketEvent.Receive e) {
+        if (e.getPacket() instanceof S12PacketEntityVelocity) {
+            if (chance.getInput() != 100.0D) {
+                double ch = Math.random() * 100;
+                if (ch >= chance.getInput()) {
+                    return;
                 }
+            }
 
-                Entity entity = mc.theWorld.getEntityByID(((S12PacketEntityVelocity) e.getPacket()).getEntityID());
+            Entity entity = mc.theWorld.getEntityByID(((S12PacketEntityVelocity) e.getPacket()).getEntityID());
 
-                if (entity == mc.thePlayer) {
-                    velo(e);
-                }
+            if (entity == mc.thePlayer) {
+                velo(e);
             }
         }
     }

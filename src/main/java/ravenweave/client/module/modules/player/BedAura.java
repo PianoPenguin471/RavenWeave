@@ -5,8 +5,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.weavemc.loader.api.event.RenderWorldEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
+import ravenweave.client.event.RenderWorldEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.*;
 import ravenweave.client.utils.Utils;
@@ -90,14 +90,13 @@ public class BedAura extends Module {
                 // Don't bother breaking a bed if we're not even in a game
                 if (!Utils.Player.isPlayerInGame()) return;
                 switch (state) {
-                    case LOOKING_FOR_BED -> {
+                    case LOOKING_FOR_BED:
                         if (!notifiedSearching) {
                             Utils.Player.sendMessageToSelf("Looking for valid bed block");
                             notifiedSearching = true;
                         }
-                        BedAura.this.bedPos = getClosestBedPosition((int) rangeInput.getInput());
-                        // We'll check again next time
-                        if (BedAura.this.bedPos != null) {
+                        bedPos = getClosestBedPosition((int) rangeInput.getInput());
+                        if (bedPos != null) {
                             Utils.Player.sendMessageToSelf("Found bed block at " + bedPos);
                             if (bypassMode.getMode() == BypassMode.NONE) {
                                 state = State.BREAKING_BED;
@@ -105,33 +104,28 @@ public class BedAura extends Module {
                                 state = State.BYPASS;
                             }
                         }
-                    }
-                    case BYPASS -> {
+                        break;
+                    case BYPASS:
                         if (bypassMode.getMode() == BypassMode.BLOCK_ABOVE) {
-                            // Get block above the bed
                             BlockPos blockAbove = getTopDefenseBlock();
-
-                            // If the bed is exposed, move on
                             if (blockAbove == null) {
                                 state = State.BREAKING_BED;
                                 break;
                             }
-
-                            // Break the block
                             mineBlock(blockAbove);
                             if (!notifiedBypassing) {
                                 Utils.Player.sendMessageToSelf("Mining Bypass Block");
                                 notifiedBypassing = true;
                             }
                         }
-                    }
-                    case BREAKING_BED -> {
-                        mineBlock(BedAura.this.bedPos);
+                        break;
+                    case BREAKING_BED:
+                        mineBlock(bedPos);
                         if (!notifiedBreaking) {
                             Utils.Player.sendMessageToSelf("Mining Bed Block");
                             notifiedBreaking = true;
                         }
-                    }
+                        break;
                 }
                 updateState();
             }

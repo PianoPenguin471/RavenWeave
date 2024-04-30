@@ -5,6 +5,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.potion.Potion;
@@ -14,19 +15,22 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.weavemc.loader.api.event.EventBus;
+import net.weavemc.api.event.EventBus;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import ravenweave.client.event.HitSlowDownEvent;
 
+// TODO: Refactor after Weave fixes mappings issues
 @Mixin(priority = 995, value = EntityPlayer.class)
 public abstract class EntityPlayerMixin extends EntityLivingBase {
     public EntityPlayerMixin(World p_i1594_1_) {
         super(p_i1594_1_);
     }
 
-    @Shadow public abstract ItemStack getHeldItem();
+    @Shadow public InventoryPlayer inventory;
+
+//    @Shadow public abstract ItemStack getHeldItem();
     @Shadow public abstract void onCriticalHit(Entity p_onCriticalHit_1_);
     @Shadow public abstract void onEnchantmentCritical(Entity p_onEnchantmentCritical_1_);
     @Shadow public abstract void triggerAchievement(StatBase p_triggerAchievement_1_);
@@ -34,6 +38,10 @@ public abstract class EntityPlayerMixin extends EntityLivingBase {
     @Shadow public abstract void destroyCurrentEquippedItem();
     @Shadow public abstract void addStat(StatBase p_addStat_1_, int p_addStat_2_);
     @Shadow public abstract void addExhaustion(float p_addExhaustion_1_);
+
+    public ItemStack getHeldItem_() {
+        return this.inventory.getCurrentItem();
+    }
 
     /**
      * @author mc code
@@ -48,9 +56,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase {
                 float f1 = 0.0F;
 
                 if (targetEntity instanceof EntityLivingBase) {
-                    f1 = EnchantmentHelper.getModifierForCreature(this.getHeldItem(), ((EntityLivingBase)targetEntity).getCreatureAttribute());
+                    f1 = EnchantmentHelper.getModifierForCreature(this.getHeldItem_(), ((EntityLivingBase)targetEntity).getCreatureAttribute());
                 } else {
-                    f1 = EnchantmentHelper.getModifierForCreature(this.getHeldItem(), EnumCreatureAttribute.UNDEFINED);
+                    f1 = EnchantmentHelper.getModifierForCreature(this.getHeldItem_(), EnumCreatureAttribute.UNDEFINED);
                 }
 
                 i = i + EnchantmentHelper.getKnockbackModifier(this);
@@ -85,7 +93,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase {
                             targetEntity.addVelocity(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F, 0.1D, MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F);
 
                             HitSlowDownEvent slowDown = new HitSlowDownEvent(0.6, false);
-                            EventBus.callEvent(slowDown);
+                            EventBus.postEvent(slowDown);
                             this.motionX *= slowDown.getSlowDown();
                             this.motionZ *= slowDown.getSlowDown();
                             this.setSprinting(slowDown.isSprinting());

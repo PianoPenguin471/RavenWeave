@@ -1,8 +1,8 @@
 package ravenweave.client.command.commands;
 
+import ravenweave.client.Raven;
 import ravenweave.client.clickgui.raven.Terminal;
 import ravenweave.client.command.Command;
-import ravenweave.client.Raven;
 import ravenweave.client.utils.Utils;
 
 public class SetKey extends Command {

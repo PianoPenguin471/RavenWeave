@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 import ravenweave.client.event.RenderLabelEvent;
 import ravenweave.client.module.Module;
@@ -31,7 +31,8 @@ public class Nametags extends Module {
 
     @SubscribeEvent
     public void onRenderLabel(RenderLabelEvent event) {
-        if(event.getTarget() instanceof EntityPlayer en) {
+        if(event.getTarget() instanceof EntityPlayer) {
+            final EntityPlayer en = (EntityPlayer) event.getTarget();
             event.setCancelled(true);
 
             if (!showInvis.isToggled() && en.isInvisible()) return;

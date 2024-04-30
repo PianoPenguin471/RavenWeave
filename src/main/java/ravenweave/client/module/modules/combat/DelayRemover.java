@@ -1,7 +1,7 @@
 package ravenweave.client.module.modules.combat;
 
 import net.minecraft.client.Minecraft;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.event.GameLoopEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.DescriptionSetting;

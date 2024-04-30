@@ -1,6 +1,5 @@
 package me.pianopenguin471.mixins;
 
-import ravenweave.client.module.modules.render.Xray;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.material.MapColor;
@@ -11,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ravenweave.client.Raven;
+import ravenweave.client.module.modules.render.Xray;
 
 @Mixin(priority = 1005, value = BlockGrass.class)
 public class BlockGrassMixin extends Block {

@@ -1,19 +1,17 @@
 package ravenweave.client.module.modules.player;
 
 import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.INetHandlerPlayServer;
-import net.weavemc.loader.api.event.*;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.event.PacketEvent;
+import ravenweave.client.event.WorldEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.impl.ComboSetting;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
 import ravenweave.client.module.setting.impl.TickSetting;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class Blink extends Module {
@@ -33,7 +31,7 @@ public class Blink extends Module {
     
     @SubscribeEvent
     public void onPacket(PacketEvent e) {
-        if (!e.isOutgoing() && (mode.getMode() == modes.BOTH || mode.getMode() == modes.INBOUND)) {
+        if (e instanceof PacketEvent.Receive && (mode.getMode() == modes.BOTH || mode.getMode() == modes.INBOUND)) {
             // The below is a bad approach but instanceof returns errors. (Sorry niki & other good devs)
             if (e.getPacket().getClass().getCanonicalName().startsWith("net.minecraft.network.play.server")) {
                 inboundPackets.add((Packet<INetHandlerPlayClient>) e.getPacket());
@@ -41,7 +39,7 @@ public class Blink extends Module {
             }
         }
 
-        if (e.isOutgoing() && (mode.getMode() == modes.BOTH || mode.getMode() == modes.OUTBOUND)) {
+        if (e instanceof PacketEvent.Send && (mode.getMode() == modes.BOTH || mode.getMode() == modes.OUTBOUND)) {
             // The below is a bad approach but instanceof returns errors. (Sorry niki & other good devs)
             if (e.getPacket().getClass().getCanonicalName().startsWith("net.minecraft.network.play.server")) {
                 outboundPackets.add((Packet<INetHandlerPlayServer>) e.getPacket());
@@ -89,7 +87,7 @@ public class Blink extends Module {
     }
 
     @SubscribeEvent
-    public void onShutdown(ShutdownEvent e) {
+    public void onShutdown(ravenweave.client.event.ShutdownEvent e) {
         this.disable();
     }
 
@@ -99,7 +97,7 @@ public class Blink extends Module {
     }
 
     @SubscribeEvent
-    public void onStart(StartGameEvent e) {
+    public void onStart(ravenweave.client.event.StartGameEvent e) {
         this.disable();
     }
 

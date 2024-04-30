@@ -1,10 +1,10 @@
 package ravenweave.client.module.modules.client;
 
 import com.google.gson.JsonObject;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
+import ravenweave.client.Raven;
 import ravenweave.client.clickgui.raven.ClickGui;
 import ravenweave.client.event.GameLoopEvent;
-import ravenweave.client.Raven;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.setting.Setting;
 import ravenweave.client.module.setting.impl.SliderSetting;

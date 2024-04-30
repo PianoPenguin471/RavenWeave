@@ -5,7 +5,7 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.server.S30PacketWindowItems;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.weavemc.loader.api.event.SubscribeEvent;
+import net.weavemc.api.event.SubscribeEvent;
 import ravenweave.client.event.PacketEvent;
 import ravenweave.client.event.SlowdownEvent;
 import ravenweave.client.event.UpdateEvent;
