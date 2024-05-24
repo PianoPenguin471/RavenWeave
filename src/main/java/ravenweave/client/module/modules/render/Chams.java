@@ -1,8 +1,8 @@
 package ravenweave.client.module.modules.render;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.weavemc.api.event.SubscribeEvent;
-import ravenweave.client.event.RenderLivingEvent;
+import net.weavemc.loader.api.event.RenderLivingEvent;
+import net.weavemc.loader.api.event.SubscribeEvent;
 import ravenweave.client.module.Module;
 import ravenweave.client.module.modules.world.AntiBot;
 import ravenweave.client.module.setting.impl.DescriptionSetting;
@@ -12,6 +12,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Chams extends Module {
     public static TickSetting ignoreBots;
+
     public Chams() {
         super("Chams", ModuleCategory.render);
         this.registerSetting(new DescriptionSetting("Shows player through walls"));
@@ -23,7 +24,10 @@ public class Chams extends Module {
         if (event.getEntity() != mc.thePlayer) {
             if (event.getEntity() instanceof EntityPlayer) {
                 glEnable(GL_POLYGON_OFFSET_FILL);
-                glPolygonOffset(1.0F, -1100000.0F);
+                glPolygonOffset(1.0F, -1000000.0F);
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                glDepthFunc(GL_ALWAYS);  // Force rendering regardless of depth
             }
         }
     }
@@ -33,7 +37,9 @@ public class Chams extends Module {
         if (event.getEntity() != mc.thePlayer && (!ignoreBots.isToggled() || !AntiBot.bot(event.getEntity()))) {
             if (event.getEntity() instanceof EntityPlayer) {
                 glDisable(GL_POLYGON_OFFSET_FILL);
-                glPolygonOffset(1.0F, 1100000.0F);
+                glPolygonOffset(1.0F, 1000000.0F);
+                glDisable(GL_BLEND);
+                glDepthFunc(GL_LEQUAL);  // Restore default depth function
             }
         }
     }
