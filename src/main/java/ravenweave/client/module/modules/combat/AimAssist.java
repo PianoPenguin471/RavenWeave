@@ -95,10 +95,13 @@ public class AimAssist extends Module {
         boolean removed = false;
         boolean found = false;
         for (NetworkPlayerInfo networkPlayerInfo : new ArrayList<>(mc.getNetHandler().getPlayerInfoMap())) {
-            Entity entity = mc.theWorld.getPlayerEntityByName(networkPlayerInfo.getDisplayName().getUnformattedText());
-            if (entity.getName().equalsIgnoreCase(name) || entity.getCustomNameTag().equalsIgnoreCase(name)) {
-                removed = removeFriend(entity);
-                found = true;
+            var displayName = networkPlayerInfo.getDisplayName();
+            if (displayName != null) {
+                Entity entity = mc.theWorld.getPlayerEntityByName(displayName.getUnformattedText());
+                if (entity.getName().equalsIgnoreCase(name) || entity.getCustomNameTag().equalsIgnoreCase(name)) {
+                    removed = removeFriend(entity);
+                    found = true;
+                }
             }
         }
 
